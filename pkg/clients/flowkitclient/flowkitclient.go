@@ -150,32 +150,37 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	}
 
 	// Convert inputs to gRPC format based on order from function definition
-	input := []*aaliflowkitgrpc.FunctionInput{}
+	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
-		// Get the input value
-		value, ok := inputs[inputDef.Name]
-		if !ok {
-			return nil, fmt.Errorf("Input %s not found in inputs", inputDef.Name)
-		}
-
-		// convert value to string
-		stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
-		if err != nil {
-			return nil, fmt.Errorf("Error converting input %s to string: %v", inputDef.Name, err)
-		}
-
-		// Convert the input value to gRPC format
-		input = append(input, &aaliflowkitgrpc.FunctionInput{
+		// create grpc input
+		grpcInput := &aaliflowkitgrpc.FunctionInput{
 			Name:   inputDef.Name,
 			GoType: inputDef.GoType,
-			Value:  stringValue,
-		})
+		}
+
+		// Get the input value
+		value, ok := inputs[inputDef.Name]
+		if ok {
+			// found: convert value to string
+			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			if err != nil {
+				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+			}
+			grpcInput.Value = stringValue
+
+		} else {
+			// input discrepancy, set to null value
+			grpcInput.Value = ""
+		}
+
+		// Append the grpc input to the list
+		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
 	// Call RunFunction
 	runResp, err := c.RunFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
-		Inputs: input,
+		Inputs: grpcInputs,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error in external function gRPC RunFunction: %v", err)
@@ -211,11 +216,11 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 // Returns:
 //   - *chan string: a channel to stream the output
 //   - error: an error message if the gRPC call fails
-func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (*chan string, error) {
+func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in RunFunction: %v", r)
+			err = fmt.Errorf("panic occured in StreamFunction: %v", r)
 		}
 	}()
 
@@ -237,36 +242,39 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	}
 
 	// Convert inputs to gRPC format based on order from function definition
-	input := []*aaliflowkitgrpc.FunctionInput{}
+	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
-		// Get the input value
-		value, ok := inputs[inputDef.Name]
-		if !ok {
-			conn.Close()
-			cancel()
-			return nil, fmt.Errorf("input %s not found in inputs", inputDef.Name)
-		}
-
-		// convert value to string
-		stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
-		if err != nil {
-			conn.Close()
-			cancel()
-			return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
-		}
-
-		// Convert the input value to gRPC format
-		input = append(input, &aaliflowkitgrpc.FunctionInput{
+		// create grpc input
+		grpcInput := &aaliflowkitgrpc.FunctionInput{
 			Name:   inputDef.Name,
 			GoType: inputDef.GoType,
-			Value:  stringValue,
-		})
+		}
+
+		// Get the input value
+		value, ok := inputs[inputDef.Name]
+		if ok {
+			// found: convert value to string
+			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			if err != nil {
+				conn.Close()
+				cancel()
+				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+			}
+			grpcInput.Value = stringValue
+
+		} else {
+			// input discrepancy, set to null value
+			grpcInput.Value = ""
+		}
+
+		// Append the grpc input to the list
+		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
 	// Call StreamFunction
 	stream, err := c.StreamFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
-		Inputs: input,
+		Inputs: grpcInputs,
 	})
 	if err != nil {
 		conn.Close()
