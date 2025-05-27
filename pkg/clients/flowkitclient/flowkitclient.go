@@ -125,7 +125,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the gRPC call fails
-func RunFunction(url string, apiKey string, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
+func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -133,8 +133,14 @@ func RunFunction(url string, apiKey string, functionName string, inputs map[stri
 		}
 	}()
 
+	// Get function definition
+	functionDef, ok := AvailableFunctions[functionName]
+	if !ok {
+		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+	}
+
 	// Set up a connection to the server.
-	c, conn, err := createClient(url, apiKey)
+	c, conn, err := createClient(functionDef.FlowkitUrl, functionDef.ApiKey)
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
@@ -143,12 +149,6 @@ func RunFunction(url string, apiKey string, functionName string, inputs map[stri
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 	defer cancel()
-
-	// Get function definition
-	functionDef, ok := AvailableFunctions[functionName]
-	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
-	}
 
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
@@ -217,7 +217,7 @@ func RunFunction(url string, apiKey string, functionName string, inputs map[stri
 // Returns:
 //   - *chan string: a channel to stream the output
 //   - error: an error message if the gRPC call fails
-func StreamFunction(ctx *logging.ContextMap, url string, apiKey string, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, err error) {
+func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -225,22 +225,20 @@ func StreamFunction(ctx *logging.ContextMap, url string, apiKey string, function
 		}
 	}()
 
+	// Get function definition
+	functionDef, ok := AvailableFunctions[functionName]
+	if !ok {
+		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+	}
+
 	// Set up a connection to the server.
-	c, conn, err := createClient(url, apiKey)
+	c, conn, err := createClient(functionDef.FlowkitUrl, functionDef.ApiKey)
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
 
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
-
-	// Get function definition
-	functionDef, ok := AvailableFunctions[functionName]
-	if !ok {
-		conn.Close()
-		cancel()
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
-	}
 
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}

@@ -158,7 +158,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the API call fails
-func RunFunction(url string, apiKey string, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
+func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -189,14 +189,14 @@ func RunFunction(url string, apiKey string, functionName string, inputs map[stri
 	}
 
 	// Create a new HTTP POST request
-	req, err := http.NewRequest("POST", url+functionDefinition.Path, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", functionDefinition.FlowkitUrl+functionDefinition.Path, bytes.NewBuffer(reqBody))
 	if err != nil {
 		errorMessage := fmt.Errorf("error creating POST request: %v", err)
 		return nil, errorMessage
 	}
 
 	// Add the required header
-	req.Header.Set("api-key", apiKey)
+	req.Header.Set("api-key", functionDefinition.ApiKey)
 	req.Header.Set("Content-Type", "application/json")
 
 	// Create a client and make the request
