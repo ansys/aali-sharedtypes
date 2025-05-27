@@ -69,10 +69,11 @@ type Config struct {
 	WORKFLOW_STORE_PATH        string `yaml:"WORKFLOW_STORE_PATH" json:"WORKFLOWSTOREPATH"`
 	BINARY_STORE_PATH          string `yaml:"BINARY_STORE_PATH" json:"BINARYSTOREPATH"`
 	NUMBER_OF_WORKFLOW_WORKERS int    `yaml:"NUMBER_OF_WORKFLOW_WORKERS" json:"NUMBEROFWORKFLOWWORKERS"`
-	// External Function Endpoints
+	// Flowkit Connection
+	FLOWKIT_CONNECTIONS        []FlowkitConnections `yaml:"FLOWKIT_CONNECTIONS" json:"FLOWKITCONNECTIONS"`              // Contains the URL and API key for the FlowKit server
+	FLOWKIT_PYTHON_CONNECTIONS []FlowkitConnections `yaml:"FLOWKIT_PYTHON_CONNECTIONS" json:"FLOWKITPYTHONCONNECTIONS"` // Contains the URL and API key for the FlowKit-Python server
+	// External Function Endpoints (Legacy)
 	EXTERNALFUNCTIONS_ENDPOINT string `yaml:"EXTERNALFUNCTIONS_ENDPOINT" json:"EXTERNALFUNCTIONSENDPOINT"`
-	FLOWKIT_PYTHON_ENDPOINT    string `yaml:"FLOWKIT_PYTHON_ENDPOINT" json:"FLOWKITPYTHONENDPOINT"`
-	FLOWKIT_PYTHON_API_KEY     string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
 	// Authentication & Authorization
 	ENABLE_AUTH                   bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
 	AZURE_AD_AUTHENTICATION_URL   string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
@@ -103,6 +104,11 @@ type Config struct {
 	// Aali Modules
 	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
 	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
+
+	// Aali Python
+	/////////////////
+	FLOWKIT_PYTHON_ENDPOINT string `yaml:"FLOWKIT_PYTHON_ENDPOINT" json:"FLOWKITPYTHONENDPOINT"`
+	FLOWKIT_PYTHON_API_KEY  string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
 
 	// Aali LLM
 	/////////////
@@ -140,6 +146,12 @@ type Config struct {
 	KVDB_ADDRESS   string `yaml:"KVDB_ADDRESS" json:"KVDBADDRESS"`
 	KVDB_PATH      string `yaml:"KVDB_PATH" json:"KVDBPATH"`
 	KVDB_IN_MEMORY bool   `yaml:"KVDB_IN_MEMORY" json:"KVDBINMEMORY"`
+}
+
+// FlowkitConnections contains the configuration for connecting to the FlowKit server.
+type FlowkitConnections struct {
+	URL     string `yaml:"URL" json:"URL"`        // URL of the FlowKit server
+	API_KEY string `yaml:"API_KEY" json:"APIKEY"` // API key for the FlowKit server
 }
 
 // Initialize conifg dict
