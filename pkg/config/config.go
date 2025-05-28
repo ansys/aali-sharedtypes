@@ -626,3 +626,27 @@ func timeToString(t time.Time) string {
 	layout := "2006-01-02 15:04:05.000"
 	return t.Format(layout)
 }
+
+////////////////////////////
+// Legacy Config Converters
+////////////////////////////
+
+// HandleLegacyPortDefinition checks if the address is set, and if not, uses the legacy port to define the web server address.
+// If both are empty, it returns an error.
+//
+// Parameters:
+//   - address: The address to use for the web server.
+//   - legacyPort: The legacy port to use if the address is not set.
+//
+// Returns:
+//   - webserverAddress: The web server address to use.
+//   - err: An error if both address and legacy port are empty.
+func HandleLegacyPortDefinition(configAddress string, legacyPort string) (webserverAddress string, err error) {
+	if configAddress != "" {
+		return configAddress, nil
+	}
+	if legacyPort != "" {
+		return "0.0.0.0:" + legacyPort, nil
+	}
+	return "", fmt.Errorf("both address and legacy port are empty")
+}
