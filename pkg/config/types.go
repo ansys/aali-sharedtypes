@@ -63,17 +63,18 @@ type Config struct {
 
 	// Aali Agent
 	///////////////
+	AGENT_ADDRESS              string `yaml:"AGENT_ADDRESS" json:"AGENTADDRESS"`
 	PRODUCTION_MODE            bool   `yaml:"PRODUCTION_MODE" json:"PRODUCTIONMODE"` // If true, the agent error messages will be generic
-	AGENT_PORT                 string `yaml:"AGENT_PORT" json:"AGENTPORT"`
 	WORKFLOW_API_KEY           string `yaml:"WORKFLOW_API_KEY" json:"WORKFLOWAPIKEY"`
 	WORKFLOW_STORE_PATH        string `yaml:"WORKFLOW_STORE_PATH" json:"WORKFLOWSTOREPATH"`
 	BINARY_STORE_PATH          string `yaml:"BINARY_STORE_PATH" json:"BINARYSTOREPATH"`
 	NUMBER_OF_WORKFLOW_WORKERS int    `yaml:"NUMBER_OF_WORKFLOW_WORKERS" json:"NUMBEROFWORKFLOWWORKERS"`
 	// Flowkit Connection
-	FLOWKIT_CONNECTIONS        []FlowkitConnections `yaml:"FLOWKIT_CONNECTIONS" json:"FLOWKITCONNECTIONS"`              // Contains the URL and API key for the FlowKit server
-	FLOWKIT_PYTHON_CONNECTIONS []FlowkitConnections `yaml:"FLOWKIT_PYTHON_CONNECTIONS" json:"FLOWKITPYTHONCONNECTIONS"` // Contains the URL and API key for the FlowKit-Python server
+	FLOWKIT_CONNECTIONS        []FlowkitConnection `yaml:"FLOWKIT_CONNECTIONS" json:"FLOWKITCONNECTIONS"`              // Contains the URL and API key for the FlowKit server
+	FLOWKIT_PYTHON_CONNECTIONS []FlowkitConnection `yaml:"FLOWKIT_PYTHON_CONNECTIONS" json:"FLOWKITPYTHONCONNECTIONS"` // Contains the URL and API key for the FlowKit-Python server
 	// External Function Endpoints (Legacy)
 	EXTERNALFUNCTIONS_ENDPOINT string `yaml:"EXTERNALFUNCTIONS_ENDPOINT" json:"EXTERNALFUNCTIONSENDPOINT"`
+	FLOWKIT_PYTHON_ENDPOINT    string `yaml:"FLOWKIT_PYTHON_ENDPOINT" json:"FLOWKITPYTHONENDPOINT"`
 	// Authentication & Authorization
 	ENABLE_AUTH                   bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
 	AZURE_AD_AUTHENTICATION_URL   string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
@@ -96,38 +97,20 @@ type Config struct {
 	EXEC_FILE_STORE_PATH                 string `yaml:"EXEC_FILE_STORE_PATH" json:"EXECFILESTOREPATH"`
 	// DB Connection
 	KVDB_ENDPOINT string `yaml:"KVDB_ENDPOINT" json:"KVDBENDPOINT"`
-
-	// Aali Flowkit
-	/////////////////
-	EXTERNALFUNCTIONS_GRPC_PORT string `yaml:"EXTERNALFUNCTIONS_GRPC_PORT" json:"EXTERNALFUNCTIONSGRPCPORT"`
-	FLOWKIT_API_KEY             string `yaml:"FLOWKIT_API_KEY" json:"FLOWKITAPIKEY"`
-	// Aali Modules
-	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
-	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
-
-	// Aali Python
-	/////////////////
-	FLOWKIT_PYTHON_ENDPOINT string `yaml:"FLOWKIT_PYTHON_ENDPOINT" json:"FLOWKITPYTHONENDPOINT"`
-	FLOWKIT_PYTHON_API_KEY  string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
+	// Workflow Store
+	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
 
 	// Aali LLM
 	/////////////
-	WEBSERVER_PORT         string `yaml:"WEBSERVER_PORT" json:"WEBSERVERPORT"`
+	LLM_ADDRESS            string `yaml:"LLM_ADDRESS" json:"LLMADDRESS"`
 	MODELS_CONFIG_LOCATION string `yaml:"MODELS_CONFIG_LOCATION" json:"MODELSCONFIGLOCATION"`
 	LLM_API_KEY            string `yaml:"LLM_API_KEY" json:"LLMAPIKEY"`
 
-	// qdrant config
-	QDRANT_HOST string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
-	QDRANT_PORT int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
-
-	// graph db config
-	GRAPHDB_ADDRESS string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
-
 	// Aali Exec
 	//////////////
-	EXEC_ID             string `yaml:"EXEC_ID" json:"EXECID"`
-	WEBSERVER_PORT_EXEC string `yaml:"WEBSERVER_PORT_EXEC" json:"WEBSERVERPORTEXEC"`
-	EXEC_API_KEY        string `yaml:"EXEC_API_KEY" json:"EXECAPIKEY"`
+	EXEC_ADDRESS string `yaml:"EXEC_ADDRESS" json:"EXECADDRESS"`
+	EXEC_ID      string `yaml:"EXEC_ID" json:"EXECID"`
+	EXEC_API_KEY string `yaml:"EXEC_API_KEY" json:"EXECAPIKEY"`
 	// Python executable name
 	PYTHON_EXECUTABLE string `yaml:"PYTHON_EXECUTABLE" json:"PYTHONEXECUTABLE"`
 	BASH_EXECUTABLE   string `yaml:"BASH_EXECUTABLE" json:"BASHEXECUTABLE"`
@@ -137,19 +120,38 @@ type Config struct {
 	// Agent connection
 	AGENT_ENDPOINT string `yaml:"AGENT_ENDPOINT" json:"AGENTENDPOINT"`
 
-	// Workflow Store
-	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
-
-	// Aali Database
+	// Aali KVDB
 	/////////////////
-	// kv db
 	KVDB_ADDRESS   string `yaml:"KVDB_ADDRESS" json:"KVDBADDRESS"`
 	KVDB_PATH      string `yaml:"KVDB_PATH" json:"KVDBPATH"`
 	KVDB_IN_MEMORY bool   `yaml:"KVDB_IN_MEMORY" json:"KVDBINMEMORY"`
+
+	// Aali Flowkit
+	/////////////////
+	FLOWKIT_ADDRESS string `yaml:"FLOWKIT_ADDRESS" json:"FLOWKITADDRESS"`
+	FLOWKIT_API_KEY string `yaml:"FLOWKIT_API_KEY" json:"FLOWKITAPIKEY"`
+	// Connections to other Modules
+	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
+	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
+	GRAPHDB_ADDRESS       string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
+	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
+	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
+
+	// Aali Flowkit Python
+	//////////////////////
+	FLOWKIT_PYTHON_ADDRESS string `yaml:"FLOWKIT_PYTHON_ADDRESS" json:"FLOWKITPYTHONADDRESS"`
+	FLOWKIT_PYTHON_API_KEY string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
+
+	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
+	/////////////////////////////////////////////////////////////////////////
+	AGENT_PORT                  string `yaml:"AGENT_PORT" json:"AGENTPORT"`
+	EXTERNALFUNCTIONS_GRPC_PORT string `yaml:"EXTERNALFUNCTIONS_GRPC_PORT" json:"EXTERNALFUNCTIONSGRPCPORT"`
+	WEBSERVER_PORT              string `yaml:"WEBSERVER_PORT" json:"WEBSERVERPORT"`
+	WEBSERVER_PORT_EXEC         string `yaml:"WEBSERVER_PORT_EXEC" json:"WEBSERVERPORTEXEC"`
 }
 
 // FlowkitConnections contains the configuration for connecting to the FlowKit server.
-type FlowkitConnections struct {
+type FlowkitConnection struct {
 	URL     string `yaml:"URL" json:"URL"`        // URL of the FlowKit server
 	API_KEY string `yaml:"API_KEY" json:"APIKEY"` // API key for the FlowKit server
 }
