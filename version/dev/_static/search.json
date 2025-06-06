@@ -1,0 +1,23 @@
+[
+    {
+        "objectID": "api_reference/index",
+        "href": "api_reference/index.html#api-reference",
+        "title": "API reference",
+        "section": "API reference",
+        "text": "Module\naaliflowkitgrpc\nconfig\nlogging\nsharedtypes\ntypeconverters\nGo back to landing page\nAPI reference"
+    },
+    {
+        "objectID": "index",
+        "href": "index.html#aali-shared-types-documentation-100",
+        "title": "Aali Shared types documentation 1.0.0",
+        "section": "Aali Shared types documentation 1.0.0",
+        "text": "<svg version=\"4.0.0.63c5cb3\" width=\"48.0px\" height=\"48.0px\" class=\"sd-material-icon sd-material-icon-code\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"></path><path d=\"M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z\"></path></svg>\nDetails the Aali Shared types API, offering a comprehensive\nreference for developers and users.\n   API reference\nAali Shared types documentation 1.0.0"
+    },
+    {
+        "objectID": "api_reference/test/index",
+        "href": "api_reference/test/index.html#api-reference",
+        "title": "API reference",
+        "section": "API reference",
+        "text": "API reference"
+    }
+]
