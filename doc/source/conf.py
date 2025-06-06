@@ -55,7 +55,7 @@ html_theme_options = {
     "logo": "ansys",
     "github_url": "https://github.com/ansys/aali-sharedtypes",
     "additional_breadcrumbs": [
-        ("Aali", "https://aali.docs.pyansys.com/"),
+        ("Aali", "https://aali.docs.ansys.com/"),
     ],
     "switcher": {
         "json_url": f"https://{cname}/versions.json",
