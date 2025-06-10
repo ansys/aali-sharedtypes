@@ -520,6 +520,36 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "[]MaterialLlmCriterion":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialLlmCriterion{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+	case "[]MaterialCriterionWithGuid":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialCriterionWithGuid{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+	case "[]MaterialAttribute":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialAttribute{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	}
 
 	return nil, fmt.Errorf("unsupported GoType: '%s'", goType)
@@ -754,6 +784,24 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]CodeGenerationUserGuideSection":
 		output, err := json.Marshal(value.([]sharedtypes.CodeGenerationUserGuideSection))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialLlmCriterion":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialLlmCriterion))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialCriterionWithGuid":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialCriterionWithGuid))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialAttribute":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialAttribute))
 		if err != nil {
 			return "", err
 		}
