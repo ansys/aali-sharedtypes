@@ -105,8 +105,9 @@ type Config struct {
 	LLM_ADDRESS            string `yaml:"LLM_ADDRESS" json:"LLMADDRESS"`
 	MODELS_CONFIG_LOCATION string `yaml:"MODELS_CONFIG_LOCATION" json:"MODELSCONFIGLOCATION"`
 	LLM_API_KEY            string `yaml:"LLM_API_KEY" json:"LLMAPIKEY"`
-	ACCESS_KEY_ID		   string `yaml:"ACCESS_KEY_ID" json:"ACCESSKEYID"`
-	SECRET_KEY	   		   string `yaml:"SECRET_KEY" json:"SECRETKEY"`
+	SAGE_ACCESS_KEY_ID	   string `yaml:"SAGE_ACCESS_KEY_ID" json:"SAGEACCESSKEYID"`
+	SAGE_SECRET_KEY	   	   string `yaml:"SAGE_SECRET_KEY" json:"SAGESECRETKEY"`
+	SAGE_ENDPOINT          string `yaml:"SAGE_ENDPOINT" json:"SAGEENDPOINT"`
 
 	// Aali Exec
 	//////////////
