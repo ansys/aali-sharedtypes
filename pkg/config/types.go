@@ -105,9 +105,6 @@ type Config struct {
 	LLM_ADDRESS            string `yaml:"LLM_ADDRESS" json:"LLMADDRESS"`
 	MODELS_CONFIG_LOCATION string `yaml:"MODELS_CONFIG_LOCATION" json:"MODELSCONFIGLOCATION"`
 	LLM_API_KEY            string `yaml:"LLM_API_KEY" json:"LLMAPIKEY"`
-	SAGE_ACCESS_KEY_ID	   string `yaml:"SAGE_ACCESS_KEY_ID" json:"SAGEACCESSKEYID"`
-	SAGE_SECRET_KEY	   	   string `yaml:"SAGE_SECRET_KEY" json:"SAGESECRETKEY"`
-	SAGE_ENDPOINT          string `yaml:"SAGE_ENDPOINT" json:"SAGEENDPOINT"`
 
 	// Aali Exec
 	//////////////
@@ -139,6 +136,10 @@ type Config struct {
 	GRAPHDB_ADDRESS       string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
 	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
 	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
+	// SageMaker
+	SAGE_ACCESS_KEY_ID	   string `yaml:"SAGE_ACCESS_KEY_ID" json:"SAGEACCESSKEYID"`
+	SAGE_SECRET_KEY	   	   string `yaml:"SAGE_SECRET_KEY" json:"SAGESECRETKEY"`
+	SAGE_ENDPOINT          string `yaml:"SAGE_ENDPOINT" json:"SAGEENDPOINT"`
 
 	// Aali Flowkit Python
 	//////////////////////
