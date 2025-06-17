@@ -28,6 +28,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 )
 
@@ -187,7 +188,7 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			value = "false"
 		}
 		return strconv.ParseBool(value)
-	case "interface{}":
+	case "interface{}", "any":
 		var output interface{}
 		if value == "" {
 			output = nil
@@ -346,6 +347,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "ParameterMap":
+		if value == "" {
+			value = "{}"
+		}
+		output := aali_graphdb.ParameterMap{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	case "[]map[string]string":
 		if value == "" {
 			value = "[]"
@@ -366,21 +377,11 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
-	case "[]map[string]interface{}":
+	case "[]map[string]interface{}", "[]map[string]any":
 		if value == "" {
 			value = "[]"
 		}
 		output := []map[string]interface{}{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, err
-		}
-		return output, nil
-	case "[]map[string]any":
-		if value == "" {
-			value = "[]"
-		}
-		output := []map[string]any{}
 		err := json.Unmarshal([]byte(value), &output)
 		if err != nil {
 			return nil, err
@@ -608,7 +609,7 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return strconv.FormatUint(value.(uint64), 10), nil
 	case "bool":
 		return strconv.FormatBool(value.(bool)), nil
-	case "interface{}":
+	case "interface{}", "any":
 		switch v := value.(type) {
 		case string:
 			return v, nil
@@ -707,20 +708,20 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", err
 		}
 		return string(output), nil
+	case "ParameterMap":
+		output, err := json.Marshal(value.(aali_graphdb.ParameterMap))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
 	case "[]map[string]string":
 		output, err := json.Marshal(value.([]map[string]string))
 		if err != nil {
 			return "", err
 		}
 		return string(output), nil
-	case "[]map[string]interface{}":
+	case "[]map[string]interface{}", "[]map[string]any":
 		output, err := json.Marshal(value.([]map[string]interface{}))
-		if err != nil {
-			return "", err
-		}
-		return string(output), nil
-	case "[]map[string]any":
-		output, err := json.Marshal(value.([]map[string]any))
 		if err != nil {
 			return "", err
 		}
