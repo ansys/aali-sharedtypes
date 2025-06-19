@@ -22,7 +22,11 @@
 
 package sharedtypes
 
-import "github.com/google/uuid"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 // DataExtractionDocumentData represents the data extracted from a document.
 type DataExtractionDocumentData struct {
@@ -64,6 +68,10 @@ type CodeGenerationElement struct {
 
 	// Only for type "enum"
 	EnumValues []string `json:"enum_values"`
+}
+
+func (element CodeGenerationElement) GetIdTypeName() string {
+	return fmt.Sprintf("%v:%v", element.Type, element.Name)
 }
 
 // Enum values for CodeGenerationType
