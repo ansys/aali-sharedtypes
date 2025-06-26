@@ -26,3 +26,27 @@ dist
 # Extra
 .venv
 doc/_build
+/config.yaml
+/workflowStore/
+error.log
+
+# Python bytecode and cache
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Sphinx build and temp
+_build/
+*.log
+
+# zip outputs (if you export docs)
+*.zip
+
+# Environment-specific
+.env
+

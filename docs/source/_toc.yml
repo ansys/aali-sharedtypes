@@ -1,0 +1,27 @@
+root: index
+
+entries:
+  - file: getting-started/index
+    title: Getting Started
+    entries:
+      - file: getting-started/setup
+      - file: getting-started/module_usage
+
+  - file: user-guide/index
+    title: User Guide
+    entries:
+      - file: user-guide/overview
+      - file: user-guide/workflow_types
+      - file: user-guide/config_types
+      - file: user-guide/value_types
+      - file: user-guide/function_definitions
+      - file: user-guide/execution_results
+
+  - file: advanced/index
+    title: Advanced Topics
+    entries:
+      - file: advanced/service_integration
+      - file: advanced/grpc_mapping
+      - file: advanced/type_system
+      - file: advanced/api_reference
+      - file: advanced/troubleshooting

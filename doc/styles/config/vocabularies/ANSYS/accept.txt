@@ -1,7 +1,0 @@
-Aali Shared types
-[Aa]ali
-(?i)Ansys
-API
-knowledgedb
-llmhandler
-config
