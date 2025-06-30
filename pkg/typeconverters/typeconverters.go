@@ -376,6 +376,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "[]map[string]any":
+		if value == "" {
+			value = "[]"
+		}
+		output := []map[string]any{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	case "DbArrayFilter":
 		if value == "" {
 			value = "{}"
@@ -694,6 +704,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]map[string]interface{}":
 		output, err := json.Marshal(value.([]map[string]interface{}))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]map[string]any":
+		output, err := json.Marshal(value.([]map[string]any))
 		if err != nil {
 			return "", err
 		}
