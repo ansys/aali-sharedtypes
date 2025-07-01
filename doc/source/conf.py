@@ -20,72 +20,43 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Sphinx documentation configuration file."""
 
-from datetime import datetime
 import os
+import sys
+from datetime import datetime
 
-from ansys_sphinx_theme import ansys_favicon, get_version_match
 
-# Project information
-project = "aali-sharedtypes"
-copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
-author = "ANSYS, Inc."
+sys.path.insert(0, os.path.abspath("../../pkg"))
 
-# Read version from VERSION file
-with open(os.path.join("..", "..", "VERSION"), "r") as f:
-    version_file = f.readline().strip()
+# Project metadata
+project = "Aali Workflow Config"
+author = "Aali Team"
+copyright = f"{datetime.now().year} ANSYS, Inc"
 
-release = version = version_file
-switcher_version = get_version_match(version_file)
-cname = os.getenv("DOCUMENTATION_CNAME", "noname.com")
-"""The canonical name of the webpage hosting the documentation."""
-
-# Select desired theme, and declare the html title
-html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = project
-html_favicon = ansys_favicon
-html_context = {
-    "github_user": "ansys",
-    "github_repo": "aali-sharedtypes",
-    "github_version": "main",
-    "doc_path": "doc/source",
-}
-html_theme_options = {
-    "logo": "ansys",
-    "github_url": "https://github.com/ansys/aali-sharedtypes",
-    "additional_breadcrumbs": [
-        ("Aali", "https://aali.docs.ansys.com/"),
-    ],
-    "switcher": {
-        "json_url": f"https://{cname}/versions.json",
-        "version_match": switcher_version,
-    },
-    "check_switcher": False,
-    "show_prev_next": False,
-    "show_breadcrumbs": True,
-    "use_edit_page_button": True,
-}
+# Ensure source code is importable
+sys.path.insert(0, os.path.abspath("../../"))
 
 # Sphinx extensions
 extensions = [
-    "sphinx_design",
-    "sphinx_copybutton",
+    "sphinx.ext.autodoc",        # Enables auto API generation
+    "sphinx.ext.napoleon",       # Supports Google/NumPy-style docstrings
+    "sphinx.ext.autosummary",    # Generates summary tables
+    "sphinx.ext.viewcode",       # Adds links to source code
+    "sphinx_design",             # Enables layout tools like grids/cards
+    "sphinx_external_toc",       # External _toc.yml support
 ]
 
+# Automatically generate stub pages from autosummary directives
+autosummary_generate = True
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
+# HTML theme configuration
+html_theme = "ansys_sphinx_theme"
 
-# The suffix(es) of source filenames.
-source_suffix = ".rst"
+# External table of contents (_toc.yml)
+external_toc_path = "_toc.yml"
+external_toc_exclude_missing = False
 
-# The master toctree document.
-master_doc = "index"
-
-source_suffix = {
-    ".rst": "restructuredtext",
-}
-
-# The master toctree document.
-master_doc = "index"
+# Add custom CSS files (Google Material icons)
+html_css_files = [
+    "https://fonts.googleapis.com/icon?family=Material+Icons"
+]

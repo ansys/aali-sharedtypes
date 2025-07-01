@@ -1,28 +1,36 @@
-Aali Shared types documentation |version|
-#################################################
+.. _index:
 
+============================
+Aali SharedTypes Documentation
+============================
 
-.. toctree::
-    :hidden:
+Aali SharedTypes provides internal data models used across the AALI system. It defines structs such as Workflow, ExecutionResult, NodeDefinition, and others for configuration and graph handling, ensuring consistency between services without relying on protobufs.
 
-    api_reference/index
+----
 
 .. grid:: 1
-   :gutter: 2 2 3 4
+   :gutter: 3
 
-   .. grid-item-card:: API reference
+   .. grid-item-card:: :material-regular:`directions_run;35px` Getting Started
       :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: getting-started/index
+      :link-type: doc
 
-      :material-regular:`code;48px`
+      Setup instructions and module usage for local development.
 
-      Details the Aali Shared types API, offering a comprehensive
-      reference for developers and users.
+   .. grid-item-card:: :material-regular:`psychology;35px` User Guide
+      :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: user-guide/index
+      :link-type: doc
 
-      +++
-      .. button-link:: api_reference/index.html
-         :color: secondary
-         :expand:
-         :outline:
-         :click-parent:
+      Core structs for workflows, execution, configuration, values, and functions.
 
-            API reference
+   .. grid-item-card:: :material-regular:`bolt;35px` Advanced Topics
+      :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: advanced/index
+      :link-type: doc
+
+      Integration patterns, GRPC mapping, internal struct design, and API reference.
