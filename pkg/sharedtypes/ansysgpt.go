@@ -53,3 +53,23 @@ type AnsysGPTCitation struct {
 	URL       string  `json:"URL"`
 	Relevance float64 `json:"Relevance"`
 }
+
+// RetrieverModuleChunk represents a chunk of data context received from the retriever module.
+type AnsysGPTRetrieverModuleChunk struct {
+	Captions        string  `json:"@search.captions"`
+	Highlights      string  `json:"@search.highlights"`
+	RerankerScore   float64 `json:"@search.reranker_score"`
+	Score           float64 `json:"@search.score"`
+	Content         string  `json:"content"`
+	IndexName       string  `json:"index_name"`
+	Physics         string  `json:"physics"`
+	Product         string  `json:"product"`
+	SourceTitleLvl2 string  `json:"sourceTitle_lvl2"`
+	SourceTitleLvl3 string  `json:"sourceTitle_lvl3"`
+	SourceUrlLvl2   string  `json:"sourceURL_lvl2"`
+	SourceUrlLvl3   string  `json:"sourceURL_lvl3"`
+	TokenSize       int     `json:"token_size"`
+	TypeOfAsset     string  `json:"typeOFasset"`
+	Version         string  `json:"version"`
+	Weight          float64 `json:"weight"`
+}
