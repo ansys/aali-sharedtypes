@@ -490,6 +490,17 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 		}
 		return output, nil
 
+	case "[]AnsysGPTRetrieverModuleChunk":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.AnsysGPTRetrieverModuleChunk{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+
 	case "[]DbData":
 		if value == "" {
 			value = "[]"
@@ -776,6 +787,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]AnsysGPTCitation":
 		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTCitation))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]AnsysGPTRetrieverModuleChunk":
+		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTRetrieverModuleChunk))
 		if err != nil {
 			return "", err
 		}
