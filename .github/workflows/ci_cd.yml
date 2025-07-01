@@ -116,7 +116,7 @@ jobs:
           fi
 
   doc-style:
-    name: Documentation style
+    name: "Documentation style"
     runs-on: ubuntu-latest
     steps:
       - uses: ansys/actions/doc-style@v9
@@ -125,7 +125,7 @@ jobs:
           fail-level: error
 
   doc-build:
-    name: Build project documentation
+    name: "Build project documentation"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -155,11 +155,11 @@ jobs:
           path: doc/_build/html
 
   doc-api-reference:
-    name: Build API reference documentation
+    name: "Build API reference documentation"
     needs: [doc-build, doc-style]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: "Checkout code"
         uses: actions/checkout@v4
 
       - name: Setup Go
@@ -207,7 +207,7 @@ jobs:
 
   upload_dev_docs:
     name: Upload dev documentation
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/docs'
     runs-on: ubuntu-latest
     needs: [doc-api-reference]
     steps:
