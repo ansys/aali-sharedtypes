@@ -1,8 +1,8 @@
 .. _sharedtypes_usage:
 
-==============
+=============
 Module Usage
-==============
+=============
 
 .. grid:: 1
    :gutter: 2
