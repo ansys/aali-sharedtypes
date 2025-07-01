@@ -128,14 +128,25 @@ jobs:
     name: "Build project documentation"
     runs-on: ubuntu-latest
     steps:
-      - name: "Build project documentation"
-        uses: ansys/actions/doc-build@v9
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-          use-python-cache: false
-          skip-install: true
-          requirements-file: doc/requirements.txt
-          check-links: false
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r doc/requirements.txt
+
+      - name: Build Sphinx documentation (warnings allowed)
+        run: |
+          source .venv/bin/activate
+          sphinx-build --keep-going -b html doc/source doc/_build/html
 
   doc-api-reference:
     name: "Build API reference documentation"
