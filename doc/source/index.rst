@@ -1,8 +1,8 @@
 .. _index:
 
-============================
+==============================
 Aali SharedTypes Documentation
-============================
+==============================
 
 Aali SharedTypes provides internal data models used across the AALI system. It defines structs such as Workflow, ExecutionResult, NodeDefinition, and others for configuration and graph handling, ensuring consistency between services.
 

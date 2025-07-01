@@ -37,7 +37,7 @@ SharedTypes integration into the AALI system.
    :margin: 2 0 0 0
 
    .. grid-item-card:: :material-regular:`description;32px` API Reference
-      :link: advanced/api_reference_manual
+      :link: api_reference_manual
       :link-type: doc
       :text-align: center
       :class-card: sd-shadow-sm sd-rounded-md
