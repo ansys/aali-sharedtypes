@@ -3,6 +3,10 @@
 API Reference
 =============
 
+.. note::
+   This page is a placeholder for auto-generated API documentation in development.
+
+
 .. grid:: 1
    :gutter: 2
 
@@ -45,5 +49,3 @@ API Reference
 
       Used to describe callable functions shared across services.
 
-.. note::
-   This page is a placeholder for future auto-generated Go API documentation.
