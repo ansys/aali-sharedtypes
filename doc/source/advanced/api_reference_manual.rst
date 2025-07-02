@@ -48,4 +48,3 @@ API Reference
          }
 
       Used to describe callable functions shared across services.
-
