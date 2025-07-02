@@ -258,6 +258,21 @@ func (client *Client) CypherQueryWrite(db string, cypher string, parameters Para
 
 type ParameterMap map[string]Value
 
+func (pm *ParameterMap) UnmarshalJSON(data []byte) error {
+	var intermediate map[string]valueUnmarshalHelper
+	err := json.Unmarshal(data, &intermediate)
+	if err != nil {
+		return err
+	}
+
+	paramMap := make(map[string]Value, len(intermediate))
+	for k, v := range intermediate {
+		paramMap[k] = v.Value
+	}
+	*pm = ParameterMap(paramMap)
+	return nil
+}
+
 type Parameters interface {
 	AsParameters() (map[string]Value, error)
 }

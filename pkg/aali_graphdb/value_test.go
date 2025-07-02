@@ -24,6 +24,7 @@ package aali_graphdb
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
 	"time"
 
@@ -34,216 +35,391 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type valueTest struct {
-	name          string
-	value         Value
-	expectedOneOf []any // allow for multiple correct options since sometimes order can change
+func valueTest1[V Value](t *testing.T, value V, expected any) {
+	require := require.New(t)
+	assert := assert.New(t)
+
+	var actual []byte
+
+	t.Run("marshal", func(t *testing.T) {
+		actualBytes, err := json.Marshal(value)
+		require.NoError(err)
+		var actualJson any
+		require.NoError(json.Unmarshal(actualBytes, &actualJson))
+		assert.Equal(expected, actualJson, "marshalling was not as expected")
+		actual = actualBytes
+	})
+	t.Run("unmarshal", func(t *testing.T) {
+		var recreated V
+		require.NoError(json.Unmarshal(actual, &recreated))
+		assert.Equal(value, recreated, "unmarshalling did not recreate original")
+	})
+	t.Run("generic unmarshal", func(t *testing.T) {
+		var unmarshaledVal valueUnmarshalHelper
+		require.NoError(json.Unmarshal(actual, &unmarshaledVal))
+		assert.Equal(reflect.TypeOf(value), reflect.TypeOf(unmarshaledVal.Value))
+	})
 }
 
-var valueTests = []valueTest{
-	{
-		"Null[Any]",
+func valueTestN[V Value](t *testing.T, value V, expecteds []any) {
+	require := require.New(t)
+	assert := assert.New(t)
+
+	var actual []byte
+
+	t.Run("marshal", func(t *testing.T) {
+		actualBytes, err := json.Marshal(value)
+		require.NoError(err)
+		var actualJson any
+		require.NoError(json.Unmarshal(actualBytes, &actualJson))
+		assert.Contains(expecteds, actualJson, "marshalling was not as expected")
+		actual = actualBytes
+	})
+	t.Run("unmarshal", func(t *testing.T) {
+		var recreated V
+		require.NoError(json.Unmarshal(actual, &recreated))
+		assert.Equal(value, recreated, "unmarshalling did not recreate original")
+	})
+	t.Run("generic unmarshal", func(t *testing.T) {
+		var unmarshaledVal valueUnmarshalHelper
+		require.NoError(json.Unmarshal(actual, &unmarshaledVal))
+		assert.Equal(reflect.TypeOf(value), reflect.TypeOf(unmarshaledVal.Value))
+	})
+}
+
+func TestValueNullAny(t *testing.T) {
+	valueTest1(
+		t,
 		NullValue{AnyLogicalType{}},
-		[]any{map[string]any{"Null": "Any"}},
-	},
-	{
-		"Null[List[Float]]",
+		map[string]any{"Null": "Any"},
+	)
+}
+func TestValueNullListFloat(t *testing.T) {
+	valueTest1(
+		t,
 		NullValue{ListLogicalType{FloatLogicalType{}}},
-		[]any{map[string]any{"Null": map[string]any{"List": map[string]any{"child_type": "Float"}}}},
-	},
-	{
-		"Bool",
+		map[string]any{"Null": map[string]any{"List": map[string]any{"child_type": "Float"}}},
+	)
+}
+func TestValueBool(t *testing.T) {
+	valueTest1(
+		t,
 		BoolValue(true),
-		[]any{map[string]any{"Bool": true}},
-	},
-	{
-		"Int64",
+		map[string]any{"Bool": true},
+	)
+}
+func TestValueInt64(t *testing.T) {
+	valueTest1(
+		t,
 		Int64Value(82),
-		[]any{map[string]any{"Int64": float64(82)}},
-	},
-	{
-		"Int32",
+		map[string]any{"Int64": float64(82)},
+	)
+}
+func TestValueInt32(t *testing.T) {
+	valueTest1(
+		t,
 		Int32Value(1),
-		[]any{map[string]any{"Int32": float64(1)}},
-	},
-	{
-		"Int16",
+		map[string]any{"Int32": float64(1)},
+	)
+}
+func TestValueInt16(t *testing.T) {
+	valueTest1(
+		t,
 		Int16Value(100),
-		[]any{map[string]any{"Int16": float64(100)}},
-	},
-	{
-		"Int8",
+		map[string]any{"Int16": float64(100)},
+	)
+}
+func TestValueInt8(t *testing.T) {
+	valueTest1(
+		t,
 		Int8Value(-6),
-		[]any{map[string]any{"Int8": float64(-6)}},
-	},
-	{
-		"UInt64",
+		map[string]any{"Int8": float64(-6)},
+	)
+}
+func TestValueUInt64(t *testing.T) {
+	valueTest1(
+		t,
 		UInt64Value(0),
-		[]any{map[string]any{"UInt64": float64(0)}},
-	},
-	{
-		"UInt32",
+		map[string]any{"UInt64": float64(0)},
+	)
+}
+func TestValueUInt32(t *testing.T) {
+	valueTest1(
+		t,
 		UInt32Value(1001),
-		[]any{map[string]any{"UInt32": float64(1001)}},
-	},
-	{
-		"UInt16",
+		map[string]any{"UInt32": float64(1001)},
+	)
+}
+func TestValueUInt16(t *testing.T) {
+	valueTest1(
+		t,
 		UInt16Value(212),
-		[]any{map[string]any{"UInt16": float64(212)}},
-	},
-	{
-		"UInt8",
+		map[string]any{"UInt16": float64(212)},
+	)
+}
+func TestValueUInt8(t *testing.T) {
+	valueTest1(
+		t,
 		UInt8Value(50),
-		[]any{map[string]any{"UInt8": float64(50)}},
-	},
-	{
-		"Int128",
+		map[string]any{"UInt8": float64(50)},
+	)
+}
+func TestValueInt128(t *testing.T) {
+	valueTest1(
+		t,
 		Int128Value(9009),
-		[]any{map[string]any{"Int128": float64(9009)}},
-	},
-	{
-		"Double",
+		map[string]any{"Int128": float64(9009)},
+	)
+}
+func TestValueDouble(t *testing.T) {
+	valueTest1(
+		t,
 		DoubleValue(-56.1234),
-		[]any{map[string]any{"Double": -56.1234}},
-	},
-	{
-		"Float",
+		map[string]any{"Double": -56.1234},
+	)
+}
+func TestValueFloat(t *testing.T) {
+	valueTest1(
+		t,
 		FloatValue(90.0),
-		[]any{map[string]any{"Float": 90.0}},
-	},
-	{
-		"InternalID",
+		map[string]any{"Float": 90.0},
+	)
+}
+func TestValueInternalID(t *testing.T) {
+	valueTest1(
+		t,
 		InternalIDValue{0, 0},
-		[]any{map[string]any{"InternalID": map[string]any{"table_id": float64(0), "offset": float64(0)}}},
-	},
-	{
-		"String",
+		map[string]any{"InternalID": map[string]any{"table_id": float64(0), "offset": float64(0)}},
+	)
+}
+func TestValueString(t *testing.T) {
+	valueTest1(
+		t,
 		StringValue("Hello"),
-		[]any{map[string]any{"String": "Hello"}},
-	},
-	{
-		"Blob",
+		map[string]any{"String": "Hello"},
+	)
+}
+func TestValueBlob(t *testing.T) {
+	valueTest1(
+		t,
 		BlobValue([]uint8{0, 1, 2, 3, 4}),
-		[]any{map[string]any{"Blob": []any{float64(0), float64(1), float64(2), float64(3), float64(4)}}},
-	},
-	{
-		"List",
+		map[string]any{"Blob": []any{float64(0), float64(1), float64(2), float64(3), float64(4)}},
+	)
+}
+func TestValueList(t *testing.T) {
+	valueTest1(
+		t,
 		ListValue{UInt64LogicalType{}, []Value{UInt64Value(0), UInt64Value(12)}},
-		[]any{map[string]any{"List": []any{"UInt64", []any{map[string]any{"UInt64": float64(0)}, map[string]any{"UInt64": float64(12)}}}}},
-	},
-	{
-		"Array",
+		map[string]any{
+			"List": []any{
+				"UInt64",
+				[]any{
+					map[string]any{"UInt64": float64(0)},
+					map[string]any{"UInt64": float64(12)},
+				},
+			},
+		},
+	)
+}
+func TestValueArray(t *testing.T) {
+	valueTest1(
+		t,
 		ArrayValue{BoolLogicalType{}, []Value{BoolValue(true), BoolValue(false)}},
-		[]any{map[string]any{"Array": []any{"Bool", []any{map[string]any{"Bool": true}, map[string]any{"Bool": false}}}}},
-	},
-	{
-		"Struct",
+		map[string]any{
+			"Array": []any{
+				"Bool",
+				[]any{
+					map[string]any{"Bool": true},
+					map[string]any{"Bool": false},
+				},
+			},
+		},
+	)
+}
+func TestValueStruct(t *testing.T) {
+	valueTestN(
+		t,
 		StructValue(map[string]Value{"a": BoolValue(false), "name": StringValue("Joe")}),
 		[]any{
-			map[string]any{"Struct": []any{[]any{"a", map[string]any{"Bool": false}}, []any{"name", map[string]any{"String": "Joe"}}}},
-			map[string]any{"Struct": []any{[]any{"name", map[string]any{"String": "Joe"}}, []any{"a", map[string]any{"Bool": false}}}},
+			map[string]any{
+				"Struct": []any{
+					[]any{"a", map[string]any{"Bool": false}},
+					[]any{"name", map[string]any{"String": "Joe"}},
+				},
+			},
+			map[string]any{
+				"Struct": []any{
+					[]any{"name", map[string]any{"String": "Joe"}},
+					[]any{"a", map[string]any{"Bool": false}},
+				},
+			},
 		},
-	},
-	{
-		"Node",
+	)
+}
+func TestValueNode(t *testing.T) {
+	valueTest1(
+		t,
 		NodeValue{InternalID{1, 10}, "my-label", map[string]Value{}},
-		[]any{
-			map[string]any{"Node": map[string]any{"id": map[string]any{"table_id": float64(1), "offset": float64(10)}, "label": "my-label", "properties": []any{}}},
+		map[string]any{
+			"Node": map[string]any{
+				"id":         map[string]any{"table_id": float64(1), "offset": float64(10)},
+				"label":      "my-label",
+				"properties": []any{},
+			},
 		},
-	},
-	{
-		"Rel",
+	)
+}
+func TestValueRel(t *testing.T) {
+	valueTest1(
+		t,
 		RelValue{InternalID{4, 1}, InternalID{6, 0}, "lab", map[string]Value{}},
-		[]any{
-			map[string]any{"Rel": map[string]any{"src_node": map[string]any{"table_id": float64(4), "offset": float64(1)}, "dst_node": map[string]any{"table_id": float64(6), "offset": float64(0)}, "label": "lab", "properties": []any{}}},
+		map[string]any{
+			"Rel": map[string]any{
+				"src_node":   map[string]any{"table_id": float64(4), "offset": float64(1)},
+				"dst_node":   map[string]any{"table_id": float64(6), "offset": float64(0)},
+				"label":      "lab",
+				"properties": []any{},
+			},
 		},
-	},
-	{
-		"Map",
+	)
+}
+func TestValueMap(t *testing.T) {
+	valueTest1(
+		t,
 		MapValue{UInt64LogicalType{}, BoolLogicalType{}, map[Value]Value{UInt64Value(4): BoolValue(false)}},
-		[]any{
-			map[string]any{"Map": []any{[]any{"UInt64", "Bool"}, []any{[]any{map[string]any{"UInt64": float64(4)}, map[string]any{"Bool": false}}}}},
+		map[string]any{
+			"Map": []any{
+				[]any{"UInt64", "Bool"},
+				[]any{
+					[]any{
+						map[string]any{"UInt64": float64(4)},
+						map[string]any{"Bool": false},
+					},
+				},
+			},
 		},
-	},
-	{
-		"Union",
+	)
+}
+func TestValueUnion(t *testing.T) {
+	valueTestN(
+		t,
 		UnionValue{map[string]LogicalType{"num": Int64LogicalType{}, "str": StringLogicalType{}}, Int64Value(1)},
 		[]any{
-			map[string]any{"Union": map[string]any{"types": []any{[]any{"num", "Int64"}, []any{"str", "String"}}, "value": map[string]any{"Int64": float64(1)}}},
-			map[string]any{"Union": map[string]any{"types": []any{[]any{"str", "String"}, []any{"num", "Int64"}}, "value": map[string]any{"Int64": float64(1)}}},
+			map[string]any{
+				"Union": map[string]any{
+					"types": []any{[]any{"num", "Int64"}, []any{"str", "String"}},
+					"value": map[string]any{"Int64": float64(1)},
+				},
+			},
+			map[string]any{
+				"Union": map[string]any{
+					"types": []any{[]any{"str", "String"}, []any{"num", "Int64"}},
+					"value": map[string]any{"Int64": float64(1)},
+				},
+			},
 		},
-	},
-	{
-		"UUID[zeros]",
+	)
+}
+func TestValueUUIDZeros(t *testing.T) {
+	valueTest1(
+		t,
 		UUIDValue(uuid.MustParse("00000000-0000-0000-0000-ffff00000000")),
-		[]any{map[string]any{"UUID": "00000000-0000-0000-0000-ffff00000000"}},
-	},
-	{
-		"UUID",
+		map[string]any{"UUID": "00000000-0000-0000-0000-ffff00000000"},
+	)
+}
+func TestValueUUID(t *testing.T) {
+	valueTest1(
+		t,
 		UUIDValue(uuid.MustParse("8f914bce-df4e-4244-9cd4-ea96bf0c58d4")),
-		[]any{map[string]any{"UUID": "8f914bce-df4e-4244-9cd4-ea96bf0c58d4"}},
-	},
-	{
-		"Decimal[small]",
+		map[string]any{"UUID": "8f914bce-df4e-4244-9cd4-ea96bf0c58d4"},
+	)
+}
+func TestValueDecimalSmall(t *testing.T) {
+	valueTest1(
+		t,
 		DecimalValue(decimal.RequireFromString("12.34")),
-		[]any{map[string]any{"Decimal": "12.34"}},
-	},
-	{
-		"Decimal[big]",
+		map[string]any{"Decimal": "12.34"},
+	)
+}
+func TestValueDecimalBig(t *testing.T) {
+	valueTest1(
+		t,
 		DecimalValue(decimal.RequireFromString("12.3456789")),
-		[]any{map[string]any{"Decimal": "12.3456789"}},
-	},
-	{
-		"Date",
+		map[string]any{"Decimal": "12.3456789"},
+	)
+}
+func TestValueDate(t *testing.T) {
+	valueTest1(
+		t,
 		DateValue(civil.Date{Year: 2025, Month: time.April, Day: 23}),
-		[]any{map[string]any{"Date": "2025-04-23"}},
-	},
-	{
-		"Timestamp",
+		map[string]any{"Date": "2025-04-23"},
+	)
+}
+func TestValueTimestamp(t *testing.T) {
+	valueTest1(
+		t,
 		TimestampValue(time.Date(2025, time.April, 23, 13, 26, 21, 123450000, time.UTC)),
-		[]any{map[string]any{"Timestamp": "2025-04-23T13:26:21.12345Z"}},
-	},
-	{
-		"TimestampTz",
+		map[string]any{"Timestamp": "2025-04-23T13:26:21.12345Z"},
+	)
+}
+func TestValueTimestampTz(t *testing.T) {
+	valueTest1(
+		t,
 		TimestampTzValue(time.Date(2025, time.April, 23, 13, 26, 21, 123450000, time.UTC)),
-		[]any{map[string]any{"TimestampTz": "2025-04-23T13:26:21.12345Z"}},
-	},
-	{
-		"TimestampNs",
+		map[string]any{"TimestampTz": "2025-04-23T13:26:21.12345Z"},
+	)
+}
+func TestValueTimestampNs(t *testing.T) {
+	valueTest1(
+		t,
 		TimestampNsValue(time.Date(2025, time.April, 23, 13, 26, 21, 123450000, time.UTC)),
-		[]any{map[string]any{"TimestampNs": "2025-04-23T13:26:21.12345Z"}},
-	},
-	{
-		"TimestampMs",
+		map[string]any{"TimestampNs": "2025-04-23T13:26:21.12345Z"},
+	)
+}
+func TestValueTimestampMs(t *testing.T) {
+	valueTest1(
+		t,
 		TimestampMsValue(time.Date(2025, time.April, 23, 13, 26, 21, 123450000, time.UTC)),
-		[]any{map[string]any{"TimestampMs": "2025-04-23T13:26:21.12345Z"}},
-	},
-	{
-		"TimestampSec",
+		map[string]any{"TimestampMs": "2025-04-23T13:26:21.12345Z"},
+	)
+}
+func TestValueTimestampSec(t *testing.T) {
+	valueTest1(
+		t,
 		TimestampSecValue(time.Date(2025, time.April, 23, 13, 26, 21, 123450000, time.UTC)),
-		[]any{map[string]any{"TimestampSec": "2025-04-23T13:26:21.12345Z"}},
-	},
-	{
-		"Interval",
-		IntervalValue(23 * 24 * time.Hour),
-		[]any{map[string]any{"Interval": []any{float64(1987200), float64(0)}}},
-	},
-	{
-		"Interval[ns]",
-		IntervalValue(23*24*time.Hour + 456*time.Nanosecond),
-		[]any{map[string]any{"Interval": []any{float64(1987200), float64(456)}}},
-	},
+		map[string]any{"TimestampSec": "2025-04-23T13:26:21.12345Z"},
+	)
+}
+func TestValueInterval(t *testing.T) {
+	valueTest1(
+		t,
+		IntervalValue(23*24*time.Hour),
+		map[string]any{"Interval": []any{float64(1987200), float64(0)}},
+	)
+}
+func TestValueIntervalNs(t *testing.T) {
+	valueTest1(
+		t,
+		IntervalValue(23*24*time.Hour+456*time.Nanosecond),
+		map[string]any{"Interval": []any{float64(1987200), float64(456)}},
+	)
 }
 
-func TestValuesMarshal(t *testing.T) {
-	for _, test := range valueTests {
-		t.Run(test.name, func(t *testing.T) {
-			actualBytes, err := json.Marshal(test.value)
-			require.NoError(t, err)
-			var actualJson any
-			err = json.Unmarshal(actualBytes, &actualJson)
-			require.NoError(t, err)
-			assert.Contains(t, test.expectedOneOf, actualJson)
-		})
-	}
-}
+// func TestGenericValueUnmarshal(t *testing.T) {
+// 	vals := []struct {
+// 		name  string
+// 		json  string
+// 		value reflect.Type
+// 	}{}
+
+// 	for _, test := range vals {
+// 		t.Run(test.name, func(t *testing.T) {
+// 			require := require.New(t)
+// 			assert := assert.New(t)
+
+// 			var unmarshaledVal Value
+// 			require.NoError(json.Unmarshal([]byte(test.json), &unmarshaledVal))
+// 			assert.Equal(test.value, reflect.TypeOf(unmarshaledVal))
+// 		})
+// 	}
+// }

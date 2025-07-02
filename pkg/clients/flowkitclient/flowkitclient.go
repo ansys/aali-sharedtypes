@@ -193,7 +193,7 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 		// convert value to Go type
 		value, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
 		if err != nil {
-			return nil, fmt.Errorf("error converting output %s to Go type: %v", output.Name, err)
+			return nil, fmt.Errorf("error converting output %s (%v) to Go type: %v", output.Name, output.Value, err)
 		}
 
 		// Save the output to the map

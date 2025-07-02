@@ -22,7 +22,17 @@
 
 package sharedtypes
 
-import "github.com/google/uuid"
+import (
+	"encoding/json"
+	"fmt"
+	"strconv"
+	"time"
+
+	"cloud.google.com/go/civil"
+	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
+	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
+)
 
 // DbFilters represents the filters for the database.
 type DbFilters struct {
@@ -183,4 +193,178 @@ type DbCreateCollectionInput struct {
 type DbCreateCollectionOutput struct {
 	Success bool   `json:"success" description:"Returns true if the collection was created successfully. Returns false or an error if not."`
 	Error   string `json:"error" description:"Error message if the collection could not be created."`
+}
+
+type GraphDbValueType string
+
+// some types don't really make sense to be parsed in the aali flowkit context. These are not included here:
+// - Null
+// - InternalID
+// - List/Array (would require somehow parsing/infering the LogicalType as well)
+// - Struct (would require knowing type of each value)
+// - Node/Rel/RecursiveRel
+// - Map
+// - Union
+const (
+	Bool         GraphDbValueType = "bool"
+	Int64        GraphDbValueType = "int64"
+	Int32        GraphDbValueType = "int32"
+	Int16        GraphDbValueType = "int16"
+	Int8         GraphDbValueType = "int8"
+	UInt64       GraphDbValueType = "uint64"
+	UInt32       GraphDbValueType = "uint32"
+	UInt16       GraphDbValueType = "uint16"
+	UInt8        GraphDbValueType = "uint8"
+	Int128       GraphDbValueType = "int128"
+	Double       GraphDbValueType = "double"
+	Float        GraphDbValueType = "float"
+	Date         GraphDbValueType = "date"
+	Interval     GraphDbValueType = "interval"
+	Timestamp    GraphDbValueType = "timestamp"
+	TimestampTz  GraphDbValueType = "timestamptz"
+	TimestampNs  GraphDbValueType = "timestampns"
+	TimestampMs  GraphDbValueType = "timestampms"
+	TimestampSec GraphDbValueType = "timestampsec"
+	String       GraphDbValueType = "string"
+	Blob         GraphDbValueType = "blob"
+	Struct       GraphDbValueType = "struct"
+	UUID         GraphDbValueType = "uuid"
+	Decimal      GraphDbValueType = "decimal"
+)
+
+func (valType GraphDbValueType) Parse(val string) (aali_graphdb.Value, error) {
+	switch valType {
+	case Bool:
+		b, err := strconv.ParseBool(val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.BoolValue(b), nil
+	case Int64:
+		i, err := strconv.ParseInt(val, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.Int64Value(i), nil
+	case Int32:
+		i, err := strconv.ParseInt(val, 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.Int32Value(i), nil
+	case Int16:
+		i, err := strconv.ParseInt(val, 10, 16)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.Int16Value(i), nil
+	case Int8:
+		i, err := strconv.ParseInt(val, 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.Int8Value(i), nil
+	case UInt64:
+		i, err := strconv.ParseUint(val, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.UInt64Value(i), nil
+	case UInt32:
+		i, err := strconv.ParseUint(val, 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.UInt32Value(i), nil
+	case UInt16:
+		i, err := strconv.ParseUint(val, 10, 16)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.UInt16Value(i), nil
+	case UInt8:
+		i, err := strconv.ParseUint(val, 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.UInt8Value(i), nil
+	case Int128:
+		i, err := strconv.ParseInt(val, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.Int128Value(i), nil
+	case Double:
+		d, err := strconv.ParseFloat(val, 64)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.DoubleValue(d), nil
+	case Float:
+		f, err := strconv.ParseFloat(val, 32)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.FloatValue(f), nil
+	case Date:
+		d, err := civil.ParseDate(val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.DateValue(d), nil
+	case Interval:
+		d, err := time.ParseDuration(val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.IntervalValue(d), nil
+	case TimestampTz:
+		t, err := time.Parse(time.RFC3339, val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.TimestampTzValue(t), err
+	case TimestampNs:
+		t, err := time.Parse(time.RFC3339, val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.TimestampNsValue(t), err
+	case TimestampMs:
+		t, err := time.Parse(time.RFC3339, val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.TimestampMsValue(t), err
+	case TimestampSec:
+		t, err := time.Parse(time.RFC3339, val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.TimestampSecValue(t), err
+	case String:
+		return aali_graphdb.StringValue(val), nil
+	case Blob:
+		var b []uint8
+		err := json.Unmarshal([]byte(val), &b)
+		if err != nil {
+			return nil, err
+		}
+
+		return aali_graphdb.BlobValue(b), nil
+	case UUID:
+		u, err := uuid.Parse(val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.UUIDValue(u), nil
+	case Decimal:
+		d, err := decimal.NewFromString(val)
+		if err != nil {
+			return nil, err
+		}
+		return aali_graphdb.DecimalValue(d), nil
+	default:
+		return nil, fmt.Errorf("unknown value type %q", valType)
+	}
 }

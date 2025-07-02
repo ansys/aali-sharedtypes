@@ -24,6 +24,7 @@ package aali_graphdb
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"net/http"
@@ -408,4 +409,26 @@ func TestErrorsReturned(t *testing.T) {
 		require.Error(t, err)
 		assert.Equal(t, expected, fmt.Sprint(err))
 	})
+}
+
+func TestParameterMapJson(t *testing.T) {
+	require := require.New(t)
+	assert := assert.New(t)
+
+	pMap := ParameterMap{"myStr": StringValue("hi"), "myBool": BoolValue(true), "myInt": Int16Value(23)}
+	jsonParamMap, err := json.Marshal(pMap)
+	require.NoError(err)
+
+	expected := map[string]any{
+		"myStr":  map[string]any{"String": "hi"},
+		"myBool": map[string]any{"Bool": true},
+		"myInt":  map[string]any{"Int16": float64(23)},
+	}
+	var unmarshalledMap map[string]any
+	require.NoError(json.Unmarshal(jsonParamMap, &unmarshalledMap))
+	assert.Equal(expected, unmarshalledMap)
+
+	var unmarshalledParamMap ParameterMap
+	require.NoError(json.Unmarshal(jsonParamMap, &unmarshalledParamMap))
+	assert.Equal(pMap, unmarshalledParamMap)
 }
