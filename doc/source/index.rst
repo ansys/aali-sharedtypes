@@ -1,36 +1,54 @@
 .. _index:
 
-==============================
-AALI SharedTypes Documentation
-==============================
+AALI SharedTypes
+================
 
-AALI SharedTypes provides internal data models used across the AALI system. It defines structs such as Workflow, ExecutionResult, NodeDefinition, and others for configuration and graph handling, ensuring consistency between services.
+Documentation
 
 ----
 
-.. grid:: 1
-   :gutter: 3
+.. grid:: 1 2 3 3
+   :gutter: 4
+   :class-container: sd-mb-5
 
-   .. grid-item-card:: :material-regular:`directions_run;35px` Getting Started
-      :text-align: center
-      :class-card: sd-shadow-sm sd-rounded-1
+   .. grid-item-card:: :material-regular:`directions_run;50px` Getting Started
       :link: getting-started/index
       :link-type: doc
+      :class-card: sd-shadow-lg sd-rounded-4 sd-p-4 sd-bg-gradient-primary-info
 
-      Setup instructions and module usage for local development.
+      Installation and setup
 
-   .. grid-item-card:: :material-regular:`psychology;35px` User Guide
-      :text-align: center
-      :class-card: sd-shadow-sm sd-rounded-1
+      Basic usage patterns
+
+   .. grid-item-card:: :material-regular:`psychology;50px` User Guide
       :link: user-guide/index
       :link-type: doc
+      :class-card: sd-shadow-lg sd-rounded-4 sd-p-4 sd-bg-gradient-info-success
 
-      Core structs for workflows, execution, configuration, values, and functions.
+      Common patterns
 
-   .. grid-item-card:: :material-regular:`bolt;35px` Advanced Topics
-      :text-align: center
-      :class-card: sd-shadow-sm sd-rounded-1
+      When to use each type
+
+   .. grid-item-card:: :material-regular:`bolt;50px` Advanced Topics
       :link: advanced/index
       :link-type: doc
+      :class-card: sd-shadow-lg sd-rounded-4 sd-p-4 sd-bg-gradient-success-warning
 
-      Integration patterns, GRPC mapping, internal struct design, and API reference.
+      Service integration
+
+      API reference
+
+----
+
+.. container:: sd-text-center
+
+   .. grid:: 1 1 1 1
+      :gutter: 3
+      :class-container: sd-mb-5 sd-w-50 sd-mx-auto
+
+      .. grid-item-card:: :material-regular:`code;35px`
+         :link: advanced/autodoc/index
+         :link-type: doc
+         :class-card: sd-shadow-md sd-rounded-3 sd-p-3 sd-bg-gradient-info
+
+         **API Reference**

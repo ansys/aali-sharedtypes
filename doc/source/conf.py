@@ -20,43 +20,70 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 import os
 import sys
 from datetime import datetime
 
-
-sys.path.insert(0, os.path.abspath("../../pkg"))
-
-# Project metadata
-project = "Aali Workflow Config"
-author = "Aali Team"
-copyright = f"{datetime.now().year} ANSYS, Inc"
-
-# Ensure source code is importable
 sys.path.insert(0, os.path.abspath("../../"))
 
-# Sphinx extensions
+from ansys_sphinx_theme import ansys_favicon
+
+# Static version - no VERSION file dependency
+version_file = "1.0.0"
+
+# Project metadata
+project = "AALI SharedTypes"
+author = "ANSYS, Inc."
+copyright = f"{datetime.now().year} ANSYS, Inc. All rights reserved"
+
+release = version = version_file
+switcher_version = version_file
+cname = os.getenv("DOCUMENTATION_CNAME", "noname.com")
+
 extensions = [
-    "sphinx.ext.autodoc",        # Enables auto API generation
-    "sphinx.ext.napoleon",       # Supports Google/NumPy-style docstrings
-    "sphinx.ext.autosummary",    # Generates summary tables
-    "sphinx.ext.viewcode",       # Adds links to source code
-    "sphinx_design",             # Enables layout tools like grids/cards
-    "sphinx_external_toc",       # External _toc.yml support
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.graphviz",
+    "sphinx_design",
+    "sphinx_external_toc",
 ]
 
-# Automatically generate stub pages from autosummary directives
-autosummary_generate = True
-
-# HTML theme configuration
 html_theme = "ansys_sphinx_theme"
+html_favicon = ansys_favicon
+html_short_title = html_title = project
 
-# External table of contents (_toc.yml)
 external_toc_path = "_toc.yml"
 external_toc_exclude_missing = False
 
-# Add custom CSS files (Google Material icons)
+html_context = {
+    "github_user": "ansys",
+    "github_repo": "aali-sharedtypes",
+    "github_version": "main",
+    "doc_path": "doc/source",
+}
+html_theme_options = {
+    "logo": "ansys",
+    "github_url": "https://github.com/ansys/aali-sharedtypes",
+    "additional_breadcrumbs": [
+        ("AALI", "https://aali.docs.pyansys.com/"),
+    ],
+    "switcher": {
+        "json_url": "_static/versions.json",
+        "version_match": switcher_version,
+    },
+    "navbar_end": ["navbar-icon-links", "version-switcher", "theme-switcher"],
+    "check_switcher": True,
+    "show_prev_next": True,
+    "show_breadcrumbs": True,
+    "use_edit_page_button": True,
+    "navigation_depth": 4,
+    "collapse_navigation": False,
+}
+
 html_css_files = [
-    "https://fonts.googleapis.com/icon?family=Material+Icons"
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+    "custom.css"
 ]
+
+html_static_path = ["_static"]

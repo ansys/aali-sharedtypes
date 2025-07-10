@@ -17,27 +17,36 @@ Module Usage
 
          import "github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 
-   .. grid-item-card:: Example: ExecutionResult
+   .. grid-item-card:: Example: SessionContext
       :class-card: sd-shadow-sm sd-rounded-md
       :text-align: left
 
-      Create and populate shared types like `ExecutionResult`.
+      Create session context for workflow or exec connections.
 
       .. code-block:: go
 
-         result := sharedtypes.ExecutionResult{
-             Status: "Success",
-             Output: "Task completed",
+         session := sharedtypes.SessionContext{
+             SessionType: "workflow",
+             WorkflowId:  "my-workflow",
+             Variables: map[string]string{
+                 "input_param": "value",
+             },
          }
 
-   .. grid-item-card:: Example: AgentConfig
+   .. grid-item-card:: Example: ExecRequest
       :class-card: sd-shadow-sm sd-rounded-md
       :text-align: left
 
-      Use configuration structs from the same module.
+      Create execution requests for code or flowkit operations.
 
       .. code-block:: go
 
-         config := sharedtypes.AgentConfig{
-             EnableTracing: true,
+         request := sharedtypes.ExecRequest{
+             Type:            "code",
+             Action:          "execute",
+             InstructionGuid: "unique-id",
+             ExecutionInstruction: &sharedtypes.ExecutionInstruction{
+                 CodeType: "python",
+                 Code:     []string{"print('Hello World')"},
+             },
          }

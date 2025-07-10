@@ -13,8 +13,8 @@ GRPC Mapping
 
       Many structs are translated into proto messages before being sent across GRPC. Examples:
 
-      - `ExecutionResult` → `flowkitpb.ExecutionResult`
+      - `HandlerRequest` → `llmpb.HandlerRequest`
       - `FunctionDefinition` → `flowkitpb.FunctionMeta`
-      - `TypedValue` → `graphpb.Value`
+      - `SessionContext` → `agentpb.SessionContext`
 
       The conversion logic is implemented in each service, keeping SharedTypes independent.

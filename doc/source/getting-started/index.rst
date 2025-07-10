@@ -1,22 +1,21 @@
-.. _getting_started_index:
+.. _getting-started:
 
-===============
 Getting Started
 ===============
 
-Set up and integrate the SharedTypes module into your project.
-
 .. grid:: 2
-   :gutter: 2
+   :gutter: 3
 
-   .. grid-item-card:: :material-regular:`download;32px` Setup
+   .. grid-item-card:: Setup
       :link: setup
       :link-type: doc
+      :class-card: sd-shadow-sm sd-rounded-3
 
-      Install the SharedTypes module and configure it in your Go project.
+      Setup instructions for installing AALI SharedTypes.
 
-   .. grid-item-card:: :material-regular:`hub;32px` Module Usage
+   .. grid-item-card:: Module Usage
       :link: module_usage
       :link-type: doc
+      :class-card: sd-shadow-sm sd-rounded-3
 
-      Import SharedTypes and use its definitions in service code.
+      Basic usage patterns and first import examples.

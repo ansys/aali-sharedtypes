@@ -20,19 +20,20 @@ API Reference
       - `pkg/config` — runtime config definitions
       - `pkg/aali_graphdb` — logical types and graph values
 
-   .. grid-item-card:: Example Struct: ExecutionResult
+   .. grid-item-card:: Example Struct: HandlerResponse
       :class-card: sd-shadow-sm sd-rounded-md
       :text-align: left
 
       .. code-block:: go
 
-         type ExecutionResult struct {
-             Status string
-             Output string
-             Error  *ErrorReport
+         type HandlerResponse struct {
+             InstructionGuid string
+             Type            string
+             ChatData        *string
+             Error           *ErrorResponse
          }
 
-      Returned by agents and services to describe outcome of a task.
+      Returned by LLM Handler for chat and embedding requests.
 
    .. grid-item-card:: Example Struct: FunctionDefinition
       :class-card: sd-shadow-sm sd-rounded-md

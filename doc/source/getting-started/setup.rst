@@ -4,26 +4,24 @@
 Setup
 =====
 
-.. grid:: 1
-   :gutter: 2
+**Add to your Go project:**
 
-   .. grid-item-card:: Clone the Repository
-      :class-card: sd-shadow-sm sd-rounded-md
-      :text-align: left
+.. code-block:: bash
 
-      Clone the source code for local development.
+   go get github.com/ansys/aali-sharedtypes
 
-      .. code-block:: bash
+**Import in your code:**
 
-         git clone https://github.com/ansys/aali-sharedtypes.git
-         cd aali-sharedtypes
+.. code-block:: go
 
-   .. grid-item-card:: Add as Dependency
-      :class-card: sd-shadow-sm sd-rounded-md
-      :text-align: left
+   import "github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 
-      Use Go modules to install the sharedtypes package in your own service.
+**Basic usage:**
 
-      .. code-block:: bash
+.. code-block:: go
 
-         go get github.com/ansys/aali-sharedtypes@latest
+   request := sharedtypes.HandlerRequest{
+       Adapter:         "chat",
+       InstructionGuid: "unique-id",
+       Data:            "Hello world",
+   }
