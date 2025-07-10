@@ -15,7 +15,7 @@ Functions
 
 .. function:: RegisterExternalFunctionsServer
 
-   func RegisterExternalFunctionsServer(s grpc.ServiceRegistrar, srv ExternalFunctionsServer) 
+   func RegisterExternalFunctionsServer(s grpc.ServiceRegistrar, srv ExternalFunctionsServer)
 
 
 Types
@@ -156,7 +156,7 @@ Interfaces
    * ListFunctions(context.Context, \*ListFunctionsRequest) (\*ListFunctionsResponse, error)
    * RunFunction(context.Context, \*FunctionInputs) (\*FunctionOutputs, error)
    * StreamFunction(\*FunctionInputs, grpc.ServerStreamingServer\[StreamOutput\]) error
-   * mustEmbedUnimplementedExternalFunctionsServer() 
+   * mustEmbedUnimplementedExternalFunctionsServer()
 
 
 .. type:: UnsafeExternalFunctionsServer
@@ -165,7 +165,7 @@ Interfaces
 
    **Methods:**
 
-   * mustEmbedUnimplementedExternalFunctionsServer() 
+   * mustEmbedUnimplementedExternalFunctionsServer()
 
 
 Constants
@@ -192,4 +192,3 @@ Variables
 .. data:: File_pkg_aaliflowkitgrpc_aali_flowkit_proto
 
    var File\_pkg\_aaliflowkitgrpc\_aali\_flowkit\_proto protoreflect.FileDescriptor
-

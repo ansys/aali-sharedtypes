@@ -10,7 +10,7 @@ Functions
 
 .. function:: InitConfig
 
-   func InitConfig(requiredProperties \[\]string, optionalDefaultValues map\[string\]interface\{\}) 
+   func InitConfig(requiredProperties \[\]string, optionalDefaultValues map\[string\]interface\{\})
 
    ////////////////////////////////////////// Standard Config init for Aali Go Modules ////////////////////////////////////////// InitConfig initializes the configuration for the Aali service.  Parameters: - requiredProperties: The list of required properties. - optionalDefaultValues: The map of optional properties and their default values.
 
@@ -59,7 +59,7 @@ Functions
 
 .. function:: TestDefineOptionalProperties
 
-   func TestDefineOptionalProperties(t \*testing.T) 
+   func TestDefineOptionalProperties(t \*testing.T)
 
    TestDefineOptionalProperties tests the defineOptionalProperties function
 
@@ -89,4 +89,3 @@ Variables
    var GlobalConfig \*Config
 
    Initialize conifg dict
-

@@ -37,4 +37,3 @@ Variables
    var AvailableFunctions map\[string\]\*sharedtypes.FunctionDefinition
 
    Global variable to store the available functions
-

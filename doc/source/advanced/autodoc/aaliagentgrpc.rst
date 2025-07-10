@@ -15,7 +15,7 @@ Functions
 
 .. function:: RegisterWorkflowRunServer
 
-   func RegisterWorkflowRunServer(s grpc.ServiceRegistrar, srv WorkflowRunServer) 
+   func RegisterWorkflowRunServer(s grpc.ServiceRegistrar, srv WorkflowRunServer)
 
 
 Types
@@ -170,7 +170,7 @@ Interfaces
    **Methods:**
 
    * RunWorkflow(grpc.BidiStreamingServer\[ClientMessage, ServerMessage\]) error
-   * mustEmbedUnimplementedWorkflowRunServer() 
+   * mustEmbedUnimplementedWorkflowRunServer()
 
 
 .. type:: UnsafeWorkflowRunServer
@@ -179,7 +179,7 @@ Interfaces
 
    **Methods:**
 
-   * mustEmbedUnimplementedWorkflowRunServer() 
+   * mustEmbedUnimplementedWorkflowRunServer()
 
 
 Constants
@@ -196,4 +196,3 @@ Variables
 .. data:: File_pkg_aaliagentgrpc_aali_agent_proto
 
    var File\_pkg\_aaliagentgrpc\_aali\_agent\_proto protoreflect.FileDescriptor
-

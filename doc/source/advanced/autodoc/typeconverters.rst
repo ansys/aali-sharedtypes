@@ -10,22 +10,22 @@ Functions
 
 .. function:: TestJSONToGo
 
-   func TestJSONToGo(t \*testing.T) 
+   func TestJSONToGo(t \*testing.T)
 
 
 .. function:: TestGoToJSON
 
-   func TestGoToJSON(t \*testing.T) 
+   func TestGoToJSON(t \*testing.T)
 
 
 .. function:: TestConvertStringToGivenType
 
-   func TestConvertStringToGivenType(t \*testing.T) 
+   func TestConvertStringToGivenType(t \*testing.T)
 
 
 .. function:: TestDeepCopy
 
-   func TestDeepCopy(t \*testing.T) 
+   func TestDeepCopy(t \*testing.T)
 
 
 .. function:: JSONToGo
@@ -61,4 +61,3 @@ Functions
    func DeepCopy(src, dst interface\{\}) (err error)
 
    DeepCopy deep copies the source interface to the destination interface.  Parameters: - src: an interface containing the source - dst: an interface containing the destination  Returns: - err: an error containing the error message
-

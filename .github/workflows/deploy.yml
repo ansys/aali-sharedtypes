@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-      
+
   workflow_dispatch:
 
 permissions:
@@ -56,6 +56,9 @@ jobs:
         run: |
           cd doc
           sphinx-build -b html source _build/html
+          # Copy to expected location for API integration
+          mkdir -p ../documentation-html
+          cp -r _build/html/* ../documentation-html/
 
       - name: Build GoPages API reference
         run: |
@@ -64,7 +67,14 @@ jobs:
 
       - name: Integrate API reference
         run: |
-          python pkg/scripts/doc_api_reference.py ansys aali-sharedtypes
+          # Only run if GoPages generated the expected files
+          if [ -d "dist/pkg/github.com/ansys/aali-sharedtypes/pkg/" ]; then
+            python pkg/scripts/doc_api_reference.py ansys aali-sharedtypes
+            # Copy integrated docs back
+            cp -r documentation-html/* doc/_build/html/
+          else
+            echo "GoPages output not found, skipping API integration"
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

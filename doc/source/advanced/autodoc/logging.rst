@@ -10,7 +10,7 @@ Functions
 
 .. function:: InitLogger
 
-   func InitLogger(GlobalConfig \*config.Config) 
+   func InitLogger(GlobalConfig \*config.Config)
 
    ///////////////////////////////// Create Logger ///////////////////////////////// InitLogger initializes the global logger.  The function creates a new zap logger with the specified configuration and sets the global logger variable to the new logger.  Parameters: - GlobalConfig: The global configuration from the config package.
 
@@ -142,4 +142,3 @@ Variables
 .. data:: DATADOG_METRICS_URL
 
    var DATADOG\_METRICS\_URL string
-

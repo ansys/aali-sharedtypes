@@ -347,4 +347,3 @@ Types
    type AnsysGPTRetrieverModuleChunk struct
 
    RetrieverModuleChunk represents a chunk of data context received from the retriever module.
-

@@ -10,12 +10,12 @@ Functions
 
 .. function:: TestLogicalTypesMarshal
 
-   func TestLogicalTypesMarshal(t \*testing.T) 
+   func TestLogicalTypesMarshal(t \*testing.T)
 
 
 .. function:: TestValuesMarshal
 
-   func TestValuesMarshal(t \*testing.T) 
+   func TestValuesMarshal(t \*testing.T)
 
 
 .. function:: NewClient
@@ -30,47 +30,47 @@ Functions
 
 .. function:: TestGetHealth
 
-   func TestGetHealth(t \*testing.T) 
+   func TestGetHealth(t \*testing.T)
 
 
 .. function:: TestGetDatabases
 
-   func TestGetDatabases(t \*testing.T) 
+   func TestGetDatabases(t \*testing.T)
 
 
 .. function:: TestCreateDatabase
 
-   func TestCreateDatabase(t \*testing.T) 
+   func TestCreateDatabase(t \*testing.T)
 
 
 .. function:: TestDeleteDatabase
 
-   func TestDeleteDatabase(t \*testing.T) 
+   func TestDeleteDatabase(t \*testing.T)
 
 
 .. function:: TestReadWriteData
 
-   func TestReadWriteData(t \*testing.T) 
+   func TestReadWriteData(t \*testing.T)
 
 
 .. function:: TestReadWriteGeneric
 
-   func TestReadWriteGeneric(t \*testing.T) 
+   func TestReadWriteGeneric(t \*testing.T)
 
 
 .. function:: TestReadWriteDataWithParameters
 
-   func TestReadWriteDataWithParameters(t \*testing.T) 
+   func TestReadWriteDataWithParameters(t \*testing.T)
 
 
 .. function:: TestParametersStruct
 
-   func TestParametersStruct(t \*testing.T) 
+   func TestParametersStruct(t \*testing.T)
 
 
 .. function:: TestErrorsReturned
 
-   func TestErrorsReturned(t \*testing.T) 
+   func TestErrorsReturned(t \*testing.T)
 
 
 Types
@@ -467,7 +467,7 @@ Interfaces
 
    **Methods:**
 
-   * IsKuzuLogicalType() 
+   * IsKuzuLogicalType()
    * MarshalJSON() (\[\]byte, error)
 
 
@@ -482,7 +482,7 @@ Interfaces
 
    **Methods:**
 
-   * IsKuzuValue() 
+   * IsKuzuValue()
    * MarshalJSON() (\[\]byte, error)
 
 

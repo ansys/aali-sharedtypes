@@ -20,4 +20,3 @@ Functions
    func RunFunction(functionName string, inputs map\[string\]sharedtypes.FilledInputOutput) (outputs map\[string\]sharedtypes.FilledInputOutput, err error)
 
    RunFunction calls the external function server and returns the outputs This function is used to run an external function  Parameters: - functionPath: the path of the function to run - inputs: the inputs to the function - outputDefinition: the definition of the outputs  Returns: - map\[string\]sharedtypes.FilledInputOutput: the outputs of the function - error: an error message if the API call fails
-
