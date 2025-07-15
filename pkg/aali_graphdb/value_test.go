@@ -335,16 +335,34 @@ func TestValueUUID(t *testing.T) {
 	)
 }
 func TestValueJSON(t *testing.T) {
-	input := map[string]interface{}{"key": "value", "number": 42}
+	input := map[string]interface{}{
+		"key":    "value",
+		"number": float64(42),
+		"nested": map[string]interface{}{
+			"inner_key":    "inner_value",
+			"inner_number": float64(100),
+			"inner_list": []interface{}{
+				"first", float64(2), map[string]interface{}{"deep": true},
+			},
+		},
+		"list": []interface{}{
+			"hello", float64(3.14), false,
+		},
+	}
+
 	data, err := json.Marshal(input)
 	if err != nil {
 		t.Fatalf("failed to marshal input: %v", err)
 	}
 
+	expected := map[string]any{
+		"JSON": input,
+	}
+
 	valueTest1(
 		t,
 		JSONValue(data),
-		map[string]any{"JSON": input}, // expected output
+		expected,
 	)
 }
 func TestValueDecimalSmall(t *testing.T) {
