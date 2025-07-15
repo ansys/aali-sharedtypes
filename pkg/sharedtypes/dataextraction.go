@@ -64,6 +64,10 @@ type CodeGenerationElement struct {
 
 	// Only for type "enum"
 	EnumValues []string `json:"enum_values"`
+
+	// Metadata for databases
+	VectorDBMetadata interface{} `json:"vector_db_metadata,omitempty"` // Optional metadata for vector databases
+	GraphDBMetadata  interface{} `json:"graph_db_metadata,omitempty"`  // Optional metadata for graph databases
 }
 
 // Enum values for CodeGenerationType
