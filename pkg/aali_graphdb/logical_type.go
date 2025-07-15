@@ -71,6 +71,7 @@ const (
 	mapLtTag          logicalTypeTag = "Map"
 	unionLtTag        logicalTypeTag = "Union"
 	uuidLtTag         logicalTypeTag = "UUID"
+	jsonLtTag         logicalTypeTag = "JSON"
 	decimalLtTag      logicalTypeTag = "Decimal"
 )
 
@@ -324,7 +325,15 @@ func (lth *logicalTypeUnmarshalHelper) UnmarshalJSON(data []byte) error {
 			}
 			lth.LogicalType = logicalType
 			return nil
-
+		
+		case jsonLtTag:
+			var logicalType JSONLogicalType
+			err := json.Unmarshal(data, &logicalType)
+			if err != nil {
+				return err
+			}
+			lth.LogicalType = logicalType
+			return nil
 		default:
 			return fmt.Errorf("unknown unit variant %q", unitVariant)
 		}
@@ -910,6 +919,18 @@ func (lt UUIDLogicalType) MarshalJSON() ([]byte, error) {
 }
 func (lt *UUIDLogicalType) UnmarshalJSON(data []byte) error {
 	return unmarshalUnitVariant(data, uuidLtTag)
+}
+
+/* JSON */
+
+type JSONLogicalType struct{}
+
+func (lt JSONLogicalType) IsKuzuLogicalType() {}
+func (lt JSONLogicalType) MarshalJSON() ([]byte, error) {
+	return json.Marshal(jsonLtTag)
+}
+func (lt *JSONLogicalType) UnmarshalJSON(data []byte) error {
+	return unmarshalUnitVariant(data, jsonLtTag)
 }
 
 /* DECIMAL */
