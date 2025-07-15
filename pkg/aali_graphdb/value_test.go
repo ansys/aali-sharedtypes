@@ -350,18 +350,13 @@ func TestValueJSON(t *testing.T) {
 		},
 	}
 
-	data, err := json.Marshal(input)
-	if err != nil {
-		t.Fatalf("failed to marshal input: %v", err)
-	}
-
 	expected := map[string]any{
 		"JSON": input,
 	}
 
 	valueTest1(
 		t,
-		JSONValue(data),
+		JSONValue(input),
 		expected,
 	)
 }

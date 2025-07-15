@@ -1401,7 +1401,7 @@ func (v *uuidValue) UnmarshalJSON(data []byte) error {
 }
 
 /* JSON */
-type JSONValue json.RawMessage
+type JSONValue map[string]interface{}
 
 func (v JSONValue) IsKuzuValue() {}
 func (v JSONValue) MarshalJSON() ([]byte, error) {
@@ -1420,12 +1420,12 @@ func (v *JSONValue) UnmarshalJSON(data []byte) error {
 type jsonValue JSONValue
 func (v jsonValue) tag() string { return string(jsonValTag) }
 func (v jsonValue) MarshalJSON() ([]byte, error) {
-	var intermediate json.RawMessage
-	intermediate = json.RawMessage(v)
+	var intermediate map[string]interface{}
+	intermediate = map[string]interface{}(v)
 	return json.Marshal(intermediate)
 }
 func (v *jsonValue) UnmarshalJSON(data []byte) error {
-	var intermediate json.RawMessage
+	var intermediate map[string]interface{}
 	err := json.Unmarshal(data, &intermediate)
 	if err != nil {
 		return err
