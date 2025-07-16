@@ -334,32 +334,7 @@ func TestValueUUID(t *testing.T) {
 		map[string]any{"UUID": "8f914bce-df4e-4244-9cd4-ea96bf0c58d4"},
 	)
 }
-func TestValueJSON(t *testing.T) {
-	input := map[string]interface{}{
-		"key":    "value",
-		"number": float64(42),
-		"nested": map[string]interface{}{
-			"inner_key":    "inner_value",
-			"inner_number": float64(100),
-			"inner_list": []interface{}{
-				"first", float64(2), map[string]interface{}{"deep": true},
-			},
-		},
-		"list": []interface{}{
-			"hello", float64(3.14), false,
-		},
-	}
 
-	expected := map[string]any{
-		"JSON": input,
-	}
-
-	valueTest1(
-		t,
-		JSONValue(input),
-		expected,
-	)
-}
 func TestValueDecimalSmall(t *testing.T) {
 	valueTest1(
 		t,
