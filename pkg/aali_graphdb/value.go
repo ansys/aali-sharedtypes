@@ -75,6 +75,7 @@ const (
 	mapValTag          valueTag = "Map"
 	unionValTag        valueTag = "Union"
 	uuidValTag         valueTag = "UUID"
+	jsonValTag         valueTag = "JSON"
 	decimalValTag      valueTag = "Decimal"
 )
 
@@ -354,6 +355,14 @@ func (vh *valueUnmarshalHelper) UnmarshalJSON(data []byte) error {
 			return nil
 		case uuidValTag:
 			var value UUIDValue
+			err := json.Unmarshal(data, &value)
+			if err != nil {
+				return err
+			}
+			vh.Value = value
+			return nil
+		case jsonValTag:
+			var value JSONValue
 			err := json.Unmarshal(data, &value)
 			if err != nil {
 				return err
@@ -1388,6 +1397,40 @@ func (v *uuidValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*v = uuidValue(intermediate)
+	return nil
+}
+
+/* JSON */
+type JSONValue map[string]interface{}
+
+func (v JSONValue) IsKuzuValue() {}
+func (v JSONValue) MarshalJSON() ([]byte, error) {
+	intermediate := jsonValue(v)
+	return json.Marshal(externallyTagged[jsonValue]{&intermediate})
+}
+func (v *JSONValue) UnmarshalJSON(data []byte) error {
+	var intermediate externallyTagged[jsonValue]
+	if err := json.Unmarshal(data, &intermediate); err != nil {
+		return err
+	}
+	*v = JSONValue(*intermediate.value)
+	return nil
+}
+
+type jsonValue JSONValue
+func (v jsonValue) tag() string { return string(jsonValTag) }
+func (v jsonValue) MarshalJSON() ([]byte, error) {
+	var intermediate map[string]interface{}
+	intermediate = map[string]interface{}(v)
+	return json.Marshal(intermediate)
+}
+func (v *jsonValue) UnmarshalJSON(data []byte) error {
+	var intermediate map[string]interface{}
+	err := json.Unmarshal(data, &intermediate)
+	if err != nil {
+		return err
+	}
+	*v = jsonValue(intermediate)
 	return nil
 }
 
