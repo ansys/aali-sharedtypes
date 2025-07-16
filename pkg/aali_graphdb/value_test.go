@@ -334,7 +334,6 @@ func TestValueUUID(t *testing.T) {
 		map[string]any{"UUID": "8f914bce-df4e-4244-9cd4-ea96bf0c58d4"},
 	)
 }
-
 func TestValueDecimalSmall(t *testing.T) {
 	valueTest1(
 		t,
