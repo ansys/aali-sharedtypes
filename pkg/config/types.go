@@ -63,23 +63,27 @@ type Config struct {
 
 	// Aali Agent
 	///////////////
+	AGENT_ADDRESS              string `yaml:"AGENT_ADDRESS" json:"AGENTADDRESS"`
 	PRODUCTION_MODE            bool   `yaml:"PRODUCTION_MODE" json:"PRODUCTIONMODE"` // If true, the agent error messages will be generic
-	AGENT_PORT                 string `yaml:"AGENT_PORT" json:"AGENTPORT"`
 	WORKFLOW_API_KEY           string `yaml:"WORKFLOW_API_KEY" json:"WORKFLOWAPIKEY"`
 	WORKFLOW_STORE_PATH        string `yaml:"WORKFLOW_STORE_PATH" json:"WORKFLOWSTOREPATH"`
 	BINARY_STORE_PATH          string `yaml:"BINARY_STORE_PATH" json:"BINARYSTOREPATH"`
 	NUMBER_OF_WORKFLOW_WORKERS int    `yaml:"NUMBER_OF_WORKFLOW_WORKERS" json:"NUMBEROFWORKFLOWWORKERS"`
-	// External Function Endpoints
+	// Flowkit Connection
+	FLOWKIT_CONNECTIONS        []FlowkitConnection `yaml:"FLOWKIT_CONNECTIONS" json:"FLOWKITCONNECTIONS"`              // Contains the URL and API key for the FlowKit server
+	FLOWKIT_PYTHON_CONNECTIONS []FlowkitConnection `yaml:"FLOWKIT_PYTHON_CONNECTIONS" json:"FLOWKITPYTHONCONNECTIONS"` // Contains the URL and API key for the FlowKit-Python server
+	// External Function Endpoints (Legacy)
 	EXTERNALFUNCTIONS_ENDPOINT string `yaml:"EXTERNALFUNCTIONS_ENDPOINT" json:"EXTERNALFUNCTIONSENDPOINT"`
 	FLOWKIT_PYTHON_ENDPOINT    string `yaml:"FLOWKIT_PYTHON_ENDPOINT" json:"FLOWKITPYTHONENDPOINT"`
-	FLOWKIT_PYTHON_API_KEY     string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
 	// Authentication & Authorization
-	ENABLE_AUTH                   bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
-	AZURE_AD_AUTHENTICATION_URL   string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
-	ANSYS_AUTHORIZATION_URL       string `yaml:"ANSYS_AUTHORIZATION_URL" json:"ANSYSAUTHORIZATIONURL"`
-	ANSYS_AUTHORIZATION_CRYPT_KEY string `yaml:"ANSYS_AUTHORIZATION_CRYPT_KEY" json:"ANSYSAUTHORIZATIONCRYPTKEY"`
-	ANSYS_DISCO_CRYPT_PRIVAT_KEY  string `yaml:"ANSYS_DISCO_CRYPT_PRIVAT_KEY" json:"ANSYSDISCOCRYPTPRIVATKEY"`
-	ANSYS_DISOC_SIGN_PUBLIC_KEY   string `yaml:"ANSYS_DISOC_SIGN_PUBLIC_KEY" json:"ANSYSDISOCSIGNPUBLICKEY"`
+	ENABLE_AUTH                      bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
+	AZURE_AD_AUTHENTICATION_URL      string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
+	ANSYS_AUTHORIZATION_URL          string `yaml:"ANSYS_AUTHORIZATION_URL" json:"ANSYSAUTHORIZATIONURL"`
+	ANSYS_GATING_AND_ENTITLEMENT_URL string `yaml:"ANSYS_GATING_AND_ENTITLEMENT_URL" json:"ANSYSGATINGANDENTITLEMENTURL"`
+	ANSYS_AUTHORIZATION_CRYPT_KEY    string `yaml:"ANSYS_AUTHORIZATION_CRYPT_KEY" json:"ANSYSAUTHORIZATIONCRYPTKEY"`
+	ANSYS_AUTHORIZATION_SECRET_KEY   string `yaml:"ANSYS_AUTHORIZATION_SECRET_KEY" json:"ANSYSAUTHORIZATIONSECRETKEY"`
+	ANSYS_DISCO_CRYPT_PRIVAT_KEY     string `yaml:"ANSYS_DISCO_CRYPT_PRIVAT_KEY" json:"ANSYSDISCOCRYPTPRIVATKEY"`
+	ANSYS_DISOC_SIGN_PUBLIC_KEY      string `yaml:"ANSYS_DISOC_SIGN_PUBLIC_KEY" json:"ANSYSDISOCSIGNPUBLICKEY"`
 	// Workflows
 	DISABLE_PUBLIC_WORKFLOWS  bool     `yaml:"DISABLE_PUBLIC_WORKFLOWS" json:"DISABLEPUBLICWORKFLOWS"`
 	LOAD_PRIVATE_WORKFLOWS    bool     `yaml:"LOAD_PRIVATE_WORKFLOWS" json:"LOADPRIVATEWORKFLOWS"`
@@ -95,48 +99,20 @@ type Config struct {
 	EXEC_FILE_STORE_PATH                 string `yaml:"EXEC_FILE_STORE_PATH" json:"EXECFILESTOREPATH"`
 	// DB Connection
 	KVDB_ENDPOINT string `yaml:"KVDB_ENDPOINT" json:"KVDBENDPOINT"`
-
-	// Aali Flowkit
-	/////////////////
-	EXTERNALFUNCTIONS_GRPC_PORT string `yaml:"EXTERNALFUNCTIONS_GRPC_PORT" json:"EXTERNALFUNCTIONSGRPCPORT"`
-	FLOWKIT_API_KEY             string `yaml:"FLOWKIT_API_KEY" json:"FLOWKITAPIKEY"`
-	// Aali Modules
-	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
-	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
+	// Workflow Store
+	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
 
 	// Aali LLM
 	/////////////
-	WEBSERVER_PORT         string `yaml:"WEBSERVER_PORT" json:"WEBSERVERPORT"`
+	LLM_ADDRESS            string `yaml:"LLM_ADDRESS" json:"LLMADDRESS"`
 	MODELS_CONFIG_LOCATION string `yaml:"MODELS_CONFIG_LOCATION" json:"MODELSCONFIGLOCATION"`
 	LLM_API_KEY            string `yaml:"LLM_API_KEY" json:"LLMAPIKEY"`
 
-	// Aali DB
-	///////////
-	WEBSERVER_PORT_DB                  string   `yaml:"WEBSERVER_PORT_DB" json:"WEBSERVERPORTDB"`
-	EMBEDDINGS_DIMENSIONS              int      `yaml:"EMBEDDINGS_DIMENSIONS" json:"EMBEDDINGSDIMENSIONS"`
-	MILVUS_INDEX_TYPE                  string   `yaml:"MILVUS_INDEX_TYPE" json:"MILVUSINDEXTYPE"`
-	MILVUS_METRIC_TYPE                 string   `yaml:"MILVUS_METRIC_TYPE" json:"MILVUSMETRICTYPE"` // cosine, l2 or ip
-	MILVUS_HOST                        string   `yaml:"MILVUS_HOST" json:"MILVUSHOST"`
-	MILVUS_PORT                        string   `yaml:"MILVUS_PORT" json:"MILVUSPORT"`
-	NEO4J_DB                           bool     `yaml:"NEO4J_DB" json:"NEO4JDB"`
-	NEO4J_URI                          string   `yaml:"NEO4J_URI" json:"NEO4JURI"`
-	NEO4J_USERNAME                     string   `yaml:"NEO4J_USERNAME" json:"NEO4JUSERNAME"`
-	NEO4J_PASSWORD                     string   `yaml:"NEO4J_PASSWORD" json:"NEO4JPASSWORD"`
-	TEMP_COLLECTION_NAME               string   `yaml:"TEMP_COLLECTION_NAME" json:"TEMPCOLLECTIONNAME"`
-	ELASTICSEARCH_HOST                 string   `yaml:"ELASTICSEARCH_HOST" json:"ELASTICSEARCHHOST"`
-	ELASTICSEARCH_PORT                 string   `yaml:"ELASTICSEARCH_PORT" json:"ELASTICSEARCHPORT"`
-	ELASTICSEARCH_USERNAME             string   `yaml:"ELASTICSEARCH_USERNAME" json:"ELASTICSEARCHUSERNAME"`
-	ELASTICSEARCH_PASSWORD             string   `yaml:"ELASTICSEARCH_PASSWORD" json:"ELASTICSEARCHPASSWORD"`
-	ELASTICSEARCH_INDEX_TYPE           string   `yaml:"ELASTICSEARCH_INDEX_TYPE" json:"ELASTICSEARCHINDEXTYPE"`                     // cosineSimilarity or dotProduct
-	ELASTICSEARCH_TRUSTED_CERTIFICATES []string `yaml:"ELASTICSEARCH_TRUSTED_CERTIFICATES" json:"ELASTICSEARCHTRUSTEDCERTIFICATES"` // list of paths to trusted certificates
-	ELASTICSEARCH_INSECURE_CONNECTION  bool     `yaml:"ELASTICSEARCH_INSECURE_CONNECTION" json:"ELASTICSEARCHINSECURECONNECTION"`
-	DATABASE_TYPE                      string   `yaml:"DATABASE_TYPE" json:"DATABASETYPE"` // milvus or elasticsearch
-
 	// Aali Exec
 	//////////////
-	EXEC_ID             string `yaml:"EXEC_ID" json:"EXECID"`
-	WEBSERVER_PORT_EXEC string `yaml:"WEBSERVER_PORT_EXEC" json:"WEBSERVERPORTEXEC"`
-	EXEC_API_KEY        string `yaml:"EXEC_API_KEY" json:"EXECAPIKEY"`
+	EXEC_ADDRESS string `yaml:"EXEC_ADDRESS" json:"EXECADDRESS"`
+	EXEC_ID      string `yaml:"EXEC_ID" json:"EXECID"`
+	EXEC_API_KEY string `yaml:"EXEC_API_KEY" json:"EXECAPIKEY"`
 	// Python executable name
 	PYTHON_EXECUTABLE string `yaml:"PYTHON_EXECUTABLE" json:"PYTHONEXECUTABLE"`
 	BASH_EXECUTABLE   string `yaml:"BASH_EXECUTABLE" json:"BASHEXECUTABLE"`
@@ -146,15 +122,40 @@ type Config struct {
 	// Agent connection
 	AGENT_ENDPOINT string `yaml:"AGENT_ENDPOINT" json:"AGENTENDPOINT"`
 
-	// Workflow Store
-	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
-
-	// Aali Database
+	// Aali KVDB
 	/////////////////
-	// kv db
 	KVDB_ADDRESS   string `yaml:"KVDB_ADDRESS" json:"KVDBADDRESS"`
 	KVDB_PATH      string `yaml:"KVDB_PATH" json:"KVDBPATH"`
 	KVDB_IN_MEMORY bool   `yaml:"KVDB_IN_MEMORY" json:"KVDBINMEMORY"`
+
+	// Aali Flowkit
+	/////////////////
+	FLOWKIT_ADDRESS string `yaml:"FLOWKIT_ADDRESS" json:"FLOWKITADDRESS"`
+	FLOWKIT_API_KEY string `yaml:"FLOWKIT_API_KEY" json:"FLOWKITAPIKEY"`
+	// Connections to other Modules
+	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
+	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
+	GRAPHDB_ADDRESS       string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
+	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
+	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
+
+	// Aali Flowkit Python
+	//////////////////////
+	FLOWKIT_PYTHON_ADDRESS string `yaml:"FLOWKIT_PYTHON_ADDRESS" json:"FLOWKITPYTHONADDRESS"`
+	FLOWKIT_PYTHON_API_KEY string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
+
+	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
+	/////////////////////////////////////////////////////////////////////////
+	AGENT_PORT                  string `yaml:"AGENT_PORT" json:"AGENTPORT"`
+	EXTERNALFUNCTIONS_GRPC_PORT string `yaml:"EXTERNALFUNCTIONS_GRPC_PORT" json:"EXTERNALFUNCTIONSGRPCPORT"`
+	WEBSERVER_PORT              string `yaml:"WEBSERVER_PORT" json:"WEBSERVERPORT"`
+	WEBSERVER_PORT_EXEC         string `yaml:"WEBSERVER_PORT_EXEC" json:"WEBSERVERPORTEXEC"`
+}
+
+// FlowkitConnections contains the configuration for connecting to the FlowKit server.
+type FlowkitConnection struct {
+	URL     string `yaml:"URL" json:"URL"`        // URL of the FlowKit server
+	API_KEY string `yaml:"API_KEY" json:"APIKEY"` // API key for the FlowKit server
 }
 
 // Initialize conifg dict

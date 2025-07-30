@@ -28,6 +28,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 )
 
@@ -177,12 +178,17 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return uint32(valueUint64), nil
+	case "uint64":
+		if value == "" {
+			value = "0"
+		}
+		return strconv.ParseUint(value, 10, 64)
 	case "bool":
 		if value == "" {
 			value = "false"
 		}
 		return strconv.ParseBool(value)
-	case "interface{}":
+	case "interface{}", "any":
 		var output interface{}
 		if value == "" {
 			output = nil
@@ -341,6 +347,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "ParameterMap":
+		if value == "" {
+			value = "{}"
+		}
+		output := aali_graphdb.ParameterMap{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	case "[]map[string]string":
 		if value == "" {
 			value = "[]"
@@ -371,7 +387,7 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
-	case "[]map[string]interface{}":
+	case "[]map[string]interface{}", "[]map[string]any":
 		if value == "" {
 			value = "[]"
 		}
@@ -485,6 +501,17 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 		}
 		return output, nil
 
+	case "[]AnsysGPTRetrieverModuleChunk":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.AnsysGPTRetrieverModuleChunk{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+
 	case "[]DbData":
 		if value == "" {
 			value = "[]"
@@ -525,6 +552,36 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "[]MaterialLlmCriterion":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialLlmCriterion{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+	case "[]MaterialCriterionWithGuid":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialCriterionWithGuid{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+	case "[]MaterialAttribute":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.MaterialAttribute{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	}
 
 	return nil, fmt.Errorf("unsupported GoType: '%s'", goType)
@@ -558,9 +615,11 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return strconv.Itoa(value.(int)), nil
 	case "uint32":
 		return strconv.FormatUint(uint64(value.(uint32)), 10), nil
+	case "uint64":
+		return strconv.FormatUint(value.(uint64), 10), nil
 	case "bool":
 		return strconv.FormatBool(value.(bool)), nil
-	case "interface{}":
+	case "interface{}", "any":
 		switch v := value.(type) {
 		case string:
 			return v, nil
@@ -659,13 +718,19 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", err
 		}
 		return string(output), nil
+	case "ParameterMap":
+		output, err := json.Marshal(value.(aali_graphdb.ParameterMap))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
 	case "[]map[string]string":
 		output, err := json.Marshal(value.([]map[string]string))
 		if err != nil {
 			return "", err
 		}
 		return string(output), nil
-	case "[]map[string]interface{}":
+	case "[]map[string]interface{}", "[]map[string]any":
 		output, err := json.Marshal(value.([]map[string]interface{}))
 		if err != nil {
 			return "", err
@@ -743,6 +808,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", err
 		}
 		return string(output), nil
+	case "[]AnsysGPTRetrieverModuleChunk":
+		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTRetrieverModuleChunk))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
 	case "[]DbData":
 		output, err := json.Marshal(value.([]sharedtypes.DbData))
 		if err != nil {
@@ -763,6 +834,24 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]CodeGenerationUserGuideSection":
 		output, err := json.Marshal(value.([]sharedtypes.CodeGenerationUserGuideSection))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialLlmCriterion":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialLlmCriterion))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialCriterionWithGuid":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialCriterionWithGuid))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]MaterialAttribute":
+		output, err := json.Marshal(value.([]sharedtypes.MaterialAttribute))
 		if err != nil {
 			return "", err
 		}

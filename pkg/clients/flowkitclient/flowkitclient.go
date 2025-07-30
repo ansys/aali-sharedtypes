@@ -33,7 +33,6 @@ import (
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
 
-	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
@@ -49,16 +48,16 @@ var AvailableFunctions map[string]*sharedtypes.FunctionDefinition
 //
 // Returns:
 //   - error: an error message if the gRPC call fails
-func ListFunctionsAndSaveToInteralStates(ctx *logging.ContextMap) error {
+func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in ListFunctionsAndSaveToInteralStates: %v", r)
+			err = fmt.Errorf("panic occurred in ListFunctionsAndSaveToInteralStates: %v", r)
 		}
 	}()
 
 	// Set up a connection to the server.
-	c, conn, err := createClient()
+	c, conn, err := createClient(url, apiKey)
 	if err != nil {
 		return fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
@@ -102,6 +101,8 @@ func ListFunctionsAndSaveToInteralStates(ctx *logging.ContextMap) error {
 		// Save the function to internal states
 		AvailableFunctions[function.Name] = &sharedtypes.FunctionDefinition{
 			Name:        function.Name,
+			FlowkitUrl:  url,
+			ApiKey:      apiKey,
 			DisplayName: function.DisplayName,
 			Description: function.Description,
 			Category:    function.Category,
@@ -124,16 +125,22 @@ func ListFunctionsAndSaveToInteralStates(ctx *logging.ContextMap) error {
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the gRPC call fails
-func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (map[string]sharedtypes.FilledInputOutput, error) {
+func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in RunFunction: %v", r)
+			err = fmt.Errorf("panic occurred in RunFunction: %v", r)
 		}
 	}()
 
+	// Get function definition
+	functionDef, ok := AvailableFunctions[functionName]
+	if !ok {
+		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+	}
+
 	// Set up a connection to the server.
-	c, conn, err := createClient()
+	c, conn, err := createClient(functionDef.FlowkitUrl, functionDef.ApiKey)
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
@@ -143,51 +150,50 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// Get function definition
-	functionDef, ok := AvailableFunctions[functionName]
-	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
-	}
-
 	// Convert inputs to gRPC format based on order from function definition
-	input := []*aaliflowkitgrpc.FunctionInput{}
+	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
-		// Get the input value
-		value, ok := inputs[inputDef.Name]
-		if !ok {
-			return nil, fmt.Errorf("Input %s not found in inputs", inputDef.Name)
-		}
-
-		// convert value to string
-		stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
-		if err != nil {
-			return nil, fmt.Errorf("Error converting input %s to string: %v", inputDef.Name, err)
-		}
-
-		// Convert the input value to gRPC format
-		input = append(input, &aaliflowkitgrpc.FunctionInput{
+		// create grpc input
+		grpcInput := &aaliflowkitgrpc.FunctionInput{
 			Name:   inputDef.Name,
 			GoType: inputDef.GoType,
-			Value:  stringValue,
-		})
+		}
+
+		// Get the input value
+		value, ok := inputs[inputDef.Name]
+		if ok {
+			// found: convert value to string
+			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			if err != nil {
+				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+			}
+			grpcInput.Value = stringValue
+
+		} else {
+			// input discrepancy, set to null value
+			grpcInput.Value = ""
+		}
+
+		// Append the grpc input to the list
+		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
 	// Call RunFunction
 	runResp, err := c.RunFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
-		Inputs: input,
+		Inputs: grpcInputs,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error in external function gRPC RunFunction: %v", err)
 	}
 
 	// convert outputs to map[string]sharedtypes.FilledInputOutput
-	outputs := map[string]sharedtypes.FilledInputOutput{}
+	outputs = map[string]sharedtypes.FilledInputOutput{}
 	for _, output := range runResp.Outputs {
 		// convert value to Go type
 		value, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
 		if err != nil {
-			return nil, fmt.Errorf("error converting output %s to Go type: %v", output.Name, err)
+			return nil, fmt.Errorf("error converting output %s (%v) to Go type: %v", output.Name, output.Value, err)
 		}
 
 		// Save the output to the map
@@ -211,16 +217,22 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 // Returns:
 //   - *chan string: a channel to stream the output
 //   - error: an error message if the gRPC call fails
-func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (*chan string, error) {
+func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in RunFunction: %v", r)
+			err = fmt.Errorf("panic occured in StreamFunction: %v", r)
 		}
 	}()
 
+	// Get function definition
+	functionDef, ok := AvailableFunctions[functionName]
+	if !ok {
+		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+	}
+
 	// Set up a connection to the server.
-	c, conn, err := createClient()
+	c, conn, err := createClient(functionDef.FlowkitUrl, functionDef.ApiKey)
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
@@ -228,45 +240,40 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 
-	// Get function definition
-	functionDef, ok := AvailableFunctions[functionName]
-	if !ok {
-		conn.Close()
-		cancel()
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
-	}
-
 	// Convert inputs to gRPC format based on order from function definition
-	input := []*aaliflowkitgrpc.FunctionInput{}
+	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
-		// Get the input value
-		value, ok := inputs[inputDef.Name]
-		if !ok {
-			conn.Close()
-			cancel()
-			return nil, fmt.Errorf("input %s not found in inputs", inputDef.Name)
-		}
-
-		// convert value to string
-		stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
-		if err != nil {
-			conn.Close()
-			cancel()
-			return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
-		}
-
-		// Convert the input value to gRPC format
-		input = append(input, &aaliflowkitgrpc.FunctionInput{
+		// create grpc input
+		grpcInput := &aaliflowkitgrpc.FunctionInput{
 			Name:   inputDef.Name,
 			GoType: inputDef.GoType,
-			Value:  stringValue,
-		})
+		}
+
+		// Get the input value
+		value, ok := inputs[inputDef.Name]
+		if ok {
+			// found: convert value to string
+			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			if err != nil {
+				conn.Close()
+				cancel()
+				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+			}
+			grpcInput.Value = stringValue
+
+		} else {
+			// input discrepancy, set to null value
+			grpcInput.Value = ""
+		}
+
+		// Append the grpc input to the list
+		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
 	// Call StreamFunction
 	stream, err := c.StreamFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
-		Inputs: input,
+		Inputs: grpcInputs,
 	})
 	if err != nil {
 		conn.Close()
@@ -324,26 +331,21 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 //   - client: the client to the external functions gRPC
 //   - connection: the connection to the external functions gRPC
 //   - err: an error message if the client creation fails
-func createClient() (client aaliflowkitgrpc.ExternalFunctionsClient, connection *grpc.ClientConn, err error) {
-	// check if EXTERNALFUNCTIONS_ENDPOINT is set
-	if config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT == "" {
-		return nil, nil, fmt.Errorf("config variable 'EXTERNALFUNCTIONS_ENDPOINT' is not set")
-	}
-
+func createClient(url string, apiKey string) (client aaliflowkitgrpc.ExternalFunctionsClient, connection *grpc.ClientConn, err error) {
 	// Extract the scheme (http or https) from the EXTERNALFUNCTIONS_ENDPOINT
 	var scheme string
 	var address string
 	switch {
-	case strings.HasPrefix(config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT, "https://"):
+	case strings.HasPrefix(url, "https://"):
 		scheme = "https"
-		address = strings.TrimPrefix(config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT, scheme+"://")
-	case strings.HasPrefix(config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT, "http://"):
+		address = strings.TrimPrefix(url, scheme+"://")
+	case strings.HasPrefix(url, "http://"):
 		scheme = "http"
-		address = strings.TrimPrefix(config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT, scheme+"://")
+		address = strings.TrimPrefix(url, scheme+"://")
 	default:
 		// legacy support for endpoint definition without http or https in front
 		scheme = "http"
-		address = config.GlobalConfig.EXTERNALFUNCTIONS_ENDPOINT
+		address = url
 	}
 
 	// Set up the gRPC dial options
@@ -358,8 +360,8 @@ func createClient() (client aaliflowkitgrpc.ExternalFunctionsClient, connection 
 	}
 
 	// Add the API key if it is set
-	if config.GlobalConfig.FLOWKIT_API_KEY != "" {
-		opts = append(opts, grpc.WithUnaryInterceptor(apiKeyInterceptor(config.GlobalConfig.FLOWKIT_API_KEY)))
+	if apiKey != "" {
+		opts = append(opts, grpc.WithUnaryInterceptor(apiKeyInterceptor(apiKey)))
 	}
 
 	// Set max message size to 1GB

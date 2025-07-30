@@ -41,6 +41,8 @@ type SessionContext struct {
 	WorkflowRunId  string `json:"workflow_run_id,omitempty"` // Workflow run ID, only relevant if "session_type" is "workflow"; if defined, mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
 	UserId         string `json:"user_id,omitempty"`         // User ID, only relevant if "session_type" is "workflow"; if defined, mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
 	StoreSnapshots bool   `json:"store_snapshots,omitempty"` // Store snapshots, only relevant if "session_type" is "workflow"; if true, all taken snapshots will be stored in the database
+	// Other
+	IpAddress string `json:"ip_address,omitempty"` // IP address of the client, required for some auth_types
 }
 
 // ConversationHistoryMessage is a structure that contains the message ID, role, content, and images of a conversation history message.

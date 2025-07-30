@@ -19,6 +19,25 @@ repos:
   hooks:
     - id: check-github-workflows
 
+- repo: local
+  hooks:
+  - id: go-generate
+    name: go generate
+    entry: go generate ./pkg/aali_graphdb
+    language: system
+    pass_filenames: false
+    stages:
+      - pre-commit
+    types: [go]
+  - id: go-build
+    name: go build
+    entry: go build ./...
+    language: system
+    pass_filenames: false
+    stages:
+      - pre-commit
+    types: [go]
+
 - repo: https://github.com/dnephin/pre-commit-golang
   rev: v0.5.0
   hooks:

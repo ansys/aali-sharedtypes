@@ -30,7 +30,6 @@ import (
 	"net/http"
 
 	"github.com/ansys/aali-sharedtypes/pkg/clients/flowkitclient"
-	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
 )
@@ -41,7 +40,7 @@ import (
 //
 // Returns:
 //   - error: an error message if the API call fails
-func ListFunctionsAndSaveToInteralStates() (err error) {
+func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -50,14 +49,14 @@ func ListFunctionsAndSaveToInteralStates() (err error) {
 	}()
 
 	// Create a new HTTP GET request
-	req, err := http.NewRequest("GET", config.GlobalConfig.FLOWKIT_PYTHON_ENDPOINT, nil)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		errorMessage := fmt.Errorf("error creating GET request: %v", err)
 		return errorMessage
 	}
 
 	// Add the required header
-	req.Header.Set("api-key", config.GlobalConfig.FLOWKIT_PYTHON_API_KEY)
+	req.Header.Set("api-key", apiKey)
 	req.Header.Set("Content-Type", "application/json")
 
 	// Create a client and make the request
@@ -133,6 +132,8 @@ func ListFunctionsAndSaveToInteralStates() (err error) {
 		// Save the function to internal states
 		flowkitclient.AvailableFunctions[function.Name] = &sharedtypes.FunctionDefinition{
 			Name:        function.Name,
+			FlowkitUrl:  url,
+			ApiKey:      apiKey,
 			Description: function.Description,
 			DisplayName: function.DisplayName,
 			Category:    function.Category,
@@ -165,11 +166,6 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 		}
 	}()
 
-	// check if endpoint is set
-	if config.GlobalConfig.FLOWKIT_PYTHON_ENDPOINT == "" {
-		return nil, fmt.Errorf("config variable 'FLOWKIT_PYTHON_ENDPOINT' is not set")
-	}
-
 	// Get function definition
 	functionDefinition := flowkitclient.AvailableFunctions[functionName]
 
@@ -193,14 +189,14 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	}
 
 	// Create a new HTTP POST request
-	req, err := http.NewRequest("POST", config.GlobalConfig.FLOWKIT_PYTHON_ENDPOINT+functionDefinition.Path, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", functionDefinition.FlowkitUrl+functionDefinition.Path, bytes.NewBuffer(reqBody))
 	if err != nil {
 		errorMessage := fmt.Errorf("error creating POST request: %v", err)
 		return nil, errorMessage
 	}
 
 	// Add the required header
-	req.Header.Set("api-key", config.GlobalConfig.FLOWKIT_PYTHON_API_KEY)
+	req.Header.Set("api-key", functionDefinition.ApiKey)
 	req.Header.Set("Content-Type", "application/json")
 
 	// Create a client and make the request

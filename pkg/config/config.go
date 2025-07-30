@@ -279,6 +279,12 @@ func CreateUpdateConfigFileFromCLI(fileName string) (err error) {
 	// Parse the flags
 	flag.Parse()
 
+	// Track which flags were actually set
+	setFlags := make(map[string]bool)
+	flag.Visit(func(f *flag.Flag) {
+		setFlags[f.Name] = true
+	})
+
 	// Checking if config.yaml file already exists
 	_, err = os.Stat(fileName)
 
@@ -297,21 +303,11 @@ func CreateUpdateConfigFileFromCLI(fileName string) (err error) {
 		err := yaml.Unmarshal(file, &config)
 		if err != nil {
 			message := fmt.Sprintf("Error in yaml.Unmarshal: %v", err)
-			return fmt.Errorf(message)
+			return errors.New(message)
 		}
 
-		// Use reflection to update fields that were set in the command line
-		valCli := reflect.ValueOf(&cliConfig).Elem()
-		valConfig := reflect.ValueOf(&config).Elem()
-		t := reflect.TypeOf(cliConfig)
-
-		for i := 0; i < t.NumField(); i++ {
-			cliField := valCli.Field(i)
-			configField := valConfig.Field(i)
-			if !reflect.DeepEqual(cliField.Interface(), reflect.Zero(cliField.Type()).Interface()) {
-				configField.Set(cliField)
-			}
-		}
+		// Use reflection to update fields that were actually set on the command line
+		updateConfigWithCLI(&config, &cliConfig, setFlags, "")
 
 		// Write back to the file
 		file, _ = yaml.Marshal(config)
@@ -344,6 +340,38 @@ func createFlags(val reflect.Value, prefix string) {
 			}
 		case reflect.Struct:
 			createFlags(val.Field(i), name+"_")
+		}
+	}
+}
+
+// updateConfigWithCLI updates the config with CLI values, but only for flags that were actually set
+//
+// Parameters:
+//   - config: The existing config to update
+//   - cliConfig: The CLI config with parsed values
+//   - setFlags: Map of flag names that were actually set on command line
+//   - prefix: The current prefix for nested structs
+func updateConfigWithCLI(config interface{}, cliConfig interface{}, setFlags map[string]bool, prefix string) {
+	valConfig := reflect.ValueOf(config).Elem()
+	valCli := reflect.ValueOf(cliConfig).Elem()
+	t := reflect.TypeOf(cliConfig).Elem()
+
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		flagName := strings.ToUpper(prefix + field.Name)
+
+		configField := valConfig.Field(i)
+		cliField := valCli.Field(i)
+
+		switch field.Type.Kind() {
+		case reflect.Struct:
+			// Recursively handle nested structs
+			updateConfigWithCLI(configField.Addr().Interface(), cliField.Addr().Interface(), setFlags, flagName+"_")
+		default:
+			// Only update if this flag was actually set on the command line
+			if setFlags[flagName] {
+				configField.Set(cliField)
+			}
 		}
 	}
 }
@@ -434,7 +462,12 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 						// Set the field to the new value
 						switch field.Kind() {
 						case reflect.String:
-							field.SetString(*resp.Value)
+							value := *resp.Value
+							unquoted, err := strconv.Unquote(`"` + strings.ReplaceAll(value, `"`, `\"`) + `"`)
+							if err == nil {
+								value = unquoted
+							}
+							field.SetString(value)
 						case reflect.Bool:
 							// Convert string to bool
 							value, err := strconv.ParseBool(*resp.Value)
@@ -620,4 +653,28 @@ func writeStringToFile(data string) error {
 func timeToString(t time.Time) string {
 	layout := "2006-01-02 15:04:05.000"
 	return t.Format(layout)
+}
+
+////////////////////////////
+// Legacy Config Converters
+////////////////////////////
+
+// HandleLegacyPortDefinition checks if the address is set, and if not, uses the legacy port to define the web server address.
+// If both are empty, it returns an error.
+//
+// Parameters:
+//   - address: The address to use for the web server.
+//   - legacyPort: The legacy port to use if the address is not set.
+//
+// Returns:
+//   - webserverAddress: The web server address to use.
+//   - err: An error if both address and legacy port are empty.
+func HandleLegacyPortDefinition(configAddress string, legacyPort string) (webserverAddress string, err error) {
+	if configAddress != "" {
+		return configAddress, nil
+	}
+	if legacyPort != "" {
+		return "0.0.0.0:" + legacyPort, nil
+	}
+	return "", fmt.Errorf("both address and legacy port are empty")
 }
