@@ -6,3 +6,9 @@ knowledgedb
 llmhandler
 config
 godoc
+sharedtypes
+typeconverters
+aaliagentgrpc
+aaliflowkitgrpc
+aali_graphdb
+Datadog

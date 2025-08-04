@@ -1,29 +1,66 @@
 API reference
 =============
 
-.. vale off
+.. note::
 
-+---------------------------------------------------+
-| Module                                            |
-+===================================================+
-| `aaliflowkitgrpc <aaliflowkitgrpc/index.html>`_   |
-+---------------------------------------------------+
-| `config <config/index.html>`_                     |
-+---------------------------------------------------+
-| `logging <logging/index.html>`_                   |
-+---------------------------------------------------+
-| `sharedtypes <sharedtypes/index.html>`_           |
-+---------------------------------------------------+
-| `typeconverters <typeconverters/index.html>`_     |
-+---------------------------------------------------+
+   Complete API documentation is automatically generated during the CI/CD build process.
 
-.. vale on
+The AALI Shared Types library contains the following packages:
+
+Core Packages
+-------------
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Package
+     - Description
+   * - **sharedtypes**
+     - Core type definitions used across all AALI services (agents, functions, databases, LLM handlers)
+   * - **typeconverters**
+     - Utilities for converting between JSON, Go types, and string representations
+
+gRPC Protocol Packages
+----------------------
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Package
+     - Description
+   * - **aaliagentgrpc**
+     - Protocol buffer definitions and gRPC service for AALI Agent communication
+   * - **aaliflowkitgrpc**
+     - Protocol buffer definitions and gRPC service for AALI FlowKit communication
+
+Utility Packages
+----------------
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Package
+     - Description
+   * - **config**
+     - Configuration management utilities for AALI services
+   * - **logging**
+     - Structured logging with Datadog integration
+   * - **clients**
+     - Client implementations for FlowKit (Go and Python)
+   * - **aali_graphdb**
+     - GraphDB client with logical types and value handling
 
 .. toctree::
     :maxdepth: 2
     :hidden:
+    :caption: Package Documentation
 
-    self
+    Type Definitions <type_definitions/index>
+    Type Converters <typeconverters/index>
+    gRPC Protocols <grpc_proto/index>
 
 .. button-ref:: ../index
     :ref-type: doc
