@@ -54,6 +54,12 @@ Utility Packages
      - GraphDB client with logical types and value handling
 
 
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   test/index
+
 .. button-ref:: ../index
     :ref-type: doc
     :color: primary
