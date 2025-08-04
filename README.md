@@ -1,2 +1,2 @@
-# Aali Shared types
-Shared types used in the Aali project
+# AALI Shared types
+Shared types used in the AALI project
