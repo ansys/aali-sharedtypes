@@ -53,14 +53,6 @@ Utility Packages
    * - **aali_graphdb**
      - GraphDB client with logical types and value handling
 
-.. toctree::
-    :maxdepth: 2
-    :hidden:
-    :caption: Package Documentation
-
-    Type Definitions <type_definitions/index>
-    Type Converters <typeconverters/index>
-    gRPC Protocols <grpc_proto/index>
 
 .. button-ref:: ../index
     :ref-type: doc

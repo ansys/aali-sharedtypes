@@ -171,6 +171,6 @@ Best Practices
 Next Steps
 ----------
 
-- Explore existing types in :doc:`../api_reference/type_definitions/index`
-- Learn about type conversion in :doc:`../api_reference/typeconverters/index`
-- Review GRPC definitions in :doc:`../api_reference/grpc_proto/index`
+- Explore existing types in the ``pkg/sharedtypes/`` directory
+- Learn about type conversion in ``pkg/typeconverters/typeconverters.go``
+- Review gRPC definitions in ``pkg/aaliagentgrpc/`` and ``pkg/aaliflowkitgrpc/``
