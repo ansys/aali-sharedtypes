@@ -58,6 +58,11 @@ type CodeGenerationElement struct {
 	ReturnDescription string   `json:"return_description"` // Return description
 	Remarks           string   `json:"remarks"`
 
+	// Only for type "method"
+	PyaedtParents     []string `json:"inheritsfrom"`
+	// Only for type "class"
+	PyaedtGroup       string   `json:"typeof"`
+	
 	// Only for type "function" or "method"
 	Parameters []XMLMemberParam `json:"parameters"`
 	Example    XMLMemberExample `json:"example"`
