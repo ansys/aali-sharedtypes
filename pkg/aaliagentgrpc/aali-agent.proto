@@ -146,7 +146,7 @@ message ClientResponse {
     optional string info_message = 14;
 }
 
-// StringList is a message to hold a list of strings
+// SlashCommands is the message to send a list of slash commands to the client.
 message SlashCommands {
     // List of strings
     repeated string slash_commands = 1;
