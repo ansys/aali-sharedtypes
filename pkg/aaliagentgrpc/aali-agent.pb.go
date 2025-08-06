@@ -616,8 +616,8 @@ type ClientResponse struct {
 	VariableValues map[string]string `protobuf:"bytes,10,rep,name=variable_values,json=variableValues,proto3" json:"variable_values,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Snapshot properties; id of the snapshot taken or loaded
 	SnapshotId string `protobuf:"bytes,11,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
-	// Slash command properties; list of slash commands supported by the workflow
-	SlashCommands []string `protobuf:"bytes,12,rep,name=slash_commands,json=slashCommands,proto3" json:"slash_commands,omitempty"`
+	// Slash command properties; dictonary of @ commands and their corresponding slash commands
+	SlashCommands map[string]*StringList `protobuf:"bytes,12,rep,name=slash_commands,json=slashCommands,proto3" json:"slash_commands,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Error properties
 	Error *ErrorResponse `protobuf:"bytes,13,opt,name=error,proto3" json:"error,omitempty"`
 	// Info properties
@@ -733,7 +733,7 @@ func (x *ClientResponse) GetSnapshotId() string {
 	return ""
 }
 
-func (x *ClientResponse) GetSlashCommands() []string {
+func (x *ClientResponse) GetSlashCommands() map[string]*StringList {
 	if x != nil {
 		return x.SlashCommands
 	}
@@ -754,6 +754,52 @@ func (x *ClientResponse) GetInfoMessage() string {
 	return ""
 }
 
+// StringList is a message to hold a list of strings
+type StringList struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of strings
+	Values        []string `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StringList) Reset() {
+	*x = StringList{}
+	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StringList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StringList) ProtoMessage() {}
+
+func (x *StringList) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StringList.ProtoReflect.Descriptor instead.
+func (*StringList) Descriptor() ([]byte, []int) {
+	return file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *StringList) GetValues() []string {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
 // ErrorResponse is the message to send an error response to the client.
 type ErrorResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -767,7 +813,7 @@ type ErrorResponse struct {
 
 func (x *ErrorResponse) Reset() {
 	*x = ErrorResponse{}
-	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[8]
+	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -779,7 +825,7 @@ func (x *ErrorResponse) String() string {
 func (*ErrorResponse) ProtoMessage() {}
 
 func (x *ErrorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[8]
+	mi := &file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -792,7 +838,7 @@ func (x *ErrorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ErrorResponse.ProtoReflect.Descriptor instead.
 func (*ErrorResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP(), []int{8}
+	return file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ErrorResponse) GetCode() int32 {
@@ -860,7 +906,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n" +
 	"\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\"J\n" +
 	"\x14AuthenticationStatus\x122\n" +
-	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\x8e\x05\n" +
+	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\x9d\x06\n" +
 	"\x0eClientResponse\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n" +
@@ -874,14 +920,20 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fvariable_values\x18\n" +
 	" \x03(\v21.aaliagentgrpc.ClientResponse.VariableValuesEntryR\x0evariableValues\x12\x1f\n" +
 	"\vsnapshot_id\x18\v \x01(\tR\n" +
-	"snapshotId\x12%\n" +
-	"\x0eslash_commands\x18\f \x03(\tR\rslashCommands\x122\n" +
+	"snapshotId\x12W\n" +
+	"\x0eslash_commands\x18\f \x03(\v20.aaliagentgrpc.ClientResponse.SlashCommandsEntryR\rslashCommands\x122\n" +
 	"\x05error\x18\r \x01(\v2\x1c.aaliagentgrpc.ErrorResponseR\x05error\x12&\n" +
 	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n" +
-	"\r_info_message\"=\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1a[\n" +
+	"\x12SlashCommandsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12/\n" +
+	"\x05value\x18\x02 \x01(\v2\x19.aaliagentgrpc.StringListR\x05value:\x028\x01B\x0f\n" +
+	"\r_info_message\"$\n" +
+	"\n" +
+	"StringList\x12\x16\n" +
+	"\x06values\x18\x01 \x03(\tR\x06values\"=\n" +
 	"\rErrorResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage2^\n" +
@@ -900,7 +952,7 @@ func file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP() []byte {
 	return file_pkg_aaliagentgrpc_aali_agent_proto_rawDescData
 }
 
-var file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_pkg_aaliagentgrpc_aali_agent_proto_goTypes = []any{
 	(*ClientMessage)(nil),        // 0: aaliagentgrpc.ClientMessage
 	(*ServerMessage)(nil),        // 1: aaliagentgrpc.ServerMessage
@@ -910,10 +962,12 @@ var file_pkg_aaliagentgrpc_aali_agent_proto_goTypes = []any{
 	(*ConnectionStatus)(nil),     // 5: aaliagentgrpc.ConnectionStatus
 	(*AuthenticationStatus)(nil), // 6: aaliagentgrpc.AuthenticationStatus
 	(*ClientResponse)(nil),       // 7: aaliagentgrpc.ClientResponse
-	(*ErrorResponse)(nil),        // 8: aaliagentgrpc.ErrorResponse
-	nil,                          // 9: aaliagentgrpc.SessionContext.VariablesEntry
-	nil,                          // 10: aaliagentgrpc.ClientRequest.VariableValuesEntry
-	nil,                          // 11: aaliagentgrpc.ClientResponse.VariableValuesEntry
+	(*StringList)(nil),           // 8: aaliagentgrpc.StringList
+	(*ErrorResponse)(nil),        // 9: aaliagentgrpc.ErrorResponse
+	nil,                          // 10: aaliagentgrpc.SessionContext.VariablesEntry
+	nil,                          // 11: aaliagentgrpc.ClientRequest.VariableValuesEntry
+	nil,                          // 12: aaliagentgrpc.ClientResponse.VariableValuesEntry
+	nil,                          // 13: aaliagentgrpc.ClientResponse.SlashCommandsEntry
 }
 var file_pkg_aaliagentgrpc_aali_agent_proto_depIdxs = []int32{
 	2,  // 0: aaliagentgrpc.ClientMessage.session_context:type_name -> aaliagentgrpc.SessionContext
@@ -921,18 +975,20 @@ var file_pkg_aaliagentgrpc_aali_agent_proto_depIdxs = []int32{
 	5,  // 2: aaliagentgrpc.ServerMessage.connection_status:type_name -> aaliagentgrpc.ConnectionStatus
 	6,  // 3: aaliagentgrpc.ServerMessage.authentication_status:type_name -> aaliagentgrpc.AuthenticationStatus
 	7,  // 4: aaliagentgrpc.ServerMessage.client_response:type_name -> aaliagentgrpc.ClientResponse
-	9,  // 5: aaliagentgrpc.SessionContext.variables:type_name -> aaliagentgrpc.SessionContext.VariablesEntry
-	10, // 6: aaliagentgrpc.ClientRequest.variable_values:type_name -> aaliagentgrpc.ClientRequest.VariableValuesEntry
+	10, // 5: aaliagentgrpc.SessionContext.variables:type_name -> aaliagentgrpc.SessionContext.VariablesEntry
+	11, // 6: aaliagentgrpc.ClientRequest.variable_values:type_name -> aaliagentgrpc.ClientRequest.VariableValuesEntry
 	4,  // 7: aaliagentgrpc.ClientRequest.feedback:type_name -> aaliagentgrpc.WorkflowFeedback
-	11, // 8: aaliagentgrpc.ClientResponse.variable_values:type_name -> aaliagentgrpc.ClientResponse.VariableValuesEntry
-	8,  // 9: aaliagentgrpc.ClientResponse.error:type_name -> aaliagentgrpc.ErrorResponse
-	0,  // 10: aaliagentgrpc.WorkflowRun.RunWorkflow:input_type -> aaliagentgrpc.ClientMessage
-	1,  // 11: aaliagentgrpc.WorkflowRun.RunWorkflow:output_type -> aaliagentgrpc.ServerMessage
-	11, // [11:12] is the sub-list for method output_type
-	10, // [10:11] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	12, // 8: aaliagentgrpc.ClientResponse.variable_values:type_name -> aaliagentgrpc.ClientResponse.VariableValuesEntry
+	13, // 9: aaliagentgrpc.ClientResponse.slash_commands:type_name -> aaliagentgrpc.ClientResponse.SlashCommandsEntry
+	9,  // 10: aaliagentgrpc.ClientResponse.error:type_name -> aaliagentgrpc.ErrorResponse
+	8,  // 11: aaliagentgrpc.ClientResponse.SlashCommandsEntry.value:type_name -> aaliagentgrpc.StringList
+	0,  // 12: aaliagentgrpc.WorkflowRun.RunWorkflow:input_type -> aaliagentgrpc.ClientMessage
+	1,  // 13: aaliagentgrpc.WorkflowRun.RunWorkflow:output_type -> aaliagentgrpc.ServerMessage
+	13, // [13:14] is the sub-list for method output_type
+	12, // [12:13] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_pkg_aaliagentgrpc_aali_agent_proto_init() }
@@ -956,7 +1012,7 @@ func file_pkg_aaliagentgrpc_aali_agent_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc), len(file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
