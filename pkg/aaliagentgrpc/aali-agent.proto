@@ -137,7 +137,7 @@ message ClientResponse {
     string snapshot_id = 11;
 
     // Slash command properties; dictonary of @ commands and their corresponding slash commands
-    map<string, StringList> slash_commands = 12;
+    map<string, StringList> commands_by_category = 12;
 
     // Error properties
     ErrorResponse error = 13;
@@ -146,10 +146,10 @@ message ClientResponse {
     optional string info_message = 14;
 }
 
-// StringList is a message to hold a list of strings
-message StringList {
+// SlashCommands is the message to send a list of slash commands to the client.
+message SlashCommands {
     // List of strings
-    repeated string values = 1;
+    repeated string slash_commands = 1;
 }
 
 // ErrorResponse is the message to send an error response to the client.
