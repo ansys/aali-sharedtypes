@@ -136,14 +136,20 @@ message ClientResponse {
     // Snapshot properties; id of the snapshot taken or loaded
     string snapshot_id = 11;
 
-    // Slash command properties; list of slash commands supported by the workflow
-    repeated string slash_commands = 12;
+    // Slash command properties; dictonary of @ commands and their corresponding slash commands
+    map<string, StringList> slash_commands = 12;
 
     // Error properties
     ErrorResponse error = 13;
 
     // Info properties
     optional string info_message = 14;
+}
+
+// StringList is a message to hold a list of strings.
+message StringList {
+    // List of strings
+    repeated string values = 1;
 }
 
 // ErrorResponse is the message to send an error response to the client.
