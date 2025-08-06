@@ -754,7 +754,7 @@ func (x *ClientResponse) GetInfoMessage() string {
 	return ""
 }
 
-// StringList is a message to hold a list of strings.
+// StringList is a message to hold a list of strings
 type StringList struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of strings
