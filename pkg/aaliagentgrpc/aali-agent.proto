@@ -146,7 +146,7 @@ message ClientResponse {
     optional string info_message = 14;
 }
 
-// StringList is a message to hold a list of strings.
+// StringList is a message to hold a list of strings
 message StringList {
     // List of strings
     repeated string values = 1;
