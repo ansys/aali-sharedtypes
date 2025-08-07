@@ -190,7 +190,7 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 		return strconv.ParseBool(value)
 	case "interface{}", "any":
 		var output interface{}
-		if value == "" {
+		if value == "" || value == "null" {
 			output = nil
 		} else {
 			err := json.Unmarshal([]byte(value), &output)
