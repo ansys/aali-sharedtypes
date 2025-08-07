@@ -151,8 +151,6 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 		}
 	}()
 
-	fmt.Println("Converting value:", value, "to Go type:", goType)
-
 	switch goType {
 	case "string":
 		return value, nil
