@@ -142,6 +142,10 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 			Type:        "python",
 			Path:        function.Path,
 		}
+		// add the category to available categories
+		if flowkitclient.AvailableCategories != nil && function.Category != "" {
+			flowkitclient.AvailableCategories[function.Category] = true
+		}
 	}
 
 	return nil
