@@ -1,0 +1,1328 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference Template &#8212; aali-sharedtypes</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/test/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://ansys.github.io/aali-sharedtypes/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API reference" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0.0" />
+  <link rel="canonical" href="https://ansys.github.io/aali-sharedtypes/version/stable/api_reference/config/index.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://www.ansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/ansys_logo_transparent_black.png" class="logo__image only-light" alt="aali-sharedtypes - Home"/>
+    <img src="../../_static/ansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="aali-sharedtypes - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference Template</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://aali.docs.ansys.com/" class="nav-link">Aali</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">API reference</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API Reference Template</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package config
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ansys/aali-sharedtypes/pkg/config"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="#CreateUpdateConfigFileFromCLI">func CreateUpdateConfigFileFromCLI(fileName string) (err error)</a></dd>
+			
+				
+				<dd><a href="#GetGlobalConfigAsJSON">func GetGlobalConfigAsJSON() string</a></dd>
+			
+				
+				<dd><a href="#HandleLegacyPortDefinition">func HandleLegacyPortDefinition(configAddress string, legacyPort string) (webserverAddress string, err error)</a></dd>
+			
+				
+				<dd><a href="#InitConfig">func InitConfig(requiredProperties []string, optionalDefaultValues map[string]interface{})</a></dd>
+			
+				
+				<dd><a href="#InitGlobalConfigFromAzureKeyVault">func InitGlobalConfigFromAzureKeyVault() (err error)</a></dd>
+			
+				
+				<dd><a href="#InitGlobalConfigFromFile">func InitGlobalConfigFromFile(fileName string, requiredProperties []string, optionalDefaultValues map[string]interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#ValidateConfig">func ValidateConfig(config Config, requiredProperties []string) (err error)</a></dd>
+			
+				
+				<dd><a href="#createFlags">func createFlags(val reflect.Value, prefix string)</a></dd>
+			
+				
+				<dd><a href="#defineOptionalProperties">func defineOptionalProperties(config *Config, optionalDefaultValues map[string]interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="#isZeroValue">func isZeroValue(v reflect.Value) bool</a></dd>
+			
+				
+				<dd><a href="#timeToString">func timeToString(t time.Time) string</a></dd>
+			
+				
+				<dd><a href="#updateConfigWithCLI">func updateConfigWithCLI(config interface{}, cliConfig interface{}, setFlags map[string]bool, prefix string)</a></dd>
+			
+				
+				<dd><a href="#writeInterfaceToFile">func writeInterfaceToFile(data interface{}) error</a></dd>
+			
+				
+				<dd><a href="#writeStringToFile">func writeStringToFile(data string) error</a></dd>
+			
+			
+				
+				<dd><a href="#Config">type Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#readYaml">func readYaml(fileName string, configStruct Config) (extractedConfigStruct Config, err error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FlowkitConnection">type FlowkitConnection</a></dd>
+				
+				
+			
+				
+				<dd><a href="#flagStringSlice">type flagStringSlice</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#flagStringSlice.Set">func (fss *flagStringSlice) Set(value string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#flagStringSlice.String">func (fss *flagStringSlice) String() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go">config.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go">types.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CreateUpdateConfigFileFromCLI">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L266">CreateUpdateConfigFileFromCLI</a>
+				<a class="permalink" href="#CreateUpdateConfigFileFromCLI">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateUpdateConfigFileFromCLI(fileName <a href="https://pkg.go.dev/builtin/#string">string</a>) (err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>CreateUpdateConfigFileFromCLI reads and updates the configuration file based on command-line arguments.
+<p>Parameters:
+<ul>
+<li>fileName: The name of the configuration file.
+</ul>
+<p>Returns:
+<ul>
+<li>err: An error if there was an issue creating or updating the configuration file.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetGlobalConfigAsJSON">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L545">GetGlobalConfigAsJSON</a>
+				<a class="permalink" href="#GetGlobalConfigAsJSON">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetGlobalConfigAsJSON() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			<p>GetGlobalConfigAsJSON returns the global configuration as a JSON string.
+<p>Returns:
+<ul>
+<li>string: The global configuration as a JSON string.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HandleLegacyPortDefinition">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L672">HandleLegacyPortDefinition</a>
+				<a class="permalink" href="#HandleLegacyPortDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HandleLegacyPortDefinition(configAddress <a href="https://pkg.go.dev/builtin/#string">string</a>, legacyPort <a href="https://pkg.go.dev/builtin/#string">string</a>) (webserverAddress <a href="https://pkg.go.dev/builtin/#string">string</a>, err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>HandleLegacyPortDefinition checks if the address is set, and if not, uses the legacy port to define the web server address.
+If both are empty, it returns an error.
+<p>Parameters:
+<ul>
+<li>address: The address to use for the web server.
+<li>legacyPort: The legacy port to use if the address is not set.
+</ul>
+<p>Returns:
+<ul>
+<li>webserverAddress: The web server address to use.
+<li>err: An error if both address and legacy port are empty.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitConfig">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L53">InitConfig</a>
+				<a class="permalink" href="#InitConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitConfig(requiredProperties []<a href="https://pkg.go.dev/builtin/#string">string</a>, optionalDefaultValues map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{})</pre>
+			<p>InitConfig initializes the configuration for the Aali service.
+<p>Parameters:
+<ul>
+<li>requiredProperties: The list of required properties.
+<li>optionalDefaultValues: The map of optional properties and their default values.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitGlobalConfigFromAzureKeyVault">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L389">InitGlobalConfigFromAzureKeyVault</a>
+				<a class="permalink" href="#InitGlobalConfigFromAzureKeyVault">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitGlobalConfigFromAzureKeyVault() (err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>InitGlobalConfigFromAzureKeyVault extracts the configuration from Azure Key Vault.
+It iterates over all secrets in the key vault and if the secret name matches a field in the Config struct,
+it sets the field to the value of the secret.
+<p>Returns:
+<ul>
+<li>err: An error if there was an issue extracting the configuration.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitGlobalConfigFromFile">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L149">InitGlobalConfigFromFile</a>
+				<a class="permalink" href="#InitGlobalConfigFromFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitGlobalConfigFromFile(fileName <a href="https://pkg.go.dev/builtin/#string">string</a>, requiredProperties []<a href="https://pkg.go.dev/builtin/#string">string</a>, optionalDefaultValues map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{}) (err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>InitGlobalConfigFromFile reads the configuration file and initializes the Config object.
+<p>Parameters:
+<ul>
+<li>fileName: The name of the configuration file.
+<li>requiredProperties: The list of required properties.
+<li>optionalDefaultValues: The map of optional properties and their default values.
+</ul>
+<p>Returns:
+<ul>
+<li>err: An error if there was an issue initializing the configuration.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ValidateConfig">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L525">ValidateConfig</a>
+				<a class="permalink" href="#ValidateConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ValidateConfig(config <a href="#Config">Config</a>, requiredProperties []<a href="https://pkg.go.dev/builtin/#string">string</a>) (err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>ValidateConfig checks for mandatory entries in the configuration and validates chosen models.
+<p>Parameters:
+<ul>
+<li>config: The configuration object to validate.
+<li>requiredProperties: The list of required properties.
+</ul>
+<p>Returns:
+<ul>
+<li>err: An error if there was an issue validating the configuration.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="createFlags">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L325">createFlags</a>
+				<a class="permalink" href="#createFlags">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func createFlags(val <a href="https://pkg.go.dev/reflect/">reflect</a>.<a href="https://pkg.go.dev/reflect/#Value">Value</a>, prefix <a href="https://pkg.go.dev/builtin/#string">string</a>)</pre>
+			<p>CreateFlags initializes command-line flags for configuration.
+<p>Parameters:
+<ul>
+<li>val: The value to create flags for.
+<li>prefix: The prefix to use for the flags.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="defineOptionalProperties">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L215">defineOptionalProperties</a>
+				<a class="permalink" href="#defineOptionalProperties">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func defineOptionalProperties(config *<a href="#Config">Config</a>, optionalDefaultValues map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{}) (err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>defineOptionalProperties sets optional properties for the configuration.
+<p>Parameters:
+<ul>
+<li>config: The configuration object to validate.
+<li>optionalDefaultValues: The map of optional properties and their default values.
+</ul>
+<p>Returns:
+<ul>
+<li>err: An error if there was an issue setting the optional properties.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="isZeroValue">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L251">isZeroValue</a>
+				<a class="permalink" href="#isZeroValue">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func isZeroValue(v <a href="https://pkg.go.dev/reflect/">reflect</a>.<a href="https://pkg.go.dev/reflect/#Value">Value</a>) <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+			<p>isZeroValue checks if a reflect.Value is zero for its type.
+<p>Parameters:
+<ul>
+<li>v: The reflect.Value to check.
+</ul>
+<p>Returns:
+<ul>
+<li>bool: True if the value is zero, false otherwise.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="timeToString">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L653">timeToString</a>
+				<a class="permalink" href="#timeToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func timeToString(t <a href="https://pkg.go.dev/time/">time</a>.<a href="https://pkg.go.dev/time/#Time">Time</a>) <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			<p>timeToString converts a time.Time value to a formatted string.
+<p>Parameters:
+<ul>
+<li>t: The time.Time value to convert.
+</ul>
+<p>Returns:
+<ul>
+<li>string: The formatted string.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="updateConfigWithCLI">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L354">updateConfigWithCLI</a>
+				<a class="permalink" href="#updateConfigWithCLI">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func updateConfigWithCLI(config interface{}, cliConfig interface{}, setFlags map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#bool">bool</a>, prefix <a href="https://pkg.go.dev/builtin/#string">string</a>)</pre>
+			<p>updateConfigWithCLI updates the config with CLI values, but only for flags that were actually set
+<p>Parameters:
+<ul>
+<li>config: The existing config to update
+<li>cliConfig: The CLI config with parsed values
+<li>setFlags: Map of flag names that were actually set on command line
+<li>prefix: The current prefix for nested structs
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="writeInterfaceToFile">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L564">writeInterfaceToFile</a>
+				<a class="permalink" href="#writeInterfaceToFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func writeInterfaceToFile(data interface{}) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			<p>writeInterfaceToFile writes interface data to an error log file.
+<p>Parameters:
+<ul>
+<li>data: The data to write to the file.
+</ul>
+<p>Returns:
+<ul>
+<li>error: An error if there was an issue writing to the file.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="writeStringToFile">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L613">writeStringToFile</a>
+				<a class="permalink" href="#writeStringToFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func writeStringToFile(data <a href="https://pkg.go.dev/builtin/#string">string</a>) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			<p>writeStringToFile writes string data to an error log file.
+<p>Parameters:
+<ul>
+<li>data: The data to write to the file.
+</ul>
+<p>Returns:
+<ul>
+<li>error: An error if there was an issue writing to the file.
+</ul>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Config">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go#L31">Config</a>
+				<a class="permalink" href="#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Config contains all the configuration settings for the Aali service.
+
+			<pre>type Config struct {
+
+    <span class="comment">// Logging</span>
+    <span class="comment">///////////</span>
+<span id="Config.LOG_LEVEL"></span>    LOG_LEVEL <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LOG_LEVEL&#34; json:&#34;LOGLEVEL&#34;`
+    <span class="comment">// Local Logs</span>
+<span id="Config.LOCAL_LOGS"></span>    LOCAL_LOGS          <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;LOCAL_LOGS&#34; json:&#34;LOCALLOGS&#34;`
+<span id="Config.LOCAL_LOGS_LOCATION"></span>    LOCAL_LOGS_LOCATION <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LOCAL_LOGS_LOCATION&#34; json:&#34;LOCALLOGSLOCATION&#34;`
+    <span class="comment">// Datadog Logs</span>
+<span id="Config.DATADOG_LOGS"></span>    DATADOG_LOGS        <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;DATADOG_LOGS&#34; json:&#34;DATADOGLOGS&#34;`
+<span id="Config.STAGE"></span>    STAGE               <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;STAGE&#34; json:&#34;STAGE&#34;`
+<span id="Config.VERSION"></span>    VERSION             <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;VERSION&#34; json:&#34;VERSION&#34;`
+<span id="Config.SERVICE_NAME"></span>    SERVICE_NAME        <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;SERVICE_NAME&#34; json:&#34;SERVICENAME&#34;`
+<span id="Config.ERROR_FILE_LOCATION"></span>    ERROR_FILE_LOCATION <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ERROR_FILE_LOCATION&#34; json:&#34;ERRORFILELOCATION&#34;`
+<span id="Config.LOGGING_URL"></span>    LOGGING_URL         <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LOGGING_URL&#34; json:&#34;LOGGINGURL&#34;`
+<span id="Config.LOGGING_API_KEY"></span>    LOGGING_API_KEY     <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LOGGING_API_KEY&#34; json:&#34;LOGGINGAPIKEY&#34;`
+<span id="Config.DATADOG_SOURCE"></span>    DATADOG_SOURCE      <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;DATADOG_SOURCE&#34; json:&#34;DATADOGSOURCE&#34;`
+    <span class="comment">// Datadog Metrics</span>
+<span id="Config.DATADOG_METRICS"></span>    DATADOG_METRICS <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;DATADOG_METRICS&#34; json:&#34;DATADOGMETRICS&#34;`
+<span id="Config.METRICS_URL"></span>    METRICS_URL     <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;METRICS_URL&#34; json:&#34;METRICSURL&#34;`
+
+    <span class="comment">// SSL Settings</span>
+    <span class="comment">/////////////////</span>
+<span id="Config.USE_SSL"></span>    USE_SSL                   <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;USE_SSL&#34; json:&#34;USESSL&#34;`
+<span id="Config.SSL_CERT_PUBLIC_KEY_FILE"></span>    SSL_CERT_PUBLIC_KEY_FILE  <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;SSL_CERT_PUBLIC_KEY_FILE&#34; json:&#34;SSLCERTPUBLICKEYFILE&#34;`
+<span id="Config.SSL_CERT_PRIVATE_KEY_FILE"></span>    SSL_CERT_PRIVATE_KEY_FILE <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;SSL_CERT_PRIVATE_KEY_FILE&#34; json:&#34;SSLCERTPRIVATEKEYFILE&#34;`
+
+    <span class="comment">// Azure Key Vault Settings</span>
+    <span class="comment">////////////////////////////</span>
+<span id="Config.EXTRACT_CONFIG_FROM_AZURE_KEY_VAULT"></span>    EXTRACT_CONFIG_FROM_AZURE_KEY_VAULT <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;EXTRACT_CONFIG_FROM_AZURE_KEY_VAULT&#34; json:&#34;EXTRACTCONFIGFROMAZUREKEYVAULT&#34;`
+<span id="Config.AZURE_KEY_VAULT_NAME"></span>    AZURE_KEY_VAULT_NAME                <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AZURE_KEY_VAULT_NAME&#34; json:&#34;AZUREKEYVAULTNAME&#34;`
+<span id="Config.AZURE_MANAGED_IDENTITY_ID"></span>    AZURE_MANAGED_IDENTITY_ID           <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AZURE_MANAGED_IDENTITY_ID&#34; json:&#34;AZUREMANAGEDIDENTITYID&#34;`
+
+    <span class="comment">// Aali Agent</span>
+    <span class="comment">///////////////</span>
+<span id="Config.AGENT_ADDRESS"></span>    AGENT_ADDRESS              <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AGENT_ADDRESS&#34; json:&#34;AGENTADDRESS&#34;`
+<span id="Config.PRODUCTION_MODE"></span>    PRODUCTION_MODE            <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;PRODUCTION_MODE&#34; json:&#34;PRODUCTIONMODE&#34;` <span class="comment">// If true, the agent error messages will be generic</span>
+<span id="Config.WORKFLOW_API_KEY"></span>    WORKFLOW_API_KEY           <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WORKFLOW_API_KEY&#34; json:&#34;WORKFLOWAPIKEY&#34;`
+<span id="Config.WORKFLOW_STORE_PATH"></span>    WORKFLOW_STORE_PATH        <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WORKFLOW_STORE_PATH&#34; json:&#34;WORKFLOWSTOREPATH&#34;`
+<span id="Config.BINARY_STORE_PATH"></span>    BINARY_STORE_PATH          <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;BINARY_STORE_PATH&#34; json:&#34;BINARYSTOREPATH&#34;`
+<span id="Config.NUMBER_OF_WORKFLOW_WORKERS"></span>    NUMBER_OF_WORKFLOW_WORKERS <a href="https://pkg.go.dev/builtin/#int">int</a>    `yaml:&#34;NUMBER_OF_WORKFLOW_WORKERS&#34; json:&#34;NUMBEROFWORKFLOWWORKERS&#34;`
+    <span class="comment">// Flowkit Connection</span>
+<span id="Config.FLOWKIT_CONNECTIONS"></span>    FLOWKIT_CONNECTIONS        []<a href="#FlowkitConnection">FlowkitConnection</a> `yaml:&#34;FLOWKIT_CONNECTIONS&#34; json:&#34;FLOWKITCONNECTIONS&#34;`              <span class="comment">// Contains the URL and API key for the FlowKit server</span>
+<span id="Config.FLOWKIT_PYTHON_CONNECTIONS"></span>    FLOWKIT_PYTHON_CONNECTIONS []<a href="#FlowkitConnection">FlowkitConnection</a> `yaml:&#34;FLOWKIT_PYTHON_CONNECTIONS&#34; json:&#34;FLOWKITPYTHONCONNECTIONS&#34;` <span class="comment">// Contains the URL and API key for the FlowKit-Python server</span>
+    <span class="comment">// External Function Endpoints (Legacy)</span>
+<span id="Config.EXTERNALFUNCTIONS_ENDPOINT"></span>    EXTERNALFUNCTIONS_ENDPOINT <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXTERNALFUNCTIONS_ENDPOINT&#34; json:&#34;EXTERNALFUNCTIONSENDPOINT&#34;`
+<span id="Config.FLOWKIT_PYTHON_ENDPOINT"></span>    FLOWKIT_PYTHON_ENDPOINT    <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;FLOWKIT_PYTHON_ENDPOINT&#34; json:&#34;FLOWKITPYTHONENDPOINT&#34;`
+    <span class="comment">// Authentication &amp; Authorization</span>
+<span id="Config.ENABLE_AUTH"></span>    ENABLE_AUTH                      <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;ENABLE_AUTH&#34; json:&#34;ENABLEAUTH&#34;` <span class="comment">// If true, the agent will require authentication/authorization for workflows</span>
+<span id="Config.AZURE_AD_AUTHENTICATION_URL"></span>    AZURE_AD_AUTHENTICATION_URL      <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AZURE_AD_AUTHENTICATION_URL&#34; json:&#34;AZUREADAUTHENTICATIONURL&#34;`
+<span id="Config.ANSYS_AUTHORIZATION_URL"></span>    ANSYS_AUTHORIZATION_URL          <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_AUTHORIZATION_URL&#34; json:&#34;ANSYSAUTHORIZATIONURL&#34;`
+<span id="Config.ANSYS_GATING_AND_ENTITLEMENT_URL"></span>    ANSYS_GATING_AND_ENTITLEMENT_URL <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_GATING_AND_ENTITLEMENT_URL&#34; json:&#34;ANSYSGATINGANDENTITLEMENTURL&#34;`
+<span id="Config.ANSYS_AUTHORIZATION_CRYPT_KEY"></span>    ANSYS_AUTHORIZATION_CRYPT_KEY    <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_AUTHORIZATION_CRYPT_KEY&#34; json:&#34;ANSYSAUTHORIZATIONCRYPTKEY&#34;`
+<span id="Config.ANSYS_AUTHORIZATION_SECRET_KEY"></span>    ANSYS_AUTHORIZATION_SECRET_KEY   <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_AUTHORIZATION_SECRET_KEY&#34; json:&#34;ANSYSAUTHORIZATIONSECRETKEY&#34;`
+<span id="Config.ANSYS_DISCO_CRYPT_PRIVAT_KEY"></span>    ANSYS_DISCO_CRYPT_PRIVAT_KEY     <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_DISCO_CRYPT_PRIVAT_KEY&#34; json:&#34;ANSYSDISCOCRYPTPRIVATKEY&#34;`
+<span id="Config.ANSYS_DISOC_SIGN_PUBLIC_KEY"></span>    ANSYS_DISOC_SIGN_PUBLIC_KEY      <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;ANSYS_DISOC_SIGN_PUBLIC_KEY&#34; json:&#34;ANSYSDISOCSIGNPUBLICKEY&#34;`
+    <span class="comment">// Workflows</span>
+<span id="Config.DISABLE_PUBLIC_WORKFLOWS"></span>    DISABLE_PUBLIC_WORKFLOWS  <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `yaml:&#34;DISABLE_PUBLIC_WORKFLOWS&#34; json:&#34;DISABLEPUBLICWORKFLOWS&#34;`
+<span id="Config.LOAD_PRIVATE_WORKFLOWS"></span>    LOAD_PRIVATE_WORKFLOWS    <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `yaml:&#34;LOAD_PRIVATE_WORKFLOWS&#34; json:&#34;LOADPRIVATEWORKFLOWS&#34;`
+<span id="Config.GITHUB_USER"></span>    GITHUB_USER               <a href="https://pkg.go.dev/builtin/#string">string</a>   `yaml:&#34;GITHUB_USER&#34; json:&#34;GITHUBUSER&#34;`
+<span id="Config.GITHUB_TOKEN"></span>    GITHUB_TOKEN              <a href="https://pkg.go.dev/builtin/#string">string</a>   `yaml:&#34;GITHUB_TOKEN&#34; json:&#34;GITHUBTOKEN&#34;`
+<span id="Config.PRIVATE_WORKFLOWS_FOLDERS"></span>    PRIVATE_WORKFLOWS_FOLDERS []<a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;PRIVATE_WORKFLOWS_FOLDERS&#34; json:&#34;PRIVATEWORKFLOWSFOLDERS&#34;`
+    <span class="comment">// Exec Settings</span>
+<span id="Config.EXEC_ENDPOINT"></span>    EXEC_ENDPOINT                        <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_ENDPOINT&#34; json:&#34;EXECENDPOINT&#34;`
+<span id="Config.EXEC_AGENT_API_KEY"></span>    EXEC_AGENT_API_KEY                   <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_AGENT_API_KEY&#34; json:&#34;EXECAGENTAPIKEY&#34;`
+<span id="Config.MONGO_DB_FOR_MULTI_AGENT"></span>    MONGO_DB_FOR_MULTI_AGENT             <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;MONGO_DB_FOR_MULTI_AGENT&#34; json:&#34;MONGODBFORMULTIAGENT&#34;`
+<span id="Config.MONGO_DB_ENDPOINT"></span>    MONGO_DB_ENDPOINT                    <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;MONGO_DB_ENDPOINT&#34; json:&#34;MONGODBENDPOINT&#34;`
+<span id="Config.MILLISECONDS_MONGODB_UPDATE_INTERVAL"></span>    MILLISECONDS_MONGODB_UPDATE_INTERVAL <a href="https://pkg.go.dev/builtin/#int">int</a>    `yaml:&#34;MILLISECONDS_MONGODB_UPDATE_INTERVAL&#34; json:&#34;MILLISECONDSMONGODBUPDATEINTERVAL&#34;`
+<span id="Config.EXEC_FILE_STORE_PATH"></span>    EXEC_FILE_STORE_PATH                 <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_FILE_STORE_PATH&#34; json:&#34;EXECFILESTOREPATH&#34;`
+    <span class="comment">// DB Connection</span>
+<span id="Config.KVDB_ENDPOINT"></span>    KVDB_ENDPOINT <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;KVDB_ENDPOINT&#34; json:&#34;KVDBENDPOINT&#34;`
+    <span class="comment">// Workflow Store</span>
+<span id="Config.WORKFLOW_CONFIG_VARIABLES"></span>    WORKFLOW_CONFIG_VARIABLES map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WORKFLOW_CONFIG_VARIABLES&#34; json:&#34;WORKFLOWCONFIGVARIABLES&#34;`
+
+    <span class="comment">// Aali LLM</span>
+    <span class="comment">/////////////</span>
+<span id="Config.LLM_ADDRESS"></span>    LLM_ADDRESS            <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LLM_ADDRESS&#34; json:&#34;LLMADDRESS&#34;`
+<span id="Config.MODELS_CONFIG_LOCATION"></span>    MODELS_CONFIG_LOCATION <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;MODELS_CONFIG_LOCATION&#34; json:&#34;MODELSCONFIGLOCATION&#34;`
+<span id="Config.LLM_API_KEY"></span>    LLM_API_KEY            <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LLM_API_KEY&#34; json:&#34;LLMAPIKEY&#34;`
+
+    <span class="comment">// Aali Exec</span>
+    <span class="comment">//////////////</span>
+<span id="Config.EXEC_ADDRESS"></span>    EXEC_ADDRESS <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_ADDRESS&#34; json:&#34;EXECADDRESS&#34;`
+<span id="Config.EXEC_ID"></span>    EXEC_ID      <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_ID&#34; json:&#34;EXECID&#34;`
+<span id="Config.EXEC_API_KEY"></span>    EXEC_API_KEY <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXEC_API_KEY&#34; json:&#34;EXECAPIKEY&#34;`
+    <span class="comment">// Python executable name</span>
+<span id="Config.PYTHON_EXECUTABLE"></span>    PYTHON_EXECUTABLE <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;PYTHON_EXECUTABLE&#34; json:&#34;PYTHONEXECUTABLE&#34;`
+<span id="Config.BASH_EXECUTABLE"></span>    BASH_EXECUTABLE   <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;BASH_EXECUTABLE&#34; json:&#34;BASHEXECUTABLE&#34;`
+    <span class="comment">// File transfer</span>
+<span id="Config.WATCH_FOLDER_PATH"></span>    WATCH_FOLDER_PATH              <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WATCH_FOLDER_PATH&#34; json:&#34;WATCHFOLDERPATH&#34;`
+<span id="Config.MILLISECONDS_SINCE_LAST_CHANGE"></span>    MILLISECONDS_SINCE_LAST_CHANGE <a href="https://pkg.go.dev/builtin/#int">int</a>    `yaml:&#34;MILLISECONDS_SINCE_LAST_CHANGE&#34; json:&#34;MILLISECONDSSINCELASTCHANGE&#34;`
+    <span class="comment">// Agent connection</span>
+<span id="Config.AGENT_ENDPOINT"></span>    AGENT_ENDPOINT <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AGENT_ENDPOINT&#34; json:&#34;AGENTENDPOINT&#34;`
+
+    <span class="comment">// Aali KVDB</span>
+    <span class="comment">/////////////////</span>
+<span id="Config.KVDB_ADDRESS"></span>    KVDB_ADDRESS   <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;KVDB_ADDRESS&#34; json:&#34;KVDBADDRESS&#34;`
+<span id="Config.KVDB_PATH"></span>    KVDB_PATH      <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;KVDB_PATH&#34; json:&#34;KVDBPATH&#34;`
+<span id="Config.KVDB_IN_MEMORY"></span>    KVDB_IN_MEMORY <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `yaml:&#34;KVDB_IN_MEMORY&#34; json:&#34;KVDBINMEMORY&#34;`
+
+    <span class="comment">// Aali Flowkit</span>
+    <span class="comment">/////////////////</span>
+<span id="Config.FLOWKIT_ADDRESS"></span>    FLOWKIT_ADDRESS <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;FLOWKIT_ADDRESS&#34; json:&#34;FLOWKITADDRESS&#34;`
+<span id="Config.FLOWKIT_API_KEY"></span>    FLOWKIT_API_KEY <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;FLOWKIT_API_KEY&#34; json:&#34;FLOWKITAPIKEY&#34;`
+    <span class="comment">// Connections to other Modules</span>
+<span id="Config.LLM_HANDLER_ENDPOINT"></span>    LLM_HANDLER_ENDPOINT  <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;LLM_HANDLER_ENDPOINT&#34; json:&#34;LLMHANDLERENDPOINT&#34;`
+<span id="Config.KNOWLEDGE_DB_ENDPOINT"></span>    KNOWLEDGE_DB_ENDPOINT <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;KNOWLEDGE_DB_ENDPOINT&#34; json:&#34;KNOWLEDGEDBENDPOINT&#34;`
+<span id="Config.GRAPHDB_ADDRESS"></span>    GRAPHDB_ADDRESS       <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;GRAPHDB_ADDRESS&#34; json:&#34;GRAPHDBADDRESS&#34;`
+<span id="Config.QDRANT_HOST"></span>    QDRANT_HOST           <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;QDRANT_HOST&#34; json:&#34;QDRANTHOST&#34;`
+<span id="Config.QDRANT_PORT"></span>    QDRANT_PORT           <a href="https://pkg.go.dev/builtin/#int">int</a>    `yaml:&#34;QDRANT_PORT&#34; json:&#34;QDRANTPORT&#34;`
+
+    <span class="comment">// Aali Flowkit Python</span>
+    <span class="comment">//////////////////////</span>
+<span id="Config.FLOWKIT_PYTHON_ADDRESS"></span>    FLOWKIT_PYTHON_ADDRESS <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;FLOWKIT_PYTHON_ADDRESS&#34; json:&#34;FLOWKITPYTHONADDRESS&#34;`
+<span id="Config.FLOWKIT_PYTHON_API_KEY"></span>    FLOWKIT_PYTHON_API_KEY <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;FLOWKIT_PYTHON_API_KEY&#34; json:&#34;FLOWKITPYTHONAPIKEY&#34;`
+
+    <span class="comment">// Legacy Port definitions (are overwritten by the new ADDRESS variables)</span>
+    <span class="comment">/////////////////////////////////////////////////////////////////////////</span>
+<span id="Config.AGENT_PORT"></span>    AGENT_PORT                  <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;AGENT_PORT&#34; json:&#34;AGENTPORT&#34;`
+<span id="Config.EXTERNALFUNCTIONS_GRPC_PORT"></span>    EXTERNALFUNCTIONS_GRPC_PORT <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;EXTERNALFUNCTIONS_GRPC_PORT&#34; json:&#34;EXTERNALFUNCTIONSGRPCPORT&#34;`
+<span id="Config.WEBSERVER_PORT"></span>    WEBSERVER_PORT              <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WEBSERVER_PORT&#34; json:&#34;WEBSERVERPORT&#34;`
+<span id="Config.WEBSERVER_PORT_EXEC"></span>    WEBSERVER_PORT_EXEC         <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;WEBSERVER_PORT_EXEC&#34; json:&#34;WEBSERVERPORTEXEC&#34;`
+}
+</pre>
+
+			
+
+			
+				<p>Initialize conifg dict
+
+				<pre>var <span id="GlobalConfig">GlobalConfig</span> *<a href="#Config">Config</a></pre>
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="readYaml">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/config.go#L177">readYaml</a>
+					<a class="permalink" href="#readYaml">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func readYaml(fileName <a href="https://pkg.go.dev/builtin/#string">string</a>, configStruct <a href="#Config">Config</a>) (extractedConfigStruct <a href="#Config">Config</a>, err <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				<p>readYaml reads the yaml specified in `fileName` parameter and saves it to `config_struct`
+<p>Parameters:
+<ul>
+<li>fileName: The name of the configuration file.
+<li>configStruct: Struct with the parameters of the YAML to read.
+</ul>
+<p>Returns:
+<ul>
+<li>extractedConfigStruct: The extracted configuration struct.
+<li>err: An error if there was an issue reading the YAML file.
+</ul>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="FlowkitConnection">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go#L156">FlowkitConnection</a>
+				<a class="permalink" href="#FlowkitConnection">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FlowkitConnections contains the configuration for connecting to the FlowKit server.
+
+			<pre>type FlowkitConnection struct {
+<span id="FlowkitConnection.URL"></span>    URL     <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;URL&#34; json:&#34;URL&#34;`        <span class="comment">// URL of the FlowKit server</span>
+<span id="FlowkitConnection.API_KEY"></span>    API_KEY <a href="https://pkg.go.dev/builtin/#string">string</a> `yaml:&#34;API_KEY&#34; json:&#34;APIKEY&#34;` <span class="comment">// API key for the FlowKit server</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="flagStringSlice">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go#L165">flagStringSlice</a>
+				<a class="permalink" href="#flagStringSlice">&#xb6;</a>
+				
+				
+			</h2>
+			<p>flagStringSlice is a custom flag type for string slices.
+
+			<pre>type flagStringSlice []<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="flagStringSlice.Set">func (*flagStringSlice) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go#L182">Set</a>
+					<a class="permalink" href="#flagStringSlice.Set">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fss *flagStringSlice) Set(value <a href="https://pkg.go.dev/builtin/#string">string</a>) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+				<p>Set sets the value of the flagStringSlice.
+<p>Parameters:
+<ul>
+<li>value: The value to set.
+</ul>
+<p>Returns:
+<ul>
+<li>error: An error if there was an issue setting the value.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="flagStringSlice.String">func (*flagStringSlice) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/config/types.go#L171">String</a>
+					<a class="permalink" href="#flagStringSlice.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fss *flagStringSlice) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				<p>String returns a string representation of the flagStringSlice.
+<p>Returns:
+<ul>
+<li>string: The string representation of the flagStringSlice.
+</ul>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.5.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="None">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api_reference/test/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

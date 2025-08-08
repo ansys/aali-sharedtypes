@@ -1,0 +1,3600 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference Template &#8212; aali-sharedtypes</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/test/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://ansys.github.io/aali-sharedtypes/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API reference" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0.0" />
+  <link rel="canonical" href="https://ansys.github.io/aali-sharedtypes/version/stable/api_reference/aaliagentgrpc/index.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://www.ansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/ansys_logo_transparent_black.png" class="logo__image only-light" alt="aali-sharedtypes - Home"/>
+    <img src="../../_static/ansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="aali-sharedtypes - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference Template</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://aali.docs.ansys.com/" class="nav-link">Aali</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">API reference</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API Reference Template</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package aaliagentgrpc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ansys/aali-sharedtypes/pkg/aaliagentgrpc"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="#RegisterWorkflowRunServer">func RegisterWorkflowRunServer(s grpc.ServiceRegistrar, srv WorkflowRunServer)</a></dd>
+			
+				
+				<dd><a href="#_WorkflowRun_RunWorkflow_Handler">func _WorkflowRun_RunWorkflow_Handler(srv interface{}, stream grpc.ServerStream) error</a></dd>
+			
+				
+				<dd><a href="#file_pkg_aaliagentgrpc_aali_agent_proto_init">func file_pkg_aaliagentgrpc_aali_agent_proto_init()</a></dd>
+			
+				
+				<dd><a href="#file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP">func file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP() []byte</a></dd>
+			
+				
+				<dd><a href="#init">func init()</a></dd>
+			
+			
+				
+				<dd><a href="#AuthenticationStatus">type AuthenticationStatus</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.Descriptor">func (*AuthenticationStatus) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.GetAuthenticationStatus">func (x *AuthenticationStatus) GetAuthenticationStatus() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.ProtoMessage">func (*AuthenticationStatus) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.ProtoReflect">func (x *AuthenticationStatus) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.Reset">func (x *AuthenticationStatus) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthenticationStatus.String">func (x *AuthenticationStatus) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ClientMessage">type ClientMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.Descriptor">func (*ClientMessage) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.GetClientRequest">func (x *ClientMessage) GetClientRequest() *ClientRequest</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.GetMessageType">func (x *ClientMessage) GetMessageType() isClientMessage_MessageType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.GetSessionContext">func (x *ClientMessage) GetSessionContext() *SessionContext</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.ProtoMessage">func (*ClientMessage) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.ProtoReflect">func (x *ClientMessage) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.Reset">func (x *ClientMessage) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage.String">func (x *ClientMessage) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ClientMessage_ClientRequest">type ClientMessage_ClientRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage_ClientRequest.isClientMessage_MessageType">func (*ClientMessage_ClientRequest) isClientMessage_MessageType()</a></dd>
+				
+			
+				
+				<dd><a href="#ClientMessage_SessionContext">type ClientMessage_SessionContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientMessage_SessionContext.isClientMessage_MessageType">func (*ClientMessage_SessionContext) isClientMessage_MessageType()</a></dd>
+				
+			
+				
+				<dd><a href="#ClientRequest">type ClientRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.Descriptor">func (*ClientRequest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetFeedback">func (x *ClientRequest) GetFeedback() *WorkflowFeedback</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetImages">func (x *ClientRequest) GetImages() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetInput">func (x *ClientRequest) GetInput() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetInstructionId">func (x *ClientRequest) GetInstructionId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetSnapshotId">func (x *ClientRequest) GetSnapshotId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetType">func (x *ClientRequest) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.GetVariableValues">func (x *ClientRequest) GetVariableValues() map[string]string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.ProtoMessage">func (*ClientRequest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.ProtoReflect">func (x *ClientRequest) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.Reset">func (x *ClientRequest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientRequest.String">func (x *ClientRequest) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ClientResponse">type ClientResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.Descriptor">func (*ClientResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetChatData">func (x *ClientResponse) GetChatData() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetCodeValidation">func (x *ClientResponse) GetCodeValidation() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetCommandsByCategory">func (x *ClientResponse) GetCommandsByCategory() []*SlashCommandCategory</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetContext">func (x *ClientResponse) GetContext() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetError">func (x *ClientResponse) GetError() *ErrorResponse</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetInfoMessage">func (x *ClientResponse) GetInfoMessage() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetInputTokenCount">func (x *ClientResponse) GetInputTokenCount() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetInstructionId">func (x *ClientResponse) GetInstructionId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetIsLast">func (x *ClientResponse) GetIsLast() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetOutputTokenCount">func (x *ClientResponse) GetOutputTokenCount() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetPosition">func (x *ClientResponse) GetPosition() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetSnapshotId">func (x *ClientResponse) GetSnapshotId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetType">func (x *ClientResponse) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.GetVariableValues">func (x *ClientResponse) GetVariableValues() map[string]string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.ProtoMessage">func (*ClientResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.ProtoReflect">func (x *ClientResponse) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.Reset">func (x *ClientResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ClientResponse.String">func (x *ClientResponse) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ConnectionStatus">type ConnectionStatus</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.Descriptor">func (*ConnectionStatus) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.GetConnectionStatus">func (x *ConnectionStatus) GetConnectionStatus() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.GetMaxNumberOfSnapshots">func (x *ConnectionStatus) GetMaxNumberOfSnapshots() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.GetWorkflowRunId">func (x *ConnectionStatus) GetWorkflowRunId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.ProtoMessage">func (*ConnectionStatus) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.ProtoReflect">func (x *ConnectionStatus) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.Reset">func (x *ConnectionStatus) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ConnectionStatus.String">func (x *ConnectionStatus) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ErrorResponse">type ErrorResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.Descriptor">func (*ErrorResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.GetCode">func (x *ErrorResponse) GetCode() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.GetMessage">func (x *ErrorResponse) GetMessage() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.ProtoMessage">func (*ErrorResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.ProtoReflect">func (x *ErrorResponse) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.Reset">func (x *ErrorResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ErrorResponse.String">func (x *ErrorResponse) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ServerMessage">type ServerMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.Descriptor">func (*ServerMessage) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.GetAuthenticationStatus">func (x *ServerMessage) GetAuthenticationStatus() *AuthenticationStatus</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.GetClientResponse">func (x *ServerMessage) GetClientResponse() *ClientResponse</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.GetConnectionStatus">func (x *ServerMessage) GetConnectionStatus() *ConnectionStatus</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.GetMessageType">func (x *ServerMessage) GetMessageType() isServerMessage_MessageType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.ProtoMessage">func (*ServerMessage) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.ProtoReflect">func (x *ServerMessage) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.Reset">func (x *ServerMessage) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage.String">func (x *ServerMessage) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ServerMessage_AuthenticationStatus">type ServerMessage_AuthenticationStatus</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage_AuthenticationStatus.isServerMessage_MessageType">func (*ServerMessage_AuthenticationStatus) isServerMessage_MessageType()</a></dd>
+				
+			
+				
+				<dd><a href="#ServerMessage_ClientResponse">type ServerMessage_ClientResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage_ClientResponse.isServerMessage_MessageType">func (*ServerMessage_ClientResponse) isServerMessage_MessageType()</a></dd>
+				
+			
+				
+				<dd><a href="#ServerMessage_ConnectionStatus">type ServerMessage_ConnectionStatus</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ServerMessage_ConnectionStatus.isServerMessage_MessageType">func (*ServerMessage_ConnectionStatus) isServerMessage_MessageType()</a></dd>
+				
+			
+				
+				<dd><a href="#SessionContext">type SessionContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.Descriptor">func (*SessionContext) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetJwtToken">func (x *SessionContext) GetJwtToken() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetSnapshotId">func (x *SessionContext) GetSnapshotId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetStoreSnapshots">func (x *SessionContext) GetStoreSnapshots() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetUserId">func (x *SessionContext) GetUserId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetVariables">func (x *SessionContext) GetVariables() map[string]string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetWorkflowId">func (x *SessionContext) GetWorkflowId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.GetWorkflowRunId">func (x *SessionContext) GetWorkflowRunId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.ProtoMessage">func (*SessionContext) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.ProtoReflect">func (x *SessionContext) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.Reset">func (x *SessionContext) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SessionContext.String">func (x *SessionContext) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#SlashCommand">type SlashCommand</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.Descriptor">func (*SlashCommand) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.GetDescription">func (x *SlashCommand) GetDescription() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.GetName">func (x *SlashCommand) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.ProtoMessage">func (*SlashCommand) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.ProtoReflect">func (x *SlashCommand) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.Reset">func (x *SlashCommand) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommand.String">func (x *SlashCommand) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#SlashCommandCategory">type SlashCommandCategory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.Descriptor">func (*SlashCommandCategory) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.GetCommands">func (x *SlashCommandCategory) GetCommands() []*SlashCommand</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.GetDescription">func (x *SlashCommandCategory) GetDescription() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.GetName">func (x *SlashCommandCategory) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.ProtoMessage">func (*SlashCommandCategory) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.ProtoReflect">func (x *SlashCommandCategory) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.Reset">func (x *SlashCommandCategory) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#SlashCommandCategory.String">func (x *SlashCommandCategory) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#UnimplementedWorkflowRunServer">type UnimplementedWorkflowRunServer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedWorkflowRunServer.RunWorkflow">func (UnimplementedWorkflowRunServer) RunWorkflow(grpc.BidiStreamingServer[ClientMessage, ServerMessage]) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedWorkflowRunServer.mustEmbedUnimplementedWorkflowRunServer">func (UnimplementedWorkflowRunServer) mustEmbedUnimplementedWorkflowRunServer()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedWorkflowRunServer.testEmbeddedByValue">func (UnimplementedWorkflowRunServer) testEmbeddedByValue()</a></dd>
+				
+			
+				
+				<dd><a href="#UnsafeWorkflowRunServer">type UnsafeWorkflowRunServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#WorkflowFeedback">type WorkflowFeedback</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.Descriptor">func (*WorkflowFeedback) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.GetAddNegative">func (x *WorkflowFeedback) GetAddNegative() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.GetAddPositive">func (x *WorkflowFeedback) GetAddPositive() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.GetMessageId">func (x *WorkflowFeedback) GetMessageId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.GetRemoveNegative">func (x *WorkflowFeedback) GetRemoveNegative() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.GetRemovePositive">func (x *WorkflowFeedback) GetRemovePositive() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.ProtoMessage">func (*WorkflowFeedback) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.ProtoReflect">func (x *WorkflowFeedback) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.Reset">func (x *WorkflowFeedback) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#WorkflowFeedback.String">func (x *WorkflowFeedback) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#WorkflowRunClient">type WorkflowRunClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewWorkflowRunClient">func NewWorkflowRunClient(cc grpc.ClientConnInterface) WorkflowRunClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="#WorkflowRunServer">type WorkflowRunServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#WorkflowRun_RunWorkflowClient">type WorkflowRun_RunWorkflowClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="#WorkflowRun_RunWorkflowServer">type WorkflowRun_RunWorkflowServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#isClientMessage_MessageType">type isClientMessage_MessageType</a></dd>
+				
+				
+			
+				
+				<dd><a href="#isServerMessage_MessageType">type isServerMessage_MessageType</a></dd>
+				
+				
+			
+				
+				<dd><a href="#workflowRunClient">type workflowRunClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#workflowRunClient.RunWorkflow">func (c *workflowRunClient) RunWorkflow(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ClientMessage, ServerMessage], error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go">aali-agent.pb.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go">aali-agent_grpc.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// Verify that this generated code is sufficiently up-to-date.</span>
+    <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#EnforceVersion">EnforceVersion</a>(20 - <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MinVersion">MinVersion</a>)
+    <span class="comment">// Verify that runtime/protoimpl is sufficiently up-to-date.</span>
+    <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#EnforceVersion">EnforceVersion</a>(<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MaxVersion">MaxVersion</a> - 20)
+)</pre>
+			
+				
+				<pre>const (
+    <span id="WorkflowRun_RunWorkflow_FullMethodName">WorkflowRun_RunWorkflow_FullMethodName</span> = &#34;/aaliagentgrpc.WorkflowRun/RunWorkflow&#34;
+)</pre>
+			
+				<p>This is a compile-time assertion to ensure that this generated file
+is compatible with the grpc package it is being compiled against.
+Requires gRPC-Go v1.64.0 or later.
+
+				<pre>const <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#SupportPackageIsVersion9">SupportPackageIsVersion9</a></pre>
+			
+				
+				<pre>const <span id="file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc">file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc</span> = &#34;&#34; +
+    &#34;\n&#34; +
+    &#34;\&#34;pkg/aaliagentgrpc/aali-agent.proto\x12\raaliagentgrpc\&#34;\xb0\x01\n&#34; +
+    &#34;\rClientMessage\x12H\n&#34; +
+    &#34;\x0fsession_context\x18\x01 \x01(\v2\x1d.aaliagentgrpc.SessionContextH\x00R\x0esessionContext\x12E\n&#34; +
+    &#34;\x0eclient_request\x18\x02 \x01(\v2\x1c.aaliagentgrpc.ClientRequestH\x00R\rclientRequestB\x0e\n&#34; +
+    &#34;\fmessage_type\&#34;\x95\x02\n&#34; +
+    &#34;\rServerMessage\x12N\n&#34; +
+    &#34;\x11connection_status\x18\x01 \x01(\v2\x1f.aaliagentgrpc.ConnectionStatusH\x00R\x10connectionStatus\x12Z\n&#34; +
+    &#34;\x15authentication_status\x18\x02 \x01(\v2#.aaliagentgrpc.AuthenticationStatusH\x00R\x14authenticationStatus\x12H\n&#34; +
+    &#34;\x0fclient_response\x18\x03 \x01(\v2\x1d.aaliagentgrpc.ClientResponseH\x00R\x0eclientResponseB\x0e\n&#34; +
+    &#34;\fmessage_type\&#34;\xe3\x02\n&#34; +
+    &#34;\x0eSessionContext\x12\x1b\n&#34; +
+    &#34;\tjwt_token\x18\x01 \x01(\tR\bjwtToken\x12\x1f\n&#34; +
+    &#34;\vworkflow_id\x18\x02 \x01(\tR\n&#34; +
+    &#34;workflowId\x12J\n&#34; +
+    &#34;\tvariables\x18\x03 \x03(\v2,.aaliagentgrpc.SessionContext.VariablesEntryR\tvariables\x12\x1f\n&#34; +
+    &#34;\vsnapshot_id\x18\x04 \x01(\tR\n&#34; +
+    &#34;snapshotId\x12&amp;\n&#34; +
+    &#34;\x0fworkflow_run_id\x18\x05 \x01(\tR\rworkflowRunId\x12\x17\n&#34; +
+    &#34;\auser_id\x18\x06 \x01(\tR\x06userId\x12&#39;\n&#34; +
+    &#34;\x0fstore_snapshots\x18\a \x01(\bR\x0estoreSnapshots\x1a&lt;\n&#34; +
+    &#34;\x0eVariablesEntry\x12\x10\n&#34; +
+    &#34;\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n&#34; +
+    &#34;\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\&#34;\xf4\x02\n&#34; +
+    &#34;\rClientRequest\x12%\n&#34; +
+    &#34;\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n&#34; +
+    &#34;\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n&#34; +
+    &#34;\x05input\x18\x03 \x01(\tR\x05input\x12\x16\n&#34; +
+    &#34;\x06images\x18\x04 \x03(\tR\x06images\x12Y\n&#34; +
+    &#34;\x0fvariable_values\x18\x05 \x03(\v20.aaliagentgrpc.ClientRequest.VariableValuesEntryR\x0evariableValues\x12\x1f\n&#34; +
+    &#34;\vsnapshot_id\x18\x06 \x01(\tR\n&#34; +
+    &#34;snapshotId\x12;\n&#34; +
+    &#34;\bfeedback\x18\a \x01(\v2\x1f.aaliagentgrpc.WorkflowFeedbackR\bfeedback\x1aA\n&#34; +
+    &#34;\x13VariableValuesEntry\x12\x10\n&#34; +
+    &#34;\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n&#34; +
+    &#34;\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\&#34;\xc9\x01\n&#34; +
+    &#34;\x10WorkflowFeedback\x12\x1d\n&#34; +
+    &#34;\n&#34; +
+    &#34;message_id\x18\x01 \x01(\tR\tmessageId\x12!\n&#34; +
+    &#34;\fadd_positive\x18\x02 \x01(\bR\vaddPositive\x12!\n&#34; +
+    &#34;\fadd_negative\x18\x03 \x01(\bR\vaddNegative\x12&#39;\n&#34; +
+    &#34;\x0fremove_positive\x18\x04 \x01(\bR\x0eremovePositive\x12&#39;\n&#34; +
+    &#34;\x0fremove_negative\x18\x05 \x01(\bR\x0eremoveNegative\&#34;\x9d\x01\n&#34; +
+    &#34;\x10ConnectionStatus\x12*\n&#34; +
+    &#34;\x10connectionStatus\x18\x01 \x01(\tR\x10connectionStatus\x12&amp;\n&#34; +
+    &#34;\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n&#34; +
+    &#34;\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\&#34;J\n&#34; +
+    &#34;\x14AuthenticationStatus\x122\n&#34; +
+    &#34;\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\&#34;\xbe\x05\n&#34; +
+    &#34;\x0eClientResponse\x12%\n&#34; +
+    &#34;\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n&#34; +
+    &#34;\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n&#34; +
+    &#34;\ais_last\x18\x03 \x01(\bR\x06isLast\x12\x1a\n&#34; +
+    &#34;\bposition\x18\x04 \x01(\rR\bposition\x12\x1b\n&#34; +
+    &#34;\tchat_data\x18\x05 \x01(\tR\bchatData\x12&#39;\n&#34; +
+    &#34;\x0fcode_validation\x18\x06 \x01(\tR\x0ecodeValidation\x12*\n&#34; +
+    &#34;\x11input_token_count\x18\a \x01(\x05R\x0finputTokenCount\x12,\n&#34; +
+    &#34;\x12output_token_count\x18\b \x01(\x05R\x10outputTokenCount\x12\x18\n&#34; +
+    &#34;\acontext\x18\t \x01(\tR\acontext\x12Z\n&#34; +
+    &#34;\x0fvariable_values\x18\n&#34; +
+    &#34; \x03(\v21.aaliagentgrpc.ClientResponse.VariableValuesEntryR\x0evariableValues\x12\x1f\n&#34; +
+    &#34;\vsnapshot_id\x18\v \x01(\tR\n&#34; +
+    &#34;snapshotId\x12U\n&#34; +
+    &#34;\x14commands_by_category\x18\f \x03(\v2#.aaliagentgrpc.SlashCommandCategoryR\x12commandsByCategory\x122\n&#34; +
+    &#34;\x05error\x18\r \x01(\v2\x1c.aaliagentgrpc.ErrorResponseR\x05error\x12&amp;\n&#34; +
+    &#34;\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x1aA\n&#34; +
+    &#34;\x13VariableValuesEntry\x12\x10\n&#34; +
+    &#34;\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n&#34; +
+    &#34;\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n&#34; +
+    &#34;\r_info_message\&#34;\x85\x01\n&#34; +
+    &#34;\x14SlashCommandCategory\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12 \n&#34; +
+    &#34;\vdescription\x18\x02 \x01(\tR\vdescription\x127\n&#34; +
+    &#34;\bcommands\x18\x03 \x03(\v2\x1b.aaliagentgrpc.SlashCommandR\bcommands\&#34;D\n&#34; +
+    &#34;\fSlashCommand\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12 \n&#34; +
+    &#34;\vdescription\x18\x02 \x01(\tR\vdescription\&#34;=\n&#34; +
+    &#34;\rErrorResponse\x12\x12\n&#34; +
+    &#34;\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n&#34; +
+    &#34;\amessage\x18\x02 \x01(\tR\amessage2^\n&#34; +
+    &#34;\vWorkflowRun\x12O\n&#34; +
+    &#34;\vRunWorkflow\x12\x1c.aaliagentgrpc.ClientMessage\x1a\x1c.aaliagentgrpc.ServerMessage\&#34;\x00(\x010\x01B\x11Z\x0f./aaliagentgrpcb\x06proto3&#34;</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span id="file_pkg_aaliagentgrpc_aali_agent_proto_rawDescOnce">file_pkg_aaliagentgrpc_aali_agent_proto_rawDescOnce</span> <a href="https://pkg.go.dev/sync/">sync</a>.<a href="https://pkg.go.dev/sync/#Once">Once</a>
+    <span id="file_pkg_aaliagentgrpc_aali_agent_proto_rawDescData">file_pkg_aaliagentgrpc_aali_agent_proto_rawDescData</span> []<a href="https://pkg.go.dev/builtin/#byte">byte</a>
+)</pre>
+			
+				
+				<pre>var <span id="File_pkg_aaliagentgrpc_aali_agent_proto">File_pkg_aaliagentgrpc_aali_agent_proto</span> <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#FileDescriptor">FileDescriptor</a></pre>
+			
+				<p>WorkflowRun_ServiceDesc is the grpc.ServiceDesc for WorkflowRun service.
+It&apos;s only intended for direct use with grpc.RegisterService,
+and not to be introspected or modified (even as a copy)
+
+				<pre>var <span id="WorkflowRun_ServiceDesc">WorkflowRun_ServiceDesc</span> = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc">ServiceDesc</a>{
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.ServiceName">ServiceName</a>: &#34;aaliagentgrpc.WorkflowRun&#34;,
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.HandlerType">HandlerType</a>: (*<a href="#WorkflowRunServer">WorkflowRunServer</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Methods">Methods</a>:     []<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#MethodDesc">MethodDesc</a>{},
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Streams">Streams</a>: []<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#StreamDesc">StreamDesc</a>{
+        {
+            <a href="#StreamName">StreamName</a>:    &#34;RunWorkflow&#34;,
+            <a href="#Handler">Handler</a>:       _WorkflowRun_RunWorkflow_Handler,
+            <a href="#ServerStreams">ServerStreams</a>: <a href="https://pkg.go.dev/builtin/#true">true</a>,
+            <a href="#ClientStreams">ClientStreams</a>: <a href="https://pkg.go.dev/builtin/#true">true</a>,
+        },
+    },
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Metadata">Metadata</a>: &#34;pkg/aaliagentgrpc/aali-agent.proto&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliagentgrpc_aali_agent_proto_depIdxs">file_pkg_aaliagentgrpc_aali_agent_proto_depIdxs</span> = []<a href="https://pkg.go.dev/builtin/#int32">int32</a>{
+    2,
+    3,
+    5,
+    6,
+    7,
+    11,
+    12,
+    4,
+    13,
+    8,
+    10,
+    9,
+    0,
+    1,
+    13,
+    12,
+    12,
+    12,
+    0,
+}</pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliagentgrpc_aali_agent_proto_goTypes">file_pkg_aaliagentgrpc_aali_agent_proto_goTypes</span> = []<a href="https://pkg.go.dev/builtin/#any">any</a>{
+    (*<a href="#ClientMessage">ClientMessage</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ServerMessage">ServerMessage</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#SessionContext">SessionContext</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ClientRequest">ClientRequest</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#WorkflowFeedback">WorkflowFeedback</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ConnectionStatus">ConnectionStatus</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#AuthenticationStatus">AuthenticationStatus</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ClientResponse">ClientResponse</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#SlashCommandCategory">SlashCommandCategory</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#SlashCommand">SlashCommand</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ErrorResponse">ErrorResponse</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    <a href="https://pkg.go.dev/builtin/#nil">nil</a>,
+    <a href="https://pkg.go.dev/builtin/#nil">nil</a>,
+    <a href="https://pkg.go.dev/builtin/#nil">nil</a>,
+}</pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes">file_pkg_aaliagentgrpc_aali_agent_proto_msgTypes</span> = <a href="https://pkg.go.dev/builtin/#make">make</a>([]<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageInfo">MessageInfo</a>, 14)</pre>
+			
+		
+		
+			
+			
+			<h2 id="RegisterWorkflowRunServer">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L87">RegisterWorkflowRunServer</a>
+				<a class="permalink" href="#RegisterWorkflowRunServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterWorkflowRunServer(s <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceRegistrar">ServiceRegistrar</a>, srv <a href="#WorkflowRunServer">WorkflowRunServer</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="_WorkflowRun_RunWorkflow_Handler">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L98">_WorkflowRun_RunWorkflow_Handler</a>
+				<a class="permalink" href="#_WorkflowRun_RunWorkflow_Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func _WorkflowRun_RunWorkflow_Handler(srv interface{}, stream <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStream">ServerStream</a>) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="file_pkg_aaliagentgrpc_aali_agent_proto_init">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L1069">file_pkg_aaliagentgrpc_aali_agent_proto_init</a>
+				<a class="permalink" href="#file_pkg_aaliagentgrpc_aali_agent_proto_init">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func file_pkg_aaliagentgrpc_aali_agent_proto_init()</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L1022">file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP</a>
+				<a class="permalink" href="#file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func file_pkg_aaliagentgrpc_aali_agent_proto_rawDescGZIP() []<a href="https://pkg.go.dev/builtin/#byte">byte</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="init">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L1068">init</a>
+				<a class="permalink" href="#init">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func init()</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AuthenticationStatus">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L555">AuthenticationStatus</a>
+				<a class="permalink" href="#AuthenticationStatus">&#xb6;</a>
+				
+				
+			</h2>
+			<p>AuthenticationStatus is the message to indicate failing authentication after client sends a session context message with authentication enabled.
+
+			<pre>type AuthenticationStatus struct {
+<span id="AuthenticationStatus.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Authentication status; can only be &#34;failed&#34;</span>
+<span id="AuthenticationStatus.AuthenticationStatus"></span>    AuthenticationStatus <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=authenticationStatus,proto3&#34; json:&#34;authenticationStatus,omitempty&#34;`
+<span id="AuthenticationStatus.unknownFields"></span>    unknownFields        <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="AuthenticationStatus.sizeCache"></span>    sizeCache            <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AuthenticationStatus.Descriptor">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L589">Descriptor</a>
+					<a class="permalink" href="#AuthenticationStatus.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AuthenticationStatus">AuthenticationStatus</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use AuthenticationStatus.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="AuthenticationStatus.GetAuthenticationStatus">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L593">GetAuthenticationStatus</a>
+					<a class="permalink" href="#AuthenticationStatus.GetAuthenticationStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#AuthenticationStatus">AuthenticationStatus</a>) GetAuthenticationStatus() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="AuthenticationStatus.ProtoMessage">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L574">ProtoMessage</a>
+					<a class="permalink" href="#AuthenticationStatus.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#AuthenticationStatus">AuthenticationStatus</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="AuthenticationStatus.ProtoReflect">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L576">ProtoReflect</a>
+					<a class="permalink" href="#AuthenticationStatus.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#AuthenticationStatus">AuthenticationStatus</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="AuthenticationStatus.Reset">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L563">Reset</a>
+					<a class="permalink" href="#AuthenticationStatus.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#AuthenticationStatus">AuthenticationStatus</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="AuthenticationStatus.String">func (*AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L570">String</a>
+					<a class="permalink" href="#AuthenticationStatus.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#AuthenticationStatus">AuthenticationStatus</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientMessage">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L25">ClientMessage</a>
+				<a class="permalink" href="#ClientMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ClientMessage is the message sent by the client to the server.
+
+			<pre>type ClientMessage struct {
+<span id="ClientMessage.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Types that are valid to be assigned to MessageType:</span>
+    <span class="comment">//</span>
+    <span class="comment">//	*ClientMessage_SessionContext</span>
+    <span class="comment">//	*ClientMessage_ClientRequest</span>
+<span id="ClientMessage.MessageType"></span>    MessageType   isClientMessage_MessageType `protobuf_oneof:&#34;message_type&#34;`
+<span id="ClientMessage.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ClientMessage.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientMessage.Descriptor">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L62">Descriptor</a>
+					<a class="permalink" href="#ClientMessage.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientMessage">ClientMessage</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ClientMessage.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.GetClientRequest">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L82">GetClientRequest</a>
+					<a class="permalink" href="#ClientMessage.GetClientRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) GetClientRequest() *<a href="#ClientRequest">ClientRequest</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.GetMessageType">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L66">GetMessageType</a>
+					<a class="permalink" href="#ClientMessage.GetMessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) GetMessageType() isClientMessage_MessageType</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.GetSessionContext">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L73">GetSessionContext</a>
+					<a class="permalink" href="#ClientMessage.GetSessionContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) GetSessionContext() *<a href="#SessionContext">SessionContext</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.ProtoMessage">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L47">ProtoMessage</a>
+					<a class="permalink" href="#ClientMessage.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientMessage">ClientMessage</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.ProtoReflect">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L49">ProtoReflect</a>
+					<a class="permalink" href="#ClientMessage.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.Reset">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L36">Reset</a>
+					<a class="permalink" href="#ClientMessage.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientMessage.String">func (*ClientMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L43">String</a>
+					<a class="permalink" href="#ClientMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientMessage">ClientMessage</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientMessage_ClientRequest">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L100">ClientMessage_ClientRequest</a>
+				<a class="permalink" href="#ClientMessage_ClientRequest">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ClientMessage_ClientRequest struct {
+    <span class="comment">// Client request message to send a request to the server</span>
+<span id="ClientMessage_ClientRequest.ClientRequest"></span>    ClientRequest *<a href="#ClientRequest">ClientRequest</a> `protobuf:&#34;bytes,2,opt,name=client_request,json=clientRequest,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientMessage_ClientRequest.isClientMessage_MessageType">func (*ClientMessage_ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L107">isClientMessage_MessageType</a>
+					<a class="permalink" href="#ClientMessage_ClientRequest.isClientMessage_MessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientMessage_ClientRequest">ClientMessage_ClientRequest</a>) isClientMessage_MessageType()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientMessage_SessionContext">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L95">ClientMessage_SessionContext</a>
+				<a class="permalink" href="#ClientMessage_SessionContext">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ClientMessage_SessionContext struct {
+    <span class="comment">// Session context message to initiate a session</span>
+<span id="ClientMessage_SessionContext.SessionContext"></span>    SessionContext *<a href="#SessionContext">SessionContext</a> `protobuf:&#34;bytes,1,opt,name=session_context,json=sessionContext,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientMessage_SessionContext.isClientMessage_MessageType">func (*ClientMessage_SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L105">isClientMessage_MessageType</a>
+					<a class="permalink" href="#ClientMessage_SessionContext.isClientMessage_MessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientMessage_SessionContext">ClientMessage_SessionContext</a>) isClientMessage_MessageType()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientRequest">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L312">ClientRequest</a>
+				<a class="permalink" href="#ClientRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ClientRequest is the message to send a request to the server.
+
+			<pre>type ClientRequest struct {
+<span id="ClientRequest.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction</span>
+<span id="ClientRequest.InstructionId"></span>    InstructionId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=instruction_id,json=instructionId,proto3&#34; json:&#34;instruction_id,omitempty&#34;`
+<span id="ClientRequest.Type"></span>    <span class="comment">// Type of the request; can be &#34;message&#34;, &#34;get_variable_values&#34;, &#34;set_variable_values&#34;, &#34;keepalive&#34;, &#34;take_snapshot&#34;, &#34;load_snapshot&#34;, &#34;get_slash_commands&#34;, &#34;feedback&#34;</span>
+    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+    <span class="comment">// String input for chat interface interaction</span>
+<span id="ClientRequest.Input"></span>    Input <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=input,proto3&#34; json:&#34;input,omitempty&#34;`
+    <span class="comment">// Image input for chat interface interaction</span>
+<span id="ClientRequest.Images"></span>    Images []<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,rep,name=images,proto3&#34; json:&#34;images,omitempty&#34;`
+    <span class="comment">// Variable values to be set for the workflow</span>
+<span id="ClientRequest.VariableValues"></span>    VariableValues map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,5,rep,name=variable_values,json=variableValues,proto3&#34; json:&#34;variable_values,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key&#34; protobuf_val:&#34;bytes,2,opt,name=value&#34;`
+    <span class="comment">// ID of the snapshot to be loaded</span>
+<span id="ClientRequest.SnapshotId"></span>    SnapshotId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,6,opt,name=snapshot_id,json=snapshotId,proto3&#34; json:&#34;snapshot_id,omitempty&#34;`
+<span id="ClientRequest.Feedback"></span>    <span class="comment">// Feedback for the workflow run</span>
+    Feedback      *<a href="#WorkflowFeedback">WorkflowFeedback</a> `protobuf:&#34;bytes,7,opt,name=feedback,proto3&#34; json:&#34;feedback,omitempty&#34;` <span class="comment">// Feedback for the workflow run</span>
+<span id="ClientRequest.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ClientRequest.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientRequest.Descriptor">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L358">Descriptor</a>
+					<a class="permalink" href="#ClientRequest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientRequest">ClientRequest</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ClientRequest.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetFeedback">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L404">GetFeedback</a>
+					<a class="permalink" href="#ClientRequest.GetFeedback">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetFeedback() *<a href="#WorkflowFeedback">WorkflowFeedback</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetImages">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L383">GetImages</a>
+					<a class="permalink" href="#ClientRequest.GetImages">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetImages() []<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetInput">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L376">GetInput</a>
+					<a class="permalink" href="#ClientRequest.GetInput">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetInput() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetInstructionId">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L362">GetInstructionId</a>
+					<a class="permalink" href="#ClientRequest.GetInstructionId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetInstructionId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetSnapshotId">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L397">GetSnapshotId</a>
+					<a class="permalink" href="#ClientRequest.GetSnapshotId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetSnapshotId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetType">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L369">GetType</a>
+					<a class="permalink" href="#ClientRequest.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.GetVariableValues">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L390">GetVariableValues</a>
+					<a class="permalink" href="#ClientRequest.GetVariableValues">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) GetVariableValues() map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.ProtoMessage">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L343">ProtoMessage</a>
+					<a class="permalink" href="#ClientRequest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientRequest">ClientRequest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.ProtoReflect">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L345">ProtoReflect</a>
+					<a class="permalink" href="#ClientRequest.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.Reset">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L332">Reset</a>
+					<a class="permalink" href="#ClientRequest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientRequest.String">func (*ClientRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L339">String</a>
+					<a class="permalink" href="#ClientRequest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientRequest">ClientRequest</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L601">ClientResponse</a>
+				<a class="permalink" href="#ClientResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ClientResponse is the message to send a response to the client.
+
+			<pre>type ClientResponse struct {
+<span id="ClientResponse.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Randomly generated instruction ID to be used in the client request</span>
+<span id="ClientResponse.InstructionId"></span>    InstructionId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=instruction_id,json=instructionId,proto3&#34; json:&#34;instruction_id,omitempty&#34;`
+<span id="ClientResponse.Type"></span>    <span class="comment">// Type of the response; can be &#34;message&#34;, &#34;stream&#34;, &#34;info_message&#34;, &#34;info_stream&#34;, &#34;error&#34;, &#34;info&#34;, &#34;varaible_values&#34;, &#34;snapshot_taken&#34;, &#34;snapshot_loaded&#34;, &#34;slash_commands&#34;, &#34;feedback_received&#34;</span>
+    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+    <span class="comment">// Chat Interface properties</span>
+<span id="ClientResponse.IsLast"></span>    IsLast           <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `protobuf:&#34;varint,3,opt,name=is_last,json=isLast,proto3&#34; json:&#34;is_last,omitempty&#34;`
+<span id="ClientResponse.Position"></span>    Position         <a href="https://pkg.go.dev/builtin/#uint32">uint32</a> `protobuf:&#34;varint,4,opt,name=position,proto3&#34; json:&#34;position,omitempty&#34;`
+<span id="ClientResponse.ChatData"></span>    ChatData         <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,5,opt,name=chat_data,json=chatData,proto3&#34; json:&#34;chat_data,omitempty&#34;`
+<span id="ClientResponse.CodeValidation"></span>    CodeValidation   <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,6,opt,name=code_validation,json=codeValidation,proto3&#34; json:&#34;code_validation,omitempty&#34;` <span class="comment">// &#34;unvalidated&#34;, &#34;valid&#34;, &#34;warning&#34;, &#34;invalid&#34;</span>
+<span id="ClientResponse.InputTokenCount"></span>    InputTokenCount  <a href="https://pkg.go.dev/builtin/#int32">int32</a>  `protobuf:&#34;varint,7,opt,name=input_token_count,json=inputTokenCount,proto3&#34; json:&#34;input_token_count,omitempty&#34;`
+<span id="ClientResponse.OutputTokenCount"></span>    OutputTokenCount <a href="https://pkg.go.dev/builtin/#int32">int32</a>  `protobuf:&#34;varint,8,opt,name=output_token_count,json=outputTokenCount,proto3&#34; json:&#34;output_token_count,omitempty&#34;`
+<span id="ClientResponse.Context"></span>    Context          <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,9,opt,name=context,proto3&#34; json:&#34;context,omitempty&#34;`
+    <span class="comment">// Variable values properties</span>
+<span id="ClientResponse.VariableValues"></span>    VariableValues map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,10,rep,name=variable_values,json=variableValues,proto3&#34; json:&#34;variable_values,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key&#34; protobuf_val:&#34;bytes,2,opt,name=value&#34;`
+    <span class="comment">// Snapshot properties; id of the snapshot taken or loaded</span>
+<span id="ClientResponse.SnapshotId"></span>    SnapshotId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,11,opt,name=snapshot_id,json=snapshotId,proto3&#34; json:&#34;snapshot_id,omitempty&#34;`
+    <span class="comment">// Slash command properties; List of @ commands containing their corresponding slash commands</span>
+<span id="ClientResponse.CommandsByCategory"></span>    CommandsByCategory []*<a href="#SlashCommandCategory">SlashCommandCategory</a> `protobuf:&#34;bytes,12,rep,name=commands_by_category,json=commandsByCategory,proto3&#34; json:&#34;commands_by_category,omitempty&#34;`
+<span id="ClientResponse.Error"></span>    <span class="comment">// Error properties</span>
+    Error *<a href="#ErrorResponse">ErrorResponse</a> `protobuf:&#34;bytes,13,opt,name=error,proto3&#34; json:&#34;error,omitempty&#34;`
+    <span class="comment">// Info properties</span>
+<span id="ClientResponse.InfoMessage"></span>    InfoMessage   *<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,14,opt,name=info_message,json=infoMessage,proto3,oneof&#34; json:&#34;info_message,omitempty&#34;`
+<span id="ClientResponse.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ClientResponse.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientResponse.Descriptor">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L655">Descriptor</a>
+					<a class="permalink" href="#ClientResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientResponse">ClientResponse</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ClientResponse.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetChatData">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L687">GetChatData</a>
+					<a class="permalink" href="#ClientResponse.GetChatData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetChatData() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetCodeValidation">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L694">GetCodeValidation</a>
+					<a class="permalink" href="#ClientResponse.GetCodeValidation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetCodeValidation() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetCommandsByCategory">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L736">GetCommandsByCategory</a>
+					<a class="permalink" href="#ClientResponse.GetCommandsByCategory">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetCommandsByCategory() []*<a href="#SlashCommandCategory">SlashCommandCategory</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetContext">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L715">GetContext</a>
+					<a class="permalink" href="#ClientResponse.GetContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetContext() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetError">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L743">GetError</a>
+					<a class="permalink" href="#ClientResponse.GetError">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetError() *<a href="#ErrorResponse">ErrorResponse</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetInfoMessage">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L750">GetInfoMessage</a>
+					<a class="permalink" href="#ClientResponse.GetInfoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetInfoMessage() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetInputTokenCount">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L701">GetInputTokenCount</a>
+					<a class="permalink" href="#ClientResponse.GetInputTokenCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetInputTokenCount() <a href="https://pkg.go.dev/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetInstructionId">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L659">GetInstructionId</a>
+					<a class="permalink" href="#ClientResponse.GetInstructionId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetInstructionId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetIsLast">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L673">GetIsLast</a>
+					<a class="permalink" href="#ClientResponse.GetIsLast">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetIsLast() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetOutputTokenCount">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L708">GetOutputTokenCount</a>
+					<a class="permalink" href="#ClientResponse.GetOutputTokenCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetOutputTokenCount() <a href="https://pkg.go.dev/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetPosition">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L680">GetPosition</a>
+					<a class="permalink" href="#ClientResponse.GetPosition">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetPosition() <a href="https://pkg.go.dev/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetSnapshotId">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L729">GetSnapshotId</a>
+					<a class="permalink" href="#ClientResponse.GetSnapshotId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetSnapshotId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetType">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L666">GetType</a>
+					<a class="permalink" href="#ClientResponse.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.GetVariableValues">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L722">GetVariableValues</a>
+					<a class="permalink" href="#ClientResponse.GetVariableValues">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) GetVariableValues() map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.ProtoMessage">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L640">ProtoMessage</a>
+					<a class="permalink" href="#ClientResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ClientResponse">ClientResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.ProtoReflect">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L642">ProtoReflect</a>
+					<a class="permalink" href="#ClientResponse.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.Reset">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L629">Reset</a>
+					<a class="permalink" href="#ClientResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ClientResponse.String">func (*ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L636">String</a>
+					<a class="permalink" href="#ClientResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ClientResponse">ClientResponse</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConnectionStatus">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L491">ConnectionStatus</a>
+				<a class="permalink" href="#ConnectionStatus">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ConnectionStatus is the message to indicate the connection status after client sends a session context message.
+
+			<pre>type ConnectionStatus struct {
+<span id="ConnectionStatus.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Connection status; can be &#34;success&#34;, &#34;failed&#34;</span>
+<span id="ConnectionStatus.ConnectionStatus"></span>    ConnectionStatus <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=connectionStatus,proto3&#34; json:&#34;connectionStatus,omitempty&#34;`
+    <span class="comment">// Workflow Run ID; if the connection status is &#34;success&#34;, this will be the ID of the workflow run</span>
+<span id="ConnectionStatus.WorkflowRunId"></span>    WorkflowRunId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=workflow_run_id,json=workflowRunId,proto3&#34; json:&#34;workflow_run_id,omitempty&#34;`
+    <span class="comment">// Maximum number of snapshots that can be stored in the database per workflow run</span>
+<span id="ConnectionStatus.MaxNumberOfSnapshots"></span>    MaxNumberOfSnapshots <a href="https://pkg.go.dev/builtin/#int32">int32</a> `protobuf:&#34;varint,3,opt,name=max_number_of_snapshots,json=maxNumberOfSnapshots,proto3&#34; json:&#34;max_number_of_snapshots,omitempty&#34;`
+<span id="ConnectionStatus.unknownFields"></span>    unknownFields        <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ConnectionStatus.sizeCache"></span>    sizeCache            <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConnectionStatus.Descriptor">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L529">Descriptor</a>
+					<a class="permalink" href="#ConnectionStatus.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ConnectionStatus">ConnectionStatus</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ConnectionStatus.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.GetConnectionStatus">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L533">GetConnectionStatus</a>
+					<a class="permalink" href="#ConnectionStatus.GetConnectionStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) GetConnectionStatus() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.GetMaxNumberOfSnapshots">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L547">GetMaxNumberOfSnapshots</a>
+					<a class="permalink" href="#ConnectionStatus.GetMaxNumberOfSnapshots">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) GetMaxNumberOfSnapshots() <a href="https://pkg.go.dev/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.GetWorkflowRunId">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L540">GetWorkflowRunId</a>
+					<a class="permalink" href="#ConnectionStatus.GetWorkflowRunId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) GetWorkflowRunId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.ProtoMessage">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L514">ProtoMessage</a>
+					<a class="permalink" href="#ConnectionStatus.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ConnectionStatus">ConnectionStatus</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.ProtoReflect">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L516">ProtoReflect</a>
+					<a class="permalink" href="#ConnectionStatus.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.Reset">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L503">Reset</a>
+					<a class="permalink" href="#ConnectionStatus.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStatus.String">func (*ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L510">String</a>
+					<a class="permalink" href="#ConnectionStatus.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ConnectionStatus">ConnectionStatus</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ErrorResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L877">ErrorResponse</a>
+				<a class="permalink" href="#ErrorResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ErrorResponse is the message to send an error response to the client.
+
+			<pre>type ErrorResponse struct {
+<span id="ErrorResponse.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Error code</span>
+<span id="ErrorResponse.Code"></span>    Code <a href="https://pkg.go.dev/builtin/#int32">int32</a> `protobuf:&#34;varint,1,opt,name=code,proto3&#34; json:&#34;code,omitempty&#34;`
+    <span class="comment">// Error message</span>
+<span id="ErrorResponse.Message"></span>    Message       <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=message,proto3&#34; json:&#34;message,omitempty&#34;`
+<span id="ErrorResponse.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ErrorResponse.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ErrorResponse.Descriptor">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L913">Descriptor</a>
+					<a class="permalink" href="#ErrorResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ErrorResponse">ErrorResponse</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ErrorResponse.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.GetCode">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L917">GetCode</a>
+					<a class="permalink" href="#ErrorResponse.GetCode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ErrorResponse">ErrorResponse</a>) GetCode() <a href="https://pkg.go.dev/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.GetMessage">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L924">GetMessage</a>
+					<a class="permalink" href="#ErrorResponse.GetMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ErrorResponse">ErrorResponse</a>) GetMessage() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.ProtoMessage">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L898">ProtoMessage</a>
+					<a class="permalink" href="#ErrorResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ErrorResponse">ErrorResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.ProtoReflect">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L900">ProtoReflect</a>
+					<a class="permalink" href="#ErrorResponse.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ErrorResponse">ErrorResponse</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.Reset">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L887">Reset</a>
+					<a class="permalink" href="#ErrorResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ErrorResponse">ErrorResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ErrorResponse.String">func (*ErrorResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L894">String</a>
+					<a class="permalink" href="#ErrorResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ErrorResponse">ErrorResponse</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ServerMessage">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L110">ServerMessage</a>
+				<a class="permalink" href="#ServerMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ServerMessage is the message sent by the server to the client.
+
+			<pre>type ServerMessage struct {
+<span id="ServerMessage.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Types that are valid to be assigned to MessageType:</span>
+    <span class="comment">//</span>
+    <span class="comment">//	*ServerMessage_ConnectionStatus</span>
+    <span class="comment">//	*ServerMessage_AuthenticationStatus</span>
+    <span class="comment">//	*ServerMessage_ClientResponse</span>
+<span id="ServerMessage.MessageType"></span>    MessageType   isServerMessage_MessageType `protobuf_oneof:&#34;message_type&#34;`
+<span id="ServerMessage.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ServerMessage.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ServerMessage.Descriptor">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L148">Descriptor</a>
+					<a class="permalink" href="#ServerMessage.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ServerMessage">ServerMessage</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ServerMessage.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.GetAuthenticationStatus">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L168">GetAuthenticationStatus</a>
+					<a class="permalink" href="#ServerMessage.GetAuthenticationStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) GetAuthenticationStatus() *<a href="#AuthenticationStatus">AuthenticationStatus</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.GetClientResponse">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L177">GetClientResponse</a>
+					<a class="permalink" href="#ServerMessage.GetClientResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) GetClientResponse() *<a href="#ClientResponse">ClientResponse</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.GetConnectionStatus">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L159">GetConnectionStatus</a>
+					<a class="permalink" href="#ServerMessage.GetConnectionStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) GetConnectionStatus() *<a href="#ConnectionStatus">ConnectionStatus</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.GetMessageType">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L152">GetMessageType</a>
+					<a class="permalink" href="#ServerMessage.GetMessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) GetMessageType() isServerMessage_MessageType</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.ProtoMessage">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L133">ProtoMessage</a>
+					<a class="permalink" href="#ServerMessage.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ServerMessage">ServerMessage</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.ProtoReflect">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L135">ProtoReflect</a>
+					<a class="permalink" href="#ServerMessage.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.Reset">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L122">Reset</a>
+					<a class="permalink" href="#ServerMessage.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ServerMessage.String">func (*ServerMessage) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L129">String</a>
+					<a class="permalink" href="#ServerMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ServerMessage">ServerMessage</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ServerMessage_AuthenticationStatus">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L195">ServerMessage_AuthenticationStatus</a>
+				<a class="permalink" href="#ServerMessage_AuthenticationStatus">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ServerMessage_AuthenticationStatus struct {
+    <span class="comment">// Authentication status message to indicate failing authentication after client sends a session context message with authentication enabled</span>
+<span id="ServerMessage_AuthenticationStatus.AuthenticationStatus"></span>    AuthenticationStatus *<a href="#AuthenticationStatus">AuthenticationStatus</a> `protobuf:&#34;bytes,2,opt,name=authentication_status,json=authenticationStatus,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ServerMessage_AuthenticationStatus.isServerMessage_MessageType">func (*ServerMessage_AuthenticationStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L207">isServerMessage_MessageType</a>
+					<a class="permalink" href="#ServerMessage_AuthenticationStatus.isServerMessage_MessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ServerMessage_AuthenticationStatus">ServerMessage_AuthenticationStatus</a>) isServerMessage_MessageType()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ServerMessage_ClientResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L200">ServerMessage_ClientResponse</a>
+				<a class="permalink" href="#ServerMessage_ClientResponse">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ServerMessage_ClientResponse struct {
+    <span class="comment">// Client response message to send a response to the client</span>
+<span id="ServerMessage_ClientResponse.ClientResponse"></span>    ClientResponse *<a href="#ClientResponse">ClientResponse</a> `protobuf:&#34;bytes,3,opt,name=client_response,json=clientResponse,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ServerMessage_ClientResponse.isServerMessage_MessageType">func (*ServerMessage_ClientResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L209">isServerMessage_MessageType</a>
+					<a class="permalink" href="#ServerMessage_ClientResponse.isServerMessage_MessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ServerMessage_ClientResponse">ServerMessage_ClientResponse</a>) isServerMessage_MessageType()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ServerMessage_ConnectionStatus">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L190">ServerMessage_ConnectionStatus</a>
+				<a class="permalink" href="#ServerMessage_ConnectionStatus">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ServerMessage_ConnectionStatus struct {
+    <span class="comment">// Connection status message to indicate the connection status after client sends a session context message</span>
+<span id="ServerMessage_ConnectionStatus.ConnectionStatus"></span>    ConnectionStatus *<a href="#ConnectionStatus">ConnectionStatus</a> `protobuf:&#34;bytes,1,opt,name=connection_status,json=connectionStatus,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ServerMessage_ConnectionStatus.isServerMessage_MessageType">func (*ServerMessage_ConnectionStatus) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L205">isServerMessage_MessageType</a>
+					<a class="permalink" href="#ServerMessage_ConnectionStatus.isServerMessage_MessageType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ServerMessage_ConnectionStatus">ServerMessage_ConnectionStatus</a>) isServerMessage_MessageType()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SessionContext">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L212">SessionContext</a>
+				<a class="permalink" href="#SessionContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>SessionContext is the message to initiate a session with the server.
+
+			<pre>type SessionContext struct {
+<span id="SessionContext.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// JWT token for authentication</span>
+<span id="SessionContext.JwtToken"></span>    JwtToken <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=jwt_token,json=jwtToken,proto3&#34; json:&#34;jwt_token,omitempty&#34;`
+    <span class="comment">// Workflow ID for the workflow to be run</span>
+<span id="SessionContext.WorkflowId"></span>    WorkflowId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=workflow_id,json=workflowId,proto3&#34; json:&#34;workflow_id,omitempty&#34;`
+<span id="SessionContext.Variables"></span>    <span class="comment">// Variables to be passed to the workflow</span>
+    Variables map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,rep,name=variables,proto3&#34; json:&#34;variables,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key&#34; protobuf_val:&#34;bytes,2,opt,name=value&#34;`
+    <span class="comment">// Snapshot ID; if defined, the given snapshot will retrived from the database</span>
+<span id="SessionContext.SnapshotId"></span>    SnapshotId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,opt,name=snapshot_id,json=snapshotId,proto3&#34; json:&#34;snapshot_id,omitempty&#34;`
+    <span class="comment">// Workflow run ID; mandatory if &#34;snapshot_id&#34; is defined in order to retrieve the snapshot from the database</span>
+<span id="SessionContext.WorkflowRunId"></span>    WorkflowRunId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,5,opt,name=workflow_run_id,json=workflowRunId,proto3&#34; json:&#34;workflow_run_id,omitempty&#34;`
+    <span class="comment">// User ID; mandatory if &#34;snapshot_id&#34; is defined in order to retrieve the snapshot from the database</span>
+<span id="SessionContext.UserId"></span>    UserId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,6,opt,name=user_id,json=userId,proto3&#34; json:&#34;user_id,omitempty&#34;`
+    <span class="comment">// Store snapshots; if true, all taken snapshots will be stored in the database</span>
+<span id="SessionContext.StoreSnapshots"></span>    StoreSnapshots <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,7,opt,name=store_snapshots,json=storeSnapshots,proto3&#34; json:&#34;store_snapshots,omitempty&#34;`
+<span id="SessionContext.unknownFields"></span>    unknownFields  <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="SessionContext.sizeCache"></span>    sizeCache      <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SessionContext.Descriptor">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L258">Descriptor</a>
+					<a class="permalink" href="#SessionContext.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SessionContext">SessionContext</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use SessionContext.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetJwtToken">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L262">GetJwtToken</a>
+					<a class="permalink" href="#SessionContext.GetJwtToken">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetJwtToken() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetSnapshotId">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L283">GetSnapshotId</a>
+					<a class="permalink" href="#SessionContext.GetSnapshotId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetSnapshotId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetStoreSnapshots">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L304">GetStoreSnapshots</a>
+					<a class="permalink" href="#SessionContext.GetStoreSnapshots">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetStoreSnapshots() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetUserId">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L297">GetUserId</a>
+					<a class="permalink" href="#SessionContext.GetUserId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetUserId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetVariables">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L276">GetVariables</a>
+					<a class="permalink" href="#SessionContext.GetVariables">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetVariables() map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetWorkflowId">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L269">GetWorkflowId</a>
+					<a class="permalink" href="#SessionContext.GetWorkflowId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetWorkflowId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.GetWorkflowRunId">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L290">GetWorkflowRunId</a>
+					<a class="permalink" href="#SessionContext.GetWorkflowRunId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) GetWorkflowRunId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.ProtoMessage">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L243">ProtoMessage</a>
+					<a class="permalink" href="#SessionContext.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SessionContext">SessionContext</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.ProtoReflect">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L245">ProtoReflect</a>
+					<a class="permalink" href="#SessionContext.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.Reset">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L232">Reset</a>
+					<a class="permalink" href="#SessionContext.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SessionContext.String">func (*SessionContext) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L239">String</a>
+					<a class="permalink" href="#SessionContext.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SessionContext">SessionContext</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SlashCommand">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L822">SlashCommand</a>
+				<a class="permalink" href="#SlashCommand">&#xb6;</a>
+				
+				
+			</h2>
+			<p>SlashCommand is the message to send a slash command.
+
+			<pre>type SlashCommand struct {
+<span id="SlashCommand.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="SlashCommand.Name"></span>    <span class="comment">// Name of the slash command</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="SlashCommand.Description"></span>    <span class="comment">// Description of the slash command</span>
+    Description   <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=description,proto3&#34; json:&#34;description,omitempty&#34;`
+<span id="SlashCommand.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="SlashCommand.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SlashCommand.Descriptor">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L858">Descriptor</a>
+					<a class="permalink" href="#SlashCommand.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SlashCommand">SlashCommand</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use SlashCommand.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.GetDescription">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L869">GetDescription</a>
+					<a class="permalink" href="#SlashCommand.GetDescription">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommand">SlashCommand</a>) GetDescription() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.GetName">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L862">GetName</a>
+					<a class="permalink" href="#SlashCommand.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommand">SlashCommand</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.ProtoMessage">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L843">ProtoMessage</a>
+					<a class="permalink" href="#SlashCommand.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SlashCommand">SlashCommand</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.ProtoReflect">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L845">ProtoReflect</a>
+					<a class="permalink" href="#SlashCommand.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommand">SlashCommand</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.Reset">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L832">Reset</a>
+					<a class="permalink" href="#SlashCommand.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommand">SlashCommand</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommand.String">func (*SlashCommand) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L839">String</a>
+					<a class="permalink" href="#SlashCommand.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommand">SlashCommand</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SlashCommandCategory">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L758">SlashCommandCategory</a>
+				<a class="permalink" href="#SlashCommandCategory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
+
+			<pre>type SlashCommandCategory struct {
+<span id="SlashCommandCategory.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Category name</span>
+<span id="SlashCommandCategory.Name"></span>    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="SlashCommandCategory.Description"></span>    <span class="comment">// Description of the category</span>
+    Description <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=description,proto3&#34; json:&#34;description,omitempty&#34;`
+    <span class="comment">// List of slash commands in this category</span>
+<span id="SlashCommandCategory.Commands"></span>    Commands      []*<a href="#SlashCommand">SlashCommand</a> `protobuf:&#34;bytes,3,rep,name=commands,proto3&#34; json:&#34;commands,omitempty&#34;`
+<span id="SlashCommandCategory.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="SlashCommandCategory.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SlashCommandCategory.Descriptor">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L796">Descriptor</a>
+					<a class="permalink" href="#SlashCommandCategory.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SlashCommandCategory">SlashCommandCategory</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use SlashCommandCategory.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.GetCommands">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L814">GetCommands</a>
+					<a class="permalink" href="#SlashCommandCategory.GetCommands">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) GetCommands() []*<a href="#SlashCommand">SlashCommand</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.GetDescription">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L807">GetDescription</a>
+					<a class="permalink" href="#SlashCommandCategory.GetDescription">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) GetDescription() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.GetName">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L800">GetName</a>
+					<a class="permalink" href="#SlashCommandCategory.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.ProtoMessage">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L781">ProtoMessage</a>
+					<a class="permalink" href="#SlashCommandCategory.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#SlashCommandCategory">SlashCommandCategory</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.ProtoReflect">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L783">ProtoReflect</a>
+					<a class="permalink" href="#SlashCommandCategory.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.Reset">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L770">Reset</a>
+					<a class="permalink" href="#SlashCommandCategory.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SlashCommandCategory.String">func (*SlashCommandCategory) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L777">String</a>
+					<a class="permalink" href="#SlashCommandCategory.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#SlashCommandCategory">SlashCommandCategory</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UnimplementedWorkflowRunServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L72">UnimplementedWorkflowRunServer</a>
+				<a class="permalink" href="#UnimplementedWorkflowRunServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>UnimplementedWorkflowRunServer must be embedded to have
+forward compatible implementations.
+<p>NOTE: this should be embedded by value instead of pointer to avoid a nil
+pointer dereference when methods are called.
+
+			<pre>type UnimplementedWorkflowRunServer struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UnimplementedWorkflowRunServer.RunWorkflow">func (UnimplementedWorkflowRunServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L74">RunWorkflow</a>
+					<a class="permalink" href="#UnimplementedWorkflowRunServer.RunWorkflow">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedWorkflowRunServer">UnimplementedWorkflowRunServer</a>) RunWorkflow(<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingServer">BidiStreamingServer</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>]) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedWorkflowRunServer.mustEmbedUnimplementedWorkflowRunServer">func (UnimplementedWorkflowRunServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L77">mustEmbedUnimplementedWorkflowRunServer</a>
+					<a class="permalink" href="#UnimplementedWorkflowRunServer.mustEmbedUnimplementedWorkflowRunServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedWorkflowRunServer">UnimplementedWorkflowRunServer</a>) mustEmbedUnimplementedWorkflowRunServer()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedWorkflowRunServer.testEmbeddedByValue">func (UnimplementedWorkflowRunServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L78">testEmbeddedByValue</a>
+					<a class="permalink" href="#UnimplementedWorkflowRunServer.testEmbeddedByValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedWorkflowRunServer">UnimplementedWorkflowRunServer</a>) testEmbeddedByValue()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UnsafeWorkflowRunServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L83">UnsafeWorkflowRunServer</a>
+				<a class="permalink" href="#UnsafeWorkflowRunServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>UnsafeWorkflowRunServer may be embedded to opt out of forward compatibility for this service.
+Use of this interface is not recommended, as added methods to WorkflowRunServer will
+result in compilation errors.
+
+			<pre>type UnsafeWorkflowRunServer interface {
+    mustEmbedUnimplementedWorkflowRunServer()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WorkflowFeedback">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L412">WorkflowFeedback</a>
+				<a class="permalink" href="#WorkflowFeedback">&#xb6;</a>
+				
+				
+			</h2>
+			<p>WorkflowFeedback is the message to send feedback to the server.
+
+			<pre>type WorkflowFeedback struct {
+<span id="WorkflowFeedback.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Message ID which has to be equal to the message ID in the conversation history for which the feedback is given</span>
+<span id="WorkflowFeedback.MessageId"></span>    MessageId <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=message_id,json=messageId,proto3&#34; json:&#34;message_id,omitempty&#34;`
+    <span class="comment">// Positive or negative feedback can either be added or removed to the message ID in the conversation history</span>
+<span id="WorkflowFeedback.AddPositive"></span>    AddPositive    <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,2,opt,name=add_positive,json=addPositive,proto3&#34; json:&#34;add_positive,omitempty&#34;`
+<span id="WorkflowFeedback.AddNegative"></span>    AddNegative    <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,3,opt,name=add_negative,json=addNegative,proto3&#34; json:&#34;add_negative,omitempty&#34;`
+<span id="WorkflowFeedback.RemovePositive"></span>    RemovePositive <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,4,opt,name=remove_positive,json=removePositive,proto3&#34; json:&#34;remove_positive,omitempty&#34;`
+<span id="WorkflowFeedback.RemoveNegative"></span>    RemoveNegative <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,5,opt,name=remove_negative,json=removeNegative,proto3&#34; json:&#34;remove_negative,omitempty&#34;`
+<span id="WorkflowFeedback.unknownFields"></span>    unknownFields  <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="WorkflowFeedback.sizeCache"></span>    sizeCache      <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="WorkflowFeedback.Descriptor">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L451">Descriptor</a>
+					<a class="permalink" href="#WorkflowFeedback.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#WorkflowFeedback">WorkflowFeedback</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use WorkflowFeedback.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.GetAddNegative">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L469">GetAddNegative</a>
+					<a class="permalink" href="#WorkflowFeedback.GetAddNegative">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) GetAddNegative() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.GetAddPositive">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L462">GetAddPositive</a>
+					<a class="permalink" href="#WorkflowFeedback.GetAddPositive">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) GetAddPositive() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.GetMessageId">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L455">GetMessageId</a>
+					<a class="permalink" href="#WorkflowFeedback.GetMessageId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) GetMessageId() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.GetRemoveNegative">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L483">GetRemoveNegative</a>
+					<a class="permalink" href="#WorkflowFeedback.GetRemoveNegative">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) GetRemoveNegative() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.GetRemovePositive">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L476">GetRemovePositive</a>
+					<a class="permalink" href="#WorkflowFeedback.GetRemovePositive">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) GetRemovePositive() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.ProtoMessage">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L436">ProtoMessage</a>
+					<a class="permalink" href="#WorkflowFeedback.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#WorkflowFeedback">WorkflowFeedback</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.ProtoReflect">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L438">ProtoReflect</a>
+					<a class="permalink" href="#WorkflowFeedback.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.Reset">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L425">Reset</a>
+					<a class="permalink" href="#WorkflowFeedback.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="WorkflowFeedback.String">func (*WorkflowFeedback) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L432">String</a>
+					<a class="permalink" href="#WorkflowFeedback.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#WorkflowFeedback">WorkflowFeedback</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="WorkflowRunClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L30">WorkflowRunClient</a>
+				<a class="permalink" href="#WorkflowRunClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>WorkflowRunClient is the client API for WorkflowRun service.
+<p>For semantics around ctx use and closing/ending streaming RPCs, please refer to <a href="https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream">https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream</a>.
+<p>WorkflowRun is a gRPC service that allows for running a workflow.
+
+			<pre>type WorkflowRunClient interface {
+    <span class="comment">// Bidirectional streaming RPC</span>
+    RunWorkflow(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingClient">BidiStreamingClient</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>], <a href="https://pkg.go.dev/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewWorkflowRunClient">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L39">NewWorkflowRunClient</a>
+					<a class="permalink" href="#NewWorkflowRunClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewWorkflowRunClient(cc <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ClientConnInterface">ClientConnInterface</a>) <a href="#WorkflowRunClient">WorkflowRunClient</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="WorkflowRunServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L61">WorkflowRunServer</a>
+				<a class="permalink" href="#WorkflowRunServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>WorkflowRunServer is the server API for WorkflowRun service.
+All implementations must embed UnimplementedWorkflowRunServer
+for forward compatibility.
+<p>WorkflowRun is a gRPC service that allows for running a workflow.
+
+			<pre>type WorkflowRunServer interface {
+    <span class="comment">// Bidirectional streaming RPC</span>
+    RunWorkflow(<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingServer">BidiStreamingServer</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>]) <a href="https://pkg.go.dev/builtin/#error">error</a>
+    mustEmbedUnimplementedWorkflowRunServer()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WorkflowRun_RunWorkflowClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L54">WorkflowRun_RunWorkflowClient</a>
+				<a class="permalink" href="#WorkflowRun_RunWorkflowClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+
+			<pre>type WorkflowRun_RunWorkflowClient = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingClient">BidiStreamingClient</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>]</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WorkflowRun_RunWorkflowServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L103">WorkflowRun_RunWorkflowServer</a>
+				<a class="permalink" href="#WorkflowRun_RunWorkflowServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+
+			<pre>type WorkflowRun_RunWorkflowServer = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingServer">BidiStreamingServer</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>]</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="isClientMessage_MessageType">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L91">isClientMessage_MessageType</a>
+				<a class="permalink" href="#isClientMessage_MessageType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type isClientMessage_MessageType interface {
+    isClientMessage_MessageType()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="isServerMessage_MessageType">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent.pb.go#L186">isServerMessage_MessageType</a>
+				<a class="permalink" href="#isServerMessage_MessageType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type isServerMessage_MessageType interface {
+    isServerMessage_MessageType()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="workflowRunClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L35">workflowRunClient</a>
+				<a class="permalink" href="#workflowRunClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type workflowRunClient struct {
+<span id="workflowRunClient.cc"></span>    cc <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ClientConnInterface">ClientConnInterface</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="workflowRunClient.RunWorkflow">func (*workflowRunClient) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliagentgrpc/aali-agent_grpc.pb.go#L43">RunWorkflow</a>
+					<a class="permalink" href="#workflowRunClient.RunWorkflow">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *workflowRunClient) RunWorkflow(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#BidiStreamingClient">BidiStreamingClient</a>[<a href="#ClientMessage">ClientMessage</a>, <a href="#ServerMessage">ServerMessage</a>], <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.5.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="None">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api_reference/test/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

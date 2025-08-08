@@ -1,0 +1,2780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference Template &#8212; aali-sharedtypes</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/test/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://ansys.github.io/aali-sharedtypes/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API reference" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0.0" />
+  <link rel="canonical" href="https://ansys.github.io/aali-sharedtypes/version/stable/api_reference/sharedtypes/index.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://www.ansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/ansys_logo_transparent_black.png" class="logo__image only-light" alt="aali-sharedtypes - Home"/>
+    <img src="../../_static/ansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="aali-sharedtypes - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference Template</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://aali.docs.ansys.com/" class="nav-link">Aali</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">API reference</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API Reference Template</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package sharedtypes
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ansys/aali-sharedtypes/pkg/sharedtypes"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="#ACSSearchResponse">type ACSSearchResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AnsysGPTCitation">type AnsysGPTCitation</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AnsysGPTDefaultFields">type AnsysGPTDefaultFields</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AnsysGPTRetrieverModuleChunk">type AnsysGPTRetrieverModuleChunk</a></dd>
+				
+				
+			
+				
+				<dd><a href="#CodeGenerationElement">type CodeGenerationElement</a></dd>
+				
+				
+			
+				
+				<dd><a href="#CodeGenerationExample">type CodeGenerationExample</a></dd>
+				
+				
+			
+				
+				<dd><a href="#CodeGenerationType">type CodeGenerationType</a></dd>
+				
+				
+			
+				
+				<dd><a href="#CodeGenerationUserGuideSection">type CodeGenerationUserGuideSection</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ConversationHistoryMessage">type ConversationHistoryMessage</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DBListCollectionsOutput">type DBListCollectionsOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DataExtractionDocumentData">type DataExtractionDocumentData</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbAddDataInput">type DbAddDataInput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbAddDataOutput">type DbAddDataOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbArrayFilter">type DbArrayFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbCreateCollectionInput">type DbCreateCollectionInput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbCreateCollectionOutput">type DbCreateCollectionOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbData">type DbData</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbFilters">type DbFilters</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbJsonFilter">type DbJsonFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="#DbResponse">type DbResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#EmbeddingOptions">type EmbeddingOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="#EmbeddingResult">type EmbeddingResult</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ErrorResponse">type ErrorResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExecRequest">type ExecRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExecResponse">type ExecResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExecutionDetails">type ExecutionDetails</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExecutionInstruction">type ExecutionInstruction</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Feedback">type Feedback</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FileDetails">type FileDetails</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FilledInputOutput">type FilledInputOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FlowKitPythonFunction">type FlowKitPythonFunction</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FunctionDefinition">type FunctionDefinition</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FunctionDefinitionShort">type FunctionDefinitionShort</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FunctionInput">type FunctionInput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FunctionOutput">type FunctionOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#GeneralNeo4jQueryInput">type GeneralNeo4jQueryInput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#GeneralNeo4jQueryOutput">type GeneralNeo4jQueryOutput</a></dd>
+				
+				
+			
+				
+				<dd><a href="#GraphDbValueType">type GraphDbValueType</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#GraphDbValueType.Parse">func (valType GraphDbValueType) Parse(val string) (aali_graphdb.Value, error)</a></dd>
+				
+			
+				
+				<dd><a href="#HandlerRequest">type HandlerRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="#HandlerResponse">type HandlerResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#HistoricMessage">type HistoricMessage</a></dd>
+				
+				
+			
+				
+				<dd><a href="#MaterialAttribute">type MaterialAttribute</a></dd>
+				
+				
+			
+				
+				<dd><a href="#MaterialCriterionWithGuid">type MaterialCriterionWithGuid</a></dd>
+				
+				
+			
+				
+				<dd><a href="#MaterialLlmCriterion">type MaterialLlmCriterion</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ModelOptions">type ModelOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Neo4jResponse">type Neo4jResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="#SessionContext">type SessionContext</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ExtractSessionContext">func ExtractSessionContext(ctx *logging.ContextMap, msg []byte) (SessionContext, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="#TransferDetails">type TransferDetails</a></dd>
+				
+				
+			
+				
+				<dd><a href="#XMLMemberExample">type XMLMemberExample</a></dd>
+				
+				
+			
+				
+				<dd><a href="#XMLMemberExampleCode">type XMLMemberExampleCode</a></dd>
+				
+				
+			
+				
+				<dd><a href="#XMLMemberParam">type XMLMemberParam</a></dd>
+				
+				
+			
+				
+				<dd><a href="#neo4jRecord">type neo4jRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="#props">type props</a></dd>
+				
+				
+			
+				
+				<dd><a href="#summaryCounters">type summaryCounters</a></dd>
+				
+				
+			
+				
+				<dd><a href="#value">type value</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/agent.go">agent.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysgpt.go">ansysgpt.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysmaterials.go">ansysmaterials.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go">dataextraction.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go">exec.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go">functiondefinition.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go">knowledgedb.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go">llmhandler.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ACSSearchResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysgpt.go#L33">ACSSearchResponse</a>
+				<a class="permalink" href="#ACSSearchResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ACSSearchResponse represents the response from the ACS search.
+
+			<pre>type ACSSearchResponse struct {
+<span id="ACSSearchResponse.Physics"></span>    Physics             <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;physics&#34;`
+<span id="ACSSearchResponse.SourceTitleLvl3"></span>    SourceTitleLvl3     <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceTitle_lvl3&#34;`
+<span id="ACSSearchResponse.SourceURLLvl3"></span>    SourceURLLvl3       <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceURL_lvl3&#34;`
+<span id="ACSSearchResponse.TokenSize"></span>    TokenSize           <a href="https://pkg.go.dev/builtin/#int">int</a>     `json:&#34;tokenSize&#34;`
+<span id="ACSSearchResponse.SourceTitleLvl2"></span>    SourceTitleLvl2     <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceTitle_lvl2&#34;`
+<span id="ACSSearchResponse.Weight"></span>    Weight              <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;weight&#34;`
+<span id="ACSSearchResponse.SourceURLLvl2"></span>    SourceURLLvl2       <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceURL_lvl2&#34;`
+<span id="ACSSearchResponse.Product"></span>    Product             <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;product&#34;`
+<span id="ACSSearchResponse.Content"></span>    Content             <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;content&#34;`
+<span id="ACSSearchResponse.TypeOFasset"></span>    TypeOFasset         <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;typeOFasset&#34;`
+<span id="ACSSearchResponse.Version"></span>    Version             <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;version&#34;`
+<span id="ACSSearchResponse.SearchScore"></span>    SearchScore         <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;@search.score&#34;`
+<span id="ACSSearchResponse.SearchRerankerScore"></span>    SearchRerankerScore <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;@search.rerankerScore&#34;`
+<span id="ACSSearchResponse.IndexName"></span>    IndexName           <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;indexName&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AnsysGPTCitation">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysgpt.go#L51">AnsysGPTCitation</a>
+				<a class="permalink" href="#AnsysGPTCitation">&#xb6;</a>
+				
+				
+			</h2>
+			<p>AnsysGPTCitation represents the citation from the AnsysGPT.
+
+			<pre>type AnsysGPTCitation struct {
+<span id="AnsysGPTCitation.Title"></span>    Title     <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;Title&#34;`
+<span id="AnsysGPTCitation.URL"></span>    URL       <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;URL&#34;`
+<span id="AnsysGPTCitation.Relevance"></span>    Relevance <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;Relevance&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AnsysGPTDefaultFields">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysgpt.go#L26">AnsysGPTDefaultFields</a>
+				<a class="permalink" href="#AnsysGPTDefaultFields">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DefaultFields represents the default fields for the user query.
+
+			<pre>type AnsysGPTDefaultFields struct {
+<span id="AnsysGPTDefaultFields.QueryWord"></span>    QueryWord         <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="AnsysGPTDefaultFields.FieldName"></span>    FieldName         <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="AnsysGPTDefaultFields.FieldDefaultValue"></span>    FieldDefaultValue <a href="https://pkg.go.dev/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AnsysGPTRetrieverModuleChunk">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysgpt.go#L58">AnsysGPTRetrieverModuleChunk</a>
+				<a class="permalink" href="#AnsysGPTRetrieverModuleChunk">&#xb6;</a>
+				
+				
+			</h2>
+			<p>RetrieverModuleChunk represents a chunk of data context received from the retriever module.
+
+			<pre>type AnsysGPTRetrieverModuleChunk struct {
+<span id="AnsysGPTRetrieverModuleChunk.Captions"></span>    Captions        <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;@search.captions&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Highlights"></span>    Highlights      <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;@search.highlights&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.RerankerScore"></span>    RerankerScore   <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;@search.reranker_score&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Score"></span>    Score           <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;@search.score&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Content"></span>    Content         <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;content&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.IndexName"></span>    IndexName       <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;index_name&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Physics"></span>    Physics         <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;physics&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Product"></span>    Product         <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;product&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.SourceTitleLvl2"></span>    SourceTitleLvl2 <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceTitle_lvl2&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.SourceTitleLvl3"></span>    SourceTitleLvl3 <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceTitle_lvl3&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.SourceUrlLvl2"></span>    SourceUrlLvl2   <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceURL_lvl2&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.SourceUrlLvl3"></span>    SourceUrlLvl3   <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;sourceURL_lvl3&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.TokenSize"></span>    TokenSize       <a href="https://pkg.go.dev/builtin/#int">int</a>     `json:&#34;token_size&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.TypeOfAsset"></span>    TypeOfAsset     <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;typeOFasset&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Version"></span>    Version         <a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;version&#34;`
+<span id="AnsysGPTRetrieverModuleChunk.Weight"></span>    Weight          <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;weight&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CodeGenerationElement">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L45">CodeGenerationElement</a>
+				<a class="permalink" href="#CodeGenerationElement">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CodeGenerationElement struct {
+<span id="CodeGenerationElement.Guid"></span>    Guid <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>          `json:&#34;guid&#34;`
+<span id="CodeGenerationElement.Type"></span>    Type <a href="#CodeGenerationType">CodeGenerationType</a> `json:&#34;type&#34;`
+
+<span id="CodeGenerationElement.NamePseudocode"></span>    NamePseudocode <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;name_pseudocode&#34;` <span class="comment">// Function name without dependencies</span>
+<span id="CodeGenerationElement.NameFormatted"></span>    NameFormatted  <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;name_formatted&#34;`  <span class="comment">// Name of the function with spaces and without parameters</span>
+<span id="CodeGenerationElement.Description"></span>    Description    <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;description&#34;`
+
+<span id="CodeGenerationElement.Name"></span>    Name              <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;name&#34;`
+<span id="CodeGenerationElement.Dependencies"></span>    Dependencies      []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;dependencies&#34;`
+<span id="CodeGenerationElement.Summary"></span>    Summary           <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;summary&#34;`
+<span id="CodeGenerationElement.ReturnType"></span>    ReturnType        <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;return&#34;`
+<span id="CodeGenerationElement.ReturnElementList"></span>    ReturnElementList []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;return_element_list&#34;`
+<span id="CodeGenerationElement.ReturnDescription"></span>    ReturnDescription <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;return_description&#34;` <span class="comment">// Return description</span>
+<span id="CodeGenerationElement.Remarks"></span>    Remarks           <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;remarks&#34;`
+
+    <span class="comment">// Only for type &#34;function&#34; or &#34;method&#34;</span>
+<span id="CodeGenerationElement.Parameters"></span>    Parameters []<a href="#XMLMemberParam">XMLMemberParam</a> `json:&#34;parameters&#34;`
+<span id="CodeGenerationElement.Example"></span>    Example    <a href="#XMLMemberExample">XMLMemberExample</a> `json:&#34;example&#34;`
+
+    <span class="comment">// Only for type &#34;enum&#34;</span>
+<span id="CodeGenerationElement.EnumValues"></span>    EnumValues []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;enum_values&#34;`
+
+    <span class="comment">// Metadata for databases</span>
+<span id="CodeGenerationElement.VectorDBMetadata"></span>    VectorDBMetadata <a href="https://pkg.go.dev/builtin/#any">any</a> `json:&#34;vector_db_metadata,omitempty&#34;` <span class="comment">// Optional metadata for vector databases</span>
+<span id="CodeGenerationElement.GraphDBMetadata"></span>    GraphDBMetadata  <a href="https://pkg.go.dev/builtin/#any">any</a> `json:&#34;graph_db_metadata,omitempty&#34;`  <span class="comment">// Optional metadata for graph databases</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CodeGenerationExample">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L101">CodeGenerationExample</a>
+				<a class="permalink" href="#CodeGenerationExample">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CodeGenerationExample struct {
+<span id="CodeGenerationExample.Guid"></span>    Guid                   <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>         `json:&#34;guid&#34;`
+<span id="CodeGenerationExample.Name"></span>    Name                   <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;name&#34;`
+<span id="CodeGenerationExample.Dependencies"></span>    Dependencies           []<a href="https://pkg.go.dev/builtin/#string">string</a>          `json:&#34;dependencies&#34;`
+<span id="CodeGenerationExample.DependencyEquivalences"></span>    DependencyEquivalences map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;dependency_equivalences&#34;`
+<span id="CodeGenerationExample.Chunks"></span>    Chunks                 []<a href="https://pkg.go.dev/builtin/#string">string</a>          `json:&#34;chunks&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CodeGenerationType">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L74">CodeGenerationType</a>
+				<a class="permalink" href="#CodeGenerationType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Enum values for CodeGenerationType
+
+			<pre>type CodeGenerationType <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="Function">Function</span>  <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Function&#34;
+    <span id="Method">Method</span>    <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Method&#34;
+    <span id="Class">Class</span>     <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Class&#34;
+    <span id="Parameter">Parameter</span> <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Parameter&#34;
+    <span id="Enum">Enum</span>      <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Enum&#34;
+    <span id="Module">Module</span>    <a href="#CodeGenerationType">CodeGenerationType</a> = &#34;Module&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CodeGenerationUserGuideSection">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L109">CodeGenerationUserGuideSection</a>
+				<a class="permalink" href="#CodeGenerationUserGuideSection">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CodeGenerationUserGuideSection struct {
+<span id="CodeGenerationUserGuideSection.Name"></span>    Name            <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;name&#34;`
+<span id="CodeGenerationUserGuideSection.Title"></span>    Title           <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;title&#34;`
+<span id="CodeGenerationUserGuideSection.IsFirstChild"></span>    IsFirstChild    <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;is_first_child&#34;`
+<span id="CodeGenerationUserGuideSection.NextSibling"></span>    NextSibling     <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;next_sibling&#34;`
+<span id="CodeGenerationUserGuideSection.NextParent"></span>    NextParent      <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;next_parent&#34;`
+<span id="CodeGenerationUserGuideSection.DocumentName"></span>    DocumentName    <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;document_name&#34;`
+<span id="CodeGenerationUserGuideSection.Parent"></span>    Parent          <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;parent&#34;`
+<span id="CodeGenerationUserGuideSection.Content"></span>    Content         <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;content&#34;`
+<span id="CodeGenerationUserGuideSection.Level"></span>    Level           <a href="https://pkg.go.dev/builtin/#int">int</a>      `json:&#34;level&#34;`
+<span id="CodeGenerationUserGuideSection.Link"></span>    Link            <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;link&#34;`
+<span id="CodeGenerationUserGuideSection.ReferencedLinks"></span>    ReferencedLinks []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;referenced_links&#34;`
+<span id="CodeGenerationUserGuideSection.Chunks"></span>    Chunks          []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;chunks&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConversationHistoryMessage">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/agent.go#L49">ConversationHistoryMessage</a>
+				<a class="permalink" href="#ConversationHistoryMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ConversationHistoryMessage is a structure that contains the message ID, role, content, and images of a conversation history message.
+
+			<pre>type ConversationHistoryMessage struct {
+<span id="ConversationHistoryMessage.MessageId"></span>    MessageId        <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;message_id&#34;`
+<span id="ConversationHistoryMessage.Role"></span>    Role             <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;role&#34;`
+<span id="ConversationHistoryMessage.Content"></span>    Content          <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;content&#34;`
+<span id="ConversationHistoryMessage.Images"></span>    Images           []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;images&#34;` <span class="comment">// image in base64 format</span>
+<span id="ConversationHistoryMessage.PositiveFeedback"></span>    PositiveFeedback <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;positive_feedback&#34;`
+<span id="ConversationHistoryMessage.NegativeFeedback"></span>    NegativeFeedback <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;negative_feedback&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DBListCollectionsOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L117">DBListCollectionsOutput</a>
+				<a class="permalink" href="#DBListCollectionsOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DBListCollectionsOutput represents the output of listing collections in the database.
+
+			<pre>type DBListCollectionsOutput struct {
+<span id="DBListCollectionsOutput.Success"></span>    Success     <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;success&#34; description:&#34;Returns true if the collections were listed successfully. Returns false or an error if not.&#34;`
+<span id="DBListCollectionsOutput.Collections"></span>    Collections []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;collections&#34; description:&#34;A list of collection names.&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DataExtractionDocumentData">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L28">DataExtractionDocumentData</a>
+				<a class="permalink" href="#DataExtractionDocumentData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DataExtractionDocumentData represents the data extracted from a document.
+
+			<pre>type DataExtractionDocumentData struct {
+<span id="DataExtractionDocumentData.DocumentName"></span>    DocumentName      <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;documentName&#34;`
+<span id="DataExtractionDocumentData.DocumentId"></span>    DocumentId        <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;documentId&#34;`
+<span id="DataExtractionDocumentData.Guid"></span>    Guid              <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a> `json:&#34;guid&#34;`
+<span id="DataExtractionDocumentData.Level"></span>    Level             <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;level&#34;`
+<span id="DataExtractionDocumentData.ChildIds"></span>    ChildIds          []<a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;childIds&#34;`
+<span id="DataExtractionDocumentData.ParentId"></span>    ParentId          <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;parentId&#34;`
+<span id="DataExtractionDocumentData.PreviousSiblingId"></span>    PreviousSiblingId <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;previousSiblingId&#34;`
+<span id="DataExtractionDocumentData.NextSiblingId"></span>    NextSiblingId     <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;nextSiblingId&#34;`
+<span id="DataExtractionDocumentData.LastChildId"></span>    LastChildId       <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;lastChildId&#34;`
+<span id="DataExtractionDocumentData.FirstChildId"></span>    FirstChildId      <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;firstChildId&#34;`
+<span id="DataExtractionDocumentData.Text"></span>    Text              <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;text&#34;`
+<span id="DataExtractionDocumentData.Keywords"></span>    Keywords          []<a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;keywords&#34;`
+<span id="DataExtractionDocumentData.Summary"></span>    Summary           <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;summary&#34;`
+<span id="DataExtractionDocumentData.Embedding"></span>    Embedding         []<a href="https://pkg.go.dev/builtin/#float32">float32</a> `json:&#34;embedding&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbAddDataInput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L175">DbAddDataInput</a>
+				<a class="permalink" href="#DbAddDataInput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbAddDataInput represents the input for adding data to the database.
+
+			<pre>type DbAddDataInput struct {
+<span id="DbAddDataInput.CollectionName"></span>    CollectionName <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;collection_name&#34; description:&#34;Name of the collection to which the data objects will be added. Required for adding data.&#34; required:&#34;true&#34;`
+<span id="DbAddDataInput.Data"></span>    Data           []<a href="#DbData">DbData</a> `json:&#34;data&#34; description:&#34;Data objects to be added to the DB.&#34; required:&#34;true&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbAddDataOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L181">DbAddDataOutput</a>
+				<a class="permalink" href="#DbAddDataOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbAddDataOutput represents the output of adding data to the database.
+
+			<pre>type DbAddDataOutput struct {
+<span id="DbAddDataOutput.Success"></span>    Success             <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `json:&#34;success&#34; description:&#34;Returns true if the data was added successfully. Returns false or an error if not.&#34;`
+<span id="DbAddDataOutput.IgnoredObjectsCount"></span>    IgnoredObjectsCount <a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;ignored_objects_count&#34; description:&#34;Number of ignored documents.&#34;`
+<span id="DbAddDataOutput.Error"></span>    Error               <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;error&#34; description:&#34;Error message if the collection could not be created.&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbArrayFilter">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L54">DbArrayFilter</a>
+				<a class="permalink" href="#DbArrayFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbArrayFilter represents the filter for an array field in the database.
+
+			<pre>type DbArrayFilter struct {
+<span id="DbArrayFilter.NeedAll"></span>    NeedAll    <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;needAll&#34;`
+<span id="DbArrayFilter.FilterData"></span>    FilterData []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;filterData&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbCreateCollectionInput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L188">DbCreateCollectionInput</a>
+				<a class="permalink" href="#DbCreateCollectionInput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbCreateCollectionInput represents the input for creating a collection in the database.
+
+			<pre>type DbCreateCollectionInput struct {
+<span id="DbCreateCollectionInput.CollectionName"></span>    CollectionName <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;collection_name&#34; description:&#34;Name of the collection to which the data objects will be added. Required for adding data.&#34; required:&#34;true&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbCreateCollectionOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L193">DbCreateCollectionOutput</a>
+				<a class="permalink" href="#DbCreateCollectionOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbCreateCollectionOutput represents the output of creating a collection in the database.
+
+			<pre>type DbCreateCollectionOutput struct {
+<span id="DbCreateCollectionOutput.Success"></span>    Success <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `json:&#34;success&#34; description:&#34;Returns true if the collection was created successfully. Returns false or an error if not.&#34;`
+<span id="DbCreateCollectionOutput.Error"></span>    Error   <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;error&#34; description:&#34;Error message if the collection could not be created.&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbData">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L68">DbData</a>
+				<a class="permalink" href="#DbData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbData represents the data stored in the database.
+
+			<pre>type DbData struct {
+<span id="DbData.Guid"></span>    Guid              <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>              `json:&#34;guid&#34;`
+<span id="DbData.DocumentId"></span>    DocumentId        <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;document_id&#34;`
+<span id="DbData.DocumentName"></span>    DocumentName      <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;document_name&#34;`
+<span id="DbData.Text"></span>    Text              <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;text&#34;`
+<span id="DbData.Keywords"></span>    Keywords          []<a href="https://pkg.go.dev/builtin/#string">string</a>               `json:&#34;keywords&#34;`
+<span id="DbData.Summary"></span>    Summary           <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;summary&#34;`
+<span id="DbData.Embedding"></span>    Embedding         []<a href="https://pkg.go.dev/builtin/#float32">float32</a>              `json:&#34;embeddings&#34;`
+<span id="DbData.Tags"></span>    Tags              []<a href="https://pkg.go.dev/builtin/#string">string</a>               `json:&#34;tags&#34;`
+<span id="DbData.Metadata"></span>    Metadata          map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{} `json:&#34;metadata&#34;`
+<span id="DbData.ParentId"></span>    ParentId          *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;parent_id&#34;`
+<span id="DbData.ChildIds"></span>    ChildIds          []<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>            `json:&#34;child_ids&#34;`
+<span id="DbData.PreviousSiblingId"></span>    PreviousSiblingId *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;previous_sibling_id&#34;`
+<span id="DbData.NextSiblingId"></span>    NextSiblingId     *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;next_sibling_id&#34;`
+<span id="DbData.LastChildId"></span>    LastChildId       *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;last_child_id&#34;`
+<span id="DbData.FirstChildId"></span>    FirstChildId      *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;first_child_id&#34;`
+<span id="DbData.Level"></span>    Level             <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;level&#34;`
+<span id="DbData.HasNeo4jEntry"></span>    HasNeo4jEntry     <a href="https://pkg.go.dev/builtin/#bool">bool</a>                   `json:&#34;has_neo4j_entry&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbFilters">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L38">DbFilters</a>
+				<a class="permalink" href="#DbFilters">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbFilters represents the filters for the database.
+
+			<pre>type DbFilters struct {
+    <span class="comment">// Filters for string fields</span>
+<span id="DbFilters.GuidFilter"></span>    GuidFilter         []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;guid,omitempty&#34;`
+<span id="DbFilters.DocumentIdFilter"></span>    DocumentIdFilter   []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;document_id,omitempty&#34;`
+<span id="DbFilters.DocumentNameFilter"></span>    DocumentNameFilter []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;document_name,omitempty&#34;`
+<span id="DbFilters.LevelFilter"></span>    LevelFilter        []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;level,omitempty&#34;`
+
+    <span class="comment">// Filters for array fields</span>
+<span id="DbFilters.TagsFilter"></span>    TagsFilter     <a href="#DbArrayFilter">DbArrayFilter</a> `json:&#34;tags,omitempty&#34;`
+<span id="DbFilters.KeywordsFilter"></span>    KeywordsFilter <a href="#DbArrayFilter">DbArrayFilter</a> `json:&#34;keywords,omitempty&#34;`
+
+    <span class="comment">// Filters for JSON fields</span>
+<span id="DbFilters.MetadataFilter"></span>    MetadataFilter []<a href="#DbJsonFilter">DbJsonFilter</a> `json:&#34;metadata,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbJsonFilter">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L60">DbJsonFilter</a>
+				<a class="permalink" href="#DbJsonFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbJsonFilter represents the filter for a JSON field in the database.
+
+			<pre>type DbJsonFilter struct {
+<span id="DbJsonFilter.FieldName"></span>    FieldName  <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;fieldName&#34;`
+<span id="DbJsonFilter.FieldType"></span>    FieldType  <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;fieldType&#34; description:&#34;Can be either string or array.&#34;` <span class="comment">// &#34;string&#34; or &#34;array&#34;</span>
+<span id="DbJsonFilter.FilterData"></span>    FilterData []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;filterData&#34;`
+<span id="DbJsonFilter.NeedAll"></span>    NeedAll    <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;needAll&#34; description:&#34;Only needed if the FieldType is array.&#34;` <span class="comment">// only needed for array fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L89">DbResponse</a>
+				<a class="permalink" href="#DbResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>DbResponse represents the response from the database.
+
+			<pre>type DbResponse struct {
+<span id="DbResponse.Guid"></span>    Guid              <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>              `json:&#34;guid&#34;`
+<span id="DbResponse.DocumentId"></span>    DocumentId        <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;document_id&#34;`
+<span id="DbResponse.DocumentName"></span>    DocumentName      <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;document_name&#34;`
+<span id="DbResponse.Text"></span>    Text              <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;text&#34;`
+<span id="DbResponse.Keywords"></span>    Keywords          []<a href="https://pkg.go.dev/builtin/#string">string</a>               `json:&#34;keywords&#34;`
+<span id="DbResponse.Summary"></span>    Summary           <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;summary&#34;`
+<span id="DbResponse.Embedding"></span>    Embedding         []<a href="https://pkg.go.dev/builtin/#float32">float32</a>              `json:&#34;embeddings&#34;`
+<span id="DbResponse.Tags"></span>    Tags              []<a href="https://pkg.go.dev/builtin/#string">string</a>               `json:&#34;tags&#34;`
+<span id="DbResponse.Metadata"></span>    Metadata          map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{} `json:&#34;metadata&#34;`
+<span id="DbResponse.ParentId"></span>    ParentId          *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;parent_id&#34;`
+<span id="DbResponse.ChildIds"></span>    ChildIds          []<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>            `json:&#34;child_ids&#34;`
+<span id="DbResponse.PreviousSiblingId"></span>    PreviousSiblingId *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;previous_sibling_id&#34;`
+<span id="DbResponse.NextSiblingId"></span>    NextSiblingId     *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;next_sibling_id&#34;`
+<span id="DbResponse.LastChildId"></span>    LastChildId       *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;last_child_id&#34;`
+<span id="DbResponse.FirstChildId"></span>    FirstChildId      *<a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a>             `json:&#34;first_child_id&#34;`
+<span id="DbResponse.Distance"></span>    Distance          <a href="https://pkg.go.dev/builtin/#float64">float64</a>                `json:&#34;distance&#34;`
+<span id="DbResponse.Level"></span>    Level             <a href="https://pkg.go.dev/builtin/#string">string</a>                 `json:&#34;level&#34;`
+<span id="DbResponse.HasNeo4jEntry"></span>    HasNeo4jEntry     <a href="https://pkg.go.dev/builtin/#bool">bool</a>                   `json:&#34;has_neo4j_entry&#34;`
+
+<span id="DbResponse.Siblings"></span>    <span class="comment">// Siblings</span>
+<span id="DbResponse.Parent"></span>    Parent    *<a href="#DbData">DbData</a>  `json:&#34;parent,omitempty&#34;`
+<span id="DbResponse.Children"></span>    Children  []<a href="#DbData">DbData</a> `json:&#34;children,omitempty&#34;`
+<span id="DbResponse.LeafNodes"></span>    LeafNodes []<a href="#DbData">DbData</a> `json:&#34;leaf_nodes,omitempty&#34;`
+    Siblings  []<a href="#DbData">DbData</a> `json:&#34;siblings,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EmbeddingOptions">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L99">EmbeddingOptions</a>
+				<a class="permalink" href="#EmbeddingOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>EmbeddingsOptions represents the options for an embeddings request.
+
+			<pre>type EmbeddingOptions struct {
+<span id="EmbeddingOptions.ReturnDense"></span>    ReturnDense   *<a href="https://pkg.go.dev/builtin/#bool">bool</a> `json:&#34;returnDense&#34;`   <span class="comment">// defines if the response should include dense vectors; only for BAAI/bge-m3</span>
+<span id="EmbeddingOptions.ReturnSparse"></span>    ReturnSparse  *<a href="https://pkg.go.dev/builtin/#bool">bool</a> `json:&#34;returnSparse&#34;`  <span class="comment">// defines if the response should include lexical weights; only for BAAI/bge-m3</span>
+<span id="EmbeddingOptions.ReturnColbert"></span>    ReturnColbert *<a href="https://pkg.go.dev/builtin/#bool">bool</a> `json:&#34;returnColbert&#34;` <span class="comment">// defines if the response should include colbert vectors; only for BAAI/bge-m3</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EmbeddingResult">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L106">EmbeddingResult</a>
+				<a class="permalink" href="#EmbeddingResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>EmbeddingResult holds both dense and sparse embeddings
+
+			<pre>type EmbeddingResult struct {
+<span id="EmbeddingResult.Dense"></span>    Dense  []<a href="https://pkg.go.dev/builtin/#float32">float32</a>
+<span id="EmbeddingResult.Sparse"></span>    Sparse map[<a href="https://pkg.go.dev/builtin/#uint">uint</a>]<a href="https://pkg.go.dev/builtin/#float32">float32</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ErrorResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L70">ErrorResponse</a>
+				<a class="permalink" href="#ErrorResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ErrorResponse represents the error response sent to the client when something fails during the processing of the request.
+
+			<pre>type ErrorResponse struct {
+<span id="ErrorResponse.Code"></span>    Code    <a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;code&#34;`
+<span id="ErrorResponse.Message"></span>    Message <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;message&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExecRequest">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go#L30">ExecRequest</a>
+				<a class="permalink" href="#ExecRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExecRequest represents the requests that can be sent to aali-exec
+
+			<pre>type ExecRequest struct {
+<span id="ExecRequest.Type"></span>    Type                 <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;type&#34;`   <span class="comment">// &#34;code&#34;, &#34;flowkit&#34;</span>
+<span id="ExecRequest.Action"></span>    Action               <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;action&#34;` <span class="comment">// type &#34;code&#34;:&#34;execute&#34;, &#34;append&#34;, &#34;cancel&#34;, &#34;status&#34;; for type &#34;flowkit&#34;: &#34;&lt;functionName&gt;&#34;</span>
+<span id="ExecRequest.InstructionGuid"></span>    InstructionGuid      <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;instructionGuid&#34;`
+<span id="ExecRequest.ExecutionInstruction"></span>    ExecutionInstruction *<a href="#ExecutionInstruction">ExecutionInstruction</a>        `json:&#34;executionInstruction&#34;` <span class="comment">// only for type &#34;code&#34;</span>
+<span id="ExecRequest.Inputs"></span>    Inputs               map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="#FilledInputOutput">FilledInputOutput</a> `json:&#34;inputs&#34;`               <span class="comment">// only for type &#34;flowkit&#34;</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExecResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go#L46">ExecResponse</a>
+				<a class="permalink" href="#ExecResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExecResponse represents the response that aali-exec sends back
+
+			<pre>type ExecResponse struct {
+<span id="ExecResponse.Type"></span>    Type             <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;type&#34;` <span class="comment">// &#34;status&#34;, &#34;flowkit&#34;, &#34;file&#34;, &#34;error&#34;</span>
+<span id="ExecResponse.InstructionGuid"></span>    InstructionGuid  <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;instructionGuid&#34;`
+<span id="ExecResponse.Error"></span>    Error            *<a href="#ErrorResponse">ErrorResponse</a>               `json:&#34;error,omitempty&#34;`
+<span id="ExecResponse.ExecutionDetails"></span>    ExecutionDetails *<a href="#ExecutionDetails">ExecutionDetails</a>            `json:&#34;executionDetails,omitempty&#34;`
+<span id="ExecResponse.FileDetails"></span>    FileDetails      *<a href="#FileDetails">FileDetails</a>                 `json:&#34;fileDetails,omitempty&#34;`
+<span id="ExecResponse.Outputs"></span>    Outputs          map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="#FilledInputOutput">FilledInputOutput</a> `json:&#34;outputs&#34;` <span class="comment">// only for type &#34;flowkit&#34;</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExecutionDetails">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go#L56">ExecutionDetails</a>
+				<a class="permalink" href="#ExecutionDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExecutionDetails represents the details of the execution
+
+			<pre>type ExecutionDetails struct {
+<span id="ExecutionDetails.InstructionGuid"></span>    InstructionGuid     <a href="https://pkg.go.dev/builtin/#string">string</a>        `json:&#34;instructionGuid&#34;`
+<span id="ExecutionDetails.ClientGuid"></span>    ClientGuid          <a href="https://pkg.go.dev/builtin/#string">string</a>        `json:&#34;clientGuid&#34;`
+<span id="ExecutionDetails.StartTime"></span>    StartTime           <a href="https://pkg.go.dev/time/">time</a>.<a href="https://pkg.go.dev/time/#Time">Time</a>     `json:&#34;startTime&#34;`
+<span id="ExecutionDetails.TimeoutAt"></span>    TimeoutAt           <a href="https://pkg.go.dev/time/">time</a>.<a href="https://pkg.go.dev/time/#Time">Time</a>     `json:&#34;timeoutAt&#34;`
+<span id="ExecutionDetails.Response"></span>    Response            <a href="https://pkg.go.dev/builtin/#string">string</a>        `json:&#34;response&#34;`
+<span id="ExecutionDetails.Status"></span>    Status              <a href="https://pkg.go.dev/builtin/#string">string</a>        `json:&#34;status&#34;` <span class="comment">// &#34;started&#34;, &#34;running&#34;, &#34;completed&#34;, &#34;failed&#34;</span>
+<span id="ExecutionDetails.LastResponseDiff"></span>    LastResponseDiff    <a href="https://pkg.go.dev/builtin/#string">string</a>        `json:&#34;lastResponseDiff&#34;`
+<span id="ExecutionDetails.InterruptionChannel"></span>    InterruptionChannel chan <a href="https://pkg.go.dev/builtin/#bool">bool</a>     `json:&#34;-&#34;`
+<span id="ExecutionDetails.StdinChannel"></span>    StdinChannel        chan []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;-&#34;`
+<span id="ExecutionDetails.Cancelled"></span>    Cancelled           <a href="https://pkg.go.dev/builtin/#bool">bool</a>          `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExecutionInstruction">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go#L39">ExecutionInstruction</a>
+				<a class="permalink" href="#ExecutionInstruction">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExecutionInstruction contain an array of strings that represent the code to be executed in aali-exec
+
+			<pre>type ExecutionInstruction struct {
+<span id="ExecutionInstruction.CodeType"></span>    CodeType       <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;codeType&#34;` <span class="comment">// &#34;python&#34;, &#34;bash&#34;</span>
+<span id="ExecutionInstruction.Code"></span>    Code           []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;code&#34;`
+<span id="ExecutionInstruction.VenvExecutable"></span>    VenvExecutable <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;venvExecutable&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Feedback">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/agent.go#L59">Feedback</a>
+				<a class="permalink" href="#Feedback">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Feedback is a structure that contains the conversation history, message ID, and feedback options of a workflow feedback.
+
+			<pre>type Feedback struct {
+<span id="Feedback.ConversationHistory"></span>    ConversationHistory []<a href="#ConversationHistoryMessage">ConversationHistoryMessage</a> `json:&#34;conversation&#34;`
+<span id="Feedback.MessageId"></span>    MessageId           <a href="https://pkg.go.dev/builtin/#string">string</a>                       `json:&#34;message_id&#34;`
+<span id="Feedback.AddPositive"></span>    AddPositive         <a href="https://pkg.go.dev/builtin/#bool">bool</a>                         `json:&#34;add_positive&#34;`
+<span id="Feedback.AddNegative"></span>    AddNegative         <a href="https://pkg.go.dev/builtin/#bool">bool</a>                         `json:&#34;add_negative&#34;`
+<span id="Feedback.RemovePositive"></span>    RemovePositive      <a href="https://pkg.go.dev/builtin/#bool">bool</a>                         `json:&#34;remove_positive&#34;`
+<span id="Feedback.RemoveNegative"></span>    RemoveNegative      <a href="https://pkg.go.dev/builtin/#bool">bool</a>                         `json:&#34;remove_negative&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FileDetails">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/exec.go#L70">FileDetails</a>
+				<a class="permalink" href="#FileDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FileDetails contain parts of a file that is being sent
+
+			<pre>type FileDetails struct {
+<span id="FileDetails.FileName"></span>    FileName        <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;fileName&#34;`
+<span id="FileDetails.FileSize"></span>    FileSize        <a href="https://pkg.go.dev/builtin/#int64">int64</a>  `json:&#34;fileSize&#34;`
+<span id="FileDetails.FileChunkNumber"></span>    FileChunkNumber <a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;fileChunkNumber&#34;`
+<span id="FileDetails.FileChunk"></span>    FileChunk       []<a href="https://pkg.go.dev/builtin/#byte">byte</a> `json:&#34;fileChunk&#34;`
+<span id="FileDetails.IsLastChunk"></span>    IsLastChunk     <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `json:&#34;isLastChunk&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FilledInputOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L80">FilledInputOutput</a>
+				<a class="permalink" href="#FilledInputOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FilledInputOutput is a struct that contains the name, go type and value of a filled input/output
+
+			<pre>type FilledInputOutput struct {
+<span id="FilledInputOutput.Name"></span>    Name   <a href="https://pkg.go.dev/builtin/#string">string</a>      `json:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="FilledInputOutput.GoType"></span>    GoType <a href="https://pkg.go.dev/builtin/#string">string</a>      `json:&#34;go_type&#34; yaml:&#34;go_type&#34;`
+<span id="FilledInputOutput.Value"></span>    Value  interface{} `json:&#34;value&#34; yaml:&#34;value&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FlowKitPythonFunction">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L40">FlowKitPythonFunction</a>
+				<a class="permalink" href="#FlowKitPythonFunction">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FlowKitPythonFunction is a struct that contains the name, path, description, inputs, outputs and definitions of a FlowKit-Python function
+
+			<pre>type FlowKitPythonFunction struct {
+<span id="FlowKitPythonFunction.Name"></span>    Name        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;name&#34;`
+<span id="FlowKitPythonFunction.Path"></span>    Path        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;path&#34;`
+<span id="FlowKitPythonFunction.Description"></span>    Description <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;description&#34;`
+<span id="FlowKitPythonFunction.Category"></span>    Category    <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;category&#34;`
+<span id="FlowKitPythonFunction.DisplayName"></span>    DisplayName <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;display_name&#34;`
+<span id="FlowKitPythonFunction.Inputs"></span>    Inputs      []<a href="#FunctionInput">FunctionInput</a>  `json:&#34;inputs&#34;`
+<span id="FlowKitPythonFunction.Outputs"></span>    Outputs     []<a href="#FunctionOutput">FunctionOutput</a> `json:&#34;outputs&#34;`
+<span id="FlowKitPythonFunction.Definitions"></span>    Definitions interface{}      `json:&#34;definitions&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FunctionDefinition">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L26">FunctionDefinition</a>
+				<a class="permalink" href="#FunctionDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionDefinition is a struct that contains the id, name, description, package, inputs and outputs of a function
+
+			<pre>type FunctionDefinition struct {
+<span id="FunctionDefinition.Name"></span>    Name        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="FunctionDefinition.FlowkitUrl"></span>    FlowkitUrl  <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;flowkit_url&#34; yaml:&#34;flowkit_url&#34;` <span class="comment">// URL of the connected FlowKit server containing this function</span>
+<span id="FunctionDefinition.ApiKey"></span>    ApiKey      <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;api_key&#34; yaml:&#34;api_key&#34;`         <span class="comment">// API key for the FlowKit server</span>
+<span id="FunctionDefinition.DisplayName"></span>    DisplayName <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;display_name&#34; yaml:&#34;display_name&#34;`
+<span id="FunctionDefinition.Description"></span>    Description <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;description&#34; yaml:&#34;description&#34;`
+<span id="FunctionDefinition.Category"></span>    Category    <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;category&#34; yaml:&#34;category&#34;` <span class="comment">// &#34;data_extraction&#34;, &#34;generic&#34;, &#34;knowledge_db&#34;, &#34;llm_handler&#34;, &#34;ansys_gpt&#34;</span>
+<span id="FunctionDefinition.Type"></span>    Type        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;type&#34; yaml:&#34;type&#34;`         <span class="comment">// &#34;go&#34;, &#34;python&#34;</span>
+<span id="FunctionDefinition.Path"></span>    Path        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;path&#34; yaml:&#34;path&#34;`         <span class="comment">// only for python functions</span>
+<span id="FunctionDefinition.Inputs"></span>    Inputs      []<a href="#FunctionInput">FunctionInput</a>  `json:&#34;inputs&#34; yaml:&#34;inputs&#34;`
+<span id="FunctionDefinition.Outputs"></span>    Outputs     []<a href="#FunctionOutput">FunctionOutput</a> `json:&#34;outputs&#34; yaml:&#34;outputs&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FunctionDefinitionShort">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L52">FunctionDefinitionShort</a>
+				<a class="permalink" href="#FunctionDefinitionShort">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionDefinitionShort is equivalent to FunctionDefinition but without the API key (used for aali-agent rest API)
+
+			<pre>type FunctionDefinitionShort struct {
+<span id="FunctionDefinitionShort.Name"></span>    Name        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="FunctionDefinitionShort.FlowkitUrl"></span>    FlowkitUrl  <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;flowkit_url&#34; yaml:&#34;flowkit_url&#34;` <span class="comment">// URL of the connected FlowKit server containing this function</span>
+<span id="FunctionDefinitionShort.DisplayName"></span>    DisplayName <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;display_name&#34; yaml:&#34;display_name&#34;`
+<span id="FunctionDefinitionShort.Description"></span>    Description <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;description&#34; yaml:&#34;description&#34;`
+<span id="FunctionDefinitionShort.Category"></span>    Category    <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;category&#34; yaml:&#34;category&#34;` <span class="comment">// &#34;data_extraction&#34;, &#34;generic&#34;, &#34;knowledge_db&#34;, &#34;llm_handler&#34;, &#34;ansys_gpt&#34;</span>
+<span id="FunctionDefinitionShort.Type"></span>    Type        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;type&#34; yaml:&#34;type&#34;`         <span class="comment">// &#34;go&#34;, &#34;python&#34;</span>
+<span id="FunctionDefinitionShort.Path"></span>    Path        <a href="https://pkg.go.dev/builtin/#string">string</a>           `json:&#34;path&#34; yaml:&#34;path&#34;`         <span class="comment">// only for python functions</span>
+<span id="FunctionDefinitionShort.Inputs"></span>    Inputs      []<a href="#FunctionInput">FunctionInput</a>  `json:&#34;inputs&#34; yaml:&#34;inputs&#34;`
+<span id="FunctionDefinitionShort.Outputs"></span>    Outputs     []<a href="#FunctionOutput">FunctionOutput</a> `json:&#34;outputs&#34; yaml:&#34;outputs&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FunctionInput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L65">FunctionInput</a>
+				<a class="permalink" href="#FunctionInput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionInput is a struct that contains the name, type, go type and options of a function input
+
+			<pre>type FunctionInput struct {
+<span id="FunctionInput.Name"></span>    Name    <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="FunctionInput.Type"></span>    Type    <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;type&#34; yaml:&#34;type&#34;` <span class="comment">// string, number, boolean, json</span>
+<span id="FunctionInput.GoType"></span>    GoType  <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;go_type&#34; yaml:&#34;go_type&#34;`
+<span id="FunctionInput.Options"></span>    Options []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;options&#34; yaml:&#34;options&#34;` <span class="comment">// only applicable if not empty</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FunctionOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/functiondefinition.go#L73">FunctionOutput</a>
+				<a class="permalink" href="#FunctionOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionOutput is a struct that contains the name, type and go type of a function output
+
+			<pre>type FunctionOutput struct {
+<span id="FunctionOutput.Name"></span>    Name   <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="FunctionOutput.Type"></span>    Type   <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;type&#34; yaml:&#34;type&#34;` <span class="comment">// string, number, boolean, json</span>
+<span id="FunctionOutput.GoType"></span>    GoType <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;go_type&#34; yaml:&#34;go_type&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GeneralNeo4jQueryInput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L123">GeneralNeo4jQueryInput</a>
+				<a class="permalink" href="#GeneralNeo4jQueryInput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>GeneralNeo4jQueryInput represents the input for executing a Neo4j query.
+
+			<pre>type GeneralNeo4jQueryInput struct {
+<span id="GeneralNeo4jQueryInput.Query"></span>    Query <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;query&#34; description:&#34;Neo4j query to be executed. Required for executing a query.&#34; required:&#34;true&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GeneralNeo4jQueryOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L128">GeneralNeo4jQueryOutput</a>
+				<a class="permalink" href="#GeneralNeo4jQueryOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>GeneralNeo4jQueryOutput represents the output of executing a Neo4j query.
+
+			<pre>type GeneralNeo4jQueryOutput struct {
+<span id="GeneralNeo4jQueryOutput.Success"></span>    Success  <a href="https://pkg.go.dev/builtin/#bool">bool</a>          `json:&#34;success&#34; description:&#34;Returns true if the query was executed successfully. Returns false or an error if not.&#34;`
+<span id="GeneralNeo4jQueryOutput.Response"></span>    Response <a href="#Neo4jResponse">Neo4jResponse</a> `json:&#34;response&#34; description:&#34;Summary and records of the query execution.&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GraphDbValueType">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L198">GraphDbValueType</a>
+				<a class="permalink" href="#GraphDbValueType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type GraphDbValueType <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+
+			
+				<p>some types don&apos;t really make sense to be parsed in the aali flowkit context. These are not included here:
+- Null
+- InternalID
+- List/Array (would require somehow parsing/infering the LogicalType as well)
+- Struct (would require knowing type of each value)
+- Node/Rel/RecursiveRel
+- Map
+- Union
+
+				<pre>const (
+    <span id="Bool">Bool</span>         <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;bool&#34;
+    <span id="Int64">Int64</span>        <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;int64&#34;
+    <span id="Int32">Int32</span>        <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;int32&#34;
+    <span id="Int16">Int16</span>        <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;int16&#34;
+    <span id="Int8">Int8</span>         <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;int8&#34;
+    <span id="UInt64">UInt64</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;uint64&#34;
+    <span id="UInt32">UInt32</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;uint32&#34;
+    <span id="UInt16">UInt16</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;uint16&#34;
+    <span id="UInt8">UInt8</span>        <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;uint8&#34;
+    <span id="Int128">Int128</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;int128&#34;
+    <span id="Double">Double</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;double&#34;
+    <span id="Float">Float</span>        <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;float&#34;
+    <span id="Date">Date</span>         <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;date&#34;
+    <span id="Interval">Interval</span>     <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;interval&#34;
+    <span id="Timestamp">Timestamp</span>    <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;timestamp&#34;
+    <span id="TimestampTz">TimestampTz</span>  <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;timestamptz&#34;
+    <span id="TimestampNs">TimestampNs</span>  <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;timestampns&#34;
+    <span id="TimestampMs">TimestampMs</span>  <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;timestampms&#34;
+    <span id="TimestampSec">TimestampSec</span> <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;timestampsec&#34;
+    <span id="String">String</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;string&#34;
+    <span id="Blob">Blob</span>         <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;blob&#34;
+    <span id="Struct">Struct</span>       <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;struct&#34;
+    <span id="UUID">UUID</span>         <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;uuid&#34;
+    <span id="Decimal">Decimal</span>      <a href="#GraphDbValueType">GraphDbValueType</a> = &#34;decimal&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GraphDbValueType.Parse">func (GraphDbValueType) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L235">Parse</a>
+					<a class="permalink" href="#GraphDbValueType.Parse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (valType <a href="#GraphDbValueType">GraphDbValueType</a>) Parse(val <a href="https://pkg.go.dev/builtin/#string">string</a>) (<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/aali_graphdb/">aali_graphdb</a>.<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/aali_graphdb/#Value">Value</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HandlerRequest">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L26">HandlerRequest</a>
+				<a class="permalink" href="#HandlerRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>HandlerRequest represents the client request for a specific chat or embeddings operation.
+
+			<pre>type HandlerRequest struct {
+<span id="HandlerRequest.Adapter"></span>    Adapter             <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;adapter&#34;` <span class="comment">// &#34;chat&#34;, &#34;embeddings&#34;</span>
+<span id="HandlerRequest.InstructionGuid"></span>    InstructionGuid     <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;instructionGuid&#34;`
+<span id="HandlerRequest.ModelIds"></span>    ModelIds            []<a href="https://pkg.go.dev/builtin/#string">string</a>          `json:&#34;modelIds&#34;`                   <span class="comment">// optional model ids to define a set of specific models to be used for this request</span>
+<span id="HandlerRequest.Data"></span>    Data                interface{}       `json:&#34;data&#34;`                       <span class="comment">// for embeddings, this can be a string or []string; for chat, only string is allowed</span>
+<span id="HandlerRequest.Images"></span>    Images              []<a href="https://pkg.go.dev/builtin/#string">string</a>          `json:&#34;images&#34;`                     <span class="comment">// List of images in base64 format</span>
+<span id="HandlerRequest.ChatRequestType"></span>    ChatRequestType     <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;chatRequestType&#34;`            <span class="comment">// &#34;summary&#34;, &#34;code&#34;, &#34;keywords&#34;, &#34;general&#34;; only relevant if &#34;adapter&#34; is &#34;chat&#34;</span>
+<span id="HandlerRequest.DataStream"></span>    DataStream          <a href="https://pkg.go.dev/builtin/#bool">bool</a>              `json:&#34;dataStream&#34;`                 <span class="comment">// only relevant if &#34;adapter&#34; is &#34;chat&#34;</span>
+<span id="HandlerRequest.MaxNumberOfKeywords"></span>    MaxNumberOfKeywords <a href="https://pkg.go.dev/builtin/#uint32">uint32</a>            `json:&#34;maxNumberOfKeywords&#34;`        <span class="comment">// only relevant if &#34;chatRequestType&#34; is &#34;keywords&#34;</span>
+<span id="HandlerRequest.IsConversation"></span>    IsConversation      <a href="https://pkg.go.dev/builtin/#bool">bool</a>              `json:&#34;isConversation&#34;`             <span class="comment">// only relevant if &#34;chatRequestType&#34; is &#34;code&#34;</span>
+<span id="HandlerRequest.ConversationHistory"></span>    ConversationHistory []<a href="#HistoricMessage">HistoricMessage</a> `json:&#34;conversationHistory&#34;`        <span class="comment">// only relevant if &#34;isConversation&#34; is true</span>
+<span id="HandlerRequest.GeneralContext"></span>    GeneralContext      <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;generalContext&#34;`             <span class="comment">// any added context you might need</span>
+<span id="HandlerRequest.MsgContext"></span>    MsgContext          <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;msgContext&#34;`                 <span class="comment">// any added context you might need</span>
+<span id="HandlerRequest.SystemPrompt"></span>    SystemPrompt        interface{}       `json:&#34;systemPrompt&#34;`               <span class="comment">// only relevant if &#34;chatRequestType&#34; is &#34;general&#34;</span>
+<span id="HandlerRequest.ModelOptions"></span>    ModelOptions        <a href="#ModelOptions">ModelOptions</a>      `json:&#34;modelOptions,omitempty&#34;`     <span class="comment">// only relevant if &#34;adapter&#34; is &#34;chat&#34;</span>
+<span id="HandlerRequest.EmbeddingOptions"></span>    EmbeddingOptions    <a href="#EmbeddingOptions">EmbeddingOptions</a>  `json:&#34;embeddingOptions,omitempty&#34;` <span class="comment">// only relevant if &#34;adapter&#34; is &#34;embeddings&#34;</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HandlerResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L45">HandlerResponse</a>
+				<a class="permalink" href="#HandlerResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>HandlerResponse represents the LLM Handler response for a specific request.
+
+			<pre>type HandlerResponse struct {
+    <span class="comment">// Common properties</span>
+<span id="HandlerResponse.InstructionGuid"></span>    InstructionGuid <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;instructionGuid&#34;`
+<span id="HandlerResponse.Type"></span>    Type            <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;type&#34;` <span class="comment">// &#34;info&#34;, &#34;error&#34;, &#34;chat&#34;, &#34;embeddings&#34;</span>
+
+    <span class="comment">// Chat properties</span>
+<span id="HandlerResponse.IsLast"></span>    IsLast           *<a href="https://pkg.go.dev/builtin/#bool">bool</a>   `json:&#34;isLast,omitempty&#34;`
+<span id="HandlerResponse.Position"></span>    Position         *<a href="https://pkg.go.dev/builtin/#uint32">uint32</a> `json:&#34;position,omitempty&#34;`
+<span id="HandlerResponse.InputTokenCount"></span>    InputTokenCount  *<a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;inputTokenCount,omitempty&#34;`
+<span id="HandlerResponse.OutputTokenCount"></span>    OutputTokenCount *<a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;outputTokenCount,omitempty&#34;`
+<span id="HandlerResponse.ChatData"></span>    ChatData         *<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;chatData,omitempty&#34;`
+
+    <span class="comment">// Embeddings properties</span>
+<span id="HandlerResponse.EmbeddedData"></span>    EmbeddedData   interface{} `json:&#34;embeddedData,omitempty&#34;`   <span class="comment">// []float32 or [][]float32; for BAAI/bge-m3 these are dense vectors</span>
+<span id="HandlerResponse.LexicalWeights"></span>    LexicalWeights interface{} `json:&#34;lexicalWeights,omitempty&#34;` <span class="comment">// map[uint]float32 or []map[uint]float32; only for BAAI/bge-m3</span>
+<span id="HandlerResponse.ColbertVecs"></span>    ColbertVecs    interface{} `json:&#34;colbertVecs,omitempty&#34;`    <span class="comment">// [][]float32 or [][][]float32; only for BAAI/bge-m3</span>
+
+<span id="HandlerResponse.Error"></span>    <span class="comment">// Error properties</span>
+    Error *<a href="#ErrorResponse">ErrorResponse</a> `json:&#34;error,omitempty&#34;`
+
+    <span class="comment">// Info properties</span>
+<span id="HandlerResponse.InfoMessage"></span>    InfoMessage *<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;infoMessage,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HistoricMessage">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L82">HistoricMessage</a>
+				<a class="permalink" href="#HistoricMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>HistoricMessage represents a past chat messages.
+
+			<pre>type HistoricMessage struct {
+<span id="HistoricMessage.Role"></span>    Role    <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;role&#34;`
+<span id="HistoricMessage.Content"></span>    Content <a href="https://pkg.go.dev/builtin/#string">string</a>   `json:&#34;content&#34;`
+<span id="HistoricMessage.Images"></span>    Images  []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;images&#34;` <span class="comment">// image in base64 format</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MaterialAttribute">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysmaterials.go#L41">MaterialAttribute</a>
+				<a class="permalink" href="#MaterialAttribute">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Represents a defined material attribute with its name and GUID.
+
+			<pre>type MaterialAttribute struct {
+<span id="MaterialAttribute.Name"></span>    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;name&#34;`
+<span id="MaterialAttribute.Guid"></span>    Guid <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;guid&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MaterialCriterionWithGuid">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysmaterials.go#L33">MaterialCriterionWithGuid</a>
+				<a class="permalink" href="#MaterialCriterionWithGuid">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Represents a criterion with its GUID
+
+			<pre>type MaterialCriterionWithGuid struct {
+<span id="MaterialCriterionWithGuid.AttributeName"></span>    AttributeName <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;attributeName&#34;`
+<span id="MaterialCriterionWithGuid.AttributeGuid"></span>    AttributeGuid <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;attributeGuid&#34;`
+<span id="MaterialCriterionWithGuid.Explanation"></span>    Explanation   <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;explanation&#34;`
+<span id="MaterialCriterionWithGuid.Confidence"></span>    Confidence    <a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;confidence&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MaterialLlmCriterion">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/ansysmaterials.go#L26">MaterialLlmCriterion</a>
+				<a class="permalink" href="#MaterialLlmCriterion">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Represents a criterion returned from the llm
+
+			<pre>type MaterialLlmCriterion struct {
+<span id="MaterialLlmCriterion.AttributeName"></span>    AttributeName <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;attributeName&#34;`
+<span id="MaterialLlmCriterion.Explanation"></span>    Explanation   <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;explanation&#34;`
+<span id="MaterialLlmCriterion.Confidence"></span>    Confidence    <a href="https://pkg.go.dev/builtin/#int">int</a>    `json:&#34;confidence&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ModelOptions">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L89">ModelOptions</a>
+				<a class="permalink" href="#ModelOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>OpenAIOption represents an option for an OpenAI API call.
+
+			<pre>type ModelOptions struct {
+<span id="ModelOptions.FrequencyPenalty"></span>    FrequencyPenalty *<a href="https://pkg.go.dev/builtin/#float32">float32</a> `json:&#34;frequencyPenalty,omitempty&#34;`
+<span id="ModelOptions.MaxTokens"></span>    MaxTokens        *<a href="https://pkg.go.dev/builtin/#int32">int32</a>   `json:&#34;maxTokens,omitempty&#34;`
+<span id="ModelOptions.PresencePenalty"></span>    PresencePenalty  *<a href="https://pkg.go.dev/builtin/#float32">float32</a> `json:&#34;presencePenalty,omitempty&#34;`
+<span id="ModelOptions.Stop"></span>    Stop             []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;stop,omitempty&#34;`
+<span id="ModelOptions.Temperature"></span>    Temperature      *<a href="https://pkg.go.dev/builtin/#float32">float32</a> `json:&#34;temperature,omitempty&#34;`
+<span id="ModelOptions.TopP"></span>    TopP             *<a href="https://pkg.go.dev/builtin/#float32">float32</a> `json:&#34;topP,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Neo4jResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L134">Neo4jResponse</a>
+				<a class="permalink" href="#Neo4jResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>neo4jResponse represents the response from the Neo4j query.
+
+			<pre>type Neo4jResponse struct {
+<span id="Neo4jResponse.Record"></span>    Record          neo4jRecord     `json:&#34;record&#34;`
+<span id="Neo4jResponse.SummaryCounters"></span>    SummaryCounters summaryCounters `json:&#34;summaryCounters&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SessionContext">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/agent.go#L32">SessionContext</a>
+				<a class="permalink" href="#SessionContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Message represents the JSON message you are expecting
+
+			<pre>type SessionContext struct {
+<span id="SessionContext.SessionType"></span>    SessionType <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;session_type&#34;`          <span class="comment">// Type of session: &#34;workflow&#34;, &#34;exec&#34;</span>
+<span id="SessionContext.ApiKey"></span>    ApiKey      <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;api_key&#34;`               <span class="comment">// API key for authentication, only relevant if &#34;session_type&#34; is &#34;exec&#34;</span>
+<span id="SessionContext.JwtToken"></span>    JwtToken    <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;jwt_token&#34;`             <span class="comment">// JWT token for authentication (optional)</span>
+<span id="SessionContext.ExecId"></span>    ExecId      <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;exec_id,omitempty&#34;`     <span class="comment">// Unique identifier of connecting Exec, only relevant if &#34;session_type&#34; is &#34;exec&#34;</span>
+<span id="SessionContext.WorkflowId"></span>    WorkflowId  <a href="https://pkg.go.dev/builtin/#string">string</a>            `json:&#34;workflow_id,omitempty&#34;` <span class="comment">// Workflow ID, only relevant if &#34;workflow_endpoint&#34; is &#34;custom&#34;</span>
+<span id="SessionContext.Variables"></span>    Variables   map[<a href="https://pkg.go.dev/builtin/#string">string</a>]<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;variables,omitempty&#34;`   <span class="comment">// Variables to be passed to the workflow</span>
+    <span class="comment">// Snapshot logic</span>
+<span id="SessionContext.SnapshotId"></span>    SnapshotId     <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;snapshot_id,omitempty&#34;`     <span class="comment">// Snapshot ID, only relevant if &#34;session_type&#34; is &#34;workflow&#34;; if defined, the given snapshot will retrived from the database</span>
+<span id="SessionContext.WorkflowRunId"></span>    WorkflowRunId  <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;workflow_run_id,omitempty&#34;` <span class="comment">// Workflow run ID, only relevant if &#34;session_type&#34; is &#34;workflow&#34;; if defined, mandatory if &#34;snapshot_id&#34; is defined in order to retrieve the snapshot from the database</span>
+<span id="SessionContext.UserId"></span>    UserId         <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;user_id,omitempty&#34;`         <span class="comment">// User ID, only relevant if &#34;session_type&#34; is &#34;workflow&#34;; if defined, mandatory if &#34;snapshot_id&#34; is defined in order to retrieve the snapshot from the database</span>
+<span id="SessionContext.StoreSnapshots"></span>    StoreSnapshots <a href="https://pkg.go.dev/builtin/#bool">bool</a>   `json:&#34;store_snapshots,omitempty&#34;` <span class="comment">// Store snapshots, only relevant if &#34;session_type&#34; is &#34;workflow&#34;; if true, all taken snapshots will be stored in the database</span>
+    <span class="comment">// Other</span>
+<span id="SessionContext.IpAddress"></span>    IpAddress <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;ip_address,omitempty&#34;` <span class="comment">// IP address of the client, required for some auth_types</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="ExtractSessionContext">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/agent.go#L75">ExtractSessionContext</a>
+					<a class="permalink" href="#ExtractSessionContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ExtractSessionContext(ctx *<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/logging/">logging</a>.<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/logging/#ContextMap">ContextMap</a>, msg []<a href="https://pkg.go.dev/builtin/#byte">byte</a>) (<a href="#SessionContext">SessionContext</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				<p>SetSessionContext sets the SessionContext struct from the JSON payload
+<p>Parameters:
+<ul>
+<li>msg: the JSON payload
+</ul>
+<p>Returns:
+<ul>
+<li>SessionContext: the SessionContext struct
+</ul>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="TransferDetails">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/llmhandler.go#L76">TransferDetails</a>
+				<a class="permalink" href="#TransferDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<p>TransferDetails holds communication channels for the websocket listener and writer.
+
+			<pre>type TransferDetails struct {
+<span id="TransferDetails.ResponseChannel"></span>    ResponseChannel chan <a href="#HandlerResponse">HandlerResponse</a>
+<span id="TransferDetails.RequestChannel"></span>    RequestChannel  chan <a href="#HandlerRequest">HandlerRequest</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="XMLMemberExample">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L85">XMLMemberExample</a>
+				<a class="permalink" href="#XMLMemberExample">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type XMLMemberExample struct {
+<span id="XMLMemberExample.Description"></span>    Description <a href="https://pkg.go.dev/builtin/#string">string</a>               `xml:&#34;,chardata&#34; json:&#34;description&#34;` <span class="comment">// Text content of &lt;example&gt;</span>
+<span id="XMLMemberExample.Code"></span>    Code        <a href="#XMLMemberExampleCode">XMLMemberExampleCode</a> `xml:&#34;code,omitempty&#34; json:&#34;code&#34;`   <span class="comment">// Optional &lt;code&gt; element</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="XMLMemberExampleCode">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L90">XMLMemberExampleCode</a>
+				<a class="permalink" href="#XMLMemberExampleCode">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type XMLMemberExampleCode struct {
+<span id="XMLMemberExampleCode.Type"></span>    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `xml:&#34;type,attr&#34; json:&#34;type&#34;` <span class="comment">// Attribute for &lt;code&gt;</span>
+<span id="XMLMemberExampleCode.Text"></span>    Text <a href="https://pkg.go.dev/builtin/#string">string</a> `xml:&#34;,chardata&#34; json:&#34;text&#34;` <span class="comment">// Text content of &lt;code&gt;</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="XMLMemberParam">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/dataextraction.go#L95">XMLMemberParam</a>
+				<a class="permalink" href="#XMLMemberParam">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type XMLMemberParam struct {
+<span id="XMLMemberParam.Name"></span>    Name        <a href="https://pkg.go.dev/builtin/#string">string</a> `xml:&#34;name&#34; json:&#34;name&#34;`             <span class="comment">// Attribute for &lt;param&gt;</span>
+<span id="XMLMemberParam.Type"></span>    Type        <a href="https://pkg.go.dev/builtin/#string">string</a> `xml:&#34;type,omitempty&#34; json:&#34;type&#34;`   <span class="comment">// Attribute for &lt;param&gt;</span>
+<span id="XMLMemberParam.Description"></span>    Description <a href="https://pkg.go.dev/builtin/#string">string</a> `xml:&#34;,chardata&#34; json:&#34;description&#34;` <span class="comment">// Text content of &lt;param&gt;</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="neo4jRecord">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L140">neo4jRecord</a>
+				<a class="permalink" href="#neo4jRecord">&#xb6;</a>
+				
+				
+			</h2>
+			<p>neo4jRecord represents the record from the Neo4j query.
+
+			<pre>type neo4jRecord []struct {
+    Values []value `json:&#34;Values&#34;`
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="props">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L152">props</a>
+				<a class="permalink" href="#props">&#xb6;</a>
+				
+				
+			</h2>
+			<p>props represents the properties from the Neo4j query.
+
+			<pre>type props struct {
+<span id="props.CollectionName"></span>    CollectionName <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;collectionName&#34;`
+<span id="props.DocumentId"></span>    DocumentId     <a href="https://pkg.go.dev/builtin/#string">string</a>    `json:&#34;documentId&#34;`
+<span id="props.DocumentTypes"></span>    DocumentTypes  []<a href="https://pkg.go.dev/builtin/#string">string</a>  `json:&#34;documentTypes,omitempty&#34;`
+<span id="props.Guid"></span>    Guid           <a href="https://pkg.go.dev/github.com/google/uuid/">uuid</a>.<a href="https://pkg.go.dev/github.com/google/uuid/#UUID">UUID</a> `json:&#34;guid,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="summaryCounters">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L160">summaryCounters</a>
+				<a class="permalink" href="#summaryCounters">&#xb6;</a>
+				
+				
+			</h2>
+			<p>summaryCounters represents the summary counters from the Neo4j query.
+
+			<pre>type summaryCounters struct {
+<span id="summaryCounters.NodesCreated"></span>    NodesCreated         <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;nodes_created&#34;`
+<span id="summaryCounters.NodesDeleted"></span>    NodesDeleted         <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;nodes_deleted&#34;`
+<span id="summaryCounters.RelationshipsCreated"></span>    RelationshipsCreated <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;relationships_created&#34;`
+<span id="summaryCounters.RelationshipsDeleted"></span>    RelationshipsDeleted <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;relationships_deleted&#34;`
+<span id="summaryCounters.PropertiesSet"></span>    PropertiesSet        <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;properties_set&#34;`
+<span id="summaryCounters.LabelsAdded"></span>    LabelsAdded          <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;labels_added&#34;`
+<span id="summaryCounters.LabelsRemoved"></span>    LabelsRemoved        <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;labels_removed&#34;`
+<span id="summaryCounters.IndexesAdded"></span>    IndexesAdded         <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;indexes_added&#34;`
+<span id="summaryCounters.IndexesRemoved"></span>    IndexesRemoved       <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;indexes_removed&#34;`
+<span id="summaryCounters.ConstraintsAdded"></span>    ConstraintsAdded     <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;constraints_added&#34;`
+<span id="summaryCounters.ConstraintsRemoved"></span>    ConstraintsRemoved   <a href="https://pkg.go.dev/builtin/#int">int</a> `json:&#34;constraints_removed&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="value">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/sharedtypes/knowledgedb.go#L145">value</a>
+				<a class="permalink" href="#value">&#xb6;</a>
+				
+				
+			</h2>
+			<p>value represents the value from the Neo4j query.
+
+			<pre>type value struct {
+<span id="value.Id"></span>    Id        <a href="https://pkg.go.dev/builtin/#int">int</a>      `json:&#34;Id&#34;`
+<span id="value.NodeTypes"></span>    NodeTypes []<a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;Labels&#34;`
+<span id="value.Props"></span>    Props     props    `json:&#34;Props&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.5.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="None">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api_reference/test/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

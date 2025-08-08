@@ -1,0 +1,1550 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API reference &#8212; aali-sharedtypes</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/test/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://ansys.github.io/aali-sharedtypes/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0.0" />
+  <link rel="canonical" href="https://ansys.github.io/aali-sharedtypes/version/stable/api_reference/logging/index.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://www.ansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/ansys_logo_transparent_black.png" class="logo__image only-light" alt="aali-sharedtypes - Home"/>
+    <img src="../../_static/ansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="aali-sharedtypes - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://aali.docs.ansys.com/" class="nav-link">Aali</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API reference</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package logging
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ansys/aali-sharedtypes/pkg/logging"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="#InitLogger">func InitLogger(GlobalConfig *config.Config)</a></dd>
+			
+				
+				<dd><a href="#entryCallerToString">func entryCallerToString(ec zapcore.EntryCaller) string</a></dd>
+			
+				
+				<dd><a href="#initLoggerConfig">func initLoggerConfig(config Config)</a></dd>
+			
+				
+				<dd><a href="#levelToString">func levelToString(level zapcore.Level) string</a></dd>
+			
+				
+				<dd><a href="#mapsToJSONBytes">func mapsToJSONBytes(maps []map[string]interface{}) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="#sendLogs">func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message string, caller zapcore.EntryCaller, stack string, function string, arguments ...interface{})</a></dd>
+			
+				
+				<dd><a href="#sendMetrics">func sendMetrics(name string, count float64)</a></dd>
+			
+				
+				<dd><a href="#sendPostRequestToDatadog">func sendPostRequestToDatadog(url string, requestBody []byte, apiKey string) (*http.Response, error)</a></dd>
+			
+				
+				<dd><a href="#timeToString">func timeToString(t time.Time) string</a></dd>
+			
+				
+				<dd><a href="#writeInterfaceToFile">func writeInterfaceToFile(filename string, data interface{}) error</a></dd>
+			
+				
+				<dd><a href="#writeStringToFile">func writeStringToFile(filename string, data string) error</a></dd>
+			
+			
+				
+				<dd><a href="#Config">type Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ContextKey">type ContextKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ContextMap">type ContextMap</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ContextMap.Copy">func (ctx *ContextMap) Copy() *ContextMap</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ContextMap.Get">func (ctx *ContextMap) Get(key ContextKey) (interface{}, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ContextMap.Set">func (ctx *ContextMap) Set(key ContextKey, value interface{})</a></dd>
+				
+			
+				
+				<dd><a href="#Metric">type Metric</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Metrics">type Metrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Point">type Point</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Resource">type Resource</a></dd>
+				
+				
+			
+				
+				<dd><a href="#loggerWrapper">type loggerWrapper</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Debugf">func (logger *loggerWrapper) Debugf(ctx *ContextMap, format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Error">func (logger *loggerWrapper) Error(ctx *ContextMap, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Errorf">func (logger *loggerWrapper) Errorf(ctx *ContextMap, format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Fatal">func (logger *loggerWrapper) Fatal(ctx *ContextMap, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Fatalf">func (logger *loggerWrapper) Fatalf(ctx *ContextMap, format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Info">func (logger *loggerWrapper) Info(ctx *ContextMap, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Infof">func (logger *loggerWrapper) Infof(ctx *ContextMap, format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Metrics">func (logger *loggerWrapper) Metrics(name string, count float64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Warn">func (logger *loggerWrapper) Warn(ctx *ContextMap, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#loggerWrapper.Warnf">func (logger *loggerWrapper) Warnf(ctx *ContextMap, format string, args ...interface{})</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go">logging.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go">types.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="DATADOG_API_KEY">DATADOG_API_KEY</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_LOGS">DATADOG_LOGS</span> <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_LOGS_URL">DATADOG_LOGS_URL</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_METRICS">DATADOG_METRICS</span> <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_METRICS_URL">DATADOG_METRICS_URL</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_SERVICE_NAME">DATADOG_SERVICE_NAME</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_SOURCE">DATADOG_SOURCE</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_STAGE">DATADOG_STAGE</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="DATADOG_VERSION">DATADOG_VERSION</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				<p>Initialize config variables
+
+				<pre>var <span id="ERROR_FILE_LOCATION">ERROR_FILE_LOCATION</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="LOCAL_LOGS">LOCAL_LOGS</span> <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+			
+				
+				<pre>var <span id="LOCAL_LOGS_LOCATION">LOCAL_LOGS_LOCATION</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+				
+				<pre>var <span id="LOG_LEVEL">LOG_LEVEL</span> <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			
+		
+		
+			
+			
+			<h2 id="InitLogger">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L82">InitLogger</a>
+				<a class="permalink" href="#InitLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitLogger(GlobalConfig *<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/config/">config</a>.<a href="/pkg/github.com/ansys/aali-sharedtypes/pkg/config/#Config">Config</a>)</pre>
+			<p>InitLogger initializes the global logger.
+<p>The function creates a new zap logger with the specified configuration and sets the global logger variable to the new logger.
+<p>Parameters:
+<ul>
+<li>GlobalConfig: The global configuration from the config package.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="entryCallerToString">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L676">entryCallerToString</a>
+				<a class="permalink" href="#entryCallerToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func entryCallerToString(ec <a href="https://pkg.go.dev/go.uber.org/zap/zapcore/">zapcore</a>.<a href="https://pkg.go.dev/go.uber.org/zap/zapcore/#EntryCaller">EntryCaller</a>) <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			<p>entryCallerToString converts a zapcore.EntryCaller to a string representation.
+<p>Parameters:
+<ul>
+<li>ec: The zapcore.EntryCaller to be converted.
+</ul>
+<p>Returns:
+<ul>
+<li>string: The string representation of the zapcore.EntryCaller.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="initLoggerConfig">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L116">initLoggerConfig</a>
+				<a class="permalink" href="#initLoggerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func initLoggerConfig(config <a href="#Config">Config</a>)</pre>
+			<p>initLoggerConfig initializes the global configuration variables for the logging package.
+<p>The function sets the global configuration variables to the values specified in the provided Config struct.
+<p>Parameters:
+<ul>
+<li>config: The Config struct containing the configuration values to set.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="levelToString">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L653">levelToString</a>
+				<a class="permalink" href="#levelToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func levelToString(level <a href="https://pkg.go.dev/go.uber.org/zap/zapcore/">zapcore</a>.<a href="https://pkg.go.dev/go.uber.org/zap/zapcore/#Level">Level</a>) <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			<p>levelToString converts a zapcore.Level to its string representation.
+<p>Parameters:
+<ul>
+<li>level: The zapcore.Level to be converted.
+</ul>
+<p>Returns:
+<ul>
+<li>string: The string representation of the zapcore.Level.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="mapsToJSONBytes">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L637">mapsToJSONBytes</a>
+				<a class="permalink" href="#mapsToJSONBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func mapsToJSONBytes(maps []map[<a href="https://pkg.go.dev/builtin/#string">string</a>]interface{}) ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>mapsToJSONBytes converts a slice of maps to a JSON-encoded byte slice. It takes an array of maps, marshals it to JSON format, and returns the resulting byte slice.
+<p>Parameters:
+<ul>
+<li>maps: The slice of maps to be converted.
+</ul>
+<p>Returns:
+<ul>
+<li>[]byte: The JSON-encoded byte slice.
+<li>error: An error if the conversion fails.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="sendLogs">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L422">sendLogs</a>
+				<a class="permalink" href="#sendLogs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func sendLogs(ctx *<a href="#ContextMap">ContextMap</a>, level <a href="https://pkg.go.dev/go.uber.org/zap/zapcore/">zapcore</a>.<a href="https://pkg.go.dev/go.uber.org/zap/zapcore/#Level">Level</a>, time <a href="https://pkg.go.dev/time/">time</a>.<a href="https://pkg.go.dev/time/#Time">Time</a>, message <a href="https://pkg.go.dev/builtin/#string">string</a>, caller <a href="https://pkg.go.dev/go.uber.org/zap/zapcore/">zapcore</a>.<a href="https://pkg.go.dev/go.uber.org/zap/zapcore/#EntryCaller">EntryCaller</a>, stack <a href="https://pkg.go.dev/builtin/#string">string</a>, function <a href="https://pkg.go.dev/builtin/#string">string</a>, arguments ...interface{})</pre>
+			<p>The function constructs a log entry with the specified parameters and context, and then sends it to Datadog if enabled in the global configuration. It also writes log entries to a local file if local logs are enabled.
+If any errors occur during this process, they are logged and written to the local error log file.
+Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>level: The log entry&apos;s severity level (e.g., Debug, Info, Error).
+<li>time: The timestamp of the log entry.
+<li>message: The log message.
+<li>caller: Information about the caller of the log entry.
+<li>stack: The stack trace of the log entry.
+<li>function: The function where the log entry was created.
+<li>arguments: Additional log entry arguments.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="sendMetrics">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L529">sendMetrics</a>
+				<a class="permalink" href="#sendMetrics">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func sendMetrics(name <a href="https://pkg.go.dev/builtin/#string">string</a>, count <a href="https://pkg.go.dev/builtin/#float64">float64</a>)</pre>
+			<p>sendMetrics sends a metric to Datadog using the specified name and count. The function creates a metric object, converts it to JSON, and sends a POST request to Datadog&apos;s metrics endpoint.
+<p>The function constructs a Metrics object containing the metric data and associated resource information. It then converts the object to JSON and sends it as a POST request to Datadog for metrics reporting. Any errors encountered during this process are logged and written to the local error log file.
+<p>Parameters:
+<ul>
+<li>name: The name of the metric.
+<li>count: The value of the metric.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="sendPostRequestToDatadog">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L599">sendPostRequestToDatadog</a>
+				<a class="permalink" href="#sendPostRequestToDatadog">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func sendPostRequestToDatadog(url <a href="https://pkg.go.dev/builtin/#string">string</a>, requestBody []<a href="https://pkg.go.dev/builtin/#byte">byte</a>, apiKey <a href="https://pkg.go.dev/builtin/#string">string</a>) (*<a href="https://pkg.go.dev/net/http/">http</a>.<a href="https://pkg.go.dev/net/http/#Response">Response</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			<p>sendPostRequestToDatadog sends the metric or logs post request to Datadog.
+<p>Parameters:
+<ul>
+<li>url: The URL to which the request is sent.
+<li>requestBody: The request body.
+<li>apiKey: The Datadog API key.
+</ul>
+<p>Returns:
+<ul>
+<li>*http.Response: The response from the POST request.
+<li>error: An error if the POST request fails.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="timeToString">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L664">timeToString</a>
+				<a class="permalink" href="#timeToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func timeToString(t <a href="https://pkg.go.dev/time/">time</a>.<a href="https://pkg.go.dev/time/#Time">Time</a>) <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+			<p>timeToString converts a time.Time value to a string representation using the &quot;2006-01-02 15:04:05.000&quot; layout.
+<p>Parameters:
+<ul>
+<li>t: The time.Time value to be converted.
+</ul>
+<p>Returns:
+<ul>
+<li>string: The string representation of the time.Time value.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="writeInterfaceToFile">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L692">writeInterfaceToFile</a>
+				<a class="permalink" href="#writeInterfaceToFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func writeInterfaceToFile(filename <a href="https://pkg.go.dev/builtin/#string">string</a>, data interface{}) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			<p>writeInterfaceToFile writes data, which is an interface{} representing structured data, to a file in JSON format. It adds a timestamp to each entry.
+<p>Parameters:
+<ul>
+<li>filename: The name of the file to write to.
+<li>data: The structured data to be written to the file.
+</ul>
+<p>Returns:
+<ul>
+<li>error: An error if writing to the file fails.
+</ul>
+
+			
+			
+
+		
+			
+			
+			<h2 id="writeStringToFile">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L739">writeStringToFile</a>
+				<a class="permalink" href="#writeStringToFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func writeStringToFile(filename <a href="https://pkg.go.dev/builtin/#string">string</a>, data <a href="https://pkg.go.dev/builtin/#string">string</a>) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			<p>writeStringToFile appends a string message to a file, including a timestamp.
+<p>Parameters:
+<ul>
+<li>filename: The name of the file to write to.
+<li>data: The string message to be written to the file.
+</ul>
+<p>Returns:
+<ul>
+<li>error: An error if writing to the file fails.
+</ul>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Config">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L66">Config</a>
+				<a class="permalink" href="#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Config represents the configuration for the logging package.
+
+			<pre>type Config struct {
+<span id="Config.ErrorFileLocation"></span>    ErrorFileLocation <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.LogLevel"></span>    LogLevel          <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.LocalLogs"></span>    LocalLogs         <a href="https://pkg.go.dev/builtin/#bool">bool</a>
+<span id="Config.LocalLogsLocation"></span>    LocalLogsLocation <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogLogs"></span>    DatadogLogs       <a href="https://pkg.go.dev/builtin/#bool">bool</a>
+<span id="Config.DatadogSource"></span>    DatadogSource     <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogStage"></span>    DatadogStage      <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogVersion"></span>    DatadogVersion    <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogService"></span>    DatadogService    <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogAPIKey"></span>    DatadogAPIKey     <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogLogsURL"></span>    DatadogLogsURL    <a href="https://pkg.go.dev/builtin/#string">string</a>
+<span id="Config.DatadogMetrics"></span>    DatadogMetrics    <a href="https://pkg.go.dev/builtin/#bool">bool</a>
+<span id="Config.DatadogMetricsURL"></span>    DatadogMetricsURL <a href="https://pkg.go.dev/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ContextKey">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L32">ContextKey</a>
+				<a class="permalink" href="#ContextKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ContextKey defines the supported context keys.
+
+			<pre>type ContextKey <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="InstructionGuid">InstructionGuid</span> <a href="#ContextKey">ContextKey</a> = &#34;instructionGuid&#34;
+    <span id="AdapterType">AdapterType</span>     <a href="#ContextKey">ContextKey</a> = &#34;adapterType&#34;
+    <span id="WatchFolderPath">WatchFolderPath</span> <a href="#ContextKey">ContextKey</a> = &#34;watchFolderPath&#34;
+    <span id="WatchFilePath">WatchFilePath</span>   <a href="#ContextKey">ContextKey</a> = &#34;watchFilePath&#34;
+    <span id="ReaderGuid">ReaderGuid</span>      <a href="#ContextKey">ContextKey</a> = &#34;readerGuid&#34;
+    <span id="ClientGuid">ClientGuid</span>      <a href="#ContextKey">ContextKey</a> = &#34;clientGuid&#34;
+    <span id="Action">Action</span>          <a href="#ContextKey">ContextKey</a> = &#34;action&#34;
+    <span id="Rest_Call_Id">Rest_Call_Id</span>    <a href="#ContextKey">ContextKey</a> = &#34;restCallId&#34;
+    <span id="Rest_Call">Rest_Call</span>       <a href="#ContextKey">ContextKey</a> = &#34;restCall&#34;
+    <span id="UserMail">UserMail</span>        <a href="#ContextKey">ContextKey</a> = &#34;userMail&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ContextMap">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L84">ContextMap</a>
+				<a class="permalink" href="#ContextMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ContextMap represents a context for managing key-value pairs with specific context keys. It allows setting, retrieving,
+and copying context data associated with various keys.
+
+			<pre>type ContextMap struct {
+<span id="ContextMap.data"></span>    data <a href="https://pkg.go.dev/sync/">sync</a>.<a href="https://pkg.go.dev/sync/#Map">Map</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ContextMap.Copy">func (*ContextMap) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L63">Copy</a>
+					<a class="permalink" href="#ContextMap.Copy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ctx *<a href="#ContextMap">ContextMap</a>) Copy() *<a href="#ContextMap">ContextMap</a></pre>
+				<p>Copy function copies the current contextMap so new uses of Set do not overwrite existing values
+<p>Returns:
+<ul>
+<li>*ContextMap: A copy of the current ContextMap.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="ContextMap.Get">func (*ContextMap) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L55">Get</a>
+					<a class="permalink" href="#ContextMap.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ctx *<a href="#ContextMap">ContextMap</a>) Get(key <a href="#ContextKey">ContextKey</a>) (interface{}, <a href="https://pkg.go.dev/builtin/#bool">bool</a>)</pre>
+				<p>Get function retrieves the value for a ContextKey
+<p>Parameters:
+<ul>
+<li>key: The ContextKey for which to retrieve the value.
+</ul>
+<p>Returns:
+<ul>
+<li>interface{}: The value associated with the specified ContextKey.
+<li>bool: A boolean indicating whether the ContextKey exists.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="ContextMap.Set">func (*ContextMap) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L43">Set</a>
+					<a class="permalink" href="#ContextMap.Set">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ctx *<a href="#ContextMap">ContextMap</a>) Set(key <a href="#ContextKey">ContextKey</a>, value interface{})</pre>
+				<p>Set function sets ContextKeys equal to any value
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Metric">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L106">Metric</a>
+				<a class="permalink" href="#Metric">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Metric represents a time series metric.
+
+			<pre>type Metric struct {
+<span id="Metric.Metric"></span>    Metric    <a href="https://pkg.go.dev/builtin/#string">string</a>     `json:&#34;metric&#34;`
+<span id="Metric.Type"></span>    Type      <a href="https://pkg.go.dev/builtin/#int">int</a>        `json:&#34;type&#34;`
+<span id="Metric.Points"></span>    Points    []<a href="#Point">Point</a>    `json:&#34;points&#34;`
+<span id="Metric.Resources"></span>    Resources []<a href="#Resource">Resource</a> `json:&#34;resources&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metrics">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L114">Metrics</a>
+				<a class="permalink" href="#Metrics">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Metrics represents a collection of metrics.
+
+			<pre>type Metrics struct {
+<span id="Metrics.Series"></span>    Series []<a href="#Metric">Metric</a> `json:&#34;series&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Point">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L94">Point</a>
+				<a class="permalink" href="#Point">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Point represents a data point in a time series metric.
+
+			<pre>type Point struct {
+<span id="Point.Timestamp"></span>    Timestamp <a href="https://pkg.go.dev/builtin/#int64">int64</a>   `json:&#34;timestamp&#34;`
+<span id="Point.Value"></span>    Value     <a href="https://pkg.go.dev/builtin/#float64">float64</a> `json:&#34;value&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Resource">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L100">Resource</a>
+				<a class="permalink" href="#Resource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Resource represents a named resource associated with a metric.
+
+			<pre>type Resource struct {
+<span id="Resource.Name"></span>    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;name&#34;`
+<span id="Resource.Type"></span>    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `json:&#34;type&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="loggerWrapper">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/types.go#L89">loggerWrapper</a>
+				<a class="permalink" href="#loggerWrapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>loggerWrapper represents a wrapper for the zap.Logger to provide custom logging functionality.
+
+			<pre>type loggerWrapper struct {
+<span id="loggerWrapper.lw"></span>    lw *<a href="https://pkg.go.dev/go.uber.org/zap/">zap</a>.<a href="https://pkg.go.dev/go.uber.org/zap/#Logger">Logger</a>
+}
+</pre>
+
+			
+
+			
+				<p>Initialize the global logger variable.
+
+				<pre>var <span id="Log">Log</span> loggerWrapper</pre>
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="loggerWrapper.Debugf">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L370">Debugf</a>
+					<a class="permalink" href="#loggerWrapper.Debugf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Debugf(ctx *<a href="#ContextMap">ContextMap</a>, format <a href="https://pkg.go.dev/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>Debugf logs a formatted message with Debug level if the global log level is set to &quot;debug.&quot;
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>format: The format of the log message.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Error">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L207">Error</a>
+					<a class="permalink" href="#loggerWrapper.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Error(ctx *<a href="#ContextMap">ContextMap</a>, args ...interface{})</pre>
+				<p>Error logs a message with Error level if the global log level is not set to &quot;fatal&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Errorf">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L234">Errorf</a>
+					<a class="permalink" href="#loggerWrapper.Errorf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Errorf(ctx *<a href="#ContextMap">ContextMap</a>, format <a href="https://pkg.go.dev/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>Errorf logs a formatted message with Error level if the global log level is not set to &quot;fatal&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>format: The format of the log message.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Fatal">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L141">Fatal</a>
+					<a class="permalink" href="#loggerWrapper.Fatal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Fatal(ctx *<a href="#ContextMap">ContextMap</a>, args ...interface{})</pre>
+				<p>Fatal logs a message with Fatal level and terminates the program.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Fatalf">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L174">Fatalf</a>
+					<a class="permalink" href="#loggerWrapper.Fatalf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Fatalf(ctx *<a href="#ContextMap">ContextMap</a>, format <a href="https://pkg.go.dev/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>Fatalf logs a formatted message with Fatal level and terminates the program.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>format: The format of the log message.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Info">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L315">Info</a>
+					<a class="permalink" href="#loggerWrapper.Info">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Info(ctx *<a href="#ContextMap">ContextMap</a>, args ...interface{})</pre>
+				<p>Info logs a message with Error level if the global log level is not set to &quot;warn&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Infof">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L342">Infof</a>
+					<a class="permalink" href="#loggerWrapper.Infof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Infof(ctx *<a href="#ContextMap">ContextMap</a>, format <a href="https://pkg.go.dev/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>Infof logs a message with Error level if the global log level is not set to &quot;warn&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>format: The format of the log message.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Metrics">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L397">Metrics</a>
+					<a class="permalink" href="#loggerWrapper.Metrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Metrics(name <a href="https://pkg.go.dev/builtin/#string">string</a>, count <a href="https://pkg.go.dev/builtin/#float64">float64</a>)</pre>
+				<p>Metrics sends a metric event with the specified name and count to Datadog if Datadog metrics are enabled.
+<p>Parameters:
+<ul>
+<li>name: The name of the metric.
+<li>count: The value of the metric.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Warn">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L261">Warn</a>
+					<a class="permalink" href="#loggerWrapper.Warn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Warn(ctx *<a href="#ContextMap">ContextMap</a>, args ...interface{})</pre>
+				<p>Warn logs a message with Error level if the global log level is not set to &quot;error&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+				
+				<h3 id="loggerWrapper.Warnf">func (*loggerWrapper) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/logging/logging.go#L288">Warnf</a>
+					<a class="permalink" href="#loggerWrapper.Warnf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (logger *loggerWrapper) Warnf(ctx *<a href="#ContextMap">ContextMap</a>, format <a href="https://pkg.go.dev/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>Warnf logs a message with Error level if the global log level is not set to &quot;error&quot;.
+<p>Parameters:
+<ul>
+<li>ctx: A ContextMap containing context information to be included in the log entry.
+<li>format: The format of the log message.
+<li>args: The log message.
+</ul>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.5.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="None">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api_reference/test/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "dev",
+    "version": "dev",
+    "url": "https://ansys.github.io/aali-sharedtypes/version/dev/"
+  },
+  {
+    "name": "1.0 (stable)",
+    "version": "1.0",
+    "url": "https://ansys.github.io/aali-sharedtypes/version/stable/"
+  }
+]

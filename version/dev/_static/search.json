@@ -1,0 +1,233 @@
+[
+    {
+        "objectID": "index",
+        "href": "index.html#aali-shared-types-documentation",
+        "title": "AALI Shared Types documentation",
+        "section": "AALI Shared Types documentation",
+        "text": "AALI Shared Types is a Go library that provides common type definitions\nused across all AALI services.\n<svg version=\"4.0.0.63c5cb3\" width=\"48.0px\" height=\"48.0px\" class=\"sd-material-icon sd-material-icon-directions_run\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z\"></path></svg>\nLearn how to install and use AALI Shared Types\nfor creating custom FlowKit functions.\n   Getting started\n<svg version=\"4.0.0.63c5cb3\" width=\"48.0px\" height=\"48.0px\" class=\"sd-material-icon sd-material-icon-code\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M0 0h24v24H0V0z\" fill=\"none\"></path><path d=\"M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z\"></path></svg>\nComplete reference for all type definitions,\nconverters, and GRPC protocols.\n   API reference\nAALI Shared Types documentation"
+    },
+    {
+        "objectID": "api_reference/index",
+        "href": "api_reference/index.html#api-reference",
+        "title": "API reference",
+        "section": "API reference",
+        "text": "Complete API documentation is automatically generated during the CI/CD build process.\nThe AALI Shared Types library contains the following packages:\nAPI reference"
+    },
+    {
+        "objectID": "api_reference/index",
+        "href": "api_reference/index.html#core-packages",
+        "title": "API reference > Core Packages",
+        "section": "Core Packages",
+        "text": "Package\nDescription\nsharedtypes\nCore type definitions used across all AALI services (agents, functions, databases, LLM handlers)\ntypeconverters\nUtilities for converting between JSON, Go types, and string representations\nCore Packages"
+    },
+    {
+        "objectID": "api_reference/index",
+        "href": "api_reference/index.html#grpc-protocol-packages",
+        "title": "API reference > gRPC Protocol Packages",
+        "section": "gRPC Protocol Packages",
+        "text": "Package\nDescription\naaliagentgrpc\nProtocol buffer definitions and gRPC service for AALI Agent communication\naaliflowkitgrpc\nProtocol buffer definitions and gRPC service for AALI FlowKit communication\ngRPC Protocol Packages"
+    },
+    {
+        "objectID": "api_reference/index",
+        "href": "api_reference/index.html#utility-packages",
+        "title": "API reference > Utility Packages",
+        "section": "Utility Packages",
+        "text": "Package\nDescription\nconfig\nConfiguration management utilities for AALI services\nlogging\nStructured logging with Datadog integration\nclients\nClient implementations for FlowKit (Go and Python)\naali_graphdb\nGraphDB client with logical types and value handling\nGo back to landing page\nUtility Packages"
+    },
+    {
+        "objectID": "getting_started/index",
+        "href": "getting_started/index.html#getting-started",
+        "title": "Getting started",
+        "section": "Getting started",
+        "text": "Understand the AALI architecture and how\nShared Types enables service communication.\n   Overview\nEnsure your system meets the requirements.\nInstall Go and set up your development environment.\n   Prerequisites\nLearn how to add AALI Shared Types to your Go project\nand verify the installation.\n   Installation\nStep-by-step guide for adding custom types\nfor your FlowKit functions.\n   Adding Custom Types\nGetting started"
+    },
+    {
+        "objectID": "getting_started/overview",
+        "href": "getting_started/overview.html#overview",
+        "title": "Overview",
+        "section": "Overview",
+        "text": "AALI (Ansys Automation and Learning Intelligence) is a distributed system for orchestrating workflows and executing functions. It consists of multiple services that communicate via gRPC and WebSocket protocols.\nOverview"
+    },
+    {
+        "objectID": "getting_started/overview",
+        "href": "getting_started/overview.html#architecture",
+        "title": "Overview > Architecture",
+        "section": "Architecture",
+        "text": "Architecture"
+    },
+    {
+        "objectID": "getting_started/overview",
+        "href": "getting_started/overview.html#why-shared-types",
+        "title": "Overview > Why Shared Types?",
+        "section": "Why Shared Types?",
+        "text": "AALI Shared Types ensures all services speak the same language by providing:\nType definitions for functions, sessions, and data structures\ngRPC protocols (aaliagentgrpc, aaliflowkitgrpc) for service communication\nType converters for JSON/Go transformations\nConfiguration structures for service setup\nWhen services like the Agent send function requests to FlowKit, or when FlowKit returns results, they all use these common type definitions to ensure data compatibility.\nWhy Shared Types?\naaliagentgrpc\naaliflowkitgrpc"
+    },
+    {
+        "objectID": "getting_started/overview",
+        "href": "getting_started/overview.html#whats-next",
+        "title": "Overview > What’s Next?",
+        "section": "What’s Next?",
+        "text": "Continue with the prerequisites to set up your development environment.\nWhat’s Next?"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#prerequisites",
+        "title": "Prerequisites",
+        "section": "Prerequisites",
+        "text": "Before working with AALI Shared Types, you need Go and Git installed on your system.\nPrerequisites"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#go-installation",
+        "title": "Prerequisites > Go Installation",
+        "section": "Go Installation",
+        "text": "AALI Shared Types requires Go 1.23.0 or higher.\nUsing Homebrew:\nOr download from golang.org\nDownload Go from golang.org\nRun the MSI installer\nThe installer will add Go to your PATH automatically\nGo Installation"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#git-installation",
+        "title": "Prerequisites > Git Installation",
+        "section": "Git Installation",
+        "text": "Git is required to fetch Go modules and clone the repository.\nDownload from git-scm.com\nGit Installation"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#clone-the-repository",
+        "title": "Prerequisites > Clone the Repository",
+        "section": "Clone the Repository",
+        "text": "To work on AALI Shared Types:\nClone the Repository"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#verify-installation",
+        "title": "Prerequisites > Verify Installation",
+        "section": "Verify Installation",
+        "text": "Check that everything is installed correctly:\nVerify Installation"
+    },
+    {
+        "objectID": "getting_started/prerequisites",
+        "href": "getting_started/prerequisites.html#next-steps",
+        "title": "Prerequisites > Next Steps",
+        "section": "Next Steps",
+        "text": "With prerequisites installed, you can:\nInstall AALI Shared Types as a dependency\nAdd custom types for your FlowKit functions\nNext Steps"
+    },
+    {
+        "objectID": "getting_started/installation",
+        "href": "getting_started/installation.html#installation",
+        "title": "Installation",
+        "section": "Installation",
+        "text": "AALI Shared Types is a Go module that provides type definitions for AALI services.\nInstallation"
+    },
+    {
+        "objectID": "getting_started/installation",
+        "href": "getting_started/installation.html#import-as-go-module",
+        "title": "Installation > Import as Go Module",
+        "section": "Import as Go Module",
+        "text": "To use AALI Shared Types in your Go project, import it as a module dependency:\nImport as Go Module"
+    },
+    {
+        "objectID": "getting_started/installation",
+        "href": "getting_started/installation.html#using-in-your-code",
+        "title": "Installation > Using in Your Code",
+        "section": "Using in Your Code",
+        "text": "Import the packages you need:\nUsing in Your Code"
+    },
+    {
+        "objectID": "getting_started/installation",
+        "href": "getting_started/installation.html#verify-installation",
+        "title": "Installation > Verify Installation",
+        "section": "Verify Installation",
+        "text": "Create a simple test file to verify the import works:\nRun the test:\nVerify Installation"
+    },
+    {
+        "objectID": "getting_started/installation",
+        "href": "getting_started/installation.html#next-steps",
+        "title": "Installation > Next Steps",
+        "section": "Next Steps",
+        "text": "Now that you have AALI Shared Types installed, learn how to add custom types for your FlowKit functions.\nNext Steps"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#adding-custom-types",
+        "title": "Adding Custom Types",
+        "section": "Adding Custom Types",
+        "text": "When creating custom FlowKit functions, you may need to define custom data types that aren’t already available in AALI Shared Types. This guide walks you through the process of adding new types and getting them integrated into AALI FlowKit and Agent.\nAdding Custom Types"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#when-to-add-custom-types",
+        "title": "Adding Custom Types > When to Add Custom Types",
+        "section": "When to Add Custom Types",
+        "text": "You need to add custom types when:\nYour FlowKit function requires a specific data structure not available in existing types\nYou need to pass complex data between functions\nYou’re integrating with external systems that use specific data formats\nYou want to ensure type safety and validation for your function inputs/outputs\nWhen to Add Custom Types"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-1-navigate-to-type-definitions",
+        "title": "Adding Custom Types > Step 1: Navigate to Type Definitions",
+        "section": "Step 1: Navigate to Type Definitions",
+        "text": "All type definitions are located in pkg/sharedtypes/. Each file represents a category of types:\nStep 1: Navigate to Type Definitions\npkg/sharedtypes/"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-2-choose-or-create-a-category",
+        "title": "Adding Custom Types > Step 2: Choose or Create a Category",
+        "section": "Step 2: Choose or Create a Category",
+        "text": "Decide where your custom type belongs:\nIf it fits an existing category, add it to the appropriate file\nIf it’s a new domain, create a new file following the naming pattern\nExample: adding a custom type to an existing category:\nStep 2: Choose or Create a Category"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-3-define-your-custom-type",
+        "title": "Adding Custom Types > Step 3: Define Your Custom Type",
+        "section": "Step 3: Define Your Custom Type",
+        "text": "Follow these guidelines when defining your type:\nUse clear, descriptive names\nAdd JSON tags for serialization\nInclude godoc comments\nConsider validation requirements\nStep 3: Define Your Custom Type"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-4-add-type-converters",
+        "title": "Adding Custom Types > Step 4: Add Type Converters",
+        "section": "Step 4: Add Type Converters",
+        "text": "Navigate to pkg/typeconverters/typeconverters.go and add conversion support for your type:\nStep 4: Add Type Converters\npkg/typeconverters/typeconverters.go"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-5-build-and-verify",
+        "title": "Adding Custom Types > Step 5: Build and Verify",
+        "section": "Step 5: Build and Verify",
+        "text": "Build the module to ensure your changes compile:\nStep 5: Build and Verify"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#step-6-submit-your-changes",
+        "title": "Adding Custom Types > Step 6: Submit Your Changes",
+        "section": "Step 6: Submit Your Changes",
+        "text": "Once your custom type is working:\nCommit your changes to a feature branch\nCreate a pull request to merge into the main branch\nAfter merge, the shared types need to be updated in:\nAALI FlowKit: Import the latest shared types version\nAALI Agent: Import the latest shared types version\nCoordinate with the team to ensure both services are updated\nStep 6: Submit Your Changes"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#example-using-your-custom-type-in-flowkit",
+        "title": "Adding Custom Types > Example: Using Your Custom Type in FlowKit",
+        "section": "Example: Using Your Custom Type in FlowKit",
+        "text": "After your type is integrated, you can use it in FlowKit function definitions.\nThis example shows how you would use the custom types defined earlier:\nExample: Using Your Custom Type in FlowKit"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#best-practices",
+        "title": "Adding Custom Types > Best Practices",
+        "section": "Best Practices",
+        "text": "Keep types focused: Each type should have a single, clear purpose\nUse standard Go conventions: Follow Go naming and structure guidelines\nDocument thoroughly: Include examples in comments\nConsider backward compatibility: Changes to existing types can break other services\nTest edge cases: Ensure your type handles null/empty values appropriately\nBest Practices"
+    },
+    {
+        "objectID": "getting_started/adding_custom_types",
+        "href": "getting_started/adding_custom_types.html#next-steps",
+        "title": "Adding Custom Types > Next Steps",
+        "section": "Next Steps",
+        "text": "Explore existing types in the pkg/sharedtypes/ directory\nLearn about type conversion in pkg/typeconverters/typeconverters.go\nReview gRPC definitions in pkg/aaliagentgrpc/ and pkg/aaliflowkitgrpc/\nNext Steps\npkg/sharedtypes/\npkg/typeconverters/typeconverters.go\npkg/aaliagentgrpc/\npkg/aaliflowkitgrpc/"
+    },
+    {
+        "objectID": "api_reference/test/index",
+        "href": "api_reference/test/index.html#api-reference-template",
+        "title": "API Reference Template",
+        "section": "API Reference Template",
+        "text": "This is a template page used by the CI/CD pipeline for generating API documentation.\nThis page serves as a template for the automated API reference generation process.\nThe actual API documentation is generated from the Go source code during the build.\nAPI Reference Template"
+    }
+]

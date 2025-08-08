@@ -1,0 +1,2923 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference Template &#8212; aali-sharedtypes</title>
+  
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css?v=0909a4fa" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+
+  <!-- Include desired assets -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
+
+  
+    <link href="../../_static/css/breadcrumbs.css" rel="stylesheet" />
+  
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/test/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://ansys.github.io/aali-sharedtypes/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/ansys-favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API reference" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0.0" />
+  <link rel="canonical" href="https://ansys.github.io/aali-sharedtypes/version/stable/api_reference/aaliflowkitgrpc/index.html" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="https://www.ansys.com/">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/ansys_logo_transparent_black.png" class="logo__image only-light" alt="aali-sharedtypes - Home"/>
+    <img src="../../_static/ansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="aali-sharedtypes - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<div class="search-bar pst-js-only" id="search-bar">
+  <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="form-control" name="q" placeholder="Search the docs ..."
+      aria-label="Search the docs ..." autocomplete="off" autocorrect="off"
+      autocapitalize="off" spellcheck="false" />
+    <span class="search-button__kbd-shortcut">
+      <kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd>
+    </span>
+  </form>
+  <div id="static-search-results" class="static-search-results" style="display:none;" tabindex="0"></div>
+</div>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+  
+    <div id="announcement_msg"></div>
+<script>
+  fetch("announcement.html")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(
+      (text) => (document.getElementById("announcement_msg").innerHTML = text),
+    )
+    .catch((error) => console.error(`Fetch problem: ${error.message}`));
+</script>
+  
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ansys/aali-sharedtypes" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference Template</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+         
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="https://aali.docs.ansys.com/" class="nav-link">Aali</a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a
+        href="../../index.html"
+        class="nav-link"
+        aria-label="Home"
+      >
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+     
+    <li class="breadcrumb-item">
+      <a href="../index.html" class="nav-link">API reference</a>
+    </li>
+      
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API Reference Template</span></li>
+    
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package aaliflowkitgrpc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ansys/aali-sharedtypes/pkg/aaliflowkitgrpc"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="#RegisterExternalFunctionsServer">func RegisterExternalFunctionsServer(s grpc.ServiceRegistrar, srv ExternalFunctionsServer)</a></dd>
+			
+				
+				<dd><a href="#_ExternalFunctions_ListFunctions_Handler">func _ExternalFunctions_ListFunctions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error)</a></dd>
+			
+				
+				<dd><a href="#_ExternalFunctions_RunFunction_Handler">func _ExternalFunctions_RunFunction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error)</a></dd>
+			
+				
+				<dd><a href="#_ExternalFunctions_StreamFunction_Handler">func _ExternalFunctions_StreamFunction_Handler(srv interface{}, stream grpc.ServerStream) error</a></dd>
+			
+				
+				<dd><a href="#file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init">func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init()</a></dd>
+			
+				
+				<dd><a href="#file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP">func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP() []byte</a></dd>
+			
+				
+				<dd><a href="#init">func init()</a></dd>
+			
+			
+				
+				<dd><a href="#ExternalFunctionsClient">type ExternalFunctionsClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewExternalFunctionsClient">func NewExternalFunctionsClient(cc grpc.ClientConnInterface) ExternalFunctionsClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExternalFunctionsServer">type ExternalFunctionsServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExternalFunctions_StreamFunctionClient">type ExternalFunctions_StreamFunctionClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="#ExternalFunctions_StreamFunctionServer">type ExternalFunctions_StreamFunctionServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#FunctionDefinition">type FunctionDefinition</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.Descriptor">func (*FunctionDefinition) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetCategory">func (x *FunctionDefinition) GetCategory() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetDescription">func (x *FunctionDefinition) GetDescription() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetDisplayName">func (x *FunctionDefinition) GetDisplayName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetInput">func (x *FunctionDefinition) GetInput() []*FunctionInputDefinition</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetName">func (x *FunctionDefinition) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.GetOutput">func (x *FunctionDefinition) GetOutput() []*FunctionOutputDefinition</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.ProtoMessage">func (*FunctionDefinition) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.ProtoReflect">func (x *FunctionDefinition) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.Reset">func (x *FunctionDefinition) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionDefinition.String">func (x *FunctionDefinition) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionInput">type FunctionInput</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.Descriptor">func (*FunctionInput) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.GetGoType">func (x *FunctionInput) GetGoType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.GetName">func (x *FunctionInput) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.GetValue">func (x *FunctionInput) GetValue() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.ProtoMessage">func (*FunctionInput) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.ProtoReflect">func (x *FunctionInput) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.Reset">func (x *FunctionInput) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInput.String">func (x *FunctionInput) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionInputDefinition">type FunctionInputDefinition</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.Descriptor">func (*FunctionInputDefinition) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.GetGoType">func (x *FunctionInputDefinition) GetGoType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.GetName">func (x *FunctionInputDefinition) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.GetOptions">func (x *FunctionInputDefinition) GetOptions() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.GetType">func (x *FunctionInputDefinition) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.ProtoMessage">func (*FunctionInputDefinition) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.ProtoReflect">func (x *FunctionInputDefinition) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.Reset">func (x *FunctionInputDefinition) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputDefinition.String">func (x *FunctionInputDefinition) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionInputs">type FunctionInputs</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.Descriptor">func (*FunctionInputs) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.GetInputs">func (x *FunctionInputs) GetInputs() []*FunctionInput</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.GetName">func (x *FunctionInputs) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.ProtoMessage">func (*FunctionInputs) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.ProtoReflect">func (x *FunctionInputs) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.Reset">func (x *FunctionInputs) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionInputs.String">func (x *FunctionInputs) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionOutput">type FunctionOutput</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.Descriptor">func (*FunctionOutput) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.GetCodeValidation">func (x *FunctionOutput) GetCodeValidation() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.GetGoType">func (x *FunctionOutput) GetGoType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.GetName">func (x *FunctionOutput) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.GetValue">func (x *FunctionOutput) GetValue() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.ProtoMessage">func (*FunctionOutput) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.ProtoReflect">func (x *FunctionOutput) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.Reset">func (x *FunctionOutput) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutput.String">func (x *FunctionOutput) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionOutputDefinition">type FunctionOutputDefinition</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.Descriptor">func (*FunctionOutputDefinition) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.GetGoType">func (x *FunctionOutputDefinition) GetGoType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.GetName">func (x *FunctionOutputDefinition) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.GetType">func (x *FunctionOutputDefinition) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.ProtoMessage">func (*FunctionOutputDefinition) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.ProtoReflect">func (x *FunctionOutputDefinition) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.Reset">func (x *FunctionOutputDefinition) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputDefinition.String">func (x *FunctionOutputDefinition) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#FunctionOutputs">type FunctionOutputs</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.Descriptor">func (*FunctionOutputs) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.GetName">func (x *FunctionOutputs) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.GetOutputs">func (x *FunctionOutputs) GetOutputs() []*FunctionOutput</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.ProtoMessage">func (*FunctionOutputs) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.ProtoReflect">func (x *FunctionOutputs) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.Reset">func (x *FunctionOutputs) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#FunctionOutputs.String">func (x *FunctionOutputs) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ListFunctionsRequest">type ListFunctionsRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsRequest.Descriptor">func (*ListFunctionsRequest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsRequest.ProtoMessage">func (*ListFunctionsRequest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsRequest.ProtoReflect">func (x *ListFunctionsRequest) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsRequest.Reset">func (x *ListFunctionsRequest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsRequest.String">func (x *ListFunctionsRequest) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#ListFunctionsResponse">type ListFunctionsResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.Descriptor">func (*ListFunctionsResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.GetFunctions">func (x *ListFunctionsResponse) GetFunctions() map[string]*FunctionDefinition</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.ProtoMessage">func (*ListFunctionsResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.ProtoReflect">func (x *ListFunctionsResponse) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.Reset">func (x *ListFunctionsResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#ListFunctionsResponse.String">func (x *ListFunctionsResponse) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#StreamOutput">type StreamOutput</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.Descriptor">func (*StreamOutput) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.GetCodeValidation">func (x *StreamOutput) GetCodeValidation() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.GetIsLast">func (x *StreamOutput) GetIsLast() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.GetMessageCounter">func (x *StreamOutput) GetMessageCounter() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.GetValue">func (x *StreamOutput) GetValue() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.ProtoMessage">func (*StreamOutput) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.ProtoReflect">func (x *StreamOutput) ProtoReflect() protoreflect.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.Reset">func (x *StreamOutput) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#StreamOutput.String">func (x *StreamOutput) String() string</a></dd>
+				
+			
+				
+				<dd><a href="#UnimplementedExternalFunctionsServer">type UnimplementedExternalFunctionsServer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedExternalFunctionsServer.ListFunctions">func (UnimplementedExternalFunctionsServer) ListFunctions(context.Context, *ListFunctionsRequest) (*ListFunctionsResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedExternalFunctionsServer.RunFunction">func (UnimplementedExternalFunctionsServer) RunFunction(context.Context, *FunctionInputs) (*FunctionOutputs, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedExternalFunctionsServer.StreamFunction">func (UnimplementedExternalFunctionsServer) StreamFunction(*FunctionInputs, grpc.ServerStreamingServer[StreamOutput]) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedExternalFunctionsServer.mustEmbedUnimplementedExternalFunctionsServer">func (UnimplementedExternalFunctionsServer) mustEmbedUnimplementedExternalFunctionsServer()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#UnimplementedExternalFunctionsServer.testEmbeddedByValue">func (UnimplementedExternalFunctionsServer) testEmbeddedByValue()</a></dd>
+				
+			
+				
+				<dd><a href="#UnsafeExternalFunctionsServer">type UnsafeExternalFunctionsServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="#externalFunctionsClient">type externalFunctionsClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#externalFunctionsClient.ListFunctions">func (c *externalFunctionsClient) ListFunctions(ctx context.Context, in *ListFunctionsRequest, opts ...grpc.CallOption) (*ListFunctionsResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#externalFunctionsClient.RunFunction">func (c *externalFunctionsClient) RunFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (*FunctionOutputs, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#externalFunctionsClient.StreamFunction">func (c *externalFunctionsClient) StreamFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamOutput], error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go">aali-flowkit.pb.go</a>
+			
+				<a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go">aali-flowkit_grpc.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// Verify that this generated code is sufficiently up-to-date.</span>
+    <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#EnforceVersion">EnforceVersion</a>(20 - <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MinVersion">MinVersion</a>)
+    <span class="comment">// Verify that runtime/protoimpl is sufficiently up-to-date.</span>
+    <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#EnforceVersion">EnforceVersion</a>(<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MaxVersion">MaxVersion</a> - 20)
+)</pre>
+			
+				
+				<pre>const (
+    <span id="ExternalFunctions_ListFunctions_FullMethodName">ExternalFunctions_ListFunctions_FullMethodName</span>  = &#34;/aaliflowkitgrpc.ExternalFunctions/ListFunctions&#34;
+    <span id="ExternalFunctions_RunFunction_FullMethodName">ExternalFunctions_RunFunction_FullMethodName</span>    = &#34;/aaliflowkitgrpc.ExternalFunctions/RunFunction&#34;
+    <span id="ExternalFunctions_StreamFunction_FullMethodName">ExternalFunctions_StreamFunction_FullMethodName</span> = &#34;/aaliflowkitgrpc.ExternalFunctions/StreamFunction&#34;
+)</pre>
+			
+				<p>This is a compile-time assertion to ensure that this generated file
+is compatible with the grpc package it is being compiled against.
+Requires gRPC-Go v1.64.0 or later.
+
+				<pre>const <span id="_">_</span> = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#SupportPackageIsVersion9">SupportPackageIsVersion9</a></pre>
+			
+				
+				<pre>const <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc</span> = &#34;&#34; +
+    &#34;\n&#34; +
+    &#34;&amp;pkg/aaliflowkitgrpc/aali-flowkit.proto\x12\x0faaliflowkitgrpc\&#34;\x16\n&#34; +
+    &#34;\x14ListFunctionsRequest\&#34;\xcf\x01\n&#34; +
+    &#34;\x15ListFunctionsResponse\x12S\n&#34; +
+    &#34;\tfunctions\x18\x01 \x03(\v25.aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntryR\tfunctions\x1aa\n&#34; +
+    &#34;\x0eFunctionsEntry\x12\x10\n&#34; +
+    &#34;\x03key\x18\x01 \x01(\tR\x03key\x129\n&#34; +
+    &#34;\x05value\x18\x02 \x01(\v2#.aaliflowkitgrpc.FunctionDefinitionR\x05value:\x028\x01\&#34;\x8b\x02\n&#34; +
+    &#34;\x12FunctionDefinition\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12 \n&#34; +
+    &#34;\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1a\n&#34; +
+    &#34;\bcategory\x18\x03 \x01(\tR\bcategory\x12 \n&#34; +
+    &#34;\vdisplayName\x18\x04 \x01(\tR\vdisplayName\x12&gt;\n&#34; +
+    &#34;\x05input\x18\x05 \x03(\v2(.aaliflowkitgrpc.FunctionInputDefinitionR\x05input\x12A\n&#34; +
+    &#34;\x06output\x18\x06 \x03(\v2).aaliflowkitgrpc.FunctionOutputDefinitionR\x06output\&#34;t\n&#34; +
+    &#34;\x17FunctionInputDefinition\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n&#34; +
+    &#34;\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n&#34; +
+    &#34;\ago_type\x18\x03 \x01(\tR\x06goType\x12\x18\n&#34; +
+    &#34;\aoptions\x18\x04 \x03(\tR\aoptions\&#34;[\n&#34; +
+    &#34;\x18FunctionOutputDefinition\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n&#34; +
+    &#34;\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n&#34; +
+    &#34;\ago_type\x18\x03 \x01(\tR\x06goType\&#34;\\\n&#34; +
+    &#34;\x0eFunctionInputs\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x126\n&#34; +
+    &#34;\x06inputs\x18\x02 \x03(\v2\x1e.aaliflowkitgrpc.FunctionInputR\x06inputs\&#34;R\n&#34; +
+    &#34;\rFunctionInput\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n&#34; +
+    &#34;\ago_type\x18\x02 \x01(\tR\x06goType\x12\x14\n&#34; +
+    &#34;\x05value\x18\x03 \x01(\tR\x05value\&#34;`\n&#34; +
+    &#34;\x0fFunctionOutputs\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x129\n&#34; +
+    &#34;\aoutputs\x18\x02 \x03(\v2\x1f.aaliflowkitgrpc.FunctionOutputR\aoutputs\&#34;|\n&#34; +
+    &#34;\x0eFunctionOutput\x12\x12\n&#34; +
+    &#34;\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n&#34; +
+    &#34;\ago_type\x18\x02 \x01(\tR\x06goType\x12\x14\n&#34; +
+    &#34;\x05value\x18\x03 \x01(\tR\x05value\x12&#39;\n&#34; +
+    &#34;\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation\&#34;\x8f\x01\n&#34; +
+    &#34;\fStreamOutput\x12&#39;\n&#34; +
+    &#34;\x0fmessage_counter\x18\x01 \x01(\x05R\x0emessageCounter\x12\x17\n&#34; +
+    &#34;\ais_last\x18\x02 \x01(\bR\x06isLast\x12\x14\n&#34; +
+    &#34;\x05value\x18\x03 \x01(\tR\x05value\x12&#39;\n&#34; +
+    &#34;\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation2\x9f\x02\n&#34; +
+    &#34;\x11ExternalFunctions\x12`\n&#34; +
+    &#34;\rListFunctions\x12%.aaliflowkitgrpc.ListFunctionsRequest\x1a&amp;.aaliflowkitgrpc.ListFunctionsResponse\&#34;\x00\x12R\n&#34; +
+    &#34;\vRunFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a .aaliflowkitgrpc.FunctionOutputs\&#34;\x00\x12T\n&#34; +
+    &#34;\x0eStreamFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a\x1d.aaliflowkitgrpc.StreamOutput\&#34;\x000\x01B\x13Z\x11./aaliflowkitgrpcb\x06proto3&#34;</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescOnce">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescOnce</span> <a href="https://pkg.go.dev/sync/">sync</a>.<a href="https://pkg.go.dev/sync/#Once">Once</a>
+    <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescData">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescData</span> []<a href="https://pkg.go.dev/builtin/#byte">byte</a>
+)</pre>
+			
+				<p>ExternalFunctions_ServiceDesc is the grpc.ServiceDesc for ExternalFunctions service.
+It&apos;s only intended for direct use with grpc.RegisterService,
+and not to be introspected or modified (even as a copy)
+
+				<pre>var <span id="ExternalFunctions_ServiceDesc">ExternalFunctions_ServiceDesc</span> = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc">ServiceDesc</a>{
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.ServiceName">ServiceName</a>: &#34;aaliflowkitgrpc.ExternalFunctions&#34;,
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.HandlerType">HandlerType</a>: (*<a href="#ExternalFunctionsServer">ExternalFunctionsServer</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Methods">Methods</a>: []<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#MethodDesc">MethodDesc</a>{
+        {
+            <a href="#MethodName">MethodName</a>: &#34;ListFunctions&#34;,
+            <a href="#Handler">Handler</a>:    _ExternalFunctions_ListFunctions_Handler,
+        },
+        {
+            <a href="#MethodName">MethodName</a>: &#34;RunFunction&#34;,
+            <a href="#Handler">Handler</a>:    _ExternalFunctions_RunFunction_Handler,
+        },
+    },
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Streams">Streams</a>: []<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#StreamDesc">StreamDesc</a>{
+        {
+            <a href="#StreamName">StreamName</a>:    &#34;StreamFunction&#34;,
+            <a href="#Handler">Handler</a>:       _ExternalFunctions_StreamFunction_Handler,
+            <a href="#ServerStreams">ServerStreams</a>: <a href="https://pkg.go.dev/builtin/#true">true</a>,
+        },
+    },
+    <a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceDesc.Metadata">Metadata</a>: &#34;pkg/aaliflowkitgrpc/aali-flowkit.proto&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="File_pkg_aaliflowkitgrpc_aali_flowkit_proto">File_pkg_aaliflowkitgrpc_aali_flowkit_proto</span> <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#FileDescriptor">FileDescriptor</a></pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_depIdxs">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_depIdxs</span> = []<a href="https://pkg.go.dev/builtin/#int32">int32</a>{
+    10,
+    3,
+    4,
+    6,
+    8,
+    2,
+    0,
+    5,
+    5,
+    1,
+    7,
+    9,
+    9,
+    6,
+    6,
+    6,
+    0,
+}</pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_goTypes">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_goTypes</span> = []<a href="https://pkg.go.dev/builtin/#any">any</a>{
+    (*<a href="#ListFunctionsRequest">ListFunctionsRequest</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionDefinition">FunctionDefinition</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionInputDefinition">FunctionInputDefinition</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionInputs">FunctionInputs</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionInput">FunctionInput</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionOutputs">FunctionOutputs</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#FunctionOutput">FunctionOutput</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    (*<a href="#StreamOutput">StreamOutput</a>)(<a href="https://pkg.go.dev/builtin/#nil">nil</a>),
+    <a href="https://pkg.go.dev/builtin/#nil">nil</a>,
+}</pre>
+			
+				
+				<pre>var <span id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes</span> = <a href="https://pkg.go.dev/builtin/#make">make</a>([]<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageInfo">MessageInfo</a>, 11)</pre>
+			
+		
+		
+			
+			
+			<h2 id="RegisterExternalFunctionsServer">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L131">RegisterExternalFunctionsServer</a>
+				<a class="permalink" href="#RegisterExternalFunctionsServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterExternalFunctionsServer(s <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServiceRegistrar">ServiceRegistrar</a>, srv <a href="#ExternalFunctionsServer">ExternalFunctionsServer</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="_ExternalFunctions_ListFunctions_Handler">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L142">_ExternalFunctions_ListFunctions_Handler</a>
+				<a class="permalink" href="#_ExternalFunctions_ListFunctions_Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func _ExternalFunctions_ListFunctions_Handler(srv interface{}, ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, dec func(interface{}) <a href="https://pkg.go.dev/builtin/#error">error</a>, interceptor <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#UnaryServerInterceptor">UnaryServerInterceptor</a>) (interface{}, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="_ExternalFunctions_RunFunction_Handler">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L160">_ExternalFunctions_RunFunction_Handler</a>
+				<a class="permalink" href="#_ExternalFunctions_RunFunction_Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func _ExternalFunctions_RunFunction_Handler(srv interface{}, ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, dec func(interface{}) <a href="https://pkg.go.dev/builtin/#error">error</a>, interceptor <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#UnaryServerInterceptor">UnaryServerInterceptor</a>) (interface{}, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="_ExternalFunctions_StreamFunction_Handler">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L178">_ExternalFunctions_StreamFunction_Handler</a>
+				<a class="permalink" href="#_ExternalFunctions_StreamFunction_Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func _ExternalFunctions_StreamFunction_Handler(srv interface{}, stream <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStream">ServerStream</a>) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L763">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init</a>
+				<a class="permalink" href="#file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init()</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L721">file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP</a>
+				<a class="permalink" href="#file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP() []<a href="https://pkg.go.dev/builtin/#byte">byte</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="init">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L762">init</a>
+				<a class="permalink" href="#init">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func init()</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ExternalFunctionsClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L33">ExternalFunctionsClient</a>
+				<a class="permalink" href="#ExternalFunctionsClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExternalFunctionsClient is the client API for ExternalFunctions service.
+<p>For semantics around ctx use and closing/ending streaming RPCs, please refer to <a href="https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream">https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream</a>.
+<p>ExternalFunctions is a gRPC service that allows for listing and running
+the function available in the externalfunctions package.
+
+			<pre>type ExternalFunctionsClient interface {
+    <span class="comment">// Lists all available functions with description, inputs and outputs.</span>
+    ListFunctions(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)
+    <span class="comment">// Runs a specified function with provided inputs and returns the function outputs.</span>
+    RunFunction(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#FunctionInputs">FunctionInputs</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (*<a href="#FunctionOutputs">FunctionOutputs</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)
+    <span class="comment">// Runs a specified function with provided inputs and returns the function output as a stream.</span>
+    StreamFunction(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#FunctionInputs">FunctionInputs</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingClient">ServerStreamingClient</a>[<a href="#StreamOutput">StreamOutput</a>], <a href="https://pkg.go.dev/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewExternalFunctionsClient">func <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L46">NewExternalFunctionsClient</a>
+					<a class="permalink" href="#NewExternalFunctionsClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewExternalFunctionsClient(cc <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ClientConnInterface">ClientConnInterface</a>) <a href="#ExternalFunctionsClient">ExternalFunctionsClient</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ExternalFunctionsServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L95">ExternalFunctionsServer</a>
+				<a class="permalink" href="#ExternalFunctionsServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ExternalFunctionsServer is the server API for ExternalFunctions service.
+All implementations must embed UnimplementedExternalFunctionsServer
+for forward compatibility.
+<p>ExternalFunctions is a gRPC service that allows for listing and running
+the function available in the externalfunctions package.
+
+			<pre>type ExternalFunctionsServer interface {
+    <span class="comment">// Lists all available functions with description, inputs and outputs.</span>
+    ListFunctions(<a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)
+    <span class="comment">// Runs a specified function with provided inputs and returns the function outputs.</span>
+    RunFunction(<a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, *<a href="#FunctionInputs">FunctionInputs</a>) (*<a href="#FunctionOutputs">FunctionOutputs</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)
+    <span class="comment">// Runs a specified function with provided inputs and returns the function output as a stream.</span>
+    StreamFunction(*<a href="#FunctionInputs">FunctionInputs</a>, <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingServer">ServerStreamingServer</a>[<a href="#StreamOutput">StreamOutput</a>]) <a href="https://pkg.go.dev/builtin/#error">error</a>
+    mustEmbedUnimplementedExternalFunctionsServer()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExternalFunctions_StreamFunctionClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L87">ExternalFunctions_StreamFunctionClient</a>
+				<a class="permalink" href="#ExternalFunctions_StreamFunctionClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+
+			<pre>type ExternalFunctions_StreamFunctionClient = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingClient">ServerStreamingClient</a>[<a href="#StreamOutput">StreamOutput</a>]</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ExternalFunctions_StreamFunctionServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L187">ExternalFunctions_StreamFunctionServer</a>
+				<a class="permalink" href="#ExternalFunctions_StreamFunctionServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+
+			<pre>type ExternalFunctions_StreamFunctionServer = <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingServer">ServerStreamingServer</a>[<a href="#StreamOutput">StreamOutput</a>]</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FunctionDefinition">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L111">FunctionDefinition</a>
+				<a class="permalink" href="#FunctionDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionDefinition is the definition of an individual function.
+It contains the name, description, inputs and outputs of the function.
+
+			<pre>type FunctionDefinition struct {
+<span id="FunctionDefinition.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionDefinition.Name"></span>    <span class="comment">// Name of the function.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="FunctionDefinition.Description"></span>    <span class="comment">// Description of the function.</span>
+    Description <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=description,proto3&#34; json:&#34;description,omitempty&#34;`
+<span id="FunctionDefinition.Category"></span>    <span class="comment">// Category of the function.</span>
+    Category <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=category,proto3&#34; json:&#34;category,omitempty&#34;`
+    <span class="comment">// Display name of the function;</span>
+<span id="FunctionDefinition.DisplayName"></span>    DisplayName <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,opt,name=displayName,proto3&#34; json:&#34;displayName,omitempty&#34;`
+    <span class="comment">// List of input definitions for the function.</span>
+<span id="FunctionDefinition.Input"></span>    Input []*<a href="#FunctionInputDefinition">FunctionInputDefinition</a> `protobuf:&#34;bytes,5,rep,name=input,proto3&#34; json:&#34;input,omitempty&#34;`
+    <span class="comment">// List of output definitions for the function.</span>
+<span id="FunctionDefinition.Output"></span>    Output        []*<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a> `protobuf:&#34;bytes,6,rep,name=output,proto3&#34; json:&#34;output,omitempty&#34;`
+<span id="FunctionDefinition.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionDefinition.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionDefinition.Descriptor">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L155">Descriptor</a>
+					<a class="permalink" href="#FunctionDefinition.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionDefinition">FunctionDefinition</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionDefinition.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetCategory">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L173">GetCategory</a>
+					<a class="permalink" href="#FunctionDefinition.GetCategory">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetCategory() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetDescription">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L166">GetDescription</a>
+					<a class="permalink" href="#FunctionDefinition.GetDescription">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetDescription() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetDisplayName">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L180">GetDisplayName</a>
+					<a class="permalink" href="#FunctionDefinition.GetDisplayName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetDisplayName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetInput">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L187">GetInput</a>
+					<a class="permalink" href="#FunctionDefinition.GetInput">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetInput() []*<a href="#FunctionInputDefinition">FunctionInputDefinition</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetName">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L159">GetName</a>
+					<a class="permalink" href="#FunctionDefinition.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.GetOutput">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L194">GetOutput</a>
+					<a class="permalink" href="#FunctionDefinition.GetOutput">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) GetOutput() []*<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.ProtoMessage">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L140">ProtoMessage</a>
+					<a class="permalink" href="#FunctionDefinition.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionDefinition">FunctionDefinition</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.ProtoReflect">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L142">ProtoReflect</a>
+					<a class="permalink" href="#FunctionDefinition.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.Reset">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L129">Reset</a>
+					<a class="permalink" href="#FunctionDefinition.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionDefinition.String">func (*FunctionDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L136">String</a>
+					<a class="permalink" href="#FunctionDefinition.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionDefinition">FunctionDefinition</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionInput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L397">FunctionInput</a>
+				<a class="permalink" href="#FunctionInput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>Single input for a function.
+
+			<pre>type FunctionInput struct {
+<span id="FunctionInput.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionInput.Name"></span>    <span class="comment">// Name of the input.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// Go language type of the input.</span>
+<span id="FunctionInput.GoType"></span>    GoType <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=go_type,json=goType,proto3&#34; json:&#34;go_type,omitempty&#34;`
+<span id="FunctionInput.Value"></span>    <span class="comment">// Value of the input.</span>
+    Value         <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="FunctionInput.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionInput.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionInput.Descriptor">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L435">Descriptor</a>
+					<a class="permalink" href="#FunctionInput.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInput">FunctionInput</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionInput.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.GetGoType">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L446">GetGoType</a>
+					<a class="permalink" href="#FunctionInput.GetGoType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) GetGoType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.GetName">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L439">GetName</a>
+					<a class="permalink" href="#FunctionInput.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.GetValue">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L453">GetValue</a>
+					<a class="permalink" href="#FunctionInput.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) GetValue() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.ProtoMessage">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L420">ProtoMessage</a>
+					<a class="permalink" href="#FunctionInput.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInput">FunctionInput</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.ProtoReflect">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L422">ProtoReflect</a>
+					<a class="permalink" href="#FunctionInput.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.Reset">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L409">Reset</a>
+					<a class="permalink" href="#FunctionInput.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInput.String">func (*FunctionInput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L416">String</a>
+					<a class="permalink" href="#FunctionInput.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInput">FunctionInput</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionInputDefinition">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L203">FunctionInputDefinition</a>
+				<a class="permalink" href="#FunctionInputDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionInputDefinition is the definition of an input for a function.
+It contains the name, type, Go language type and options for the input.
+
+			<pre>type FunctionInputDefinition struct {
+<span id="FunctionInputDefinition.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionInputDefinition.Name"></span>    <span class="comment">// Name of the input.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="FunctionInputDefinition.Type"></span>    <span class="comment">// Type of the input.</span>
+    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+    <span class="comment">// Go language type of the input.</span>
+<span id="FunctionInputDefinition.GoType"></span>    GoType <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=go_type,json=goType,proto3&#34; json:&#34;go_type,omitempty&#34;`
+    <span class="comment">// List of options for the input, if applicable.</span>
+<span id="FunctionInputDefinition.Options"></span>    Options       []<a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,rep,name=options,proto3&#34; json:&#34;options,omitempty&#34;`
+<span id="FunctionInputDefinition.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionInputDefinition.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionInputDefinition.Descriptor">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L243">Descriptor</a>
+					<a class="permalink" href="#FunctionInputDefinition.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionInputDefinition.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.GetGoType">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L261">GetGoType</a>
+					<a class="permalink" href="#FunctionInputDefinition.GetGoType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) GetGoType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.GetName">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L247">GetName</a>
+					<a class="permalink" href="#FunctionInputDefinition.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.GetOptions">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L268">GetOptions</a>
+					<a class="permalink" href="#FunctionInputDefinition.GetOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) GetOptions() []<a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.GetType">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L254">GetType</a>
+					<a class="permalink" href="#FunctionInputDefinition.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) GetType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.ProtoMessage">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L228">ProtoMessage</a>
+					<a class="permalink" href="#FunctionInputDefinition.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.ProtoReflect">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L230">ProtoReflect</a>
+					<a class="permalink" href="#FunctionInputDefinition.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.Reset">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L217">Reset</a>
+					<a class="permalink" href="#FunctionInputDefinition.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputDefinition.String">func (*FunctionInputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L224">String</a>
+					<a class="permalink" href="#FunctionInputDefinition.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputDefinition">FunctionInputDefinition</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionInputs">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L342">FunctionInputs</a>
+				<a class="permalink" href="#FunctionInputs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionInputs is the input message for the RunFunction method.
+It contains the name of the function to run and a list of inputs.
+
+			<pre>type FunctionInputs struct {
+<span id="FunctionInputs.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionInputs.Name"></span>    <span class="comment">// Name of the function to run.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// List of inputs for the function.</span>
+<span id="FunctionInputs.Inputs"></span>    Inputs        []*<a href="#FunctionInput">FunctionInput</a> `protobuf:&#34;bytes,2,rep,name=inputs,proto3&#34; json:&#34;inputs,omitempty&#34;`
+<span id="FunctionInputs.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionInputs.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionInputs.Descriptor">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L378">Descriptor</a>
+					<a class="permalink" href="#FunctionInputs.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInputs">FunctionInputs</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionInputs.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.GetInputs">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L389">GetInputs</a>
+					<a class="permalink" href="#FunctionInputs.GetInputs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputs">FunctionInputs</a>) GetInputs() []*<a href="#FunctionInput">FunctionInput</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.GetName">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L382">GetName</a>
+					<a class="permalink" href="#FunctionInputs.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputs">FunctionInputs</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.ProtoMessage">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L363">ProtoMessage</a>
+					<a class="permalink" href="#FunctionInputs.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionInputs">FunctionInputs</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.ProtoReflect">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L365">ProtoReflect</a>
+					<a class="permalink" href="#FunctionInputs.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputs">FunctionInputs</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.Reset">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L352">Reset</a>
+					<a class="permalink" href="#FunctionInputs.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputs">FunctionInputs</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionInputs.String">func (*FunctionInputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L359">String</a>
+					<a class="permalink" href="#FunctionInputs.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionInputs">FunctionInputs</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L518">FunctionOutput</a>
+				<a class="permalink" href="#FunctionOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionOutput is a single output from a function.
+It contains the name, Go language type and value of the output.
+
+			<pre>type FunctionOutput struct {
+<span id="FunctionOutput.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionOutput.Name"></span>    <span class="comment">// Name of the output.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// Go language type of the output.</span>
+<span id="FunctionOutput.GoType"></span>    GoType <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=go_type,json=goType,proto3&#34; json:&#34;go_type,omitempty&#34;`
+<span id="FunctionOutput.Value"></span>    <span class="comment">// Value of the output.</span>
+    Value <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+    <span class="comment">// Code validation of the output. Only relevant for code generation.</span>
+<span id="FunctionOutput.CodeValidation"></span>    CodeValidation <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,opt,name=code_validation,json=codeValidation,proto3&#34; json:&#34;code_validation,omitempty&#34;`
+<span id="FunctionOutput.unknownFields"></span>    unknownFields  <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionOutput.sizeCache"></span>    sizeCache      <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionOutput.Descriptor">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L558">Descriptor</a>
+					<a class="permalink" href="#FunctionOutput.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutput">FunctionOutput</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionOutput.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.GetCodeValidation">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L583">GetCodeValidation</a>
+					<a class="permalink" href="#FunctionOutput.GetCodeValidation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) GetCodeValidation() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.GetGoType">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L569">GetGoType</a>
+					<a class="permalink" href="#FunctionOutput.GetGoType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) GetGoType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.GetName">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L562">GetName</a>
+					<a class="permalink" href="#FunctionOutput.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.GetValue">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L576">GetValue</a>
+					<a class="permalink" href="#FunctionOutput.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) GetValue() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.ProtoMessage">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L543">ProtoMessage</a>
+					<a class="permalink" href="#FunctionOutput.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutput">FunctionOutput</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.ProtoReflect">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L545">ProtoReflect</a>
+					<a class="permalink" href="#FunctionOutput.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.Reset">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L532">Reset</a>
+					<a class="permalink" href="#FunctionOutput.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutput.String">func (*FunctionOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L539">String</a>
+					<a class="permalink" href="#FunctionOutput.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutput">FunctionOutput</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionOutputDefinition">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L277">FunctionOutputDefinition</a>
+				<a class="permalink" href="#FunctionOutputDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionOutputDefinition is the definition of an output for a function.
+It contains the name, type and Go language type of the output.
+
+			<pre>type FunctionOutputDefinition struct {
+<span id="FunctionOutputDefinition.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionOutputDefinition.Name"></span>    <span class="comment">// Name of the output.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="FunctionOutputDefinition.Type"></span>    <span class="comment">// Type of the output.</span>
+    Type <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+    <span class="comment">// Go language type of the output.</span>
+<span id="FunctionOutputDefinition.GoType"></span>    GoType        <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=go_type,json=goType,proto3&#34; json:&#34;go_type,omitempty&#34;`
+<span id="FunctionOutputDefinition.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionOutputDefinition.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionOutputDefinition.Descriptor">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L315">Descriptor</a>
+					<a class="permalink" href="#FunctionOutputDefinition.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionOutputDefinition.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.GetGoType">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L333">GetGoType</a>
+					<a class="permalink" href="#FunctionOutputDefinition.GetGoType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) GetGoType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.GetName">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L319">GetName</a>
+					<a class="permalink" href="#FunctionOutputDefinition.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.GetType">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L326">GetType</a>
+					<a class="permalink" href="#FunctionOutputDefinition.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) GetType() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.ProtoMessage">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L300">ProtoMessage</a>
+					<a class="permalink" href="#FunctionOutputDefinition.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.ProtoReflect">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L302">ProtoReflect</a>
+					<a class="permalink" href="#FunctionOutputDefinition.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.Reset">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L289">Reset</a>
+					<a class="permalink" href="#FunctionOutputDefinition.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputDefinition.String">func (*FunctionOutputDefinition) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L296">String</a>
+					<a class="permalink" href="#FunctionOutputDefinition.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputDefinition">FunctionOutputDefinition</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FunctionOutputs">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L462">FunctionOutputs</a>
+				<a class="permalink" href="#FunctionOutputs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>FunctionOutputs is the output message for the RunFunction method.
+It contains the name of the function that was run and a list of outputs.
+
+			<pre>type FunctionOutputs struct {
+<span id="FunctionOutputs.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="FunctionOutputs.Name"></span>    <span class="comment">// Name of the function that was run.</span>
+    Name <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// List of outputs from the function.</span>
+<span id="FunctionOutputs.Outputs"></span>    Outputs       []*<a href="#FunctionOutput">FunctionOutput</a> `protobuf:&#34;bytes,2,rep,name=outputs,proto3&#34; json:&#34;outputs,omitempty&#34;`
+<span id="FunctionOutputs.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="FunctionOutputs.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FunctionOutputs.Descriptor">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L498">Descriptor</a>
+					<a class="permalink" href="#FunctionOutputs.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutputs">FunctionOutputs</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use FunctionOutputs.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.GetName">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L502">GetName</a>
+					<a class="permalink" href="#FunctionOutputs.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputs">FunctionOutputs</a>) GetName() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.GetOutputs">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L509">GetOutputs</a>
+					<a class="permalink" href="#FunctionOutputs.GetOutputs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputs">FunctionOutputs</a>) GetOutputs() []*<a href="#FunctionOutput">FunctionOutput</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.ProtoMessage">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L483">ProtoMessage</a>
+					<a class="permalink" href="#FunctionOutputs.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#FunctionOutputs">FunctionOutputs</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.ProtoReflect">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L485">ProtoReflect</a>
+					<a class="permalink" href="#FunctionOutputs.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputs">FunctionOutputs</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.Reset">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L472">Reset</a>
+					<a class="permalink" href="#FunctionOutputs.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputs">FunctionOutputs</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FunctionOutputs.String">func (*FunctionOutputs) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L479">String</a>
+					<a class="permalink" href="#FunctionOutputs.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#FunctionOutputs">FunctionOutputs</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ListFunctionsRequest">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L26">ListFunctionsRequest</a>
+				<a class="permalink" href="#ListFunctionsRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ListFunctionsRequest is the input message for the ListFunctions method.
+As no input is required, this message is empty.
+
+			<pre>type ListFunctionsRequest struct {
+<span id="ListFunctionsRequest.state"></span>    state         <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+<span id="ListFunctionsRequest.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ListFunctionsRequest.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ListFunctionsRequest.Descriptor">func (*ListFunctionsRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L58">Descriptor</a>
+					<a class="permalink" href="#ListFunctionsRequest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ListFunctionsRequest.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsRequest.ProtoMessage">func (*ListFunctionsRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L43">ProtoMessage</a>
+					<a class="permalink" href="#ListFunctionsRequest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsRequest.ProtoReflect">func (*ListFunctionsRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L45">ProtoReflect</a>
+					<a class="permalink" href="#ListFunctionsRequest.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsRequest.Reset">func (*ListFunctionsRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L32">Reset</a>
+					<a class="permalink" href="#ListFunctionsRequest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsRequest.String">func (*ListFunctionsRequest) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L39">String</a>
+					<a class="permalink" href="#ListFunctionsRequest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ListFunctionsResponse">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L64">ListFunctionsResponse</a>
+				<a class="permalink" href="#ListFunctionsResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>ListFunctionsResponse is the output message for the ListFunctions method.
+It contains a map of function names to their definitions.
+
+			<pre>type ListFunctionsResponse struct {
+<span id="ListFunctionsResponse.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Map of function names to their definitions.</span>
+<span id="ListFunctionsResponse.Functions"></span>    Functions     map[<a href="https://pkg.go.dev/builtin/#string">string</a>]*<a href="#FunctionDefinition">FunctionDefinition</a> `protobuf:&#34;bytes,1,rep,name=functions,proto3&#34; json:&#34;functions,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key&#34; protobuf_val:&#34;bytes,2,opt,name=value&#34;`
+<span id="ListFunctionsResponse.unknownFields"></span>    unknownFields <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="ListFunctionsResponse.sizeCache"></span>    sizeCache     <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ListFunctionsResponse.Descriptor">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L98">Descriptor</a>
+					<a class="permalink" href="#ListFunctionsResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use ListFunctionsResponse.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsResponse.GetFunctions">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L102">GetFunctions</a>
+					<a class="permalink" href="#ListFunctionsResponse.GetFunctions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) GetFunctions() map[<a href="https://pkg.go.dev/builtin/#string">string</a>]*<a href="#FunctionDefinition">FunctionDefinition</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsResponse.ProtoMessage">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L83">ProtoMessage</a>
+					<a class="permalink" href="#ListFunctionsResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsResponse.ProtoReflect">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L85">ProtoReflect</a>
+					<a class="permalink" href="#ListFunctionsResponse.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsResponse.Reset">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L72">Reset</a>
+					<a class="permalink" href="#ListFunctionsResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ListFunctionsResponse.String">func (*ListFunctionsResponse) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L79">String</a>
+					<a class="permalink" href="#ListFunctionsResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#ListFunctionsResponse">ListFunctionsResponse</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StreamOutput">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L592">StreamOutput</a>
+				<a class="permalink" href="#StreamOutput">&#xb6;</a>
+				
+				
+			</h2>
+			<p>StreamOutput is the output message for the StreamFunction method.
+It contains the message counter, a flag indicating if this is the last message
+
+			<pre>type StreamOutput struct {
+<span id="StreamOutput.state"></span>    state <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#MessageState">MessageState</a> `protogen:&#34;open.v1&#34;`
+    <span class="comment">// Counter for the message in the stream.</span>
+<span id="StreamOutput.MessageCounter"></span>    MessageCounter <a href="https://pkg.go.dev/builtin/#int32">int32</a> `protobuf:&#34;varint,1,opt,name=message_counter,json=messageCounter,proto3&#34; json:&#34;message_counter,omitempty&#34;`
+    <span class="comment">// Indicates if this is the last message in the stream.</span>
+<span id="StreamOutput.IsLast"></span>    IsLast <a href="https://pkg.go.dev/builtin/#bool">bool</a> `protobuf:&#34;varint,2,opt,name=is_last,json=isLast,proto3&#34; json:&#34;is_last,omitempty&#34;`
+<span id="StreamOutput.Value"></span>    <span class="comment">// Value of the output.</span>
+    Value <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+    <span class="comment">// Code validation of the output. Only relevant for code generation.</span>
+<span id="StreamOutput.CodeValidation"></span>    CodeValidation <a href="https://pkg.go.dev/builtin/#string">string</a> `protobuf:&#34;bytes,4,opt,name=code_validation,json=codeValidation,proto3&#34; json:&#34;code_validation,omitempty&#34;`
+<span id="StreamOutput.unknownFields"></span>    unknownFields  <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#UnknownFields">UnknownFields</a>
+<span id="StreamOutput.sizeCache"></span>    sizeCache      <a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/">protoimpl</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/runtime/protoimpl/#SizeCache">SizeCache</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StreamOutput.Descriptor">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L632">Descriptor</a>
+					<a class="permalink" href="#StreamOutput.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#StreamOutput">StreamOutput</a>) Descriptor() ([]<a href="https://pkg.go.dev/builtin/#byte">byte</a>, []<a href="https://pkg.go.dev/builtin/#int">int</a>)</pre>
+				<p>Deprecated: Use StreamOutput.ProtoReflect.Descriptor instead.
+
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.GetCodeValidation">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L657">GetCodeValidation</a>
+					<a class="permalink" href="#StreamOutput.GetCodeValidation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) GetCodeValidation() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.GetIsLast">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L643">GetIsLast</a>
+					<a class="permalink" href="#StreamOutput.GetIsLast">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) GetIsLast() <a href="https://pkg.go.dev/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.GetMessageCounter">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L636">GetMessageCounter</a>
+					<a class="permalink" href="#StreamOutput.GetMessageCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) GetMessageCounter() <a href="https://pkg.go.dev/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.GetValue">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L650">GetValue</a>
+					<a class="permalink" href="#StreamOutput.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) GetValue() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.ProtoMessage">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L617">ProtoMessage</a>
+					<a class="permalink" href="#StreamOutput.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="#StreamOutput">StreamOutput</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.ProtoReflect">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L619">ProtoReflect</a>
+					<a class="permalink" href="#StreamOutput.ProtoReflect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) ProtoReflect() <a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/">protoreflect</a>.<a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect/#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.Reset">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L606">Reset</a>
+					<a class="permalink" href="#StreamOutput.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamOutput.String">func (*StreamOutput) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit.pb.go#L613">String</a>
+					<a class="permalink" href="#StreamOutput.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x *<a href="#StreamOutput">StreamOutput</a>) String() <a href="https://pkg.go.dev/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UnimplementedExternalFunctionsServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L110">UnimplementedExternalFunctionsServer</a>
+				<a class="permalink" href="#UnimplementedExternalFunctionsServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>UnimplementedExternalFunctionsServer must be embedded to have
+forward compatible implementations.
+<p>NOTE: this should be embedded by value instead of pointer to avoid a nil
+pointer dereference when methods are called.
+
+			<pre>type UnimplementedExternalFunctionsServer struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UnimplementedExternalFunctionsServer.ListFunctions">func (UnimplementedExternalFunctionsServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L112">ListFunctions</a>
+					<a class="permalink" href="#UnimplementedExternalFunctionsServer.ListFunctions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedExternalFunctionsServer">UnimplementedExternalFunctionsServer</a>) ListFunctions(<a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>) (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedExternalFunctionsServer.RunFunction">func (UnimplementedExternalFunctionsServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L115">RunFunction</a>
+					<a class="permalink" href="#UnimplementedExternalFunctionsServer.RunFunction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedExternalFunctionsServer">UnimplementedExternalFunctionsServer</a>) RunFunction(<a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, *<a href="#FunctionInputs">FunctionInputs</a>) (*<a href="#FunctionOutputs">FunctionOutputs</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedExternalFunctionsServer.StreamFunction">func (UnimplementedExternalFunctionsServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L118">StreamFunction</a>
+					<a class="permalink" href="#UnimplementedExternalFunctionsServer.StreamFunction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedExternalFunctionsServer">UnimplementedExternalFunctionsServer</a>) StreamFunction(*<a href="#FunctionInputs">FunctionInputs</a>, <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingServer">ServerStreamingServer</a>[<a href="#StreamOutput">StreamOutput</a>]) <a href="https://pkg.go.dev/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedExternalFunctionsServer.mustEmbedUnimplementedExternalFunctionsServer">func (UnimplementedExternalFunctionsServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L121">mustEmbedUnimplementedExternalFunctionsServer</a>
+					<a class="permalink" href="#UnimplementedExternalFunctionsServer.mustEmbedUnimplementedExternalFunctionsServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedExternalFunctionsServer">UnimplementedExternalFunctionsServer</a>) mustEmbedUnimplementedExternalFunctionsServer()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnimplementedExternalFunctionsServer.testEmbeddedByValue">func (UnimplementedExternalFunctionsServer) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L122">testEmbeddedByValue</a>
+					<a class="permalink" href="#UnimplementedExternalFunctionsServer.testEmbeddedByValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="#UnimplementedExternalFunctionsServer">UnimplementedExternalFunctionsServer</a>) testEmbeddedByValue()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UnsafeExternalFunctionsServer">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L127">UnsafeExternalFunctionsServer</a>
+				<a class="permalink" href="#UnsafeExternalFunctionsServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>UnsafeExternalFunctionsServer may be embedded to opt out of forward compatibility for this service.
+Use of this interface is not recommended, as added methods to ExternalFunctionsServer will
+result in compilation errors.
+
+			<pre>type UnsafeExternalFunctionsServer interface {
+    mustEmbedUnimplementedExternalFunctionsServer()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="externalFunctionsClient">type <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L42">externalFunctionsClient</a>
+				<a class="permalink" href="#externalFunctionsClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type externalFunctionsClient struct {
+<span id="externalFunctionsClient.cc"></span>    cc <a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ClientConnInterface">ClientConnInterface</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="externalFunctionsClient.ListFunctions">func (*externalFunctionsClient) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L50">ListFunctions</a>
+					<a class="permalink" href="#externalFunctionsClient.ListFunctions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *externalFunctionsClient) ListFunctions(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#ListFunctionsRequest">ListFunctionsRequest</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (*<a href="#ListFunctionsResponse">ListFunctionsResponse</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="externalFunctionsClient.RunFunction">func (*externalFunctionsClient) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L60">RunFunction</a>
+					<a class="permalink" href="#externalFunctionsClient.RunFunction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *externalFunctionsClient) RunFunction(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#FunctionInputs">FunctionInputs</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (*<a href="#FunctionOutputs">FunctionOutputs</a>, <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="externalFunctionsClient.StreamFunction">func (*externalFunctionsClient) <a href="https://github.com/ansys/aali-sharedtypes/blob/main/pkg/aaliflowkitgrpc/aali-flowkit_grpc.pb.go#L70">StreamFunction</a>
+					<a class="permalink" href="#externalFunctionsClient.StreamFunction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *externalFunctionsClient) StreamFunction(ctx <a href="https://pkg.go.dev/context/">context</a>.<a href="https://pkg.go.dev/context/#Context">Context</a>, in *<a href="#FunctionInputs">FunctionInputs</a>, opts ...<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="https://pkg.go.dev/google.golang.org/grpc/">grpc</a>.<a href="https://pkg.go.dev/google.golang.org/grpc/#ServerStreamingClient">ServerStreamingClient</a>[<a href="#StreamOutput">StreamOutput</a>], <a href="https://pkg.go.dev/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.5.<br>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</article>
+              
+              
+              
+              
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"> 
+<div class="tocsection editthispage">
+  <a href="None">
+    <i class="fa-solid fa-pencil"></i>
+       Edit
+    on GitHub  
+  </a>
+</div>
+
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api_reference/test/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+
+  <!-- Include desired assets -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+
+<script>
+// Passing the search options to the search.js file
+const SEARCH_OPTIONS = JSON.parse('{"keys": ["title", "text"], "limit": 10, "threshold": 0.2}');
+const SEARCH_FILE = "../../_static/search.json";
+</script>
+
+
+<script src="../../_static/js/search.js"></script>
+  
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright (c) 2025 ANSYS, Inc. All rights reserved.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the
+  <a href="https://sphinxdocs.ansys.com/version/stable/index.html"
+    >Ansys Sphinx Theme</a
+  >
+  1.3.3. <br />Last updated on
+  <span id="ast_build_date"></span>
+</p>
+<script>
+  var options = { day: "numeric", month: "long", year: "numeric" };
+  var ast_lastModifiedDate = new Date(document.lastModified);
+  var ast_build_date = ast_lastModifiedDate.toLocaleDateString("en-US", options);
+  document.getElementById("ast_build_date").innerHTML = ast_build_date;
+</script></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

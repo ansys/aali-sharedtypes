@@ -1,0 +1,36 @@
+.. _index:
+
+==============================
+Aali SharedTypes Documentation
+==============================
+
+Aali SharedTypes provides internal data models used across the AALI system. It defines structs such as Workflow, ExecutionResult, NodeDefinition, and others. 
+
+----
+
+.. grid:: 1
+   :gutter: 3
+
+   .. grid-item-card:: :material-regular:`directions_run;35px` Getting Started
+      :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: getting-started/index
+      :link-type: doc
+
+      Setup instructions and module usage for local development.
+
+   .. grid-item-card:: :material-regular:`psychology;35px` User Guide
+      :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: user-guide/index
+      :link-type: doc
+
+      Core structs for workflows, execution, configuration, values, and functions.
+
+   .. grid-item-card:: :material-regular:`bolt;35px` Advanced Topics
+      :text-align: center
+      :class-card: sd-shadow-sm sd-rounded-1
+      :link: advanced/index
+      :link-type: doc
+
+      Integration patterns, GRPC mapping, internal struct design, and API reference.
