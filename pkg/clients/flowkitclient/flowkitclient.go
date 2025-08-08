@@ -39,8 +39,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-// Global variable to store the available functions
+// Global variable to store the available functions, types and categories
 var AvailableFunctions map[string]*sharedtypes.FunctionDefinition
+var AvailableTypes map[string]bool
+var AvailableCategories map[string]bool
 
 // ListFunctionsAndSaveToInteralStates calls the ListFunctions gRPC and saves the functions to internal states
 // This function is used to get the list of available functions from the external function server
@@ -88,6 +90,10 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				GoType:  inputParam.GoType,
 				Options: inputParam.Options,
 			})
+			// add the type to available types
+			if AvailableTypes != nil && inputParam.GoType != "" && inputParam.GoType != "any" {
+				AvailableTypes[inputParam.GoType] = true
+			}
 		}
 		outputs := []sharedtypes.FunctionOutput{}
 		for _, outputParam := range function.Output {
@@ -96,6 +102,10 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				Type:   outputParam.Type,
 				GoType: outputParam.GoType,
 			})
+			// add the type to available types
+			if AvailableTypes != nil && outputParam.GoType != "" && outputParam.GoType != "any" {
+				AvailableTypes[outputParam.GoType] = true
+			}
 		}
 
 		// Save the function to internal states
@@ -109,6 +119,10 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 			Inputs:      inputs,
 			Outputs:     outputs,
 			Type:        "go",
+		}
+		// add the category to available categories
+		if AvailableCategories != nil && function.Category != "" {
+			AvailableCategories[function.Category] = true
 		}
 	}
 

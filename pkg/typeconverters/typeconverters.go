@@ -190,12 +190,34 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 		return strconv.ParseBool(value)
 	case "interface{}", "any":
 		var output interface{}
-		if value == "" {
+		if value == "" || value == "null" {
 			output = nil
 		} else {
-			err := json.Unmarshal([]byte(value), &output)
-			if err != nil {
-				return nil, err
+			trimmed := strings.TrimSpace(value)
+
+			// Check if it looks like a JSON object or array
+			if (strings.HasPrefix(trimmed, "{") && strings.HasSuffix(trimmed, "}")) ||
+				(strings.HasPrefix(trimmed, "[") && strings.HasSuffix(trimmed, "]")) ||
+				(strings.HasPrefix(trimmed, "\"") && strings.HasSuffix(trimmed, "\"")) {
+				// Try to unmarshal as JSON
+				err := json.Unmarshal([]byte(value), &output)
+				if err != nil {
+					return nil, err
+				}
+			} else if trimmed == "true" || trimmed == "false" {
+				// Handle boolean values
+				output = trimmed == "true"
+			} else if num, err := strconv.ParseFloat(trimmed, 64); err == nil {
+				// Try to parse as number (int or float)
+				intNum, err := strconv.ParseInt(trimmed, 10, 64)
+				if err == nil {
+					output = intNum
+				} else {
+					output = num
+				}
+			} else {
+				// Default: treat as plain string
+				output = value
 			}
 		}
 		return output, nil
@@ -362,6 +384,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			value = "[]"
 		}
 		output := []map[string]string{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
+	case "map[uint]float32":
+		if value == "" {
+			value = "{}"
+		}
+		output := map[uint]float32{}
 		err := json.Unmarshal([]byte(value), &output)
 		if err != nil {
 			return nil, err
@@ -722,6 +754,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]map[string]interface{}", "[]map[string]any":
 		output, err := json.Marshal(value.([]map[string]interface{}))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "map[uint]float32":
+		output, err := json.Marshal(value.(map[uint]float32))
 		if err != nil {
 			return "", err
 		}

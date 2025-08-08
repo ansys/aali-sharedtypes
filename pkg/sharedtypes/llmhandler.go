@@ -101,3 +101,9 @@ type EmbeddingOptions struct {
 	ReturnSparse  *bool `json:"returnSparse"`  // defines if the response should include lexical weights; only for BAAI/bge-m3
 	ReturnColbert *bool `json:"returnColbert"` // defines if the response should include colbert vectors; only for BAAI/bge-m3
 }
+
+// EmbeddingResult holds both dense and sparse embeddings
+type EmbeddingResult struct {
+	Dense  []float32
+	Sparse map[uint]float32
+}

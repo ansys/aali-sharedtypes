@@ -136,14 +136,35 @@ message ClientResponse {
     // Snapshot properties; id of the snapshot taken or loaded
     string snapshot_id = 11;
 
-    // Slash command properties; list of slash commands supported by the workflow
-    repeated string slash_commands = 12;
+    // Slash command properties; List of @ commands containing their corresponding slash commands
+    repeated SlashCommandCategory commands_by_category = 12;
 
     // Error properties
     ErrorResponse error = 13;
 
     // Info properties
     optional string info_message = 14;
+}
+
+// SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
+message SlashCommandCategory {
+    // Category name
+    string name = 1;
+
+    // Description of the category
+    string description = 2;
+
+    // List of slash commands in this category
+    repeated SlashCommand commands = 3;
+}
+
+// SlashCommand is the message to send a slash command.
+message SlashCommand {
+    // Name of the slash command
+    string name = 1;
+
+    // Description of the slash command
+    string description = 2;
 }
 
 // ErrorResponse is the message to send an error response to the client.

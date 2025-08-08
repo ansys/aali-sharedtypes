@@ -25,9 +25,9 @@ jobs:
     - name: Install required tools
       run : |
         sudo apt-get update
-        sudo apt-get install -y golang-go
-        sudo apt-get install -y golang-golang-x-tools
-        sudo snap install golangci-lint --classic
+        sudo apt-get install -y golang-go golang-golang-x-tools
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
     - name: Checkout repository
       uses: actions/checkout@v4
