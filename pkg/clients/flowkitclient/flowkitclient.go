@@ -91,7 +91,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				Options: inputParam.Options,
 			})
 			// add the type to available types
-			if AvailableTypes != nil {
+			if AvailableTypes != nil && inputParam.GoType != "" && inputParam.GoType != "any" {
 				AvailableTypes[inputParam.GoType] = true
 			}
 		}
@@ -103,7 +103,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				GoType: outputParam.GoType,
 			})
 			// add the type to available types
-			if AvailableTypes != nil {
+			if AvailableTypes != nil && outputParam.GoType != "" && outputParam.GoType != "any" {
 				AvailableTypes[outputParam.GoType] = true
 			}
 		}
