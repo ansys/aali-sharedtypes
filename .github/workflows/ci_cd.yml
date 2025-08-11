@@ -142,7 +142,7 @@ jobs:
     name: "Documentation style"
     runs-on: ubuntu-latest
     steps:
-      - uses: ansys/actions/doc-style@v9
+      - uses: ansys/actions/doc-style@v10
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -151,7 +151,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Build project documentation"
-        uses: ansys/actions/doc-build@v9
+        uses: ansys/actions/doc-build@v10
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           use-python-cache: false
@@ -181,7 +181,7 @@ jobs:
           gopages -internal -source-link "https://github.com/ansys/aali-sharedtypes/blob/main/{{.Path}}{{if .Line}}#L{{.Line}}{{end}}"
 
       - name: Download HTML documentation artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: documentation-html
           path: documentation-html
