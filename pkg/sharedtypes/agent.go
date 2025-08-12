@@ -53,6 +53,7 @@ type ConversationHistoryMessage struct {
 	Images           []string `json:"images"` // image in base64 format
 	PositiveFeedback bool     `json:"positive_feedback"`
 	NegativeFeedback bool     `json:"negative_feedback"`
+	FeedbackText     string   `json:"feedback_text,omitempty"` // Optional feedback text
 }
 
 // Feedback is a structure that contains the conversation history, message ID, and feedback options of a workflow feedback.
@@ -63,6 +64,7 @@ type Feedback struct {
 	AddNegative         bool                         `json:"add_negative"`
 	RemovePositive      bool                         `json:"remove_positive"`
 	RemoveNegative      bool                         `json:"remove_negative"`
+	FeedbackText        string                       `json:"feedback_text,omitempty"` // Optional feedback text
 }
 
 // SetSessionContext sets the SessionContext struct from the JSON payload
