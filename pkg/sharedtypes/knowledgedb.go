@@ -87,12 +87,45 @@ type DbData struct {
 
 // DbResponse represents the response from the database.
 type DbResponse struct {
-	Guid              uuid.UUID              `json:"guid"`
+
+	// shared fields
+	Guid         uuid.UUID `json:"guid"`
+	Name         string    `json:"name"`
+	Dependencies []string  `json:"dependencies"`
+	Chunks       []string  `json:"chunks"`
+
+	// element fields
+	Type              CodeGenerationType `json:"type"`
+	NamePseudocode    string             `json:"name_pseudocode"`
+	NameFormatted     string             `json:"name_formatted"`
+	Description       string             `json:"description"`
+	Summary           string             `json:"summary"`
+	ReturnType        string             `json:"return"`
+	ReturnElementList []string           `json:"return_element_list"`
+	ReturnDescription string             `json:"return_description"`
+	Remarks           string             `json:"remarks"`
+	Parameters        []XMLMemberParam   `json:"parameters"`
+	Example           XMLMemberExample   `json:"example"`
+	EnumValues        []string           `json:"enum_values"`
+
+	// example fields
+	DependencyEquivalences map[string]string `json:"dependency_equivalences"`
+
+	// user guide fields
+	Title           string   `json:"title"`
+	IsFirstChild    bool     `json:"is_first_child"`
+	NextSibling     string   `json:"next_sibling"`
+	NextParent      string   `json:"next_parent"`
+	DocumentName    string   `json:"document_name"`
+	Content         string   `json:"content"`
+	Level           string   `json:"level"`
+	Link            string   `json:"link"`
+	ReferencedLinks []string `json:"referenced_links"`
+
+	// stuff here from before
 	DocumentId        string                 `json:"document_id"`
-	DocumentName      string                 `json:"document_name"`
 	Text              string                 `json:"text"`
 	Keywords          []string               `json:"keywords"`
-	Summary           string                 `json:"summary"`
 	Embedding         []float32              `json:"embeddings"`
 	Tags              []string               `json:"tags"`
 	Metadata          map[string]interface{} `json:"metadata"`
@@ -103,7 +136,6 @@ type DbResponse struct {
 	LastChildId       *uuid.UUID             `json:"last_child_id"`
 	FirstChildId      *uuid.UUID             `json:"first_child_id"`
 	Distance          float64                `json:"distance"`
-	Level             string                 `json:"level"`
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 
 	// Siblings
