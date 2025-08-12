@@ -99,6 +99,8 @@ type Config struct {
 	EXEC_FILE_STORE_PATH                 string `yaml:"EXEC_FILE_STORE_PATH" json:"EXECFILESTOREPATH"`
 	// DB Connection
 	KVDB_ENDPOINT string `yaml:"KVDB_ENDPOINT" json:"KVDBENDPOINT"`
+	// LLM Connection
+	LLM_REST_ENDPOINT string `yaml:"LLM_REST_ENDPOINT" json:"LLMRESTENDPOINT"`
 	// Workflow Store
 	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
 
