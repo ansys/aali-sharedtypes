@@ -7,6 +7,12 @@ option go_package = "./aaliflowkitgrpc";
 // ExternalFunctions is a gRPC service that allows for listing and running
 // the function available in the externalfunctions package.
 service ExternalFunctions {
+    // HealthCheck is a simple health check method that returns an empty response.
+    rpc HealthCheck(HealthRequest) returns (HealthResponse) {}
+
+    // GetVersion returns the version of the service.
+    rpc GetVersion(VersionRequest) returns (VersionResponse) {}
+
     // Lists all available functions with description, inputs and outputs.
     rpc ListFunctions(ListFunctionsRequest) returns (ListFunctionsResponse) {}
 
@@ -15,6 +21,26 @@ service ExternalFunctions {
 
     // Runs a specified function with provided inputs and returns the function output as a stream.
     rpc StreamFunction(FunctionInputs) returns (stream StreamOutput) {}
+}
+
+// HealthRequest is the input message for the HealthCheck method.
+message HealthRequest {
+}
+
+// HealthResponse is the output message for the HealthCheck method.
+message HealthResponse {
+    // Status of the health check, always "OK" for a healthy service.
+    string status = 1;
+}
+
+// VersionRequest is the input message for the GetVersion method.
+message VersionRequest {
+}
+
+// VersionResponse is the output message for the GetVersion method.
+message VersionResponse {
+    // Version of the service.
+    string version = 1;
 }
 
 // ListFunctionsRequest is the input message for the ListFunctions method.

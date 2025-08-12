@@ -21,6 +21,172 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// HealthRequest is the input message for the HealthCheck method.
+type HealthRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HealthRequest) Reset() {
+	*x = HealthRequest{}
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HealthRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HealthRequest) ProtoMessage() {}
+
+func (x *HealthRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HealthRequest.ProtoReflect.Descriptor instead.
+func (*HealthRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{0}
+}
+
+// HealthResponse is the output message for the HealthCheck method.
+type HealthResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Status of the health check, always "OK" for a healthy service.
+	Status        string `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HealthResponse) Reset() {
+	*x = HealthResponse{}
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HealthResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HealthResponse) ProtoMessage() {}
+
+func (x *HealthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HealthResponse.ProtoReflect.Descriptor instead.
+func (*HealthResponse) Descriptor() ([]byte, []int) {
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *HealthResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+// VersionRequest is the input message for the GetVersion method.
+type VersionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VersionRequest) Reset() {
+	*x = VersionRequest{}
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VersionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VersionRequest) ProtoMessage() {}
+
+func (x *VersionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VersionRequest.ProtoReflect.Descriptor instead.
+func (*VersionRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{2}
+}
+
+// VersionResponse is the output message for the GetVersion method.
+type VersionResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Version of the service.
+	Version       string `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VersionResponse) Reset() {
+	*x = VersionResponse{}
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VersionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VersionResponse) ProtoMessage() {}
+
+func (x *VersionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VersionResponse.ProtoReflect.Descriptor instead.
+func (*VersionResponse) Descriptor() ([]byte, []int) {
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *VersionResponse) GetVersion() string {
+	if x != nil {
+		return x.Version
+	}
+	return ""
+}
+
 // ListFunctionsRequest is the input message for the ListFunctions method.
 // As no input is required, this message is empty.
 type ListFunctionsRequest struct {
@@ -31,7 +197,7 @@ type ListFunctionsRequest struct {
 
 func (x *ListFunctionsRequest) Reset() {
 	*x = ListFunctionsRequest{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[0]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +209,7 @@ func (x *ListFunctionsRequest) String() string {
 func (*ListFunctionsRequest) ProtoMessage() {}
 
 func (x *ListFunctionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[0]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +222,7 @@ func (x *ListFunctionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFunctionsRequest.ProtoReflect.Descriptor instead.
 func (*ListFunctionsRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{0}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{4}
 }
 
 // ListFunctionsResponse is the output message for the ListFunctions method.
@@ -71,7 +237,7 @@ type ListFunctionsResponse struct {
 
 func (x *ListFunctionsResponse) Reset() {
 	*x = ListFunctionsResponse{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[1]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -83,7 +249,7 @@ func (x *ListFunctionsResponse) String() string {
 func (*ListFunctionsResponse) ProtoMessage() {}
 
 func (x *ListFunctionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[1]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -96,7 +262,7 @@ func (x *ListFunctionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFunctionsResponse.ProtoReflect.Descriptor instead.
 func (*ListFunctionsResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{1}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListFunctionsResponse) GetFunctions() map[string]*FunctionDefinition {
@@ -128,7 +294,7 @@ type FunctionDefinition struct {
 
 func (x *FunctionDefinition) Reset() {
 	*x = FunctionDefinition{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[2]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -140,7 +306,7 @@ func (x *FunctionDefinition) String() string {
 func (*FunctionDefinition) ProtoMessage() {}
 
 func (x *FunctionDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[2]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -153,7 +319,7 @@ func (x *FunctionDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionDefinition.ProtoReflect.Descriptor instead.
 func (*FunctionDefinition) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{2}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *FunctionDefinition) GetName() string {
@@ -216,7 +382,7 @@ type FunctionInputDefinition struct {
 
 func (x *FunctionInputDefinition) Reset() {
 	*x = FunctionInputDefinition{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[3]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -228,7 +394,7 @@ func (x *FunctionInputDefinition) String() string {
 func (*FunctionInputDefinition) ProtoMessage() {}
 
 func (x *FunctionInputDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[3]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -241,7 +407,7 @@ func (x *FunctionInputDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionInputDefinition.ProtoReflect.Descriptor instead.
 func (*FunctionInputDefinition) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{3}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *FunctionInputDefinition) GetName() string {
@@ -288,7 +454,7 @@ type FunctionOutputDefinition struct {
 
 func (x *FunctionOutputDefinition) Reset() {
 	*x = FunctionOutputDefinition{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[4]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -300,7 +466,7 @@ func (x *FunctionOutputDefinition) String() string {
 func (*FunctionOutputDefinition) ProtoMessage() {}
 
 func (x *FunctionOutputDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[4]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -313,7 +479,7 @@ func (x *FunctionOutputDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionOutputDefinition.ProtoReflect.Descriptor instead.
 func (*FunctionOutputDefinition) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{4}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *FunctionOutputDefinition) GetName() string {
@@ -351,7 +517,7 @@ type FunctionInputs struct {
 
 func (x *FunctionInputs) Reset() {
 	*x = FunctionInputs{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[5]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -363,7 +529,7 @@ func (x *FunctionInputs) String() string {
 func (*FunctionInputs) ProtoMessage() {}
 
 func (x *FunctionInputs) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[5]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -376,7 +542,7 @@ func (x *FunctionInputs) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionInputs.ProtoReflect.Descriptor instead.
 func (*FunctionInputs) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{5}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *FunctionInputs) GetName() string {
@@ -408,7 +574,7 @@ type FunctionInput struct {
 
 func (x *FunctionInput) Reset() {
 	*x = FunctionInput{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[6]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -420,7 +586,7 @@ func (x *FunctionInput) String() string {
 func (*FunctionInput) ProtoMessage() {}
 
 func (x *FunctionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[6]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -433,7 +599,7 @@ func (x *FunctionInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionInput.ProtoReflect.Descriptor instead.
 func (*FunctionInput) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{6}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *FunctionInput) GetName() string {
@@ -471,7 +637,7 @@ type FunctionOutputs struct {
 
 func (x *FunctionOutputs) Reset() {
 	*x = FunctionOutputs{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[7]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -483,7 +649,7 @@ func (x *FunctionOutputs) String() string {
 func (*FunctionOutputs) ProtoMessage() {}
 
 func (x *FunctionOutputs) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[7]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -496,7 +662,7 @@ func (x *FunctionOutputs) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionOutputs.ProtoReflect.Descriptor instead.
 func (*FunctionOutputs) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{7}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *FunctionOutputs) GetName() string {
@@ -531,7 +697,7 @@ type FunctionOutput struct {
 
 func (x *FunctionOutput) Reset() {
 	*x = FunctionOutput{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[8]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -543,7 +709,7 @@ func (x *FunctionOutput) String() string {
 func (*FunctionOutput) ProtoMessage() {}
 
 func (x *FunctionOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[8]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -556,7 +722,7 @@ func (x *FunctionOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionOutput.ProtoReflect.Descriptor instead.
 func (*FunctionOutput) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{8}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *FunctionOutput) GetName() string {
@@ -605,7 +771,7 @@ type StreamOutput struct {
 
 func (x *StreamOutput) Reset() {
 	*x = StreamOutput{}
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[9]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -617,7 +783,7 @@ func (x *StreamOutput) String() string {
 func (*StreamOutput) ProtoMessage() {}
 
 func (x *StreamOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[9]
+	mi := &file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -630,7 +796,7 @@ func (x *StreamOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamOutput.ProtoReflect.Descriptor instead.
 func (*StreamOutput) Descriptor() ([]byte, []int) {
-	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{9}
+	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *StreamOutput) GetMessageCounter() int32 {
@@ -665,7 +831,13 @@ var File_pkg_aaliflowkitgrpc_aali_flowkit_proto protoreflect.FileDescriptor
 
 const file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc = "" +
 	"\n" +
-	"&pkg/aaliflowkitgrpc/aali-flowkit.proto\x12\x0faaliflowkitgrpc\"\x16\n" +
+	"&pkg/aaliflowkitgrpc/aali-flowkit.proto\x12\x0faaliflowkitgrpc\"\x0f\n" +
+	"\rHealthRequest\"(\n" +
+	"\x0eHealthResponse\x12\x16\n" +
+	"\x06status\x18\x01 \x01(\tR\x06status\"\x10\n" +
+	"\x0eVersionRequest\"+\n" +
+	"\x0fVersionResponse\x12\x18\n" +
+	"\aversion\x18\x01 \x01(\tR\aversion\"\x16\n" +
 	"\x14ListFunctionsRequest\"\xcf\x01\n" +
 	"\x15ListFunctionsResponse\x12S\n" +
 	"\tfunctions\x18\x01 \x03(\v25.aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntryR\tfunctions\x1aa\n" +
@@ -707,8 +879,11 @@ const file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc = "" +
 	"\x0fmessage_counter\x18\x01 \x01(\x05R\x0emessageCounter\x12\x17\n" +
 	"\ais_last\x18\x02 \x01(\bR\x06isLast\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05value\x12'\n" +
-	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation2\x9f\x02\n" +
-	"\x11ExternalFunctions\x12`\n" +
+	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation2\xc4\x03\n" +
+	"\x11ExternalFunctions\x12P\n" +
+	"\vHealthCheck\x12\x1e.aaliflowkitgrpc.HealthRequest\x1a\x1f.aaliflowkitgrpc.HealthResponse\"\x00\x12Q\n" +
+	"\n" +
+	"GetVersion\x12\x1f.aaliflowkitgrpc.VersionRequest\x1a .aaliflowkitgrpc.VersionResponse\"\x00\x12`\n" +
 	"\rListFunctions\x12%.aaliflowkitgrpc.ListFunctionsRequest\x1a&.aaliflowkitgrpc.ListFunctionsResponse\"\x00\x12R\n" +
 	"\vRunFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a .aaliflowkitgrpc.FunctionOutputs\"\x00\x12T\n" +
 	"\x0eStreamFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a\x1d.aaliflowkitgrpc.StreamOutput\"\x000\x01B\x13Z\x11./aaliflowkitgrpcb\x06proto3"
@@ -725,35 +900,43 @@ func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescGZIP() []byte {
 	return file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDescData
 }
 
-var file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_pkg_aaliflowkitgrpc_aali_flowkit_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_pkg_aaliflowkitgrpc_aali_flowkit_proto_goTypes = []any{
-	(*ListFunctionsRequest)(nil),     // 0: aaliflowkitgrpc.ListFunctionsRequest
-	(*ListFunctionsResponse)(nil),    // 1: aaliflowkitgrpc.ListFunctionsResponse
-	(*FunctionDefinition)(nil),       // 2: aaliflowkitgrpc.FunctionDefinition
-	(*FunctionInputDefinition)(nil),  // 3: aaliflowkitgrpc.FunctionInputDefinition
-	(*FunctionOutputDefinition)(nil), // 4: aaliflowkitgrpc.FunctionOutputDefinition
-	(*FunctionInputs)(nil),           // 5: aaliflowkitgrpc.FunctionInputs
-	(*FunctionInput)(nil),            // 6: aaliflowkitgrpc.FunctionInput
-	(*FunctionOutputs)(nil),          // 7: aaliflowkitgrpc.FunctionOutputs
-	(*FunctionOutput)(nil),           // 8: aaliflowkitgrpc.FunctionOutput
-	(*StreamOutput)(nil),             // 9: aaliflowkitgrpc.StreamOutput
-	nil,                              // 10: aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry
+	(*HealthRequest)(nil),            // 0: aaliflowkitgrpc.HealthRequest
+	(*HealthResponse)(nil),           // 1: aaliflowkitgrpc.HealthResponse
+	(*VersionRequest)(nil),           // 2: aaliflowkitgrpc.VersionRequest
+	(*VersionResponse)(nil),          // 3: aaliflowkitgrpc.VersionResponse
+	(*ListFunctionsRequest)(nil),     // 4: aaliflowkitgrpc.ListFunctionsRequest
+	(*ListFunctionsResponse)(nil),    // 5: aaliflowkitgrpc.ListFunctionsResponse
+	(*FunctionDefinition)(nil),       // 6: aaliflowkitgrpc.FunctionDefinition
+	(*FunctionInputDefinition)(nil),  // 7: aaliflowkitgrpc.FunctionInputDefinition
+	(*FunctionOutputDefinition)(nil), // 8: aaliflowkitgrpc.FunctionOutputDefinition
+	(*FunctionInputs)(nil),           // 9: aaliflowkitgrpc.FunctionInputs
+	(*FunctionInput)(nil),            // 10: aaliflowkitgrpc.FunctionInput
+	(*FunctionOutputs)(nil),          // 11: aaliflowkitgrpc.FunctionOutputs
+	(*FunctionOutput)(nil),           // 12: aaliflowkitgrpc.FunctionOutput
+	(*StreamOutput)(nil),             // 13: aaliflowkitgrpc.StreamOutput
+	nil,                              // 14: aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry
 }
 var file_pkg_aaliflowkitgrpc_aali_flowkit_proto_depIdxs = []int32{
-	10, // 0: aaliflowkitgrpc.ListFunctionsResponse.functions:type_name -> aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry
-	3,  // 1: aaliflowkitgrpc.FunctionDefinition.input:type_name -> aaliflowkitgrpc.FunctionInputDefinition
-	4,  // 2: aaliflowkitgrpc.FunctionDefinition.output:type_name -> aaliflowkitgrpc.FunctionOutputDefinition
-	6,  // 3: aaliflowkitgrpc.FunctionInputs.inputs:type_name -> aaliflowkitgrpc.FunctionInput
-	8,  // 4: aaliflowkitgrpc.FunctionOutputs.outputs:type_name -> aaliflowkitgrpc.FunctionOutput
-	2,  // 5: aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry.value:type_name -> aaliflowkitgrpc.FunctionDefinition
-	0,  // 6: aaliflowkitgrpc.ExternalFunctions.ListFunctions:input_type -> aaliflowkitgrpc.ListFunctionsRequest
-	5,  // 7: aaliflowkitgrpc.ExternalFunctions.RunFunction:input_type -> aaliflowkitgrpc.FunctionInputs
-	5,  // 8: aaliflowkitgrpc.ExternalFunctions.StreamFunction:input_type -> aaliflowkitgrpc.FunctionInputs
-	1,  // 9: aaliflowkitgrpc.ExternalFunctions.ListFunctions:output_type -> aaliflowkitgrpc.ListFunctionsResponse
-	7,  // 10: aaliflowkitgrpc.ExternalFunctions.RunFunction:output_type -> aaliflowkitgrpc.FunctionOutputs
-	9,  // 11: aaliflowkitgrpc.ExternalFunctions.StreamFunction:output_type -> aaliflowkitgrpc.StreamOutput
-	9,  // [9:12] is the sub-list for method output_type
-	6,  // [6:9] is the sub-list for method input_type
+	14, // 0: aaliflowkitgrpc.ListFunctionsResponse.functions:type_name -> aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry
+	7,  // 1: aaliflowkitgrpc.FunctionDefinition.input:type_name -> aaliflowkitgrpc.FunctionInputDefinition
+	8,  // 2: aaliflowkitgrpc.FunctionDefinition.output:type_name -> aaliflowkitgrpc.FunctionOutputDefinition
+	10, // 3: aaliflowkitgrpc.FunctionInputs.inputs:type_name -> aaliflowkitgrpc.FunctionInput
+	12, // 4: aaliflowkitgrpc.FunctionOutputs.outputs:type_name -> aaliflowkitgrpc.FunctionOutput
+	6,  // 5: aaliflowkitgrpc.ListFunctionsResponse.FunctionsEntry.value:type_name -> aaliflowkitgrpc.FunctionDefinition
+	0,  // 6: aaliflowkitgrpc.ExternalFunctions.HealthCheck:input_type -> aaliflowkitgrpc.HealthRequest
+	2,  // 7: aaliflowkitgrpc.ExternalFunctions.GetVersion:input_type -> aaliflowkitgrpc.VersionRequest
+	4,  // 8: aaliflowkitgrpc.ExternalFunctions.ListFunctions:input_type -> aaliflowkitgrpc.ListFunctionsRequest
+	9,  // 9: aaliflowkitgrpc.ExternalFunctions.RunFunction:input_type -> aaliflowkitgrpc.FunctionInputs
+	9,  // 10: aaliflowkitgrpc.ExternalFunctions.StreamFunction:input_type -> aaliflowkitgrpc.FunctionInputs
+	1,  // 11: aaliflowkitgrpc.ExternalFunctions.HealthCheck:output_type -> aaliflowkitgrpc.HealthResponse
+	3,  // 12: aaliflowkitgrpc.ExternalFunctions.GetVersion:output_type -> aaliflowkitgrpc.VersionResponse
+	5,  // 13: aaliflowkitgrpc.ExternalFunctions.ListFunctions:output_type -> aaliflowkitgrpc.ListFunctionsResponse
+	11, // 14: aaliflowkitgrpc.ExternalFunctions.RunFunction:output_type -> aaliflowkitgrpc.FunctionOutputs
+	13, // 15: aaliflowkitgrpc.ExternalFunctions.StreamFunction:output_type -> aaliflowkitgrpc.StreamOutput
+	11, // [11:16] is the sub-list for method output_type
+	6,  // [6:11] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -770,7 +953,7 @@ func file_pkg_aaliflowkitgrpc_aali_flowkit_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc), len(file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

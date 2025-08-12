@@ -19,6 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	ExternalFunctions_HealthCheck_FullMethodName    = "/aaliflowkitgrpc.ExternalFunctions/HealthCheck"
+	ExternalFunctions_GetVersion_FullMethodName     = "/aaliflowkitgrpc.ExternalFunctions/GetVersion"
 	ExternalFunctions_ListFunctions_FullMethodName  = "/aaliflowkitgrpc.ExternalFunctions/ListFunctions"
 	ExternalFunctions_RunFunction_FullMethodName    = "/aaliflowkitgrpc.ExternalFunctions/RunFunction"
 	ExternalFunctions_StreamFunction_FullMethodName = "/aaliflowkitgrpc.ExternalFunctions/StreamFunction"
@@ -31,6 +33,10 @@ const (
 // ExternalFunctions is a gRPC service that allows for listing and running
 // the function available in the externalfunctions package.
 type ExternalFunctionsClient interface {
+	// HealthCheck is a simple health check method that returns an empty response.
+	HealthCheck(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
+	// GetVersion returns the version of the service.
+	GetVersion(ctx context.Context, in *VersionRequest, opts ...grpc.CallOption) (*VersionResponse, error)
 	// Lists all available functions with description, inputs and outputs.
 	ListFunctions(ctx context.Context, in *ListFunctionsRequest, opts ...grpc.CallOption) (*ListFunctionsResponse, error)
 	// Runs a specified function with provided inputs and returns the function outputs.
@@ -45,6 +51,26 @@ type externalFunctionsClient struct {
 
 func NewExternalFunctionsClient(cc grpc.ClientConnInterface) ExternalFunctionsClient {
 	return &externalFunctionsClient{cc}
+}
+
+func (c *externalFunctionsClient) HealthCheck(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HealthResponse)
+	err := c.cc.Invoke(ctx, ExternalFunctions_HealthCheck_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *externalFunctionsClient) GetVersion(ctx context.Context, in *VersionRequest, opts ...grpc.CallOption) (*VersionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VersionResponse)
+	err := c.cc.Invoke(ctx, ExternalFunctions_GetVersion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *externalFunctionsClient) ListFunctions(ctx context.Context, in *ListFunctionsRequest, opts ...grpc.CallOption) (*ListFunctionsResponse, error) {
@@ -93,6 +119,10 @@ type ExternalFunctions_StreamFunctionClient = grpc.ServerStreamingClient[StreamO
 // ExternalFunctions is a gRPC service that allows for listing and running
 // the function available in the externalfunctions package.
 type ExternalFunctionsServer interface {
+	// HealthCheck is a simple health check method that returns an empty response.
+	HealthCheck(context.Context, *HealthRequest) (*HealthResponse, error)
+	// GetVersion returns the version of the service.
+	GetVersion(context.Context, *VersionRequest) (*VersionResponse, error)
 	// Lists all available functions with description, inputs and outputs.
 	ListFunctions(context.Context, *ListFunctionsRequest) (*ListFunctionsResponse, error)
 	// Runs a specified function with provided inputs and returns the function outputs.
@@ -109,6 +139,12 @@ type ExternalFunctionsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedExternalFunctionsServer struct{}
 
+func (UnimplementedExternalFunctionsServer) HealthCheck(context.Context, *HealthRequest) (*HealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
+}
+func (UnimplementedExternalFunctionsServer) GetVersion(context.Context, *VersionRequest) (*VersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVersion not implemented")
+}
 func (UnimplementedExternalFunctionsServer) ListFunctions(context.Context, *ListFunctionsRequest) (*ListFunctionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFunctions not implemented")
 }
@@ -137,6 +173,42 @@ func RegisterExternalFunctionsServer(s grpc.ServiceRegistrar, srv ExternalFuncti
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&ExternalFunctions_ServiceDesc, srv)
+}
+
+func _ExternalFunctions_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExternalFunctionsServer).HealthCheck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExternalFunctions_HealthCheck_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExternalFunctionsServer).HealthCheck(ctx, req.(*HealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExternalFunctions_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VersionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExternalFunctionsServer).GetVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExternalFunctions_GetVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExternalFunctionsServer).GetVersion(ctx, req.(*VersionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ExternalFunctions_ListFunctions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -193,6 +265,14 @@ var ExternalFunctions_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "aaliflowkitgrpc.ExternalFunctions",
 	HandlerType: (*ExternalFunctionsServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "HealthCheck",
+			Handler:    _ExternalFunctions_HealthCheck_Handler,
+		},
+		{
+			MethodName: "GetVersion",
+			Handler:    _ExternalFunctions_GetVersion_Handler,
+		},
 		{
 			MethodName: "ListFunctions",
 			Handler:    _ExternalFunctions_ListFunctions_Handler,
