@@ -39,6 +39,67 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+// HealthCheck checks the health of the external function server
+// This function is used to check if the external function server is running and reachable
+//
+// Parameters:
+//   - url: the URL of the external function server
+//   - apiKey: the API key to authenticate with the external function server
+//
+// Returns:
+//   - err: an error message if the gRPC call fails
+func HealthCheck(url string, apiKey string) (err error) {
+	// Set up a connection to the server.
+	c, conn, err := createClient(url, apiKey)
+	if err != nil {
+		return fmt.Errorf("unable to connect to external function gRPC: %v", err)
+	}
+	defer conn.Close()
+
+	// Create a context with a cancel
+	ctxWithCancel, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Call HealthCheck
+	_, err = c.HealthCheck(ctxWithCancel, &aaliflowkitgrpc.HealthRequest{})
+	if err != nil {
+		return fmt.Errorf("error in external function gRPC HealthCheck: %v", err)
+	}
+
+	return nil
+}
+
+// GetVersion retrieves the version of the external function server
+// This function is used to get the version of the external function server
+//
+// Parameters:
+//   - url: the URL of the external function server
+//   - apiKey: the API key to authenticate with the external function server
+//
+// Returns:
+//   - version: the version of the external function server
+//   - err: an error message if the gRPC call fails
+func GetVersion(url string, apiKey string) (version string, err error) {
+	// Set up a connection to the server.
+	c, conn, err := createClient(url, apiKey)
+	if err != nil {
+		return "", fmt.Errorf("unable to connect to external function gRPC: %v", err)
+	}
+	defer conn.Close()
+
+	// Create a context with a cancel
+	ctxWithCancel, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Call GetVersion
+	resp, err := c.GetVersion(ctxWithCancel, &aaliflowkitgrpc.VersionRequest{})
+	if err != nil {
+		return "", fmt.Errorf("error in external function gRPC GetVersion: %v", err)
+	}
+
+	return resp.Version, nil
+}
+
 // Global variable to store the available functions, types and categories
 var AvailableFunctions map[string]*sharedtypes.FunctionDefinition
 var AvailableTypes map[string]bool
@@ -47,6 +108,10 @@ var AvailableCategories map[string]bool
 // ListFunctionsAndSaveToInteralStates calls the ListFunctions gRPC and saves the functions to internal states
 // This function is used to get the list of available functions from the external function server
 // and save them to internal states
+//
+// Parameters:
+//   - url: the URL of the external function server
+//   - apiKey: the API key to authenticate with the external function server
 //
 // Returns:
 //   - error: an error message if the gRPC call fails
