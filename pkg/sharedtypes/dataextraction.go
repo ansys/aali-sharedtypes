@@ -73,6 +73,9 @@ type CodeGenerationElement struct {
 	// Metadata for databases
 	VectorDBMetadata any `json:"vector_db_metadata,omitempty"` // Optional metadata for vector databases
 	GraphDBMetadata  any `json:"graph_db_metadata,omitempty"`  // Optional metadata for graph databases
+
+	PyaedtGroup      string `json:"typeof"`
+	PyaedtParents  []string  `json:"inheritsfrom"`
 }
 
 // Enum values for CodeGenerationType
