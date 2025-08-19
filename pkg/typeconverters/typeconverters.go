@@ -258,6 +258,7 @@ func init() {
 		"[]DbJsonFilter":                   jsonSliceConverter[[]sharedtypes.DbJsonFilter](),
 		"[]DbResponse":                     jsonSliceConverter[[]sharedtypes.DbResponse](),
 		"[]HistoricMessage":                jsonSliceConverter[[]sharedtypes.HistoricMessage](),
+		"[]AedtApiDbResponse":              jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
 		"[]AnsysGPTDefaultFields":          jsonSliceConverter[[]sharedtypes.AnsysGPTDefaultFields](),
 		"[]ACSSearchResponse":              jsonSliceConverter[[]sharedtypes.ACSSearchResponse](),
 		"[]AnsysGPTCitation":               jsonSliceConverter[[]sharedtypes.AnsysGPTCitation](),
@@ -504,7 +505,6 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 	if !ok {
 		return nil, false, nil
 	}
-
 	result, err := converter.FromString(value)
 	return result, true, err
 }
