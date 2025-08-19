@@ -85,6 +85,34 @@ type DbData struct {
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 }
 
+// ExampleDbResponse represents the example response from the database.
+type ExampleDbResponse struct {
+	Guid              uuid.UUID              `json:"guid"`
+	DocumentId        string                 `json:"document_id"`
+	DocumentName      string                 `json:"document_name"`
+	Text              string                 `json:"text"`
+	//Keywords          []string               `json:"keywords"`
+	Summary           string                 `json:"summary"`
+
+	// Siblings
+	//Parent    *DbData  `json:"parent,omitempty"`
+	//Children  []DbData `json:"children,omitempty"`
+	//LeafNodes []DbData `json:"leaf_nodes,omitempty"`
+	//Siblings  []DbData `json:"siblings,omitempty"`
+}
+
+// ApiDbResponse represents the response from the database.
+type ApiDbResponse struct {
+	Guid              uuid.UUID              `json:"guid"`
+	Name              string                 `json:"name"`
+	Type              string                 `json:"type"`
+	ParentClass       string                 `json:"parent_class"`
+	PyaedtGroup       string                 `json:"typeof,omitempty"`
+	//ParentId          *uuid.UUID             `json:"parent_id"`
+	//Siblings  []DbData `json:"siblings,omitempty"`
+}
+
+// DbResponse represents the response from the database.
 // DbResponse can accommodate non-conflicting data from:
 // - StoreElementsInVectorDatabase (API/Element data)
 // - StoreExamplesInVectorDatabase (Example data)
