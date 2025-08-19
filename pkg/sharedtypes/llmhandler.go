@@ -27,6 +27,7 @@ type HandlerRequest struct {
 	Adapter             string            `json:"adapter"` // "chat", "embeddings"
 	InstructionGuid     string            `json:"instructionGuid"`
 	ModelIds            []string          `json:"modelIds"`                   // optional model ids to define a set of specific models to be used for this request
+	ModelCategory       []string          `json:"modelCategory"`              // optional model category; define one or more categories to filter models; models of the specified categories from first to last will be used for this request if available
 	Data                interface{}       `json:"data"`                       // for embeddings, this can be a string or []string; for chat, only string is allowed
 	Images              []string          `json:"images"`                     // List of images in base64 format
 	ChatRequestType     string            `json:"chatRequestType"`            // "summary", "code", "keywords", "general"; only relevant if "adapter" is "chat"
