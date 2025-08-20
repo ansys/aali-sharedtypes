@@ -489,6 +489,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+        case "[]ExampleDbResponse":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.ExampleDbResponse{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	case "[]HistoricMessage":
 		if value == "" {
 			value = "[]"
@@ -822,7 +832,13 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", err
 		}
 		return string(output), nil
-	case "[]HistoricMessage":
+	case "[]ExampleDbResponse":
+		output, err := json.Marshal(value.([]sharedtypes.ExampleDbResponse))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+        case "[]HistoricMessage":
 		output, err := json.Marshal(value.([]sharedtypes.HistoricMessage))
 		if err != nil {
 			return "", err
