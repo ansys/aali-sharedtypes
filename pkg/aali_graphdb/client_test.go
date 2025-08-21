@@ -99,6 +99,15 @@ func TestGetHealth(t *testing.T) {
 	assert.Equal(t, true, dbs)
 }
 
+func TestGetVersion(t *testing.T) {
+	client := getTestClient(t)
+	version, err := client.GetVersion()
+	require.NoError(t, err)
+	assert.NotEmpty(t, version.Version)
+	assert.NotEmpty(t, version.KuzuVersion)
+	assert.NotEmpty(t, version.KuzuStorageVersion)
+}
+
 func TestGetDatabases(t *testing.T) {
 	client := getTestClient(t)
 	dbs, err := client.GetDatabases()
