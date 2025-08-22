@@ -98,7 +98,7 @@ type getVersionResponse struct {
 }
 
 func (client Client) GetVersion() (getVersionResponse, error) {
-	url, err := url.JoinPath(client.address, "")
+	url, err := url.JoinPath(client.address, "health")
 	if err != nil {
 		return getVersionResponse{}, err
 	}

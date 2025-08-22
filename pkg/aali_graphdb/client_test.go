@@ -37,6 +37,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+	"golang.org/x/mod/semver"
 )
 
 // StdoutLogConsumer is a LogConsumer that prints the log to stdout
@@ -105,8 +106,11 @@ func TestGetVersion(t *testing.T) {
 	version, err := client.GetVersion()
 	require.NoError(t, err)
 	assert.NotEmpty(t, version.Version)
-	assert.NotEmpty(t, version.KuzuVersion)
-	assert.NotEmpty(t, version.KuzuStorageVersion)
+	if semver.Compare("v"+version.Version, "v1.0.8") >= 0 {
+		// these were introduced in v1.0.8, so cannot assert on them if testing against earlier server version
+		assert.NotEmpty(t, version.KuzuVersion)
+		assert.NotEmpty(t, version.KuzuStorageVersion)
+	}
 }
 
 func TestGetDatabases(t *testing.T) {
