@@ -90,6 +90,41 @@ func (client Client) GetHealth() (bool, error) {
 	return true, nil
 }
 
+type getVersionResponse struct {
+	Status             string `json:"status"`
+	Version            string `json:"version"`
+	KuzuVersion        string `json:"kuzu_version"`
+	KuzuStorageVersion int    `json:"kuzu_storage_version"`
+}
+
+func (client Client) GetVersion() (getVersionResponse, error) {
+	url, err := url.JoinPath(client.address, "health")
+	if err != nil {
+		return getVersionResponse{}, err
+	}
+	resp, err := client.httpClient.Get(url)
+	if err != nil {
+		return getVersionResponse{}, err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return getVersionResponse{}, fmt.Errorf("unexpected status code: %v", resp.StatusCode)
+	}
+
+	var r getVersionResponse
+	err = json.NewDecoder(resp.Body).Decode(&r)
+	if err != nil {
+		return getVersionResponse{}, err
+	}
+
+	return r, nil
+}
+
 type getDatabasesResponse struct {
 	Databases []string `json:"databases"`
 }

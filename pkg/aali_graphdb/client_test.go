@@ -28,6 +28,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"regexp"
 	"testing"
 	"time"
 
@@ -36,6 +37,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+	"golang.org/x/mod/semver"
 )
 
 // StdoutLogConsumer is a LogConsumer that prints the log to stdout
@@ -97,6 +99,18 @@ func TestGetHealth(t *testing.T) {
 	dbs, err := client.GetHealth()
 	require.NoError(t, err)
 	assert.Equal(t, true, dbs)
+}
+
+func TestGetVersion(t *testing.T) {
+	client := getTestClient(t)
+	version, err := client.GetVersion()
+	require.NoError(t, err)
+	assert.NotEmpty(t, version.Version)
+	if semver.Compare("v"+version.Version, "v1.0.8") >= 0 {
+		// these were introduced in v1.0.8, so cannot assert on them if testing against earlier server version
+		assert.NotEmpty(t, version.KuzuVersion)
+		assert.NotEmpty(t, version.KuzuStorageVersion)
+	}
 }
 
 func TestGetDatabases(t *testing.T) {
@@ -397,17 +411,17 @@ func TestErrorsReturned(t *testing.T) {
 	require.NoError(t, err)
 
 	query := "not a real cypher query"
-	expected := `unexpected status code: 500 "Query execution failed: Parser exception: extraneous input 'not' expecting {ALTER, ATTACH, BEGIN, CALL, CHECKPOINT, COMMENT, COMMIT, COPY, CREATE, DELETE, DETACH, DROP, EXPLAIN, EXPORT, IMPORT, INSTALL, LOAD, MATCH, MERGE, OPTIONAL, PROFILE, RETURN, ROLLBACK, SET, UNWIND, USE, WITH, SP} (line: 1, offset: 0)\n\"not a real cypher query\"\n ^^^"`
+	pat := regexp.MustCompile(`Query execution failed:[\s\S]*` + query)
 
 	t.Run("Read", func(t *testing.T) {
 		_, err = client.CypherQueryRead(DBNAME, query, nil)
 		require.Error(t, err)
-		assert.Equal(t, expected, fmt.Sprint(err))
+		assert.True(t, pat.MatchString(fmt.Sprint(err)))
 	})
 	t.Run("Write", func(t *testing.T) {
 		_, err = client.CypherQueryWrite(DBNAME, query, nil)
 		require.Error(t, err)
-		assert.Equal(t, expected, fmt.Sprint(err))
+		assert.True(t, pat.MatchString(fmt.Sprint(err)))
 	})
 }
 
