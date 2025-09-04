@@ -86,22 +86,20 @@ type HistoricMessage struct {
 	Images  []string `json:"images"` // image in base64 format
 }
 
-// Effort and reasoning summary fields
-type ReasoningOptions struct {
-	Effort  string `json:"effort,omitempty"`  // Any of "minimal", "low", "medium", "high"
-	Summary string `json:"summary,omitempty"` // Optional fields like "auto", "concise", "detailed"
-}
-
 // OpenAIOption represents an option for an OpenAI API call.
 type ModelOptions struct {
-	FrequencyPenalty *float32          `json:"frequencyPenalty,omitempty"`
-	MaxTokens        *int32            `json:"maxTokens,omitempty"`
-	PresencePenalty  *float32          `json:"presencePenalty,omitempty"`
-	Stop             []string          `json:"stop,omitempty"`
-	Temperature      *float32          `json:"temperature,omitempty"`
-	TopP             *float32          `json:"topP,omitempty"`
-	Reasoning        *ReasoningOptions `json:"reasoning,omitempty"` // reasoning configuration for GPT-5 / o-series models
+	FrequencyPenalty *float32 `json:"frequencyPenalty,omitempty"`
+	MaxTokens        *int32   `json:"maxTokens,omitempty"`
+	PresencePenalty  *float32 `json:"presencePenalty,omitempty"`
+	Stop             []string `json:"stop,omitempty"`
+	Temperature      *float32 `json:"temperature,omitempty"`
+	TopP             *float32 `json:"topP,omitempty"`
 
+	// GPT-5 / o-series only
+
+	ReasoningEffort  *string `json:"reasoningEffort,omitempty"`  // "minimal" | "low" | "medium" | "high"
+	ReasoningSummary *string `json:"reasoningSummary,omitempty"` // "auto" | "concise" | "detailed"
+	Verbosity        *string `json:"verbosity,omitempty"`        // "low" | "medium" | "high"
 }
 
 // EmbeddingsOptions represents the options for an embeddings request.
