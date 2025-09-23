@@ -153,6 +153,18 @@ type Config struct {
 	FLOWKIT_PYTHON_ADDRESS string `yaml:"FLOWKIT_PYTHON_ADDRESS" json:"FLOWKITPYTHONADDRESS"`
 	FLOWKIT_PYTHON_API_KEY string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
 
+	// Aali Proxy / ADS
+	///////////////////
+	// ads proxy uses this to determine which port to listen on for graphdb proxy requests
+	GRAPHDB_PROXY_ADDRESS string `yaml:"GRAPHDB_PROXY_ADDRESS" json:"GRAPHDBPROXYADDRESS"`
+	// ads proxy uses this to determine which port to listen on for qdrant proxy requests
+	QDRANT_PROXY_ADDRESS string `yaml:"QDRANT_PROXY_ADDRESS" json:"QDRANTPROXYADDRESS"`
+	// other services use this to determine what address to call to get encrypted graphdb data from
+	GRAPHDB_ADDRESS_ENCRYPTED string `yaml:"GRAPHDB_ADDRESS_ENCRYPTED" json:"GRAPHDBADDRESSENCRYPTED"`
+	// other services use these to determine what address to call to get encrypted qdrant data from
+	QDRANT_HOST_ENCRYPTED string `yaml:"QDRANT_HOST_ENCRYPTED" json:"QDRANTHOSTENCRYPTED"`
+	QDRANT_PORT_ENCRYPTED int    `yaml:"QDRANT_PORT_ENCRYPTED" json:"QDRANTPORTENCRYPTED"`
+
 	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
 	/////////////////////////////////////////////////////////////////////////
 	AGENT_PORT                  string `yaml:"AGENT_PORT" json:"AGENTPORT"`
