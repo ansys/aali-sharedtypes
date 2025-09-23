@@ -85,8 +85,13 @@ type DbData struct {
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 }
 
-// DbResponse represents the response from the database.
+// DbResponse can accommodate non-conflicting data from:
+// - StoreElementsInVectorDatabase (API/Element data)
+// - StoreExamplesInVectorDatabase (Example data)
+// - StoreUserGuideSectionsInVectorDatabase (User guide data)
+// - Standard document data
 type DbResponse struct {
+	// Standard DbResponse fields
 	Guid              uuid.UUID              `json:"guid"`
 	DocumentId        string                 `json:"document_id"`
 	DocumentName      string                 `json:"document_name"`
@@ -111,6 +116,24 @@ type DbResponse struct {
 	Children  []DbData `json:"children,omitempty"`
 	LeafNodes []DbData `json:"leaf_nodes,omitempty"`
 	Siblings  []DbData `json:"siblings,omitempty"`
+
+	// From StoreElementsInVectorDatabase payload
+	Type           string `json:"type,omitempty"`
+	NamePseudocode string `json:"name_pseudocode,omitempty"`
+	NameFormatted  string `json:"name_formatted,omitempty"`
+	Name           string `json:"name,omitempty"`
+	ParentClass    string `json:"parent_class,omitempty"`
+
+	// From StoreExamplesInVectorDatabase payload
+	Dependencies           []interface{}          `json:"dependencies,omitempty"`
+	DependencyEquivalences map[string]interface{} `json:"dependency_equivalences,omitempty"`
+	PreviousChunk          string                 `json:"previous_chunk,omitempty"`
+	NextChunk              string                 `json:"next_chunk,omitempty"`
+
+	// From StoreUserGuideSectionsInVectorDatabase payload
+	SectionName       string `json:"section_name,omitempty"`
+	Title             string `json:"title,omitempty"`
+	ParentSectionName string `json:"parent_section_name,omitempty"`
 }
 
 // DBListCollectionsOutput represents the output of listing collections in the database.
