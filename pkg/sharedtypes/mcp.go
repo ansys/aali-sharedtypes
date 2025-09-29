@@ -46,4 +46,3 @@ func (config *MCPConfig) GetAuthToken() string {
 	}
 	return config.AuthToken
 }
-
