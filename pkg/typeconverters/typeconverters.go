@@ -614,11 +614,11 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
-	case "DiscoverServerResponse":
+	case "[]MCPConfig":
 		if value == "" {
-			value = "{}"
+			value = "[]"
 		}
-		output := sharedtypes.DiscoverServerResponse{}
+		output := []sharedtypes.MCPConfig{}
 		err := json.Unmarshal([]byte(value), &output)
 		if err != nil {
 			return nil, err
@@ -904,8 +904,8 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", err
 		}
 		return string(output), nil
-	case "DiscoverServerResponse":
-		output, err := json.Marshal(value.(sharedtypes.DiscoverServerResponse))
+	case "[]MCPConfig":
+		output, err := json.Marshal(value.([]sharedtypes.MCPConfig))
 		if err != nil {
 			return "", err
 		}

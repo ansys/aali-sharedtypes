@@ -29,10 +29,10 @@ import (
 
 // MCPConfig represents the configuration for MCP connections
 type MCPConfig struct {
-	ServerURL string `json:"serverURL"`
-	Transport string `json:"transport"`
-	AuthToken string `json:"authToken"`
-	Timeout   int    `json:"timeout"`
+	ServerURL string `json:"serverURL"` // URL of the MCP server endpoint
+	Transport string `json:"transport"` // Connection protocol: "stdio", "http", "websocket"
+	AuthToken string `json:"authToken"` // Authentication token, supports ${ENV_VAR} syntax
+	Timeout   int    `json:"timeout"`   // Connection timeout in seconds
 }
 
 // GetAuthToken returns the authentication token, resolving environment variables if needed
@@ -47,20 +47,3 @@ func (config *MCPConfig) GetAuthToken() string {
 	return config.AuthToken
 }
 
-// DiscoverServerResponse represents the response from MCP server discovery
-type DiscoverServerResponse struct {
-	ServerURL            string   `json:"serverURL"`
-	Status               string   `json:"status"`
-	RequiresAuth         bool     `json:"requiresAuth"`
-	AvailableTransports  []string `json:"availableTransports"`
-	HasTools             bool     `json:"hasTools"`
-	ToolsCount           int      `json:"toolsCount"`
-	HasResources         bool     `json:"hasResources"`
-	ResourcesCount       int      `json:"resourcesCount"`
-	HasPrompts           bool     `json:"hasPrompts"`
-	PromptsCount         int      `json:"promptsCount"`
-	RecommendedTimeout   int      `json:"recommendedTimeout"`
-	RecommendedTransport string   `json:"recommendedTransport"`
-	Error                string   `json:"error,omitempty"`
-	Note                 string   `json:"note,omitempty"`
-}
