@@ -624,6 +624,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "[]SlashCommand":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.SlashCommand{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	}
 
 	return nil, fmt.Errorf("unsupported GoType: '%s'", goType)
@@ -906,6 +916,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "[]MCPConfig":
 		output, err := json.Marshal(value.([]sharedtypes.MCPConfig))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "[]SlashCommand":
+		output, err := json.Marshal(value.([]sharedtypes.SlashCommand))
 		if err != nil {
 			return "", err
 		}
