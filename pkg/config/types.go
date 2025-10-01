@@ -129,6 +129,7 @@ type Config struct {
 	// Aali KVDB
 	/////////////////
 	KVDB_ADDRESS   string `yaml:"KVDB_ADDRESS" json:"KVDBADDRESS"`
+	KVDB_API_KEY   string `yaml:"KVDB_API_KEY" json:"KVDBAPIKEY"`
 	KVDB_PATH      string `yaml:"KVDB_PATH" json:"KVDBPATH"`
 	KVDB_IN_MEMORY bool   `yaml:"KVDB_IN_MEMORY" json:"KVDBINMEMORY"`
 
@@ -140,8 +141,10 @@ type Config struct {
 	LLM_HANDLER_ENDPOINT  string `yaml:"LLM_HANDLER_ENDPOINT" json:"LLMHANDLERENDPOINT"`
 	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
 	GRAPHDB_ADDRESS       string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
+	GRAPHDB_API_KEY       string `yaml:"GRAPHDB_API_KEY" json:"GRAPHDBAPIKEY"`
 	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
 	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
+	QDRANT_API_KEY        string `yaml:"QDRANT_API_KEY" json:"QDRANTAPIKEY"`
 
 	// Aali Flowkit Python
 	//////////////////////
