@@ -89,7 +89,7 @@ func getTestClient(t *testing.T) *Client {
 	}
 
 	address := fmt.Sprintf("http://%s:%s", host, port.Port())
-	client, err := NewClient(address, &httpClient)
+	client, err := NewClient(address, "", &httpClient)
 	require.NoError(t, err)
 	return client
 }

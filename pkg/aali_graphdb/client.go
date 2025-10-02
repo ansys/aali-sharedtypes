@@ -35,21 +35,34 @@ import (
 
 type Client struct {
 	address    string
+	apiKey     string
 	logger     *zap.Logger
 	httpClient *http.Client
 }
 
-func NewClient(address string, httpClient *http.Client) (*Client, error) {
+func NewClient(address string, apiKey string, httpClient *http.Client) (*Client, error) {
 	logger, err := zap.NewProduction()
 	if err != nil {
 		return nil, err
 	}
 	defer logger.Sync() //nolint:errcheck
-	return &Client{address, logger, httpClient}, nil
+	return &Client{address, apiKey, logger, httpClient}, nil
 }
 
-func DefaultClient(address string) (*Client, error) {
-	return NewClient(address, http.DefaultClient)
+func DefaultClient(address string, apiKey string) (*Client, error) {
+	return NewClient(address, apiKey, http.DefaultClient)
+}
+
+func (client Client) get(u string) (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, u, nil)
+	if err != nil {
+		return nil, err
+	}
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
+	}
+
+	return client.httpClient.Do(req)
 }
 
 func (client Client) post(u string, body any) (*http.Response, error) {
@@ -61,6 +74,9 @@ func (client Client) post(u string, body any) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodPost, u, bytes.NewBuffer(jsonReq))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("accept", "*/*")
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +89,7 @@ func (client Client) GetHealth() (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	resp, err := client.httpClient.Get(url)
+	resp, err := client.get(url)
 	if err != nil {
 		return false, err
 	}
@@ -102,7 +118,7 @@ func (client Client) GetVersion() (getVersionResponse, error) {
 	if err != nil {
 		return getVersionResponse{}, err
 	}
-	resp, err := client.httpClient.Get(url)
+	resp, err := client.get(url)
 	if err != nil {
 		return getVersionResponse{}, err
 	}
@@ -134,7 +150,7 @@ func (client Client) GetDatabases() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.httpClient.Get(url)
+	resp, err := client.get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -187,6 +203,9 @@ func (client Client) DeleteDatabase(name string) error {
 	req, err := http.NewRequest("DELETE", u, nil)
 	if err != nil {
 		return err
+	}
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
 	}
 	resp, err := client.httpClient.Do(req)
 	if err != nil {
