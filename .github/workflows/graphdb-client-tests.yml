@@ -1,0 +1,44 @@
+name: aali-graphdb go client tests
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        type: string
+        description: The name of the `aali-graphdb` image to run the unit tests against
+        required: false
+        default: ghcr.io/ansys/aali-graphdb:edge
+
+jobs:
+  get-test-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      IMAGE_NAMES: ${{ env.IMAGE_NAMES }}
+    steps:
+      - if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "IMAGE_NAMES=[\"${{ inputs.image_name }}\"]" | tee -a "$GITHUB_ENV"
+      - if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: echo "IMAGE_NAMES=[\"ghcr.io/ansys/aali-graphdb:edge\", \"ghcr.io/ansys/aali-graphdb:latest\", \"ghcr.io/ansys/aali-graphdb:v1.0.0\"]" | tee -a "$GITHUB_ENV"
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: get-test-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        image-name: ${{ fromJson(needs.get-test-matrix.outputs.IMAGE_NAMES) }}
+    env:
+      REGISTRY: ghcr.io
+      GOPROXY: https://proxy.golang.org,direct # fallback to direct fetching when proxy fails
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
+      - run: docker pull ${{ matrix.image-name }}
+      - run: go test -v ./pkg/aali_graphdb/... -imagename ${{ matrix.image-name }}
