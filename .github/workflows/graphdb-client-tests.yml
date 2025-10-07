@@ -10,15 +10,23 @@ on:
         default: ghcr.io/ansys/aali-graphdb:edge
 
 jobs:
+  # build the matrix for the unit tests, whether this was called via workflow dispatch or not
+  #
+  # We'll always run 2 versions of each test suite, once with API key auth enabled, and another
+  # without.
   get-test-matrix:
     runs-on: ubuntu-latest
     outputs:
-      IMAGE_NAMES: ${{ env.IMAGE_NAMES }}
+      MATRIX: ${{ steps.build-matrix.outputs.MATRIX }}
     steps:
       - if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "IMAGE_NAMES=[\"${{ inputs.image_name }}\"]" | tee -a "$GITHUB_ENV"
       - if: ${{ github.event_name != 'workflow_dispatch' }}
         run: echo "IMAGE_NAMES=[\"ghcr.io/ansys/aali-graphdb:edge\", \"ghcr.io/ansys/aali-graphdb:latest\", \"ghcr.io/ansys/aali-graphdb:v1.0.0\"]" | tee -a "$GITHUB_ENV"
+      - id: build-matrix
+        run: |
+          matrix=$(echo "$IMAGE_NAMES" | jq -c "[{image: .[], api_key: true}, {image: .[], api_key: false}]")
+          echo "MATRIX=$matrix" | tee -a "$GITHUB_OUTPUT"
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -26,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image-name: ${{ fromJson(needs.get-test-matrix.outputs.IMAGE_NAMES) }}
+        include: ${{ fromJson(needs.get-test-matrix.outputs.MATRIX) }}
     env:
       REGISTRY: ghcr.io
       GOPROXY: https://proxy.golang.org,direct # fallback to direct fetching when proxy fails
@@ -40,5 +48,11 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
           password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
-      - run: docker pull ${{ matrix.image-name }}
-      - run: go test -v ./pkg/aali_graphdb/... -imagename ${{ matrix.image-name }}
+      - run: docker pull ${{ matrix.image }}
+      - run: |
+          if [ "${{ matrix.api_key }}" = "true" ]; then
+            apikey=$(openssl rand -base64 36)
+          else
+            apikey=""
+          fi
+          go test -v ./pkg/aali_graphdb/... -imagename "${{ matrix.image }}" -apikey "$apikey"

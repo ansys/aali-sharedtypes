@@ -49,9 +49,11 @@ func (lc *StdoutLogConsumer) Accept(l testcontainers.Log) {
 }
 
 var imageName string
+var apiKey string
 
 func init() {
 	flag.StringVar(&imageName, "imagename", "ghcr.io/ansys/aali-graphdb:edge", "Name of the aali-graphdb image to run the tests against")
+	flag.StringVar(&apiKey, "apikey", "", "Set the tests to use an API key")
 }
 
 // if you are using Colima see https://golang.testcontainers.org/system_requirements/using_colima/
@@ -59,6 +61,11 @@ func getTestClient(t *testing.T) *Client {
 	ctx := context.Background()
 
 	fmt.Printf("Running test against image: %q\n", imageName)
+
+	env := map[string]string{"RUST_LOG": "debug"}
+	if apiKey != "" {
+		env["AALI_GRAPHDB_API_KEY"] = apiKey
+	}
 
 	req := testcontainers.ContainerRequest{
 		Image:        imageName,
@@ -68,7 +75,7 @@ func getTestClient(t *testing.T) *Client {
 			Opts:      []testcontainers.LogProductionOption{testcontainers.WithLogProductionTimeout(10 * time.Second)},
 			Consumers: []testcontainers.LogConsumer{&StdoutLogConsumer{}},
 		},
-		Env: map[string]string{"RUST_LOG": "debug"},
+		Env: env,
 	}
 	aaliDbCont, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: req, Started: true,
@@ -89,7 +96,7 @@ func getTestClient(t *testing.T) *Client {
 	}
 
 	address := fmt.Sprintf("http://%s:%s", host, port.Port())
-	client, err := NewClient(address, "", &httpClient)
+	client, err := NewClient(address, apiKey, &httpClient)
 	require.NoError(t, err)
 	return client
 }
@@ -445,4 +452,25 @@ func TestParameterMapJson(t *testing.T) {
 	var unmarshalledParamMap ParameterMap
 	require.NoError(json.Unmarshal(jsonParamMap, &unmarshalledParamMap))
 	assert.Equal(pMap, unmarshalledParamMap)
+}
+
+func TestRequiresApiKey(t *testing.T) {
+	if apiKey == "" {
+		t.Skip("this test is only relevant for tests with API keys configured")
+	}
+
+	require := require.New(t)
+	assert := assert.New(t)
+
+	client := getTestClient(t)
+	version, err := client.GetVersion()
+	require.NoError(err)
+
+	if semver.Compare("v"+version.Version, "v1.2.2") < 0 {
+		t.Skip("API key auth was not released prior to server version v1.2.2")
+	}
+
+	// try to make a call without api key and make sure you get an error
+	_, err = client.WithApiKey("").GetDatabases()
+	assert.EqualError(err, "unexpected status code: 401")
 }
