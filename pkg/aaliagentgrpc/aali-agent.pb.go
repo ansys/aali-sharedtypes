@@ -225,8 +225,12 @@ type SessionContext struct {
 	UserId string `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	// Store snapshots; if true, all taken snapshots will be stored in the database
 	StoreSnapshots bool `protobuf:"varint,7,opt,name=store_snapshots,json=storeSnapshots,proto3" json:"store_snapshots,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// IP address of the client; required for some auth_types
+	IpAddress string `protobuf:"bytes,8,opt,name=ip_address,json=ipAddress,proto3" json:"ip_address,omitempty"`
+	// API key for authentication
+	ApiKey        string `protobuf:"bytes,9,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SessionContext) Reset() {
@@ -306,6 +310,20 @@ func (x *SessionContext) GetStoreSnapshots() bool {
 		return x.StoreSnapshots
 	}
 	return false
+}
+
+func (x *SessionContext) GetIpAddress() string {
+	if x != nil {
+		return x.IpAddress
+	}
+	return ""
+}
+
+func (x *SessionContext) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
 }
 
 // ClientRequest is the message to send a request to the server.
@@ -941,7 +959,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x11connection_status\x18\x01 \x01(\v2\x1f.aaliagentgrpc.ConnectionStatusH\x00R\x10connectionStatus\x12Z\n" +
 	"\x15authentication_status\x18\x02 \x01(\v2#.aaliagentgrpc.AuthenticationStatusH\x00R\x14authenticationStatus\x12H\n" +
 	"\x0fclient_response\x18\x03 \x01(\v2\x1d.aaliagentgrpc.ClientResponseH\x00R\x0eclientResponseB\x0e\n" +
-	"\fmessage_type\"\xe3\x02\n" +
+	"\fmessage_type\"\x9b\x03\n" +
 	"\x0eSessionContext\x12\x1b\n" +
 	"\tjwt_token\x18\x01 \x01(\tR\bjwtToken\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
@@ -951,7 +969,10 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"snapshotId\x12&\n" +
 	"\x0fworkflow_run_id\x18\x05 \x01(\tR\rworkflowRunId\x12\x17\n" +
 	"\auser_id\x18\x06 \x01(\tR\x06userId\x12'\n" +
-	"\x0fstore_snapshots\x18\a \x01(\bR\x0estoreSnapshots\x1a<\n" +
+	"\x0fstore_snapshots\x18\a \x01(\bR\x0estoreSnapshots\x12\x1d\n" +
+	"\n" +
+	"ip_address\x18\b \x01(\tR\tipAddress\x12\x17\n" +
+	"\aapi_key\x18\t \x01(\tR\x06apiKey\x1a<\n" +
 	"\x0eVariablesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xf4\x02\n" +
