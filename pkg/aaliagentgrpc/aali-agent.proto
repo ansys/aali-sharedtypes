@@ -57,6 +57,12 @@ message SessionContext {
 
     // Store snapshots; if true, all taken snapshots will be stored in the database
     bool store_snapshots = 7;
+
+    // IP address of the client; required for some auth_types
+    string ip_address = 8;
+
+    // API key for authentication
+    string api_key = 9;
 }
 
 // ClientRequest is the message to send a request to the server.
