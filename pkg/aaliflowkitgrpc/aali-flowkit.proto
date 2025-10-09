@@ -75,6 +75,9 @@ message FunctionDefinition {
 
     // List of output definitions for the function.
     repeated FunctionOutputDefinition output = 6;
+
+    // List of deprecated parameters for the function.
+    repeated string deprecatedParams = 7;
 }
 
 // FunctionInputDefinition is the definition of an input for a function.
