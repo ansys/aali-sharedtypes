@@ -53,6 +53,12 @@ func DefaultClient(address string, apiKey string) (*Client, error) {
 	return NewClient(address, apiKey, http.DefaultClient)
 }
 
+// Update the api key of the client.
+func (client *Client) WithApiKey(apiKey string) *Client {
+	client.apiKey = apiKey
+	return client
+}
+
 func (client Client) get(u string) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodGet, u, nil)
 	if err != nil {
