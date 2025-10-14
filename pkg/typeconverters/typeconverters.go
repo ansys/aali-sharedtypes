@@ -759,7 +759,7 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		}
 		return string(output), nil
 	case "map[string]ElementContextsTuple":
-		output, err := json.Marshal(value.(sharedtypes.ElementContextsTuple))
+		output, err := json.Marshal(value.(map[string]sharedtypes.ElementContextsTuple))
 		if err != nil {
 			return "", err
 		}
