@@ -126,10 +126,10 @@ type ApiDbResponse struct {
 
 // ElementContextsTuple represents a tuple of element contexts.
 type ElementContextsTuple struct {
-	Params      string
-	Return      string
-	Example     string
-	Instruction string
+	Params      string `json:"params"`
+	Return      string `json:"return"`
+	Example     string `json:"example"`
+	Instruction string `json:"instruction"`
 }
 
 // DbResponse represents the response from the database.

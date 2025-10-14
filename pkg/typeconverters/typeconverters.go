@@ -349,6 +349,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, err
 		}
 		return output, nil
+	case "map[string]ElementContextsTuple":
+		if value == "" {
+			value = "{}"
+		}
+		output := map[string]sharedtypes.ElementContextsTuple{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, err
+		}
+		return output, nil
 	case "map[string][]string":
 		if value == "" {
 			value = "{}"
@@ -744,6 +754,12 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), nil
 	case "map[string]bool":
 		output, err := json.Marshal(value.(map[string]bool))
+		if err != nil {
+			return "", err
+		}
+		return string(output), nil
+	case "map[string]ElementContextsTuple":
+		output, err := json.Marshal(value.(sharedtypes.ElementContextsTuple))
 		if err != nil {
 			return "", err
 		}
