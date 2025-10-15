@@ -24,16 +24,17 @@ package sharedtypes
 
 // FunctionDefinition is a struct that contains the id, name, description, package, inputs and outputs of a function
 type FunctionDefinition struct {
-	Name        string           `json:"name" yaml:"name"`
-	FlowkitUrl  string           `json:"flowkit_url" yaml:"flowkit_url"` // URL of the connected FlowKit server containing this function
-	ApiKey      string           `json:"api_key" yaml:"api_key"`         // API key for the FlowKit server
-	DisplayName string           `json:"display_name" yaml:"display_name"`
-	Description string           `json:"description" yaml:"description"`
-	Category    string           `json:"category" yaml:"category"` // "data_extraction", "generic", "knowledge_db", "llm_handler", "ansys_gpt"
-	Type        string           `json:"type" yaml:"type"`         // "go", "python"
-	Path        string           `json:"path" yaml:"path"`         // only for python functions
-	Inputs      []FunctionInput  `json:"inputs" yaml:"inputs"`
-	Outputs     []FunctionOutput `json:"outputs" yaml:"outputs"`
+	Name             string           `json:"name" yaml:"name"`
+	FlowkitUrl       string           `json:"flowkit_url" yaml:"flowkit_url"` // URL of the connected FlowKit server containing this function
+	ApiKey           string           `json:"api_key" yaml:"api_key"`         // API key for the FlowKit server
+	DisplayName      string           `json:"display_name" yaml:"display_name"`
+	Description      string           `json:"description" yaml:"description"`
+	Category         string           `json:"category" yaml:"category"` // "data_extraction", "generic", "knowledge_db", "llm_handler", "ansys_gpt"
+	Type             string           `json:"type" yaml:"type"`         // "go", "python"
+	Path             string           `json:"path" yaml:"path"`         // only for python functions
+	Inputs           []FunctionInput  `json:"inputs" yaml:"inputs"`
+	Outputs          []FunctionOutput `json:"outputs" yaml:"outputs"`
+	DeprecatedParams []string         `json:"deprecated_params" yaml:"deprecated_params"` // list of deprecated parameter names
 }
 
 // FlowKitPythonFunction is a struct that contains the name, path, description, inputs, outputs and definitions of a FlowKit-Python function
@@ -50,15 +51,16 @@ type FlowKitPythonFunction struct {
 
 // FunctionDefinitionShort is equivalent to FunctionDefinition but without the API key (used for aali-agent rest API)
 type FunctionDefinitionShort struct {
-	Name        string           `json:"name" yaml:"name"`
-	FlowkitUrl  string           `json:"flowkit_url" yaml:"flowkit_url"` // URL of the connected FlowKit server containing this function
-	DisplayName string           `json:"display_name" yaml:"display_name"`
-	Description string           `json:"description" yaml:"description"`
-	Category    string           `json:"category" yaml:"category"` // "data_extraction", "generic", "knowledge_db", "llm_handler", "ansys_gpt"
-	Type        string           `json:"type" yaml:"type"`         // "go", "python"
-	Path        string           `json:"path" yaml:"path"`         // only for python functions
-	Inputs      []FunctionInput  `json:"inputs" yaml:"inputs"`
-	Outputs     []FunctionOutput `json:"outputs" yaml:"outputs"`
+	Name             string           `json:"name" yaml:"name"`
+	FlowkitUrl       string           `json:"flowkit_url" yaml:"flowkit_url"` // URL of the connected FlowKit server containing this function
+	DisplayName      string           `json:"display_name" yaml:"display_name"`
+	Description      string           `json:"description" yaml:"description"`
+	Category         string           `json:"category" yaml:"category"` // "data_extraction", "generic", "knowledge_db", "llm_handler", "ansys_gpt"
+	Type             string           `json:"type" yaml:"type"`         // "go", "python"
+	Path             string           `json:"path" yaml:"path"`         // only for python functions
+	Inputs           []FunctionInput  `json:"inputs" yaml:"inputs"`
+	Outputs          []FunctionOutput `json:"outputs" yaml:"outputs"`
+	DeprecatedParams []string         `json:"deprecated_params" yaml:"deprecated_params"` // list of deprecated parameter names
 }
 
 // FunctionInput is a struct that contains the name, type, go type and options of a function input
