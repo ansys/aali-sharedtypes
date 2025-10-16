@@ -169,6 +169,65 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			value = "0"
 		}
 		return strconv.Atoi(value)
+	case "int8":
+		if value == "" {
+			value = "0"
+		}
+		valueInt64, err := strconv.ParseInt(value, 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		return int8(valueInt64), nil
+	case "int16":
+		if value == "" {
+			value = "0"
+		}
+		valueInt64, err := strconv.ParseInt(value, 10, 16)
+		if err != nil {
+			return nil, err
+		}
+		return int16(valueInt64), nil
+	case "int32":
+		if value == "" {
+			value = "0"
+		}
+		valueInt64, err := strconv.ParseInt(value, 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		return int32(valueInt64), nil
+	case "int64":
+		if value == "" {
+			value = "0"
+		}
+		return strconv.ParseInt(value, 10, 64)
+	case "uint":
+		if value == "" {
+			value = "0"
+		}
+		valueUint64, err := strconv.ParseUint(value, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		return uint(valueUint64), nil
+	case "uint8":
+		if value == "" {
+			value = "0"
+		}
+		valueUint64, err := strconv.ParseUint(value, 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		return uint8(valueUint64), nil
+	case "uint16":
+		if value == "" {
+			value = "0"
+		}
+		valueUint64, err := strconv.ParseUint(value, 10, 16)
+		if err != nil {
+			return nil, err
+		}
+		return uint16(valueUint64), nil
 	case "uint32":
 		if value == "" {
 			value = "0"
@@ -685,6 +744,20 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return strconv.FormatFloat(value.(float64), 'f', -1, 64), nil
 	case "int":
 		return strconv.Itoa(value.(int)), nil
+	case "int8":
+		return strconv.FormatInt(int64(value.(int8)), 10), nil
+	case "int16":
+		return strconv.FormatInt(int64(value.(int16)), 10), nil
+	case "int32":
+		return strconv.FormatInt(int64(value.(int32)), 10), nil
+	case "int64":
+		return strconv.FormatInt(value.(int64), 10), nil
+	case "uint":
+		return strconv.FormatUint(uint64(value.(uint)), 10), nil
+	case "uint8":
+		return strconv.FormatUint(uint64(value.(uint8)), 10), nil
+	case "uint16":
+		return strconv.FormatUint(uint64(value.(uint16)), 10), nil
 	case "uint32":
 		return strconv.FormatUint(uint64(value.(uint32)), 10), nil
 	case "uint64":
