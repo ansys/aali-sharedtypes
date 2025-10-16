@@ -175,15 +175,16 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 
 		// Save the function to internal states
 		AvailableFunctions[function.Name] = &sharedtypes.FunctionDefinition{
-			Name:        function.Name,
-			FlowkitUrl:  url,
-			ApiKey:      apiKey,
-			DisplayName: function.DisplayName,
-			Description: function.Description,
-			Category:    function.Category,
-			Inputs:      inputs,
-			Outputs:     outputs,
-			Type:        "go",
+			Name:             function.Name,
+			FlowkitUrl:       url,
+			ApiKey:           apiKey,
+			DisplayName:      function.DisplayName,
+			Description:      function.Description,
+			Category:         function.Category,
+			DeprecatedParams: function.DeprecatedParams,
+			Inputs:           inputs,
+			Outputs:          outputs,
+			Type:             "go",
 		}
 		// add the category to available categories
 		if AvailableCategories != nil && function.Category != "" {
