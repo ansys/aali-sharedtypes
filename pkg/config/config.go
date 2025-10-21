@@ -469,6 +469,11 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							}
 							field.SetString(value)
 						case reflect.Bool:
+							// fix for empty string
+							if *resp.Value == "" {
+								field.SetBool(false)
+								break
+							}
 							// Convert string to bool
 							value, err := strconv.ParseBool(*resp.Value)
 							if err != nil {
@@ -476,6 +481,11 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							}
 							field.SetBool(value)
 						case reflect.Int:
+							// fix for empty string
+							if *resp.Value == "" {
+								field.SetInt(0)
+								break
+							}
 							// Convert string to int
 							value, err := strconv.Atoi(*resp.Value)
 							if err != nil {
@@ -483,6 +493,11 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							}
 							field.SetInt(int64(value))
 						case reflect.Slice:
+							// fix for empty string
+							if *resp.Value == "" {
+								field.Set(reflect.ValueOf([]string{}))
+								break
+							}
 							// Convert string to string slice
 							var value []string
 							err := json.Unmarshal([]byte(*resp.Value), &value)
@@ -491,6 +506,11 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							}
 							field.Set(reflect.ValueOf(value))
 						case reflect.Map:
+							// fix for empty string
+							if *resp.Value == "" {
+								field.Set(reflect.ValueOf(map[string]string{}))
+								break
+							}
 							// Convert string to map[string]string
 							var value map[string]string
 							err := json.Unmarshal([]byte(*resp.Value), &value)
