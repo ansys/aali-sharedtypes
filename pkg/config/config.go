@@ -438,7 +438,7 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 	for pagerSecerts.More() {
 		page, err := pagerSecerts.NextPage(context.TODO())
 		if err != nil {
-			return err
+			return fmt.Errorf("error, when iterating over Azure key vault secrets: %v", err)
 		}
 		for _, secret := range page.Value {
 			// iterate over all fields in the struct
@@ -455,7 +455,7 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 					// Get the key value
 					resp, err := clientSecrets.GetSecret(context.TODO(), secret.ID.Name(), "", nil)
 					if err != nil {
-						return err
+						return fmt.Errorf("error while getting value for secret '%v': %v", yamlTag, err)
 					}
 					// Check if the field is settable
 					if field.CanSet() {
@@ -472,14 +472,14 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							// Convert string to bool
 							value, err := strconv.ParseBool(*resp.Value)
 							if err != nil {
-								return err
+								return fmt.Errorf("error in strconv.ParseBool for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
 							}
 							field.SetBool(value)
 						case reflect.Int:
 							// Convert string to int
 							value, err := strconv.Atoi(*resp.Value)
 							if err != nil {
-								return err
+								return fmt.Errorf("error in strconv.Atoi for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
 							}
 							field.SetInt(int64(value))
 						case reflect.Slice:
@@ -487,7 +487,7 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							var value []string
 							err := json.Unmarshal([]byte(*resp.Value), &value)
 							if err != nil {
-								return err
+								return fmt.Errorf("error in json.Unmarshal []string for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
 							}
 							field.Set(reflect.ValueOf(value))
 						case reflect.Map:
@@ -495,11 +495,11 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 							var value map[string]string
 							err := json.Unmarshal([]byte(*resp.Value), &value)
 							if err != nil {
-								return err
+								return fmt.Errorf("error in json.Unmarshal map[string]string for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
 							}
 							field.Set(reflect.ValueOf(value))
 						default:
-							return fmt.Errorf("unsupported field type: %v", field.Kind())
+							return fmt.Errorf("unsupported field type '%v' for secret '%v' with value '%v'", field.Kind(), yamlTag, *resp.Value)
 						}
 					}
 				}
