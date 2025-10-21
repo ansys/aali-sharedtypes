@@ -108,7 +108,7 @@ type DbResponse struct {
 	LastChildId       *uuid.UUID             `json:"last_child_id"`
 	FirstChildId      *uuid.UUID             `json:"first_child_id"`
 	Distance          float64                `json:"distance"`
-	Level             string                 `json:"level"`
+	Level             int                    `json:"level"`
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 
 	// Siblings
