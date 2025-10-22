@@ -81,7 +81,7 @@ type DbData struct {
 	NextSiblingId     *uuid.UUID             `json:"next_sibling_id"`
 	LastChildId       *uuid.UUID             `json:"last_child_id"`
 	FirstChildId      *uuid.UUID             `json:"first_child_id"`
-	Level             string                 `json:"level"`
+	Level             int                    `json:"level"`
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 }
 
