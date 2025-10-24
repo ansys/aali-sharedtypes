@@ -26,6 +26,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"net"
 	"strings"
 
 	"github.com/ansys/aali-sharedtypes/pkg/aaliflowkitgrpc"
@@ -430,6 +431,21 @@ func createClient(url string, apiKey string) (client aaliflowkitgrpc.ExternalFun
 
 	// Set up the gRPC dial options
 	var opts []grpc.DialOption
+
+	// Add custom dialer with IPv4 first, fallback to IPv6
+	opts = append(opts, grpc.WithContextDialer(func(ctx context.Context, addr string) (net.Conn, error) {
+		d := &net.Dialer{}
+
+		// Try IPv4 first
+		conn, err := d.DialContext(ctx, "tcp4", addr)
+		if err == nil {
+			return conn, nil
+		}
+
+		// Fall back to IPv6 if IPv4 fails
+		return d.DialContext(ctx, "tcp6", addr)
+	}))
+
 	if scheme == "https" {
 		// Set up a secure connection with default TLS config
 		creds := credentials.NewTLS(nil)
@@ -447,7 +463,7 @@ func createClient(url string, apiKey string) (client aaliflowkitgrpc.ExternalFun
 	// Set max message size to 1GB
 	opts = append(opts, grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(1024*1024*1024)))
 
-	// Set up a connection to the server.
+	// Set up a connection to the server
 	conn, err := grpc.NewClient(address, opts...)
 	if err != nil {
 		return nil, nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
