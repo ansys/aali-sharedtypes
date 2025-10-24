@@ -122,6 +122,8 @@ func TestConvertStringToGivenType(t *testing.T) {
 		{"{}", "map[string]bool", map[string]bool{}, nil},
 		{"[]", "[]DbJsonFilter", []sharedtypes.DbJsonFilter{}, nil},
 		{"", "*chan string", (*chan string)(nil), nil},
+		{`{"serverURL":"http://localhost:8080","transport":"http","authToken":"secret123","timeout":30}`, "MCPConfig", sharedtypes.MCPConfig{ServerURL: "http://localhost:8080", Transport: "http", AuthToken: "secret123", Timeout: 30}, nil},
+		{`[{"serverURL":"http://localhost:8080","transport":"http","authToken":"secret123","timeout":30}]`, "[]MCPConfig", []sharedtypes.MCPConfig{{ServerURL: "http://localhost:8080", Transport: "http", AuthToken: "secret123", Timeout: 30}}, nil},
 		// Add more test cases as needed for each supported type
 	}
 

@@ -47,13 +47,39 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
+      - run: go test $(go list ./pkg/... | grep -v 'aali_graphdb')  # run all the tests except for those in aali_graphdb (those are run below in separate job)
+
+  get-test-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      IMAGE_NAMES: ${{ env.IMAGE_NAMES }}
+    steps:
+      - if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "IMAGE_NAMES=[\"${{ inputs.image_name }}\"]" | tee "$GITHUB_ENV"
+      - if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: echo "IMAGE_NAMES=[\"ghcr.io/ansys/aali-graphdb:edge\", \"ghcr.io/ansys/aali-graphdb:latest\", \"ghcr.io/ansys/aali-graphdb:v1.0.0\"]" | tee "$GITHUB_ENV"
+
+  graphdb-client-unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image-name:
+          - ghcr.io/ansys/aali-graphdb:edge
+          - ghcr.io/ansys/aali-graphdb:latest
+          - ghcr.io/ansys/aali-graphdb:v1.0.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
           password: ${{ secrets.PYANSYS_CI_BOT_PACKAGE_TOKEN }}
-      - run: docker pull ghcr.io/ansys/aali-graphdb:edge
-      - run: go test -v ./pkg/...
+      - run: docker pull ${{ matrix.image-name }}
+      - run: go test -v ./pkg/aali_graphdb/... -imagename ${{ matrix.image-name }}
 
   build:
     name: Build project
@@ -198,7 +224,7 @@ jobs:
   release:
     name: Generate GitHub release
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs: [doc-api-reference, build, unit-tests]
+    needs: [doc-api-reference, build, unit-tests, graphdb-client-unit-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
