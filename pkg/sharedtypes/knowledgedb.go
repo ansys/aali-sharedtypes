@@ -101,6 +101,13 @@ type ExampleDbResponse struct {
 	//Siblings  []DbData `json:"siblings,omitempty"`
 }
 
+// ElementContextsTuple represents a tuple of element contexts.
+type ElementContextsTuple struct {
+	Params      string `json:"params"`
+	Return      string `json:"return"`
+	Example     string `json:"example"`
+	Instruction string `json:"instruction"`
+}
 // ApiDbResponse represents the response from the database.
 type ApiDbResponse struct {
 	Guid              uuid.UUID              `json:"guid"`
