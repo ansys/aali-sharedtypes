@@ -24,6 +24,7 @@ package logging
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -33,6 +34,7 @@ import (
 	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"google.golang.org/grpc/metadata"
 )
 
 ///////////////////////////////////
@@ -764,4 +766,80 @@ func writeStringToFile(filename string, data string) error {
 	// append data to file with a new line
 	_, err = fmt.Fprintln(file, data)
 	return err
+}
+
+// CreateMetaDataFromCtx creates gRPC metadata from the given ContextMap and attaches it to the provided context.
+//
+// Parameters:
+//   - ctx: the logging context map containing metadata values
+//   - ctxWithCancel: the gRPC context to which the metadata will be attached
+//
+// Returns:
+//   - ctxWithMetaData: the new gRPC context with the attached metadata
+//   - err: an error if the metadata creation or attachment fails
+func CreateMetaDataFromCtx(ctx *ContextMap, ctxWithCancel context.Context) (ctxWithMetaData context.Context, err error) {
+	// Append body with context
+	body := []map[string]interface{}{
+		{},
+	}
+	ctx.data.Range(func(key, value interface{}) bool {
+		body[0][string(key.(ContextKey))] = value
+		return true
+	})
+
+	// Serialize struct to JSON
+	jsonData, err := json.Marshal(&body)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
+	}
+
+	// Attach metadata to gRPC context
+	md := metadata.Pairs(
+		"request-metadata", string(jsonData),
+	)
+	return metadata.NewOutgoingContext(ctxWithCancel, md), nil
+}
+
+// CreateCtxFromMetaData creates a ContextMap from gRPC metadata in the provided context.
+//
+// Parameters:
+//   - ctxWithMetaData: the gRPC context containing the metadata
+//
+// Returns:
+//   - ctx: the logging context map created from the metadata
+//   - err: an error if the metadata extraction or deserialization fails
+func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, err error) {
+	// Extract metadata from incoming context
+	md, ok := metadata.FromIncomingContext(ctxWithMetaData)
+	if !ok {
+		return nil, fmt.Errorf("no metadata found in context")
+	}
+
+	// Get the request-metadata value
+	metadataValues := md.Get("request-metadata")
+	if len(metadataValues) == 0 {
+		return nil, fmt.Errorf("request-metadata not found in context")
+	}
+
+	// Take the first value (there should only be one)
+	jsonData := metadataValues[0]
+
+	// Deserialize JSON to body
+	var body []map[string]interface{}
+	err = json.Unmarshal([]byte(jsonData), &body)
+	if err != nil {
+		return nil, fmt.Errorf("error deserializing JSON to metadata: %v", err)
+	}
+
+	// Create new ContextMap
+	ctx = &ContextMap{}
+
+	// Populate the ContextMap with data from body
+	if len(body) > 0 && body[0] != nil {
+		for key, value := range body[0] {
+			ctx.data.Store(ContextKey(key), value)
+		}
+	}
+
+	return ctx, nil
 }

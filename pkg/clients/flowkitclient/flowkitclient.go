@@ -24,7 +24,6 @@ package flowkitclient
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net"
@@ -233,7 +232,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	defer cancel()
 
 	// get logging metadata from context
-	ctxWithMetadata, err := attachCtxAsMetaData(ctx, ctxWithCancel)
+	ctxWithMetadata, err := logging.CreateMetaDataFromCtx(ctx, ctxWithCancel)
 	if err != nil {
 		return nil, fmt.Errorf("error adding metadata: %v", err)
 	}
@@ -329,7 +328,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 
 	// get logging metadata from context
-	ctxWithMetadata, err := attachCtxAsMetaData(ctx, ctxWithCancel)
+	ctxWithMetadata, err := logging.CreateMetaDataFromCtx(ctx, ctxWithCancel)
 	if err != nil {
 		conn.Close()
 		cancel()
@@ -513,27 +512,4 @@ func apiKeyInterceptor(apiKey string) grpc.UnaryClientInterceptor {
 		// Invoke the RPC with the modified context
 		return invoker(ctx, method, req, reply, cc, opts...)
 	}
-}
-
-// attachCtxAsMetaData creates metadata from the given struct and attaches it to the gRPC context
-//
-// Parameters:
-//   - ctx: the logging context map containing metadata values
-//   - ctxWithCancel: the gRPC context to attach the metadata to
-//
-// Returns:
-//   - context.Context: the modified gRPC context with the added metadata
-//   - error: an error message if the struct serialization fails
-func attachCtxAsMetaData(ctx *logging.ContextMap, ctxWithCancel context.Context) (context.Context, error) {
-	// Serialize struct to JSON
-	jsonData, err := json.Marshal(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
-	}
-
-	// Attach metadata to gRPC context
-	md := metadata.Pairs(
-		"request-metadata", string(jsonData),
-	)
-	return metadata.NewOutgoingContext(ctxWithCancel, md), nil
 }
