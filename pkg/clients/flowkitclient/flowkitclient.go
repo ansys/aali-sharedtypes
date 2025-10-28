@@ -505,8 +505,20 @@ func apiKeyInterceptor(apiKey string) grpc.UnaryClientInterceptor {
 		invoker grpc.UnaryInvoker,
 		opts ...grpc.CallOption,
 	) error {
-		// Add API key to the context metadata
-		md := metadata.Pairs("x-api-key", apiKey)
+		// Get existing metadata from context (if any)
+		md, ok := metadata.FromOutgoingContext(ctx)
+		if !ok {
+			// No existing metadata, create new
+			md = metadata.MD{}
+		} else {
+			// Copy the metadata to avoid modifying the original
+			md = md.Copy()
+		}
+
+		// Add API key to the existing metadata (this preserves other keys)
+		md.Set("x-api-key", apiKey)
+
+		// Create new context with MERGED metadata
 		ctx = metadata.NewOutgoingContext(ctx, md)
 
 		// Invoke the RPC with the modified context
