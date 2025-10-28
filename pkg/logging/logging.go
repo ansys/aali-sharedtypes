@@ -31,6 +31,8 @@ import (
 	"os"
 	"time"
 
+	"nhooyr.io/websocket"
+
 	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -768,6 +770,10 @@ func writeStringToFile(filename string, data string) error {
 	return err
 }
 
+///////////////////////////////////
+// Log Context metadata functions
+///////////////////////////////////
+
 // CreateMetaDataFromCtx creates gRPC metadata from the given ContextMap and attaches it to the provided context.
 //
 // Parameters:
@@ -809,16 +815,19 @@ func CreateMetaDataFromCtx(ctx *ContextMap, ctxWithCancel context.Context) (ctxW
 //   - ctx: the logging context map created from the metadata
 //   - err: an error if the metadata extraction or deserialization fails
 func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, err error) {
+	// Create new ContextMap
+	ctx = &ContextMap{}
+
 	// Extract metadata from incoming context
 	md, ok := metadata.FromIncomingContext(ctxWithMetaData)
 	if !ok {
-		return nil, fmt.Errorf("no metadata found in context")
+		return ctx, nil
 	}
 
 	// Get the request-metadata value
 	metadataValues := md.Get("request-metadata")
 	if len(metadataValues) == 0 {
-		return nil, fmt.Errorf("request-metadata not found in context")
+		return ctx, nil
 	}
 
 	// Take the first value (there should only be one)
@@ -831,9 +840,6 @@ func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, er
 		return nil, fmt.Errorf("error deserializing JSON to metadata: %v", err)
 	}
 
-	// Create new ContextMap
-	ctx = &ContextMap{}
-
 	// Populate the ContextMap with data from body
 	if len(body) > 0 && body[0] != nil {
 		for key, value := range body[0] {
@@ -841,5 +847,70 @@ func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, er
 		}
 	}
 
+	return ctx, nil
+}
+
+// CreateDialOptionsFromCtx creates websocket dial options from the given ContextMap.
+//
+// Parameters:
+//   - ctx: the logging context map containing metadata values
+//
+// Returns:
+//   - opts: the websocket dial options with the attached metadata
+//   - err: an error if the metadata creation fails
+func CreateDialOptionsFromCtx(ctx *ContextMap) (opts *websocket.DialOptions, err error) {
+	// Append body with context
+	body := []map[string]interface{}{
+		{},
+	}
+	ctx.data.Range(func(key, value interface{}) bool {
+		body[0][string(key.(ContextKey))] = value
+		return true
+	})
+
+	// Serialize struct to JSON
+	jsonData, err := json.Marshal(&body)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
+	}
+	opts = &websocket.DialOptions{
+		HTTPHeader: http.Header{
+			"request-metadata": []string{string(jsonData)},
+		},
+	}
+	return opts, nil
+}
+
+// CreateCtxFromHeader creates a ContextMap from HTTP request headers.
+//
+// Parameters:
+//   - request: the HTTP request containing the headers
+//
+// Returns:
+//   - ctx: the logging context map created from the headers
+//   - err: an error if the header extraction or deserialization fails
+func CreateCtxFromHeader(request *http.Request) (ctx *ContextMap, err error) {
+	// Create new ContextMap
+	ctx = &ContextMap{}
+
+	// Get the request-metadata value
+	meta := request.Header.Get("request-metadata")
+	if meta == "" {
+		return ctx, nil
+	}
+
+	// Deserialize JSON to body
+	var body []map[string]interface{}
+	err = json.Unmarshal([]byte(meta), &body)
+	if err != nil {
+		return nil, fmt.Errorf("error deserializing JSON to metadata: %v", err)
+	}
+
+	// Populate the ContextMap with data from body
+	if len(body) > 0 && body[0] != nil {
+		for key, value := range body[0] {
+			ctx.data.Store(ContextKey(key), value)
+		}
+	}
 	return ctx, nil
 }
