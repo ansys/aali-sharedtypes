@@ -24,6 +24,7 @@ package flowkitclient
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net"
@@ -206,7 +207,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the gRPC call fails
-func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
+func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -230,6 +231,12 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	// get logging metadata from context
+	ctxWithMetadata, err := createAndAttachMetaData(ctx, ctxWithCancel)
+	if err != nil {
+		return nil, fmt.Errorf("error adding metadata: %v", err)
+	}
 
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
@@ -260,7 +267,7 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	}
 
 	// Call RunFunction
-	runResp, err := c.RunFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
+	runResp, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
@@ -321,6 +328,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 
+	// get logging metadata from context
+	ctxWithMetadata, err := createAndAttachMetaData(ctx, ctxWithCancel)
+	if err != nil {
+		conn.Close()
+		cancel()
+		return nil, fmt.Errorf("error adding metadata: %v", err)
+	}
+
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
@@ -352,7 +367,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	}
 
 	// Call StreamFunction
-	stream, err := c.StreamFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
+	stream, err := c.StreamFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
@@ -498,4 +513,53 @@ func apiKeyInterceptor(apiKey string) grpc.UnaryClientInterceptor {
 		// Invoke the RPC with the modified context
 		return invoker(ctx, method, req, reply, cc, opts...)
 	}
+}
+
+// RequestMetadata represents metadata for a gRPC request.
+type RequestMetadata struct {
+	WorkflowId    string `json:"workflowId"`
+	WorkflowRunId string `json:"workflowRunId"`
+	UserId        string `json:"userId"`
+	InstructionId string `json:"instructionId"`
+}
+
+// createAndAttachMetaData creates metadata from the given struct and attaches it to the gRPC context
+//
+// Parameters:
+//   - ctx: the logging context map containing metadata values
+//   - ctxWithCancel: the gRPC context to attach the metadata to
+//
+// Returns:
+//   - context.Context: the modified gRPC context with the added metadata
+//   - error: an error message if the struct serialization fails
+func createAndAttachMetaData(ctx *logging.ContextMap, ctxWithCancel context.Context) (context.Context, error) {
+	// Extract metadata from logging context
+	meta := RequestMetadata{}
+	workflowId, ok := ctx.Get(logging.WorkflowId)
+	if ok {
+		meta.WorkflowId = workflowId.(string)
+	}
+	workflowRunId, ok := ctx.Get(logging.WorkflowRunId)
+	if ok {
+		meta.WorkflowRunId = workflowRunId.(string)
+	}
+	userId, ok := ctx.Get(logging.UserId)
+	if ok {
+		meta.UserId = userId.(string)
+	}
+	instructionId, ok := ctx.Get(logging.InstructionGuid)
+	if ok {
+		meta.InstructionId = instructionId.(string)
+	}
+
+	// Serialize struct to JSON
+	jsonData, err := json.Marshal(meta)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
+	}
+
+	md := metadata.Pairs(
+		"request-metadata", string(jsonData),
+	)
+	return metadata.NewOutgoingContext(ctxWithCancel, md), nil
 }
