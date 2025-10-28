@@ -793,10 +793,17 @@ func CreateMetaDataFromCtx(ctx *ContextMap, ctxWithCancel context.Context) (ctxW
 		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
 	}
 
+	// LOG: Check what's being sent
+	fmt.Printf("CLIENT: Sending metadata: %s\n", string(jsonData))
+
 	// Attach metadata to gRPC context
 	md := metadata.Pairs(
 		"request-metadata", string(jsonData),
 	)
+
+	// LOG: Verify metadata is created
+	fmt.Printf("CLIENT: Created metadata: %v\n", md)
+
 	return metadata.NewOutgoingContext(ctxWithCancel, md), nil
 }
 
@@ -814,6 +821,9 @@ func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, er
 	if !ok {
 		return nil, fmt.Errorf("no metadata found in context")
 	}
+
+	// LOG: Print all metadata keys
+	fmt.Printf("SERVER: All metadata keys: %v\n", md)
 
 	// Get the request-metadata value
 	metadataValues := md.Get("request-metadata")
