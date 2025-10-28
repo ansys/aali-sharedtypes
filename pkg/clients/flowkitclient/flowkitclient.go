@@ -233,7 +233,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	defer cancel()
 
 	// get logging metadata from context
-	ctxWithMetadata, err := createAndAttachMetaData(ctx, ctxWithCancel)
+	ctxWithMetadata, err := attachCtxAsMetaData(ctx, ctxWithCancel)
 	if err != nil {
 		return nil, fmt.Errorf("error adding metadata: %v", err)
 	}
@@ -329,7 +329,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 
 	// get logging metadata from context
-	ctxWithMetadata, err := createAndAttachMetaData(ctx, ctxWithCancel)
+	ctxWithMetadata, err := attachCtxAsMetaData(ctx, ctxWithCancel)
 	if err != nil {
 		conn.Close()
 		cancel()
@@ -515,15 +515,7 @@ func apiKeyInterceptor(apiKey string) grpc.UnaryClientInterceptor {
 	}
 }
 
-// RequestMetadata represents metadata for a gRPC request.
-type RequestMetadata struct {
-	WorkflowId    string `json:"workflowId"`
-	WorkflowRunId string `json:"workflowRunId"`
-	UserId        string `json:"userId"`
-	InstructionId string `json:"instructionId"`
-}
-
-// createAndAttachMetaData creates metadata from the given struct and attaches it to the gRPC context
+// attachCtxAsMetaData creates metadata from the given struct and attaches it to the gRPC context
 //
 // Parameters:
 //   - ctx: the logging context map containing metadata values
@@ -532,32 +524,14 @@ type RequestMetadata struct {
 // Returns:
 //   - context.Context: the modified gRPC context with the added metadata
 //   - error: an error message if the struct serialization fails
-func createAndAttachMetaData(ctx *logging.ContextMap, ctxWithCancel context.Context) (context.Context, error) {
-	// Extract metadata from logging context
-	meta := RequestMetadata{}
-	workflowId, ok := ctx.Get(logging.WorkflowId)
-	if ok {
-		meta.WorkflowId = workflowId.(string)
-	}
-	workflowRunId, ok := ctx.Get(logging.WorkflowRunId)
-	if ok {
-		meta.WorkflowRunId = workflowRunId.(string)
-	}
-	userId, ok := ctx.Get(logging.UserId)
-	if ok {
-		meta.UserId = userId.(string)
-	}
-	instructionId, ok := ctx.Get(logging.InstructionGuid)
-	if ok {
-		meta.InstructionId = instructionId.(string)
-	}
-
+func attachCtxAsMetaData(ctx *logging.ContextMap, ctxWithCancel context.Context) (context.Context, error) {
 	// Serialize struct to JSON
-	jsonData, err := json.Marshal(meta)
+	jsonData, err := json.Marshal(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing metadata struct to JSON: %v", err)
 	}
 
+	// Attach metadata to gRPC context
 	md := metadata.Pairs(
 		"request-metadata", string(jsonData),
 	)
