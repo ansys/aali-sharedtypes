@@ -801,7 +801,7 @@ func CreateMetaDataFromCtx(ctx *ContextMap, ctxWithCancel context.Context) (ctxW
 
 	// Attach metadata to gRPC context
 	md := metadata.Pairs(
-		"request-metadata", string(jsonData),
+		"aali-logging-context", string(jsonData),
 	)
 	return metadata.NewOutgoingContext(ctxWithCancel, md), nil
 }
@@ -824,8 +824,8 @@ func CreateCtxFromMetaData(ctxWithMetaData context.Context) (ctx *ContextMap, er
 		return ctx, nil
 	}
 
-	// Get the request-metadata value
-	metadataValues := md.Get("request-metadata")
+	// Get the aali-logging-context value
+	metadataValues := md.Get("aali-logging-context")
 	if len(metadataValues) == 0 {
 		return ctx, nil
 	}
@@ -875,7 +875,7 @@ func CreateDialOptionsFromCtx(ctx *ContextMap) (opts *websocket.DialOptions, err
 	}
 	opts = &websocket.DialOptions{
 		HTTPHeader: http.Header{
-			"request-metadata": []string{string(jsonData)},
+			"aali-logging-context": []string{string(jsonData)},
 		},
 	}
 	return opts, nil
@@ -893,8 +893,8 @@ func CreateCtxFromHeader(request *http.Request) (ctx *ContextMap, err error) {
 	// Create new ContextMap
 	ctx = &ContextMap{}
 
-	// Get the request-metadata value
-	meta := request.Header.Get("request-metadata")
+	// Get the aali-logging-context value
+	meta := request.Header.Get("aali-logging-context")
 	if meta == "" {
 		return ctx, nil
 	}
