@@ -33,6 +33,9 @@ type ContextKey string
 
 const (
 	InstructionGuid ContextKey = "instructionGuid"
+	WorkflowId      ContextKey = "workflowId"
+	WorkflowRunId   ContextKey = "workflowRunId"
+	UserId          ContextKey = "userId"
 	AdapterType     ContextKey = "adapterType"
 	WatchFolderPath ContextKey = "watchFolderPath"
 	WatchFilePath   ContextKey = "watchFilePath"

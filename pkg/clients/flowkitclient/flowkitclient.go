@@ -206,7 +206,7 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the gRPC call fails
-func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
+func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -230,6 +230,12 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	// get logging metadata from context
+	ctxWithMetadata, err := logging.CreateMetaDataFromCtx(ctx, ctxWithCancel)
+	if err != nil {
+		return nil, fmt.Errorf("error adding metadata: %v", err)
+	}
 
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
@@ -260,7 +266,7 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	}
 
 	// Call RunFunction
-	runResp, err := c.RunFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
+	runResp, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
@@ -321,6 +327,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	// Create a context with a cancel
 	ctxWithCancel, cancel := context.WithCancel(context.Background())
 
+	// get logging metadata from context
+	ctxWithMetadata, err := logging.CreateMetaDataFromCtx(ctx, ctxWithCancel)
+	if err != nil {
+		conn.Close()
+		cancel()
+		return nil, fmt.Errorf("error adding metadata: %v", err)
+	}
+
 	// Convert inputs to gRPC format based on order from function definition
 	grpcInputs := []*aaliflowkitgrpc.FunctionInput{}
 	for _, inputDef := range functionDef.Inputs {
@@ -352,7 +366,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	}
 
 	// Call StreamFunction
-	stream, err := c.StreamFunction(ctxWithCancel, &aaliflowkitgrpc.FunctionInputs{
+	stream, err := c.StreamFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
@@ -491,8 +505,20 @@ func apiKeyInterceptor(apiKey string) grpc.UnaryClientInterceptor {
 		invoker grpc.UnaryInvoker,
 		opts ...grpc.CallOption,
 	) error {
-		// Add API key to the context metadata
-		md := metadata.Pairs("x-api-key", apiKey)
+		// Get existing metadata from context (if any)
+		md, ok := metadata.FromOutgoingContext(ctx)
+		if !ok {
+			// No existing metadata, create new
+			md = metadata.MD{}
+		} else {
+			// Copy the metadata to avoid modifying the original
+			md = md.Copy()
+		}
+
+		// Add API key to the existing metadata (this preserves other keys)
+		md.Set("x-api-key", apiKey)
+
+		// Create new context with MERGED metadata
 		ctx = metadata.NewOutgoingContext(ctx, md)
 
 		// Invoke the RPC with the modified context

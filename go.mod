@@ -17,6 +17,7 @@ require (
 	golang.org/x/mod v0.17.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
+	nhooyr.io/websocket v1.8.17
 )
 
 require (
