@@ -108,6 +108,20 @@ type ElementContextsTuple struct {
 	Example     string `json:"example"`
 	Instruction string `json:"instruction"`
 }
+
+// UserGuideDbResponse represents the user guide response from the database.
+type UserGuideDbResponse struct {
+	Guid              uuid.UUID `json:"guid"`
+	DocumentName      string    `json:"document_name"`
+	Text              string    `json:"text"`
+	NextChunk         string    `json:"next_chunk"`
+	PreviousChunk     string    `json:"previous_chunk"`
+	Title             string    `json:"title"`
+	ParentSectionName string    `json:"parent_section_name"`
+	SectionName       string    `json:"section_name"`
+	Level             string    `json:"level"`
+}
+
 // ApiDbResponse represents the response from the database.
 type ApiDbResponse struct {
 	Guid              uuid.UUID              `json:"guid"`
