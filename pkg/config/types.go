@@ -49,11 +49,14 @@ type Config struct {
 	DATADOG_METRICS bool   `yaml:"DATADOG_METRICS" json:"DATADOGMETRICS"`
 	METRICS_URL     string `yaml:"METRICS_URL" json:"METRICSURL"`
 
-	// SSL Settings
-	/////////////////
-	USE_SSL                   bool   `yaml:"USE_SSL" json:"USESSL"`
-	SSL_CERT_PUBLIC_KEY_FILE  string `yaml:"SSL_CERT_PUBLIC_KEY_FILE" json:"SSLCERTPUBLICKEYFILE"`
-	SSL_CERT_PRIVATE_KEY_FILE string `yaml:"SSL_CERT_PRIVATE_KEY_FILE" json:"SSLCERTPRIVATEKEYFILE"`
+	// SSL & MTLS Settings
+	//////////////////////
+	USE_SSL                      bool   `yaml:"USE_SSL" json:"USESSL"`
+	SSL_CERT_PUBLIC_KEY_FILE     string `yaml:"SSL_CERT_PUBLIC_KEY_FILE" json:"SSLCERTPUBLICKEYFILE"`
+	SSL_CERT_PRIVATE_KEY_FILE    string `yaml:"SSL_CERT_PRIVATE_KEY_FILE" json:"SSLCERTPRIVATEKEYFILE"`
+	USE_MTLS                     bool   `yaml:"USE_MTLS" json:"USEMTLS"`
+	CLIENT_CERT_PUBLIC_KEY_FILE  string `yaml:"CLIENT_CERT_PUBLIC_KEY_FILE" json:"CLIENTCERTPUBLICKEYFILE"`
+	CLIENT_CERT_PRIVATE_KEY_FILE string `yaml:"CLIENT_CERT_PRIVATE_KEY_FILE" json:"CLIENTCERTPRIVATEKEYFILE"`
 
 	// Azure Key Vault Settings
 	////////////////////////////
