@@ -88,12 +88,18 @@ type HistoricMessage struct {
 
 // OpenAIOption represents an option for an OpenAI API call.
 type ModelOptions struct {
-	FrequencyPenalty *float32 `json:"frequencyPenalty,omitempty"`
-	MaxTokens        *int32   `json:"maxTokens,omitempty"`
-	PresencePenalty  *float32 `json:"presencePenalty,omitempty"`
-	Stop             []string `json:"stop,omitempty"`
-	Temperature      *float32 `json:"temperature,omitempty"`
-	TopP             *float32 `json:"topP,omitempty"`
+	FrequencyPenalty *float32 `json:"frequencyPenalty,omitempty" yaml:"FREQUENCY_PENALTY,omitempty"`
+	MaxTokens        *int32   `json:"maxTokens,omitempty" yaml:"MAX_TOKENS,omitempty"`
+	PresencePenalty  *float32 `json:"presencePenalty,omitempty" yaml:"PRESENCE_PENALTY,omitempty"`
+	Stop             []string `json:"stop,omitempty" yaml:"STOP,omitempty"`
+	Temperature      *float32 `json:"temperature,omitempty" yaml:"TEMPERATURE,omitempty"`
+	TopP             *float32 `json:"topP,omitempty" yaml:"TOP_P,omitempty"`
+
+	// GPT-5 / o-series only
+
+	ReasoningEffort  *string `json:"reasoningEffort,omitempty" yaml:"REASONING_EFFORT,omitempty"`   // "minimal" | "low" | "medium" | "high"
+	ReasoningSummary *string `json:"reasoningSummary,omitempty" yaml:"REASONING_SUMMARY,omitempty"` // "auto" | "concise" | "detailed"
+	Verbosity        *string `json:"verbosity,omitempty" yaml:"VERBOSITY,omitempty"`                // "low" | "medium" | "high"
 }
 
 // EmbeddingsOptions represents the options for an embeddings request.

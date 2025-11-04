@@ -28,6 +28,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"regexp"
 	"testing"
 	"time"
 
@@ -36,6 +37,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+	"golang.org/x/mod/semver"
 )
 
 // StdoutLogConsumer is a LogConsumer that prints the log to stdout
@@ -47,9 +49,11 @@ func (lc *StdoutLogConsumer) Accept(l testcontainers.Log) {
 }
 
 var imageName string
+var apiKey string
 
 func init() {
 	flag.StringVar(&imageName, "imagename", "ghcr.io/ansys/aali-graphdb:edge", "Name of the aali-graphdb image to run the tests against")
+	flag.StringVar(&apiKey, "apikey", "", "Set the tests to use an API key")
 }
 
 // if you are using Colima see https://golang.testcontainers.org/system_requirements/using_colima/
@@ -57,6 +61,11 @@ func getTestClient(t *testing.T) *Client {
 	ctx := context.Background()
 
 	fmt.Printf("Running test against image: %q\n", imageName)
+
+	env := map[string]string{"RUST_LOG": "debug"}
+	if apiKey != "" {
+		env["AALI_GRAPHDB_API_KEY"] = apiKey
+	}
 
 	req := testcontainers.ContainerRequest{
 		Image:        imageName,
@@ -66,7 +75,7 @@ func getTestClient(t *testing.T) *Client {
 			Opts:      []testcontainers.LogProductionOption{testcontainers.WithLogProductionTimeout(10 * time.Second)},
 			Consumers: []testcontainers.LogConsumer{&StdoutLogConsumer{}},
 		},
-		Env: map[string]string{"RUST_LOG": "debug"},
+		Env: env,
 	}
 	aaliDbCont, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: req, Started: true,
@@ -87,7 +96,7 @@ func getTestClient(t *testing.T) *Client {
 	}
 
 	address := fmt.Sprintf("http://%s:%s", host, port.Port())
-	client, err := NewClient(address, &httpClient)
+	client, err := NewClient(address, apiKey, &httpClient)
 	require.NoError(t, err)
 	return client
 }
@@ -104,8 +113,11 @@ func TestGetVersion(t *testing.T) {
 	version, err := client.GetVersion()
 	require.NoError(t, err)
 	assert.NotEmpty(t, version.Version)
-	assert.NotEmpty(t, version.KuzuVersion)
-	assert.NotEmpty(t, version.KuzuStorageVersion)
+	if semver.Compare("v"+version.Version, "v1.0.8") >= 0 {
+		// these were introduced in v1.0.8, so cannot assert on them if testing against earlier server version
+		assert.NotEmpty(t, version.KuzuVersion)
+		assert.NotEmpty(t, version.KuzuStorageVersion)
+	}
 }
 
 func TestGetDatabases(t *testing.T) {
@@ -406,17 +418,17 @@ func TestErrorsReturned(t *testing.T) {
 	require.NoError(t, err)
 
 	query := "not a real cypher query"
-	expected := `unexpected status code: 500 "Query execution failed: Parser exception: extraneous input 'not' expecting {ALTER, ATTACH, BEGIN, CALL, CHECKPOINT, COMMENT, COMMIT, COPY, CREATE, DELETE, DETACH, DROP, EXPLAIN, EXPORT, IMPORT, INSTALL, LOAD, MATCH, MERGE, OPTIONAL, PROFILE, RETURN, ROLLBACK, SET, UNWIND, USE, WITH, SP} (line: 1, offset: 0)\n\"not a real cypher query\"\n ^^^"`
+	pat := regexp.MustCompile(`Query execution failed:[\s\S]*` + query)
 
 	t.Run("Read", func(t *testing.T) {
 		_, err = client.CypherQueryRead(DBNAME, query, nil)
 		require.Error(t, err)
-		assert.Equal(t, expected, fmt.Sprint(err))
+		assert.True(t, pat.MatchString(fmt.Sprint(err)))
 	})
 	t.Run("Write", func(t *testing.T) {
 		_, err = client.CypherQueryWrite(DBNAME, query, nil)
 		require.Error(t, err)
-		assert.Equal(t, expected, fmt.Sprint(err))
+		assert.True(t, pat.MatchString(fmt.Sprint(err)))
 	})
 }
 
@@ -440,4 +452,25 @@ func TestParameterMapJson(t *testing.T) {
 	var unmarshalledParamMap ParameterMap
 	require.NoError(json.Unmarshal(jsonParamMap, &unmarshalledParamMap))
 	assert.Equal(pMap, unmarshalledParamMap)
+}
+
+func TestRequiresApiKey(t *testing.T) {
+	if apiKey == "" {
+		t.Skip("this test is only relevant for tests with API keys configured")
+	}
+
+	require := require.New(t)
+	assert := assert.New(t)
+
+	client := getTestClient(t)
+	version, err := client.GetVersion()
+	require.NoError(err)
+
+	if semver.Compare("v"+version.Version, "v1.2.2") < 0 {
+		t.Skip("API key auth was not released prior to server version v1.2.2")
+	}
+
+	// try to make a call without api key and make sure you get an error
+	_, err = client.WithApiKey("").GetDatabases()
+	assert.EqualError(err, "unexpected status code: 401")
 }
