@@ -85,34 +85,6 @@ type DbData struct {
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 }
 
-// ExampleDbResponse represents the example response from the database.
-type ExampleDbResponse struct {
-	Guid         uuid.UUID `json:"guid"`
-	DocumentId   string    `json:"document_id"`
-	DocumentName string    `json:"document_name"`
-	Text         string    `json:"text"`
-	//Keywords          []string               `json:"keywords"`
-	Summary string `json:"summary"`
-	//Embedding         []float32              `json:"embeddings"`
-	//Tags              []string               `json:"tags"`
-	//Metadata          map[string]interface{} `json:"metadata"`
-	//ParentId          *uuid.UUID             `json:"parent_id"`
-	//ChildIds          []uuid.UUID            `json:"child_ids"`
-	//PreviousSiblingId *uuid.UUID             `json:"previous_sibling_id"`
-	//NextSiblingId     *uuid.UUID             `json:"next_sibling_id"`
-	//LastChildId       *uuid.UUID             `json:"last_child_id"`
-	//FirstChildId      *uuid.UUID             `json:"first_child_id"`
-	//Distance          float64                `json:"distance"`
-	//Level             string                 `json:"level"`
-	//HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
-
-	// Siblings
-	//Parent    *DbData  `json:"parent,omitempty"`
-	//Children  []DbData `json:"children,omitempty"`
-	//LeafNodes []DbData `json:"leaf_nodes,omitempty"`
-	//Siblings  []DbData `json:"siblings,omitempty"`
-}
-
 // ApiDbResponse represents the response from the database.
 type ApiDbResponse struct {
 	Guid        uuid.UUID `json:"guid"`
@@ -145,6 +117,23 @@ type UserGuideDbResponse struct {
 	Level             string    `json:"level"`
 }
 
+// ExampleDbResponse represents the example response from the database.
+type ExampleDbResponse struct {
+	Guid         uuid.UUID `json:"guid"`
+	DocumentId   string    `json:"document_id"`
+	DocumentName string    `json:"document_name"`
+	Text         string    `json:"text"`
+	//Keywords          []string               `json:"keywords"`
+	Summary string `json:"summary"`
+
+	// Siblings
+	//Parent    *DbData  `json:"parent,omitempty"`
+	//Children  []DbData `json:"children,omitempty"`
+	//LeafNodes []DbData `json:"leaf_nodes,omitempty"`
+	//Siblings  []DbData `json:"siblings,omitempty"`
+}
+
+// DbResponse represents the response from the database.
 // DbResponse can accommodate non-conflicting data from:
 // - StoreElementsInVectorDatabase (API/Element data)
 // - StoreExamplesInVectorDatabase (Example data)
