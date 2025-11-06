@@ -31,7 +31,7 @@ import (
 	"os"
 	"time"
 
-	"nhooyr.io/websocket"
+	"github.com/coder/websocket"
 
 	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"go.uber.org/zap"

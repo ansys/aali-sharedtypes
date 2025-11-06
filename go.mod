@@ -9,6 +9,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.17.1
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.8.2
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.3.1
+	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/iancoleman/strcase v0.3.0
 	github.com/shopspring/decimal v1.4.0
@@ -17,7 +18,6 @@ require (
 	golang.org/x/mod v0.17.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
-	nhooyr.io/websocket v1.8.17
 )
 
 require (
