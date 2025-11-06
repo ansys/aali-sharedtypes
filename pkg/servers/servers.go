@@ -27,7 +27,7 @@ import "github.com/coder/websocket"
 // GetDefaultWebsocketDialOptions returns the default dial options for websocket connections.
 //
 // Returns:
-//   - acceptOptions: Pointer to websocket.DialOptions
+//   - acceptOptions: Pointer to websocket.AcceptOptions with default settings.
 func GetDefaultWebsocketAcceptOptions() (acceptOptions *websocket.AcceptOptions) {
 	return &websocket.AcceptOptions{
 		InsecureSkipVerify: true,
