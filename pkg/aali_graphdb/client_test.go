@@ -76,6 +76,13 @@ func getTestClient(t *testing.T) *Client {
 			Consumers: []testcontainers.LogConsumer{&StdoutLogConsumer{}},
 		},
 		Env: env,
+		Files: []testcontainers.ContainerFile{
+			{
+				HostFilePath:      t.TempDir(),
+				ContainerFilePath: "/data",
+				FileMode:          0o700,
+			},
+		},
 	}
 	aaliDbCont, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: req, Started: true,
