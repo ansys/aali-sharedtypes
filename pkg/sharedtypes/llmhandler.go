@@ -30,6 +30,7 @@ type HandlerRequest struct {
 	ModelCategory       []string          `json:"modelCategory"`              // optional model category; define one or more categories to filter models; models of the specified categories from first to last will be used for this request if available
 	Data                interface{}       `json:"data"`                       // for embeddings, this can be a string or []string; for chat, only string is allowed
 	Images              []string          `json:"images"`                     // List of images in base64 format
+	MCPTools            []interface{}     `json:"mcpTools,omitempty"`         // MCP tool definitions for tool calling support
 	ChatRequestType     string            `json:"chatRequestType"`            // "summary", "code", "keywords", "general"; only relevant if "adapter" is "chat"
 	DataStream          bool              `json:"dataStream"`                 // only relevant if "adapter" is "chat"
 	MaxNumberOfKeywords uint32            `json:"maxNumberOfKeywords"`        // only relevant if "chatRequestType" is "keywords"
@@ -49,11 +50,13 @@ type HandlerResponse struct {
 	Type            string `json:"type"` // "info", "error", "chat", "embeddings"
 
 	// Chat properties
-	IsLast           *bool   `json:"isLast,omitempty"`
-	Position         *uint32 `json:"position,omitempty"`
-	InputTokenCount  *int    `json:"inputTokenCount,omitempty"`
-	OutputTokenCount *int    `json:"outputTokenCount,omitempty"`
-	ChatData         *string `json:"chatData,omitempty"`
+	IsLast           *bool      `json:"isLast,omitempty"`
+	Position         *uint32    `json:"position,omitempty"`
+	InputTokenCount  *int       `json:"inputTokenCount,omitempty"`
+	OutputTokenCount *int       `json:"outputTokenCount,omitempty"`
+	ChatData         *string    `json:"chatData,omitempty"`
+	ToolCalls        []ToolCall `json:"toolCalls,omitempty"`       // Structured tool calls from LLM (standard format)
+	ToolCallsLegacy  *string    `json:"toolCallsLegacy,omitempty"` // DEPRECATED: JSON string format, use ToolCalls instead
 
 	// Embeddings properties
 	EmbeddedData   interface{} `json:"embeddedData,omitempty"`   // []float32 or [][]float32; for BAAI/bge-m3 these are dense vectors
@@ -79,11 +82,12 @@ type TransferDetails struct {
 	RequestChannel  chan HandlerRequest
 }
 
-// HistoricMessage represents a past chat messages.
+// HistoricMessage represents a past chat message.
 type HistoricMessage struct {
-	Role    string   `json:"role"`
-	Content string   `json:"content"`
-	Images  []string `json:"images"` // image in base64 format
+	Role       string   `json:"role"`
+	Content    string   `json:"content"`
+	Images     []string `json:"images"`               // image in base64 format
+	ToolCallId *string  `json:"toolCallId,omitempty"` // Tool call ID for OpenAI-style tool responses
 }
 
 // OpenAIOption represents an option for an OpenAI API call.
@@ -113,4 +117,19 @@ type EmbeddingOptions struct {
 type EmbeddingResult struct {
 	Dense  []float32
 	Sparse map[uint]float32
+}
+
+// ToolCall represents a tool invocation from the LLM (follows OpenAI/Anthropic spec)
+type ToolCall struct {
+	ID    string                 `json:"id"`
+	Type  string                 `json:"type"`
+	Name  string                 `json:"name"`
+	Input map[string]interface{} `json:"input"`
+}
+
+// ToolResult represents a tool execution result (follows Anthropic spec)
+type ToolResult struct {
+	ToolCallID string `json:"tool_call_id"`
+	Content    string `json:"content"`
+	IsError    bool   `json:"is_error"`
 }
