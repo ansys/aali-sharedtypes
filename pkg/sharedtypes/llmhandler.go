@@ -50,13 +50,12 @@ type HandlerResponse struct {
 	Type            string `json:"type"` // "info", "error", "chat", "embeddings"
 
 	// Chat properties
-	IsLast           *bool      `json:"isLast,omitempty"`
-	Position         *uint32    `json:"position,omitempty"`
-	InputTokenCount  *int       `json:"inputTokenCount,omitempty"`
-	OutputTokenCount *int       `json:"outputTokenCount,omitempty"`
-	ChatData         *string    `json:"chatData,omitempty"`
-	ToolCalls        []ToolCall `json:"toolCalls,omitempty"`       // Structured tool calls from LLM (standard format)
-	ToolCallsLegacy  *string    `json:"toolCallsLegacy,omitempty"` // DEPRECATED: JSON string format, use ToolCalls instead
+	IsLast           *bool   `json:"isLast,omitempty"`
+	Position         *uint32 `json:"position,omitempty"`
+	InputTokenCount  *int    `json:"inputTokenCount,omitempty"`
+	OutputTokenCount *int    `json:"outputTokenCount,omitempty"`
+	ChatData         *string `json:"chatData,omitempty"`
+	ToolCalls        []ToolCall `json:"toolCalls,omitempty"` // Structured tool calls from LLM
 
 	// Embeddings properties
 	EmbeddedData   interface{} `json:"embeddedData,omitempty"`   // []float32 or [][]float32; for BAAI/bge-m3 these are dense vectors
@@ -86,7 +85,7 @@ type TransferDetails struct {
 type HistoricMessage struct {
 	Role       string   `json:"role"`
 	Content    string   `json:"content"`
-	Images     []string `json:"images"`               // image in base64 format
+	Images     []string `json:"images"`           // image in base64 format
 	ToolCallId *string  `json:"toolCallId,omitempty"` // Tool call ID for OpenAI-style tool responses
 }
 

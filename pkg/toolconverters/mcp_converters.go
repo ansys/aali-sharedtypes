@@ -24,7 +24,10 @@
 package toolconverters
 
 import (
+	"encoding/json"
+
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
+	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/anthropics/anthropic-sdk-go/packages/param"
 	"github.com/openai/openai-go"
@@ -232,4 +235,63 @@ func ConvertMCPToAnthropicFormat(
 	}
 
 	return anthropicTools
+}
+
+// ConvertAnthropicToolCallsToSharedTypes converts Anthropic ToolUseBlock responses to shared ToolCall format.
+func ConvertAnthropicToolCallsToSharedTypes(
+	ctx *logging.ContextMap,
+	toolUseBlocks []anthropic.ToolUseBlock,
+) []sharedtypes.ToolCall {
+	var toolCalls []sharedtypes.ToolCall
+
+	for _, block := range toolUseBlocks {
+		// Unmarshal json.RawMessage to map[string]interface{}
+		var input map[string]interface{}
+		if err := json.Unmarshal(block.Input, &input); err != nil {
+			logging.Log.Warnf(ctx, "Failed to parse tool input for %s: %v", block.Name, err)
+			input = make(map[string]interface{})
+		}
+
+		toolCalls = append(toolCalls, sharedtypes.ToolCall{
+			ID:    block.ID,
+			Type:  "tool_use",
+			Name:  block.Name,
+			Input: input,
+		})
+	}
+
+	if len(toolCalls) > 0 {
+		logging.Log.Infof(ctx, "Converted %d Anthropic tool calls to shared format", len(toolCalls))
+	}
+
+	return toolCalls
+}
+
+// ConvertOpenAIToolCallsToSharedTypes converts OpenAI ChatCompletionMessageToolCall responses to shared ToolCall format.
+func ConvertOpenAIToolCallsToSharedTypes(
+	ctx *logging.ContextMap,
+	openaiToolCalls []openai.ChatCompletionMessageToolCall,
+) []sharedtypes.ToolCall {
+	var toolCalls []sharedtypes.ToolCall
+
+	for _, tc := range openaiToolCalls {
+		var args map[string]interface{}
+		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v", tc.Function.Name, err)
+			args = make(map[string]interface{})
+		}
+
+		toolCalls = append(toolCalls, sharedtypes.ToolCall{
+			ID:    tc.ID,
+			Type:  "function",
+			Name:  tc.Function.Name,
+			Input: args,
+		})
+	}
+
+	if len(toolCalls) > 0 {
+		logging.Log.Infof(ctx, "Converted %d OpenAI tool calls to shared format", len(toolCalls))
+	}
+
+	return toolCalls
 }
