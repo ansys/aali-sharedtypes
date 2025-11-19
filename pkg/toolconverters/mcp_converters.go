@@ -28,12 +28,21 @@ import (
 
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
-	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/anthropics/anthropic-sdk-go/packages/param"
 	"github.com/openai/openai-go"
+	openaiv2 "github.com/openai/openai-go/v2"
+	openaiv2shared "github.com/openai/openai-go/v2/shared"
 )
 
 // ConvertMCPToOpenAIFormat converts MCP tools to OpenAI function calling format.
+//
+// Parameters:
+//
+//	ctx: The logging context map.
+//	mcpTools: Array of MCP tool definitions.
+//
+// Returns:
+//
+//	[]openai.ChatCompletionToolParam: OpenAI-formatted tools.
 func ConvertMCPToOpenAIFormat(
 	ctx *logging.ContextMap,
 	mcpTools []interface{},
@@ -95,12 +104,21 @@ func ConvertMCPToOpenAIFormat(
 	return openaiTools
 }
 
-// ConvertMCPToMistralFormat converts MCP tools to Mistral function calling format.
-func ConvertMCPToMistralFormat(
+// ConvertMCPToOpenAIV2Format converts MCP tools to OpenAI v2 SDK format for Azure GPT.
+//
+// Parameters:
+//
+//	ctx: The logging context map.
+//	mcpTools: Array of MCP tool definitions.
+//
+// Returns:
+//
+//	[]openaiv2.ChatCompletionToolUnionParam: OpenAI v2 formatted tools.
+func ConvertMCPToOpenAIV2Format(
 	ctx *logging.ContextMap,
 	mcpTools []interface{},
-) []map[string]interface{} {
-	var mistralTools []map[string]interface{}
+) []openaiv2.ChatCompletionToolUnionParam {
+	var openaiTools []openaiv2.ChatCompletionToolUnionParam
 
 	for i, mcpTool := range mcpTools {
 		// Convert interface{} to map for field access
@@ -134,140 +152,37 @@ func ConvertMCPToMistralFormat(
 			}
 		}
 
-		// Convert to Mistral format (OpenAI-compatible)
-		mistralTool := map[string]interface{}{
-			"type": "function",
-			"function": map[string]interface{}{
-				"name":        name,
-				"description": description,
-				"parameters":  inputSchema,
-			},
+		// Convert to OpenAI v2 format
+		functionDef := openaiv2shared.FunctionDefinitionParam{
+			Name:        name,
+			Description: openaiv2.String(description),
+			Parameters:  openaiv2shared.FunctionParameters(inputSchema),
 		}
 
-		mistralTools = append(mistralTools, mistralTool)
-		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to Mistral format", name)
+		openaiTool := openaiv2.ChatCompletionFunctionTool(functionDef)
+		openaiTools = append(openaiTools, openaiTool)
+		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to OpenAI v2 format", name)
 	}
 
-	if len(mistralTools) > 0 {
-		logging.Log.Infof(ctx, "Converted %d MCP tools to Mistral format", len(mistralTools))
+	if len(openaiTools) > 0 {
+		logging.Log.Infof(ctx, "Converted %d MCP tools to OpenAI v2 format", len(openaiTools))
 	} else if len(mcpTools) > 0 {
 		logging.Log.Warnf(ctx, "No valid tools converted from %d MCP tools provided", len(mcpTools))
 	}
 
-	return mistralTools
-}
-
-// ConvertMCPToAnthropicFormat converts MCP tools to Anthropic function calling format.
-func ConvertMCPToAnthropicFormat(
-	ctx *logging.ContextMap,
-	mcpTools []interface{},
-) []anthropic.ToolParam {
-	var anthropicTools []anthropic.ToolParam
-
-	for i, mcpTool := range mcpTools {
-		// Convert interface{} to map for field access
-		toolMap, ok := mcpTool.(map[string]interface{})
-		if !ok {
-			logging.Log.Warnf(ctx, "Skipping tool %d: not a valid object", i)
-			continue
-		}
-
-		// Extract required fields
-		name, nameOk := toolMap["name"].(string)
-		if !nameOk || name == "" {
-			logging.Log.Warnf(ctx, "Skipping tool %d: missing or invalid 'name' field", i)
-			continue
-		}
-
-		// Extract description (optional)
-		description, _ := toolMap["description"].(string)
-		if description == "" {
-			logging.Log.Warnf(ctx, "Tool '%s': missing description (recommended for better LLM understanding)", name)
-		}
-
-		// Extract inputSchema (optional)
-		inputSchema, schemaOk := toolMap["inputSchema"].(map[string]interface{})
-		if !schemaOk {
-			logging.Log.Warnf(ctx, "Tool '%s': missing or invalid 'inputSchema' (LLM may not understand parameters)", name)
-			// Create empty schema as fallback
-			inputSchema = map[string]interface{}{
-				"type":       "object",
-				"properties": map[string]interface{}{},
-			}
-		}
-
-		// Extract required fields from inputSchema
-		var required []string
-		if req, ok := inputSchema["required"].([]interface{}); ok {
-			for _, r := range req {
-				if rStr, ok := r.(string); ok {
-					required = append(required, rStr)
-				}
-			}
-		}
-
-		// Extract properties from inputSchema
-		properties, _ := inputSchema["properties"]
-
-		// Convert to Anthropic format
-		anthropicTool := anthropic.ToolParam{
-			Name: name,
-			InputSchema: anthropic.ToolInputSchemaParam{
-				Type:       "object",
-				Properties: properties,
-				Required:   required,
-			},
-		}
-
-		// Add description if present
-		if description != "" {
-			anthropicTool.Description = param.NewOpt(description)
-		}
-
-		anthropicTools = append(anthropicTools, anthropicTool)
-		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to Anthropic format", name)
-	}
-
-	if len(anthropicTools) > 0 {
-		logging.Log.Infof(ctx, "Converted %d MCP tools to Anthropic format", len(anthropicTools))
-	} else if len(mcpTools) > 0 {
-		logging.Log.Warnf(ctx, "No valid tools converted from %d MCP tools provided", len(mcpTools))
-	}
-
-	return anthropicTools
-}
-
-// ConvertAnthropicToolCallsToSharedTypes converts Anthropic ToolUseBlock responses to shared ToolCall format.
-func ConvertAnthropicToolCallsToSharedTypes(
-	ctx *logging.ContextMap,
-	toolUseBlocks []anthropic.ToolUseBlock,
-) []sharedtypes.ToolCall {
-	var toolCalls []sharedtypes.ToolCall
-
-	for _, block := range toolUseBlocks {
-		// Unmarshal json.RawMessage to map[string]interface{}
-		var input map[string]interface{}
-		if err := json.Unmarshal(block.Input, &input); err != nil {
-			logging.Log.Warnf(ctx, "Failed to parse tool input for %s: %v", block.Name, err)
-			input = make(map[string]interface{})
-		}
-
-		toolCalls = append(toolCalls, sharedtypes.ToolCall{
-			ID:    block.ID,
-			Type:  "tool_use",
-			Name:  block.Name,
-			Input: input,
-		})
-	}
-
-	if len(toolCalls) > 0 {
-		logging.Log.Infof(ctx, "Converted %d Anthropic tool calls to shared format", len(toolCalls))
-	}
-
-	return toolCalls
+	return openaiTools
 }
 
 // ConvertOpenAIToolCallsToSharedTypes converts OpenAI ChatCompletionMessageToolCall responses to shared ToolCall format.
+//
+// Parameters:
+//
+//	ctx: The logging context map.
+//	openaiToolCalls: Array of OpenAI tool call responses.
+//
+// Returns:
+//
+//	[]sharedtypes.ToolCall: Shared format tool calls.
 func ConvertOpenAIToolCallsToSharedTypes(
 	ctx *logging.ContextMap,
 	openaiToolCalls []openai.ChatCompletionMessageToolCall,
@@ -275,12 +190,20 @@ func ConvertOpenAIToolCallsToSharedTypes(
 	var toolCalls []sharedtypes.ToolCall
 
 	for _, tc := range openaiToolCalls {
-		var args map[string]interface{}
-		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
-			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v", tc.Function.Name, err)
-			args = make(map[string]interface{})
+		// Skip tool calls with empty arguments
+		if tc.Function.Arguments == "" {
+			logging.Log.Warnf(ctx, "Tool call %s has empty arguments, skipping", tc.ID)
+			continue
 		}
 
+		// Parse arguments
+		var args map[string]interface{}
+		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v, skipping tool call", tc.Function.Name, err)
+			continue
+		}
+
+		// Only append valid tool calls
 		toolCalls = append(toolCalls, sharedtypes.ToolCall{
 			ID:    tc.ID,
 			Type:  "function",
@@ -291,6 +214,52 @@ func ConvertOpenAIToolCallsToSharedTypes(
 
 	if len(toolCalls) > 0 {
 		logging.Log.Infof(ctx, "Converted %d OpenAI tool calls to shared format", len(toolCalls))
+	}
+
+	return toolCalls
+}
+
+// ConvertOpenAIV2ToolCallsToSharedTypes converts OpenAI v2 SDK tool calls to shared ToolCall format.
+//
+// Parameters:
+//
+//	ctx: The logging context map.
+//	openaiToolCalls: Array of OpenAI v2 tool call responses.
+//
+// Returns:
+//
+//	[]sharedtypes.ToolCall: Shared format tool calls.
+func ConvertOpenAIV2ToolCallsToSharedTypes(
+	ctx *logging.ContextMap,
+	openaiToolCalls []openaiv2.ChatCompletionMessageToolCallUnion,
+) []sharedtypes.ToolCall {
+	var toolCalls []sharedtypes.ToolCall
+
+	for _, tc := range openaiToolCalls {
+		// Skip tool calls with empty arguments
+		if tc.Function.Arguments == "" {
+			logging.Log.Warnf(ctx, "Tool call %s has empty arguments, skipping", tc.ID)
+			continue
+		}
+
+		// Parse arguments
+		var args map[string]interface{}
+		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v, skipping tool call", tc.Function.Name, err)
+			continue
+		}
+
+		// Only append valid tool calls
+		toolCalls = append(toolCalls, sharedtypes.ToolCall{
+			ID:    tc.ID,
+			Type:  string(tc.Type),
+			Name:  tc.Function.Name,
+			Input: args,
+		})
+	}
+
+	if len(toolCalls) > 0 {
+		logging.Log.Infof(ctx, "Converted %d OpenAI v2 tool calls to shared format", len(toolCalls))
 	}
 
 	return toolCalls
