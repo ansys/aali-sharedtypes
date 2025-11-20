@@ -130,23 +130,22 @@ func ConvertOpenAIToolCallsToSharedTypes(
 	var errors []error
 
 	for i, tc := range openaiToolCalls {
-		// Skip tool calls with empty arguments
-		if tc.Function.Arguments == "" {
-			err := fmt.Errorf("tool call at index %d (ID: %s, Name: %s) has empty arguments", i, tc.ID, tc.Function.Name)
-			errors = append(errors, err)
-			logging.Log.Errorf(ctx, "Tool call at index %d (ID: %s, Name: %s) has empty arguments, skipping", i, tc.ID, tc.Function.Name)
-			continue
-		}
-
-		// Parse arguments
+		// Parse arguments - handle empty string as empty object (zero-parameter tool)
 		var args map[string]interface{}
-		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
-			parseErr := fmt.Errorf("failed to parse tool call at index %d (ID: %s, Name: %s): %w, raw arguments: %s",
-				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
-			errors = append(errors, parseErr)
-			logging.Log.Errorf(ctx, "Failed to parse tool call at index %d (ID: %s, Name: %s): %v, raw arguments: %s, skipping tool call",
-				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
-			continue
+		if tc.Function.Arguments == "" {
+			// Empty arguments string represents a tool with no parameters
+			args = map[string]interface{}{}
+			logging.Log.Debugf(ctx, "Tool call at index %d (ID: %s, Name: %s) has no arguments (zero-parameter tool)", i, tc.ID, tc.Function.Name)
+		} else {
+			// Parse non-empty arguments
+			if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+				parseErr := fmt.Errorf("failed to parse tool call at index %d (ID: %s, Name: %s): %w, raw arguments: %s",
+					i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
+				errors = append(errors, parseErr)
+				logging.Log.Errorf(ctx, "Failed to parse tool call at index %d (ID: %s, Name: %s): %v, raw arguments: %s, skipping tool call",
+					i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
+				continue
+			}
 		}
 
 		// Only append valid tool calls
