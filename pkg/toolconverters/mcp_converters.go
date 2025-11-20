@@ -25,12 +25,12 @@ package toolconverters
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
-	"github.com/openai/openai-go"
-	openaiv2 "github.com/openai/openai-go/v2"
-	openaiv2shared "github.com/openai/openai-go/v2/shared"
+	"github.com/openai/openai-go/v2"
+	"github.com/openai/openai-go/v2/shared"
 )
 
 // ConvertMCPToOpenAIFormat converts MCP tools to OpenAI function calling format.
@@ -42,35 +42,43 @@ import (
 //
 // Returns:
 //
-//	[]openai.ChatCompletionToolParam: OpenAI-formatted tools.
+//	[]openai.ChatCompletionToolUnionParam: OpenAI formatted tools.
+//	[]error: List of errors for tools that were skipped during conversion.
 func ConvertMCPToOpenAIFormat(
 	ctx *logging.ContextMap,
 	mcpTools []interface{},
-) []openai.ChatCompletionToolParam {
-	var openaiTools []openai.ChatCompletionToolParam
+) ([]openai.ChatCompletionToolUnionParam, []error) {
+	var openaiTools []openai.ChatCompletionToolUnionParam
+	var errors []error
 
 	for i, mcpTool := range mcpTools {
 		// Convert interface{} to map for field access
 		toolMap, ok := mcpTool.(map[string]interface{})
 		if !ok {
-			logging.Log.Warnf(ctx, "Skipping tool %d: not a valid object", i)
+			toolJSON, _ := json.Marshal(mcpTool)
+			err := fmt.Errorf("tool at index %d is not a valid object, got type %T, value: %s", i, mcpTool, string(toolJSON))
+			errors = append(errors, err)
+			logging.Log.Errorf(ctx, "Skipping tool %d: not a valid object (type: %T, value: %s)", i, mcpTool, string(toolJSON))
 			continue
 		}
 
 		// Extract required fields
 		name, nameOk := toolMap["name"].(string)
 		if !nameOk || name == "" {
-			logging.Log.Warnf(ctx, "Skipping tool %d: missing or invalid 'name' field", i)
+			toolJSON, _ := json.Marshal(toolMap)
+			err := fmt.Errorf("tool at index %d is missing or has invalid 'name' field, tool data: %s", i, string(toolJSON))
+			errors = append(errors, err)
+			logging.Log.Errorf(ctx, "Skipping tool %d: missing or invalid 'name' field, tool data: %s", i, string(toolJSON))
 			continue
 		}
 
-		// Extract description (optional)
+		// Extract description (
 		description, _ := toolMap["description"].(string)
 		if description == "" {
 			logging.Log.Warnf(ctx, "Tool '%s': missing description (recommended for better LLM understanding)", name)
 		}
 
-		// Extract inputSchema (optional)
+		// Extract inputSchema
 		inputSchema, schemaOk := toolMap["inputSchema"].(map[string]interface{})
 		if !schemaOk {
 			logging.Log.Warnf(ctx, "Tool '%s': missing or invalid 'inputSchema' (LLM may not understand parameters)", name)
@@ -81,99 +89,29 @@ func ConvertMCPToOpenAIFormat(
 			}
 		}
 
-		// Convert to OpenAI format using openai.F() wrappers
-		openaiTool := openai.ChatCompletionToolParam{
-			Type: openai.F(openai.ChatCompletionToolTypeFunction),
-			Function: openai.F(openai.FunctionDefinitionParam{
-				Name:        openai.String(name),
-				Description: openai.String(description),
-				Parameters:  openai.F(openai.FunctionParameters(inputSchema)),
-			}),
+		// Convert to OpenAI format
+		functionDef := shared.FunctionDefinitionParam{
+			Name:        name,
+			Description: openai.String(description),
+			Parameters:  shared.FunctionParameters(inputSchema),
 		}
 
+		openaiTool := openai.ChatCompletionFunctionTool(functionDef)
 		openaiTools = append(openaiTools, openaiTool)
 		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to OpenAI format", name)
 	}
 
 	if len(openaiTools) > 0 {
 		logging.Log.Infof(ctx, "Converted %d MCP tools to OpenAI format", len(openaiTools))
-	} else if len(mcpTools) > 0 {
-		logging.Log.Warnf(ctx, "No valid tools converted from %d MCP tools provided", len(mcpTools))
+	}
+	if len(errors) > 0 {
+		logging.Log.Errorf(ctx, "Failed to convert %d out of %d MCP tools (see detailed errors above)", len(errors), len(mcpTools))
 	}
 
-	return openaiTools
+	return openaiTools, errors
 }
 
-// ConvertMCPToOpenAIV2Format converts MCP tools to OpenAI v2 SDK format for Azure GPT.
-//
-// Parameters:
-//
-//	ctx: The logging context map.
-//	mcpTools: Array of MCP tool definitions.
-//
-// Returns:
-//
-//	[]openaiv2.ChatCompletionToolUnionParam: OpenAI v2 formatted tools.
-func ConvertMCPToOpenAIV2Format(
-	ctx *logging.ContextMap,
-	mcpTools []interface{},
-) []openaiv2.ChatCompletionToolUnionParam {
-	var openaiTools []openaiv2.ChatCompletionToolUnionParam
-
-	for i, mcpTool := range mcpTools {
-		// Convert interface{} to map for field access
-		toolMap, ok := mcpTool.(map[string]interface{})
-		if !ok {
-			logging.Log.Warnf(ctx, "Skipping tool %d: not a valid object", i)
-			continue
-		}
-
-		// Extract required fields
-		name, nameOk := toolMap["name"].(string)
-		if !nameOk || name == "" {
-			logging.Log.Warnf(ctx, "Skipping tool %d: missing or invalid 'name' field", i)
-			continue
-		}
-
-		// Extract description (optional)
-		description, _ := toolMap["description"].(string)
-		if description == "" {
-			logging.Log.Warnf(ctx, "Tool '%s': missing description (recommended for better LLM understanding)", name)
-		}
-
-		// Extract inputSchema (optional)
-		inputSchema, schemaOk := toolMap["inputSchema"].(map[string]interface{})
-		if !schemaOk {
-			logging.Log.Warnf(ctx, "Tool '%s': missing or invalid 'inputSchema' (LLM may not understand parameters)", name)
-			// Create empty schema as fallback
-			inputSchema = map[string]interface{}{
-				"type":       "object",
-				"properties": map[string]interface{}{},
-			}
-		}
-
-		// Convert to OpenAI v2 format
-		functionDef := openaiv2shared.FunctionDefinitionParam{
-			Name:        name,
-			Description: openaiv2.String(description),
-			Parameters:  openaiv2shared.FunctionParameters(inputSchema),
-		}
-
-		openaiTool := openaiv2.ChatCompletionFunctionTool(functionDef)
-		openaiTools = append(openaiTools, openaiTool)
-		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to OpenAI v2 format", name)
-	}
-
-	if len(openaiTools) > 0 {
-		logging.Log.Infof(ctx, "Converted %d MCP tools to OpenAI v2 format", len(openaiTools))
-	} else if len(mcpTools) > 0 {
-		logging.Log.Warnf(ctx, "No valid tools converted from %d MCP tools provided", len(mcpTools))
-	}
-
-	return openaiTools
-}
-
-// ConvertOpenAIToolCallsToSharedTypes converts OpenAI ChatCompletionMessageToolCall responses to shared ToolCall format.
+// ConvertOpenAIToolCallsToSharedTypes converts OpenAI SDK tool calls to shared ToolCall format.
 //
 // Parameters:
 //
@@ -183,69 +121,31 @@ func ConvertMCPToOpenAIV2Format(
 // Returns:
 //
 //	[]sharedtypes.ToolCall: Shared format tool calls.
+//	[]error: List of errors for tool calls that were skipped during conversion.
 func ConvertOpenAIToolCallsToSharedTypes(
 	ctx *logging.ContextMap,
-	openaiToolCalls []openai.ChatCompletionMessageToolCall,
-) []sharedtypes.ToolCall {
+	openaiToolCalls []openai.ChatCompletionMessageToolCallUnion,
+) ([]sharedtypes.ToolCall, []error) {
 	var toolCalls []sharedtypes.ToolCall
+	var errors []error
 
-	for _, tc := range openaiToolCalls {
+	for i, tc := range openaiToolCalls {
 		// Skip tool calls with empty arguments
 		if tc.Function.Arguments == "" {
-			logging.Log.Warnf(ctx, "Tool call %s has empty arguments, skipping", tc.ID)
+			err := fmt.Errorf("tool call at index %d (ID: %s, Name: %s) has empty arguments", i, tc.ID, tc.Function.Name)
+			errors = append(errors, err)
+			logging.Log.Errorf(ctx, "Tool call at index %d (ID: %s, Name: %s) has empty arguments, skipping", i, tc.ID, tc.Function.Name)
 			continue
 		}
 
 		// Parse arguments
 		var args map[string]interface{}
 		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
-			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v, skipping tool call", tc.Function.Name, err)
-			continue
-		}
-
-		// Only append valid tool calls
-		toolCalls = append(toolCalls, sharedtypes.ToolCall{
-			ID:    tc.ID,
-			Type:  "function",
-			Name:  tc.Function.Name,
-			Input: args,
-		})
-	}
-
-	if len(toolCalls) > 0 {
-		logging.Log.Infof(ctx, "Converted %d OpenAI tool calls to shared format", len(toolCalls))
-	}
-
-	return toolCalls
-}
-
-// ConvertOpenAIV2ToolCallsToSharedTypes converts OpenAI v2 SDK tool calls to shared ToolCall format.
-//
-// Parameters:
-//
-//	ctx: The logging context map.
-//	openaiToolCalls: Array of OpenAI v2 tool call responses.
-//
-// Returns:
-//
-//	[]sharedtypes.ToolCall: Shared format tool calls.
-func ConvertOpenAIV2ToolCallsToSharedTypes(
-	ctx *logging.ContextMap,
-	openaiToolCalls []openaiv2.ChatCompletionMessageToolCallUnion,
-) []sharedtypes.ToolCall {
-	var toolCalls []sharedtypes.ToolCall
-
-	for _, tc := range openaiToolCalls {
-		// Skip tool calls with empty arguments
-		if tc.Function.Arguments == "" {
-			logging.Log.Warnf(ctx, "Tool call %s has empty arguments, skipping", tc.ID)
-			continue
-		}
-
-		// Parse arguments
-		var args map[string]interface{}
-		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
-			logging.Log.Warnf(ctx, "Failed to parse tool call arguments for %s: %v, skipping tool call", tc.Function.Name, err)
+			parseErr := fmt.Errorf("failed to parse tool call at index %d (ID: %s, Name: %s): %w, raw arguments: %s",
+				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
+			errors = append(errors, parseErr)
+			logging.Log.Errorf(ctx, "Failed to parse tool call at index %d (ID: %s, Name: %s): %v, raw arguments: %s, skipping tool call",
+				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
 			continue
 		}
 
@@ -259,8 +159,11 @@ func ConvertOpenAIV2ToolCallsToSharedTypes(
 	}
 
 	if len(toolCalls) > 0 {
-		logging.Log.Infof(ctx, "Converted %d OpenAI v2 tool calls to shared format", len(toolCalls))
+		logging.Log.Infof(ctx, "Converted %d OpenAI tool calls to shared format", len(toolCalls))
+	}
+	if len(errors) > 0 {
+		logging.Log.Errorf(ctx, "Failed to convert %d out of %d tool calls (see detailed errors above)", len(errors), len(openaiToolCalls))
 	}
 
-	return toolCalls
+	return toolCalls, errors
 }
