@@ -12,7 +12,6 @@ require (
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/iancoleman/strcase v0.3.0
-	github.com/openai/openai-go v0.1.0-alpha.61
 	github.com/openai/openai-go/v2 v2.7.1
 	github.com/shopspring/decimal v1.4.0
 	github.com/stretchr/testify v1.10.0
