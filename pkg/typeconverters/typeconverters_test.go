@@ -129,7 +129,7 @@ func TestConvertStringToGivenType(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("%s_%s", test.goType, test.value), func(t *testing.T) {
-			output, err := ConvertStringToGivenType(test.value, test.goType)
+			output, _, err := ConvertStringToGivenType(test.value, test.goType)
 			if err != nil && test.expectedErr == nil {
 				t.Errorf("Expected no error, got: %v", err)
 			}
