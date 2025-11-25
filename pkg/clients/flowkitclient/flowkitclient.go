@@ -250,9 +250,12 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		value, ok := inputs[inputDef.Name]
 		if ok {
 			// found: convert value to string
-			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			stringValue, exists, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
 			if err != nil {
-				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+				return nil, fmt.Errorf("error converting input '%s' to string: %v", inputDef.Name, err)
+			}
+			if !exists {
+				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
 			}
 			grpcInput.Value = stringValue
 
@@ -278,9 +281,12 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	outputs = map[string]sharedtypes.FilledInputOutput{}
 	for _, output := range runResp.Outputs {
 		// convert value to Go type
-		value, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
+		value, exists, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
 		if err != nil {
 			return nil, fmt.Errorf("error converting output %s (%v) to Go type: %v", output.Name, output.Value, err)
+		}
+		if !exists {
+			return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertStringToGivenType", output.Name)
 		}
 
 		// Save the output to the map
@@ -348,11 +354,16 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 		value, ok := inputs[inputDef.Name]
 		if ok {
 			// found: convert value to string
-			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			stringValue, exists, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
 			if err != nil {
 				conn.Close()
 				cancel()
 				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+			}
+			if !exists {
+				conn.Close()
+				cancel()
+				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
 			}
 			grpcInput.Value = stringValue
 
