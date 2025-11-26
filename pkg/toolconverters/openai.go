@@ -38,51 +38,34 @@ import (
 // Parameters:
 //
 //	ctx: The logging context map.
-//	mcpTools: Array of MCP tool definitions.
+//	mcpTools: Array of MCP tool definitions (typed MCPTool structs).
 //
 // Returns:
 //
 //	[]openai.ChatCompletionToolUnionParam: OpenAI formatted tools.
-//	[]error: List of errors for tools that were skipped during conversion.
+//	[]error: List of errors (empty for typed input, kept for API compatibility).
 func ConvertMCPToOpenAIFormat(
 	ctx *logging.ContextMap,
-	mcpTools []interface{},
+	mcpTools []sharedtypes.MCPTool,
 ) ([]openai.ChatCompletionToolUnionParam, []error) {
 	var openaiTools []openai.ChatCompletionToolUnionParam
-	var errors []error
 
-	for i, mcpTool := range mcpTools {
-		// Convert interface{} to map for field access
-		toolMap, ok := mcpTool.(map[string]interface{})
-		if !ok {
-			toolJSON, _ := json.Marshal(mcpTool)
-			err := fmt.Errorf("tool at index %d is not a valid object, got type %T, value: %s", i, mcpTool, string(toolJSON))
-			errors = append(errors, err)
-			logging.Log.Errorf(ctx, "Skipping tool %d: not a valid object (type: %T, value: %s)", i, mcpTool, string(toolJSON))
+	for _, mcpTool := range mcpTools {
+		// Validate name (required field)
+		if mcpTool.Name == "" {
+			logging.Log.Warnf(ctx, "Skipping tool with empty name")
 			continue
 		}
 
-		// Extract required fields
-		name, nameOk := toolMap["name"].(string)
-		if !nameOk || name == "" {
-			toolJSON, _ := json.Marshal(toolMap)
-			err := fmt.Errorf("tool at index %d is missing or has invalid 'name' field, tool data: %s", i, string(toolJSON))
-			errors = append(errors, err)
-			logging.Log.Errorf(ctx, "Skipping tool %d: missing or invalid 'name' field, tool data: %s", i, string(toolJSON))
-			continue
+		// Warn if description is missing (recommended but not required)
+		if mcpTool.Description == "" {
+			logging.Log.Warnf(ctx, "Tool '%s': missing description (recommended for better LLM understanding)", mcpTool.Name)
 		}
 
-		// Extract description (
-		description, _ := toolMap["description"].(string)
-		if description == "" {
-			logging.Log.Warnf(ctx, "Tool '%s': missing description (recommended for better LLM understanding)", name)
-		}
-
-		// Extract inputSchema
-		inputSchema, schemaOk := toolMap["inputSchema"].(map[string]interface{})
-		if !schemaOk {
-			logging.Log.Warnf(ctx, "Tool '%s': missing or invalid 'inputSchema' (LLM may not understand parameters)", name)
-			// Create empty schema as fallback
+		// Use provided inputSchema or create empty one as fallback
+		inputSchema := mcpTool.InputSchema
+		if inputSchema == nil {
+			logging.Log.Warnf(ctx, "Tool '%s': missing 'inputSchema' (LLM may not understand parameters)", mcpTool.Name)
 			inputSchema = map[string]interface{}{
 				"type":       "object",
 				"properties": map[string]interface{}{},
@@ -91,24 +74,21 @@ func ConvertMCPToOpenAIFormat(
 
 		// Convert to OpenAI format
 		functionDef := shared.FunctionDefinitionParam{
-			Name:        name,
-			Description: openai.String(description),
+			Name:        mcpTool.Name,
+			Description: openai.String(mcpTool.Description),
 			Parameters:  shared.FunctionParameters(inputSchema),
 		}
 
 		openaiTool := openai.ChatCompletionFunctionTool(functionDef)
 		openaiTools = append(openaiTools, openaiTool)
-		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to OpenAI format", name)
+		logging.Log.Debugf(ctx, "Converted MCP tool '%s' to OpenAI format", mcpTool.Name)
 	}
 
 	if len(openaiTools) > 0 {
 		logging.Log.Infof(ctx, "Converted %d MCP tools to OpenAI format", len(openaiTools))
 	}
-	if len(errors) > 0 {
-		logging.Log.Errorf(ctx, "Failed to convert %d out of %d MCP tools (see detailed errors above)", len(errors), len(mcpTools))
-	}
 
-	return openaiTools, errors
+	return openaiTools, nil
 }
 
 // ConvertOpenAIToolCallsToSharedTypes converts OpenAI SDK tool calls to shared ToolCall format.
@@ -130,23 +110,22 @@ func ConvertOpenAIToolCallsToSharedTypes(
 	var errors []error
 
 	for i, tc := range openaiToolCalls {
-		// Skip tool calls with empty arguments
-		if tc.Function.Arguments == "" {
-			err := fmt.Errorf("tool call at index %d (ID: %s, Name: %s) has empty arguments", i, tc.ID, tc.Function.Name)
-			errors = append(errors, err)
-			logging.Log.Errorf(ctx, "Tool call at index %d (ID: %s, Name: %s) has empty arguments, skipping", i, tc.ID, tc.Function.Name)
-			continue
-		}
-
-		// Parse arguments
+		// Parse arguments - handle empty string as empty object (zero-parameter tool)
 		var args map[string]interface{}
-		if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
-			parseErr := fmt.Errorf("failed to parse tool call at index %d (ID: %s, Name: %s): %w, raw arguments: %s",
-				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
-			errors = append(errors, parseErr)
-			logging.Log.Errorf(ctx, "Failed to parse tool call at index %d (ID: %s, Name: %s): %v, raw arguments: %s, skipping tool call",
-				i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
-			continue
+		if tc.Function.Arguments == "" {
+			// Empty arguments string represents a tool with no parameters
+			args = map[string]interface{}{}
+			logging.Log.Debugf(ctx, "Tool call at index %d (ID: %s, Name: %s) has no arguments (zero-parameter tool)", i, tc.ID, tc.Function.Name)
+		} else {
+			// Parse non-empty arguments
+			if err := json.Unmarshal([]byte(tc.Function.Arguments), &args); err != nil {
+				parseErr := fmt.Errorf("failed to parse tool call at index %d (ID: %s, Name: %s): %w, raw arguments: %s",
+					i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
+				errors = append(errors, parseErr)
+				logging.Log.Errorf(ctx, "Failed to parse tool call at index %d (ID: %s, Name: %s): %v, raw arguments: %s, skipping tool call",
+					i, tc.ID, tc.Function.Name, err, tc.Function.Arguments)
+				continue
+			}
 		}
 
 		// Only append valid tool calls
