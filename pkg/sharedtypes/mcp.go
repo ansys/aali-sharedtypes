@@ -35,6 +35,44 @@ type MCPConfig struct {
 	Timeout   int    `json:"timeout"`   // Connection timeout in seconds
 }
 
+// MCPTool represents a tool definition in the Model Context Protocol.
+type MCPTool struct {
+	Name        string                 `json:"name"`                  // Unique identifier for the tool
+	Description string                 `json:"description,omitempty"` // Human-readable description of what the tool does
+	InputSchema map[string]interface{} `json:"inputSchema"`           // JSON Schema for the tool's parameters
+}
+
+// MCPContentItem represents a single content item in an MCP response.
+type MCPContentItem struct {
+	Type     string `json:"type"`               // Content type: "text", "image", "resource"
+	Text     string `json:"text,omitempty"`     // Text content
+	Data     string `json:"data,omitempty"`     // Base64-encoded data for images
+	MimeType string `json:"mimeType,omitempty"` // MIME type for binary content
+	URI      string `json:"uri,omitempty"`      // Resource URI for resource content
+}
+
+// MCPResource represents a resource available from an MCP server.
+type MCPResource struct {
+	URI         string `json:"uri"`                   // Unique resource identifier
+	Name        string `json:"name"`                  // Human-readable resource name
+	Description string `json:"description,omitempty"` // Description of the resource
+	MimeType    string `json:"mimeType,omitempty"`    // MIME type of the resource content
+}
+
+// MCPPrompt represents a prompt template available from an MCP server.
+type MCPPrompt struct {
+	Name        string              `json:"name"`                  // Unique prompt identifier
+	Description string              `json:"description,omitempty"` // Description of what the prompt does
+	Arguments   []MCPPromptArgument `json:"arguments,omitempty"`   // Parameters the prompt accepts
+}
+
+// MCPPromptArgument represents an argument for a prompt template.
+type MCPPromptArgument struct {
+	Name        string `json:"name"`                  // Argument name
+	Description string `json:"description,omitempty"` // Description of the argument
+	Required    bool   `json:"required,omitempty"`    // Whether the argument is required
+}
+
 // GetAuthToken returns the authentication token, resolving environment variables if needed
 // ${MCP_TOKEN} will return the value of the MCP_TOKEN environment variable
 func (config *MCPConfig) GetAuthToken() string {
