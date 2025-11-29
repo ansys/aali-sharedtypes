@@ -88,10 +88,11 @@ type TransferDetails struct {
 
 // HistoricMessage represents a past chat message.
 type HistoricMessage struct {
-	Role       string   `json:"role"`
-	Content    string   `json:"content"`
-	Images     []string `json:"images"`               // image in base64 format
-	ToolCallId *string  `json:"toolCallId,omitempty"` // Tool call ID for tool responses
+	Role       string     `json:"role"`
+	Content    string     `json:"content"`
+	Images     []string   `json:"images"`               // image in base64 format
+	ToolCallId *string    `json:"toolCallId,omitempty"` // Tool call ID for tool responses
+	ToolCalls  []ToolCall `json:"toolCalls,omitempty"`  // Tool calls made by assistant
 }
 
 // ModelOptions represents options for provider-specific API calls.

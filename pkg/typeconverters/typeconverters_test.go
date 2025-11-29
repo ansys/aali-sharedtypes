@@ -124,6 +124,8 @@ func TestConvertStringToGivenType(t *testing.T) {
 		{"", "*chan string", (*chan string)(nil), nil},
 		{`{"serverURL":"http://localhost:8080","transport":"http","authToken":"secret123","timeout":30}`, "MCPConfig", sharedtypes.MCPConfig{ServerURL: "http://localhost:8080", Transport: "http", AuthToken: "secret123", Timeout: 30}, nil},
 		{`[{"serverURL":"http://localhost:8080","transport":"http","authToken":"secret123","timeout":30}]`, "[]MCPConfig", []sharedtypes.MCPConfig{{ServerURL: "http://localhost:8080", Transport: "http", AuthToken: "secret123", Timeout: 30}}, nil},
+		{`[{"name":"test_tool","description":"A test tool","inputSchema":{"type":"object","properties":{"param1":{"type":"string"}}}}]`, "[]MCPTool", []sharedtypes.MCPTool{{Name: "test_tool", Description: "A test tool", InputSchema: map[string]interface{}{"type": "object", "properties": map[string]interface{}{"param1": map[string]interface{}{"type": "string"}}}}}, nil},
+		{"", "[]MCPTool", []sharedtypes.MCPTool{}, nil},
 		// Add more test cases as needed for each supported type
 	}
 
