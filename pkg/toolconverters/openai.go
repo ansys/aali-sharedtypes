@@ -146,3 +146,53 @@ func ConvertOpenAIToolCallsToSharedTypes(
 
 	return toolCalls, errors
 }
+
+// ConvertSharedTypesToOpenAIToolCalls converts shared ToolCall format to OpenAI SDK tool call params.
+// This is used when reconstructing conversation history with assistant messages that made tool calls.
+//
+// Parameters:
+//
+//	ctx: The logging context map.
+//	toolCalls: Array of shared format tool calls.
+//
+// Returns:
+//
+//	[]openai.ChatCompletionMessageToolCallUnionParam: OpenAI formatted tool call params.
+//	[]error: List of errors for tool calls that failed conversion.
+func ConvertSharedTypesToOpenAIToolCalls(
+	ctx *logging.ContextMap,
+	toolCalls []sharedtypes.ToolCall,
+) ([]openai.ChatCompletionMessageToolCallUnionParam, []error) {
+	var openaiToolCalls []openai.ChatCompletionMessageToolCallUnionParam
+	var errors []error
+
+	for i, tc := range toolCalls {
+		// Serialize arguments back to JSON string
+		argsJSON, err := json.Marshal(tc.Input)
+		if err != nil {
+			parseErr := fmt.Errorf("failed to serialize tool call arguments at index %d (ID: %s, Name: %s): %w",
+				i, tc.ID, tc.Name, err)
+			errors = append(errors, parseErr)
+			logging.Log.Errorf(ctx, "Failed to serialize tool call at index %d (ID: %s, Name: %s): %v, skipping",
+				i, tc.ID, tc.Name, err)
+			continue
+		}
+
+		openaiToolCall := openai.ChatCompletionMessageToolCallUnionParam{
+			OfFunction: &openai.ChatCompletionMessageFunctionToolCallParam{
+				ID: tc.ID,
+				Function: openai.ChatCompletionMessageFunctionToolCallFunctionParam{
+					Name:      tc.Name,
+					Arguments: string(argsJSON),
+				},
+			},
+		}
+		openaiToolCalls = append(openaiToolCalls, openaiToolCall)
+	}
+
+	if len(openaiToolCalls) > 0 {
+		logging.Log.Debugf(ctx, "Converted %d shared tool calls to OpenAI format", len(openaiToolCalls))
+	}
+
+	return openaiToolCalls, errors
+}
