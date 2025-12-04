@@ -29,6 +29,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"github.com/ansys/aali-sharedtypes/pkg/clients/flowkitclient"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
@@ -60,7 +61,11 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 	req.Header.Set("Content-Type", "application/json")
 
 	// Create a client and make the request
-	client := &http.Client{}
+	client, err := clients.GetHttpClient()
+	if err != nil {
+		errorMessage := fmt.Errorf("error getting HTTP client with cert: %v", err)
+		return errorMessage
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		errorMessage := fmt.Errorf("error making GET request: %v", err)
@@ -204,7 +209,11 @@ func RunFunction(functionName string, inputs map[string]sharedtypes.FilledInputO
 	req.Header.Set("Content-Type", "application/json")
 
 	// Create a client and make the request
-	client := &http.Client{}
+	client, err := clients.GetHttpClient()
+	if err != nil {
+		errorMessage := fmt.Errorf("error getting HTTP client with cert: %v", err)
+		return nil, errorMessage
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		errorMessage := fmt.Errorf("error making POST request: %v", err)

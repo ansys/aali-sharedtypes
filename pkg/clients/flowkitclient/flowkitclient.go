@@ -26,17 +26,15 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"net"
 	"strings"
 
 	"github.com/ansys/aali-sharedtypes/pkg/aaliflowkitgrpc"
+	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -454,30 +452,10 @@ func createClient(url string, apiKey string) (client aaliflowkitgrpc.ExternalFun
 		address = url
 	}
 
-	// Set up the gRPC dial options
-	var opts []grpc.DialOption
-
-	// Add custom dialer with IPv4 first, fallback to IPv6
-	opts = append(opts, grpc.WithContextDialer(func(ctx context.Context, addr string) (net.Conn, error) {
-		d := &net.Dialer{}
-
-		// Try IPv4 first
-		conn, err := d.DialContext(ctx, "tcp4", addr)
-		if err == nil {
-			return conn, nil
-		}
-
-		// Fall back to IPv6 if IPv4 fails
-		return d.DialContext(ctx, "tcp6", addr)
-	}))
-
-	if scheme == "https" {
-		// Set up a secure connection with default TLS config
-		creds := credentials.NewTLS(nil)
-		opts = append(opts, grpc.WithTransportCredentials(creds))
-	} else {
-		// Set up an insecure connection
-		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// Get gRPC dial options
+	opts, err := clients.GetGrpcDialOptions(scheme)
+	if err != nil {
+		return nil, nil, fmt.Errorf("unable to get gRPC dial options: %v", err)
 	}
 
 	// Add the API key if it is set
