@@ -30,6 +30,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"go.uber.org/zap"
 )
 
@@ -50,7 +51,11 @@ func NewClient(address string, apiKey string, httpClient *http.Client) (*Client,
 }
 
 func DefaultClient(address string, apiKey string) (*Client, error) {
-	return NewClient(address, apiKey, http.DefaultClient)
+	client, err := clients.GetHttpClient()
+	if err != nil {
+		return nil, fmt.Errorf("error getting HTTP client with cert: %v", err)
+	}
+	return NewClient(address, apiKey, client)
 }
 
 // Update the api key of the client.
