@@ -26,12 +26,21 @@ package toolconverters
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
+	"strings"
 
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/openai/openai-go/v2"
 	"github.com/openai/openai-go/v2/shared"
 )
+
+// sanitizeToolName converts tool names to OpenAI-compatible format.
+func SanitizeToolName(name string) string {
+	sanitized := strings.ReplaceAll(name, " ", "_")
+	reg := regexp.MustCompile(`[^a-zA-Z0-9_.-]`)
+	return reg.ReplaceAllString(sanitized, "_")
+}
 
 // ConvertMCPToOpenAIFormat converts MCP tools to OpenAI function calling format.
 //
@@ -70,11 +79,16 @@ func ConvertMCPToOpenAIFormat(
 				"type":       "object",
 				"properties": map[string]interface{}{},
 			}
+		} else {
+			// Ensure 'properties' field exists - Azure OpenAI requires it for object schemas
+			if _, hasProperties := inputSchema["properties"]; !hasProperties {
+				inputSchema["properties"] = map[string]interface{}{}
+			}
 		}
 
 		// Convert to OpenAI format
 		functionDef := shared.FunctionDefinitionParam{
-			Name:        mcpTool.Name,
+			Name:        SanitizeToolName(mcpTool.Name),
 			Description: openai.String(mcpTool.Description),
 			Parameters:  shared.FunctionParameters(inputSchema),
 		}
