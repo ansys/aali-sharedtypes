@@ -37,9 +37,10 @@ type MCPConfig struct {
 
 // MCPTool represents a tool definition in the Model Context Protocol.
 type MCPTool struct {
-	Name        string                 `json:"name"`                  // Unique identifier for the tool
-	Description string                 `json:"description,omitempty"` // Human-readable description of what the tool does
-	InputSchema map[string]interface{} `json:"inputSchema"`           // JSON Schema for the tool's parameters
+	Name         string                 `json:"name"`                   // Unique identifier for the tool
+	OriginalName string                 `json:"originalName,omitempty"` // Original name of the tool
+	Description  string                 `json:"description,omitempty"`  // Human-readable description of what the tool does
+	InputSchema  map[string]interface{} `json:"inputSchema"`            // JSON Schema for the tool's parameters
 }
 
 // MCPContentItem represents a single content item in an MCP response.
