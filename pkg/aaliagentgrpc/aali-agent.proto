@@ -70,7 +70,7 @@ message ClientRequest {
     // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
     string instruction_id = 1;
 
-    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback"
+    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title"
     string type = 2;
 
     // String input for chat interface interaction
@@ -124,7 +124,7 @@ message ClientResponse {
     // Randomly generated instruction ID to be used in the client request
     string instruction_id = 1;
 
-    // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received"
+    // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title"
     string type = 2;
 
     // Chat Interface properties
@@ -150,6 +150,9 @@ message ClientResponse {
 
     // Info properties
     optional string info_message = 14;
+
+    // Conversation Title
+    string conversation_title = 15;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.

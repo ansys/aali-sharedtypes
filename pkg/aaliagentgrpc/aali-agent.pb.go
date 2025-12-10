@@ -331,7 +331,7 @@ type ClientRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback"
+	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// String input for chat interface interaction
 	Input string `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`
@@ -620,7 +620,7 @@ type ClientResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Randomly generated instruction ID to be used in the client request
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received"
+	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// Chat Interface properties
 	IsLast           bool   `protobuf:"varint,3,opt,name=is_last,json=isLast,proto3" json:"is_last,omitempty"`
@@ -639,9 +639,11 @@ type ClientResponse struct {
 	// Error properties
 	Error *ErrorResponse `protobuf:"bytes,13,opt,name=error,proto3" json:"error,omitempty"`
 	// Info properties
-	InfoMessage   *string `protobuf:"bytes,14,opt,name=info_message,json=infoMessage,proto3,oneof" json:"info_message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	InfoMessage *string `protobuf:"bytes,14,opt,name=info_message,json=infoMessage,proto3,oneof" json:"info_message,omitempty"`
+	// Conversation Title
+	ConversationTitle string `protobuf:"bytes,15,opt,name=conversation_title,json=conversationTitle,proto3" json:"conversation_title,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ClientResponse) Reset() {
@@ -768,6 +770,13 @@ func (x *ClientResponse) GetError() *ErrorResponse {
 func (x *ClientResponse) GetInfoMessage() string {
 	if x != nil && x.InfoMessage != nil {
 		return *x.InfoMessage
+	}
+	return ""
+}
+
+func (x *ClientResponse) GetConversationTitle() string {
+	if x != nil {
+		return x.ConversationTitle
 	}
 	return ""
 }
@@ -1000,7 +1009,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n" +
 	"\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\"J\n" +
 	"\x14AuthenticationStatus\x122\n" +
-	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xbe\x05\n" +
+	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xed\x05\n" +
 	"\x0eClientResponse\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n" +
@@ -1017,7 +1026,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"snapshotId\x12U\n" +
 	"\x14commands_by_category\x18\f \x03(\v2#.aaliagentgrpc.SlashCommandCategoryR\x12commandsByCategory\x122\n" +
 	"\x05error\x18\r \x01(\v2\x1c.aaliagentgrpc.ErrorResponseR\x05error\x12&\n" +
-	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x1aA\n" +
+	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x12-\n" +
+	"\x12conversation_title\x18\x0f \x01(\tR\x11conversationTitle\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n" +
