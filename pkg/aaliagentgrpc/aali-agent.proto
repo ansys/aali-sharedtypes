@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/struct.proto"; 
+
 package aaliagentgrpc;
 
 option go_package = "./aaliagentgrpc";
