@@ -117,8 +117,13 @@ jobs:
 
       - name: Compile protofiles
         run: |
-          protoc --go_out=pkg --go-grpc_out=pkg ./pkg/aaliflowkitgrpc/aali-flowkit.proto
-          protoc --go_out=pkg --go-grpc_out=pkg ./pkg/aaliagentgrpc/aali-agent.proto
+          # Find the protoc include directory
+          PROTOC_INCLUDE=$(dirname $(which protoc))/../include
+          echo "Using protoc include path: $PROTOC_INCLUDE"
+          ls -la "$PROTOC_INCLUDE/google/protobuf/" || echo "Include path not found"
+
+          protoc --proto_path=. --proto_path="$PROTOC_INCLUDE" --go_out=pkg --go-grpc_out=pkg ./pkg/aaliflowkitgrpc/aali-flowkit.proto
+          protoc --proto_path=. --proto_path="$PROTOC_INCLUDE" --go_out=pkg --go-grpc_out=pkg ./pkg/aaliagentgrpc/aali-agent.proto
           go mod tidy
           go mod verify
 
