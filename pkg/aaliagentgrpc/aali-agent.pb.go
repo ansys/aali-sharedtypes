@@ -331,7 +331,7 @@ type ClientRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title"
+	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// String input for chat interface interaction
 	Input string `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`
@@ -342,9 +342,11 @@ type ClientRequest struct {
 	// ID of the snapshot to be loaded
 	SnapshotId string `protobuf:"bytes,6,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
 	// Feedback for the workflow run
-	Feedback      *WorkflowFeedback `protobuf:"bytes,7,opt,name=feedback,proto3" json:"feedback,omitempty"` // Feedback for the workflow run
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Feedback *WorkflowFeedback `protobuf:"bytes,7,opt,name=feedback,proto3" json:"feedback,omitempty"` // Feedback for the workflow run
+	// Tool Call validation input
+	AcceptToolCall bool `protobuf:"varint,8,opt,name=accept_tool_call,json=acceptToolCall,proto3" json:"accept_tool_call,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ClientRequest) Reset() {
@@ -424,6 +426,13 @@ func (x *ClientRequest) GetFeedback() *WorkflowFeedback {
 		return x.Feedback
 	}
 	return nil
+}
+
+func (x *ClientRequest) GetAcceptToolCall() bool {
+	if x != nil {
+		return x.AcceptToolCall
+	}
+	return false
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
@@ -620,7 +629,7 @@ type ClientResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Randomly generated instruction ID to be used in the client request
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title"
+	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// Chat Interface properties
 	IsLast           bool   `protobuf:"varint,3,opt,name=is_last,json=isLast,proto3" json:"is_last,omitempty"`
@@ -642,8 +651,10 @@ type ClientResponse struct {
 	InfoMessage *string `protobuf:"bytes,14,opt,name=info_message,json=infoMessage,proto3,oneof" json:"info_message,omitempty"`
 	// Conversation Title
 	ConversationTitle string `protobuf:"bytes,15,opt,name=conversation_title,json=conversationTitle,proto3" json:"conversation_title,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Tool Call properties
+	ToolCall      string `protobuf:"bytes,16,opt,name=tool_call,json=toolCall,proto3" json:"tool_call,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ClientResponse) Reset() {
@@ -777,6 +788,13 @@ func (x *ClientResponse) GetInfoMessage() string {
 func (x *ClientResponse) GetConversationTitle() string {
 	if x != nil {
 		return x.ConversationTitle
+	}
+	return ""
+}
+
+func (x *ClientResponse) GetToolCall() string {
+	if x != nil {
+		return x.ToolCall
 	}
 	return ""
 }
@@ -984,7 +1002,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\aapi_key\x18\t \x01(\tR\x06apiKey\x1a<\n" +
 	"\x0eVariablesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xf4\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x9e\x03\n" +
 	"\rClientRequest\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
@@ -993,7 +1011,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fvariable_values\x18\x05 \x03(\v20.aaliagentgrpc.ClientRequest.VariableValuesEntryR\x0evariableValues\x12\x1f\n" +
 	"\vsnapshot_id\x18\x06 \x01(\tR\n" +
 	"snapshotId\x12;\n" +
-	"\bfeedback\x18\a \x01(\v2\x1f.aaliagentgrpc.WorkflowFeedbackR\bfeedback\x1aA\n" +
+	"\bfeedback\x18\a \x01(\v2\x1f.aaliagentgrpc.WorkflowFeedbackR\bfeedback\x12(\n" +
+	"\x10accept_tool_call\x18\b \x01(\bR\x0eacceptToolCall\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc9\x01\n" +
@@ -1009,7 +1028,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n" +
 	"\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\"J\n" +
 	"\x14AuthenticationStatus\x122\n" +
-	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xed\x05\n" +
+	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\x8a\x06\n" +
 	"\x0eClientResponse\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n" +
@@ -1027,7 +1046,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x14commands_by_category\x18\f \x03(\v2#.aaliagentgrpc.SlashCommandCategoryR\x12commandsByCategory\x122\n" +
 	"\x05error\x18\r \x01(\v2\x1c.aaliagentgrpc.ErrorResponseR\x05error\x12&\n" +
 	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x12-\n" +
-	"\x12conversation_title\x18\x0f \x01(\tR\x11conversationTitle\x1aA\n" +
+	"\x12conversation_title\x18\x0f \x01(\tR\x11conversationTitle\x12\x1b\n" +
+	"\ttool_call\x18\x10 \x01(\tR\btoolCall\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n" +
