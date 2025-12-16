@@ -41,6 +41,7 @@ type MCPTool struct {
 	OriginalName string                 `json:"originalName,omitempty"` // Original name of the tool
 	Description  string                 `json:"description,omitempty"`  // Human-readable description of what the tool does
 	InputSchema  map[string]interface{} `json:"inputSchema"`            // JSON Schema for the tool's parameters
+	ServerURL    string                 `json:"serverURL,omitempty"`    // URL of the MCP server that provides this tool
 }
 
 // MCPContentItem represents a single content item in an MCP response.
