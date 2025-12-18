@@ -738,6 +738,16 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, true, err
 		}
 		return output, true, nil
+	case "*MCPClient":
+		if value == "" {
+			value = "{}"
+		}
+		output := &sharedtypes.MCPClient{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
 	case "ToolCall":
 		if value == "" {
 			value = "{}"
@@ -1098,6 +1108,14 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 			return "", true, err
 		}
 		return string(output), true, nil
+
+	case "*MCPClient":
+		output, err := json.Marshal(value.(*sharedtypes.MCPClient))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+
 	case "ToolCall":
 		output, err := json.Marshal(value.(sharedtypes.ToolCall))
 		if err != nil {

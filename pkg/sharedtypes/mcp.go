@@ -25,6 +25,10 @@ package sharedtypes
 import (
 	"os"
 	"strings"
+	"sync"
+
+	"github.com/ansys/aali-sharedtypes/pkg/logging"
+	"github.com/mark3labs/mcp-go/client"
 )
 
 // MCPConfig represents the configuration for MCP connections
@@ -42,6 +46,16 @@ type MCPTool struct {
 	Description  string                 `json:"description,omitempty"`  // Human-readable description of what the tool does
 	InputSchema  map[string]interface{} `json:"inputSchema"`            // JSON Schema for the tool's parameters
 	ServerURL    string                 `json:"serverURL,omitempty"`    // URL of the MCP server that provides this tool
+}
+
+// MCPClient wraps the SDK client with logging context
+type MCPClient struct {
+	Client    *client.Client
+	Transport string
+	ServerURL string
+	closed    bool
+	mu        sync.Mutex
+	logCtx    *logging.ContextMap
 }
 
 // MCPContentItem represents a single content item in an MCP response.
