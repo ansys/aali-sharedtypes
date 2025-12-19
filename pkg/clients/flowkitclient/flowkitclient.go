@@ -208,14 +208,14 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	defer func() {
 		r := recover()
 		if r != nil {
-			err = fmt.Errorf("panic occurred in RunFunction: %v", r)
+			err = fmt.Errorf("panic occurred in RunFunction of function '%v': %v", functionName, r)
 		}
 	}()
 
 	// Get function definition
 	functionDef, ok := AvailableFunctions[functionName]
 	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+		return nil, fmt.Errorf("function '%s' not found in available functions", functionName)
 	}
 
 	// Set up a connection to the server.
@@ -250,7 +250,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 			// found: convert value to string
 			stringValue, exists, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
 			if err != nil {
-				return nil, fmt.Errorf("error converting input '%s' to string: %v", inputDef.Name, err)
+				return nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
 			}
 			if !exists {
 				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
@@ -272,7 +272,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		Inputs: grpcInputs,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("error in external function gRPC RunFunction: %v", err)
+		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
 	}
 
 	// convert outputs to map[string]sharedtypes.FilledInputOutput
@@ -281,7 +281,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		// convert value to Go type
 		value, exists, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
 		if err != nil {
-			return nil, fmt.Errorf("error converting output %s (%v) to Go type: %v", output.Name, output.Value, err)
+			return nil, fmt.Errorf("error converting output '%s' with value '%v' for function '%v' to Go type: %v", output.Name, output.Value, functionName, err)
 		}
 		if !exists {
 			return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertStringToGivenType", output.Name)
@@ -312,14 +312,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	defer func() {
 		r := recover()
 		if r != nil {
-			err = fmt.Errorf("panic occured in StreamFunction: %v", r)
+			err = fmt.Errorf("panic occured in StreamFunction for function '%v': %v", functionName, r)
 		}
 	}()
 
 	// Get function definition
 	functionDef, ok := AvailableFunctions[functionName]
 	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+		return nil, fmt.Errorf("function '%s' not found in available functions", functionName)
 	}
 
 	// Set up a connection to the server.
@@ -356,7 +356,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 			if err != nil {
 				conn.Close()
 				cancel()
-				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+				return nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
 			}
 			if !exists {
 				conn.Close()
@@ -382,14 +382,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	if err != nil {
 		conn.Close()
 		cancel()
-		return nil, fmt.Errorf("error in external function gRPC StreamFunction: %v", err)
+		return nil, fmt.Errorf("error in external function gRPC StreamFunction for function '%v': %v", functionName, err)
 	}
 
 	// Create a stream channel
 	streamChannel := make(chan string, 400)
 
 	// Receive the stream from the server
-	go receiveStreamFromServer(ctx, stream, &streamChannel, conn, cancel)
+	go receiveStreamFromServer(ctx, stream, &streamChannel, conn, cancel, functionName)
 
 	return &streamChannel, nil
 }
@@ -399,11 +399,11 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 // Parameters:
 //   - stream: the stream from the server
 //   - streamChannel: the channel to send the stream to
-func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.ExternalFunctions_StreamFunctionClient, streamChannel *chan string, conn *grpc.ClientConn, cancel context.CancelFunc) {
+func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.ExternalFunctions_StreamFunctionClient, streamChannel *chan string, conn *grpc.ClientConn, cancel context.CancelFunc, functionName string) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in receiveStreamFromServer: %v", r)
+			logging.Log.Errorf(ctx, "Panic occured in receiveStreamFromServer for function '%v': %v", functionName, r)
 		}
 	}()
 
@@ -411,7 +411,7 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 	for {
 		res, err := stream.Recv()
 		if err != nil && err != io.EOF {
-			logging.Log.Errorf(ctx, "error receiving stream: %v", err)
+			logging.Log.Errorf(ctx, "error receiving stream for function '%v': %v", functionName, err)
 		}
 
 		// Send the stream to the channel
