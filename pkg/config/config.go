@@ -550,8 +550,7 @@ func ValidateConfig(config Config, requiredProperties []string) (err error) {
 		field := configValue.FieldByName(property)
 
 		if !field.IsValid() || field.IsZero() {
-			message := fmt.Sprintf("config.yaml is missing mandatory property '%v': ", property)
-			return fmt.Errorf(message)
+			return fmt.Errorf("config.yaml is missing mandatory property '%v': ", property)
 		}
 	}
 
