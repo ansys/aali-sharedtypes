@@ -149,6 +149,8 @@ type Config struct {
 	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
 	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
 	QDRANT_API_KEY        string `yaml:"QDRANT_API_KEY" json:"QDRANTAPIKEY"`
+	// Connections to external services
+	MONGODB_CS string `yaml:"MONGODB_CS" json:"MONGODBCS"`
 
 	// Aali Flowkit Python
 	//////////////////////
