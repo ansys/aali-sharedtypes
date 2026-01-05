@@ -115,7 +115,6 @@ type Config struct {
 	LLM_ADDRESS            string `yaml:"LLM_ADDRESS" json:"LLMADDRESS"`
 	MODELS_CONFIG_LOCATION string `yaml:"MODELS_CONFIG_LOCATION" json:"MODELSCONFIGLOCATION"`
 	LLM_API_KEY            string `yaml:"LLM_API_KEY" json:"LLMAPIKEY"`
-	LLM_PROMPTS_FILE       string `yaml:"LLM_PROMPTS_FILE" json:"LLMPROMPTSFILE"`
 
 	// Aali Exec
 	//////////////
