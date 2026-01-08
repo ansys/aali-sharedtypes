@@ -72,7 +72,7 @@ message ClientRequest {
     // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
     string instruction_id = 1;
 
-    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation"
+    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution"
     string type = 2;
 
     // String input for chat interface interaction
@@ -92,6 +92,9 @@ message ClientRequest {
 
     // Tool Call validation input
     bool accept_tool_call = 8;
+
+    // Updated LLM message after code changes for code execution
+    string updated_llm_message = 9;
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
@@ -161,6 +164,9 @@ message ClientResponse {
 
     // Tool Call properties
     ToolCall tool_call = 16;
+
+    // Code Execution properties
+    bool code_execution_allowed = 17;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
