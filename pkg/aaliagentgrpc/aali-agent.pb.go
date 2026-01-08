@@ -332,7 +332,7 @@ type ClientRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation"
+	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// String input for chat interface interaction
 	Input string `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`
@@ -346,8 +346,10 @@ type ClientRequest struct {
 	Feedback *WorkflowFeedback `protobuf:"bytes,7,opt,name=feedback,proto3" json:"feedback,omitempty"` // Feedback for the workflow run
 	// Tool Call validation input
 	AcceptToolCall bool `protobuf:"varint,8,opt,name=accept_tool_call,json=acceptToolCall,proto3" json:"accept_tool_call,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Updated LLM message after code changes for code execution
+	UpdatedLlmMessage string `protobuf:"bytes,9,opt,name=updated_llm_message,json=updatedLlmMessage,proto3" json:"updated_llm_message,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ClientRequest) Reset() {
@@ -434,6 +436,13 @@ func (x *ClientRequest) GetAcceptToolCall() bool {
 		return x.AcceptToolCall
 	}
 	return false
+}
+
+func (x *ClientRequest) GetUpdatedLlmMessage() string {
+	if x != nil {
+		return x.UpdatedLlmMessage
+	}
+	return ""
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
@@ -653,9 +662,11 @@ type ClientResponse struct {
 	// Conversation Title
 	ConversationTitle string `protobuf:"bytes,15,opt,name=conversation_title,json=conversationTitle,proto3" json:"conversation_title,omitempty"`
 	// Tool Call properties
-	ToolCall      *ToolCall `protobuf:"bytes,16,opt,name=tool_call,json=toolCall,proto3" json:"tool_call,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ToolCall *ToolCall `protobuf:"bytes,16,opt,name=tool_call,json=toolCall,proto3" json:"tool_call,omitempty"`
+	// Code Execution properties
+	CodeExecutionAllowed bool `protobuf:"varint,17,opt,name=code_execution_allowed,json=codeExecutionAllowed,proto3" json:"code_execution_allowed,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *ClientResponse) Reset() {
@@ -798,6 +809,13 @@ func (x *ClientResponse) GetToolCall() *ToolCall {
 		return x.ToolCall
 	}
 	return nil
+}
+
+func (x *ClientResponse) GetCodeExecutionAllowed() bool {
+	if x != nil {
+		return x.CodeExecutionAllowed
+	}
+	return false
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
@@ -1076,7 +1094,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\aapi_key\x18\t \x01(\tR\x06apiKey\x1a<\n" +
 	"\x0eVariablesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x9e\x03\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xce\x03\n" +
 	"\rClientRequest\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
@@ -1086,7 +1104,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\vsnapshot_id\x18\x06 \x01(\tR\n" +
 	"snapshotId\x12;\n" +
 	"\bfeedback\x18\a \x01(\v2\x1f.aaliagentgrpc.WorkflowFeedbackR\bfeedback\x12(\n" +
-	"\x10accept_tool_call\x18\b \x01(\bR\x0eacceptToolCall\x1aA\n" +
+	"\x10accept_tool_call\x18\b \x01(\bR\x0eacceptToolCall\x12.\n" +
+	"\x13updated_llm_message\x18\t \x01(\tR\x11updatedLlmMessage\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc9\x01\n" +
@@ -1102,7 +1121,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n" +
 	"\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\"J\n" +
 	"\x14AuthenticationStatus\x122\n" +
-	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xa3\x06\n" +
+	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xd9\x06\n" +
 	"\x0eClientResponse\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n" +
@@ -1121,7 +1140,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x05error\x18\r \x01(\v2\x1c.aaliagentgrpc.ErrorResponseR\x05error\x12&\n" +
 	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x12-\n" +
 	"\x12conversation_title\x18\x0f \x01(\tR\x11conversationTitle\x124\n" +
-	"\ttool_call\x18\x10 \x01(\v2\x17.aaliagentgrpc.ToolCallR\btoolCall\x1aA\n" +
+	"\ttool_call\x18\x10 \x01(\v2\x17.aaliagentgrpc.ToolCallR\btoolCall\x124\n" +
+	"\x16code_execution_allowed\x18\x11 \x01(\bR\x14codeExecutionAllowed\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n" +
