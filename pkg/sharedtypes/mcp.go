@@ -27,12 +27,22 @@ import (
 	"strings"
 )
 
+// TLSConfig represents the TLS/HTTPS configuration for secure connections
+type TLSConfig struct {
+	Enabled            bool   `json:"enabled"`            // Whether TLS is enabled
+	CertFile           string `json:"certFile,omitempty"` // Path to the TLS certificate file
+	KeyFile            string `json:"keyFile,omitempty"`  // Path to the TLS key file
+	CAFile             string `json:"caFile,omitempty"`   // Path to the CA certificate file
+	InsecureSkipVerify bool   `json:"insecureSkipVerify"` // Whether to skip server certificate verification(dev)
+}
+
 // MCPConfig represents the configuration for MCP connections
 type MCPConfig struct {
-	ServerURL string `json:"serverURL"` // URL of the MCP server endpoint
-	Transport string `json:"transport"` // Connection protocol: "stdio", "http", "websocket"
-	AuthToken string `json:"authToken"` // Authentication token, supports ${ENV_VAR} syntax
-	Timeout   int    `json:"timeout"`   // Connection timeout in seconds
+	ServerURL string     `json:"serverURL"`     // URL of the MCP server endpoint
+	Transport string     `json:"transport"`     // Connection protocol: "stdio", "http", "websocket"
+	AuthToken string     `json:"authToken"`     // Authentication token, supports ${ENV_VAR} syntax
+	Timeout   int        `json:"timeout"`       // Connection timeout in seconds
+	TLS       *TLSConfig `json:"tls,omitempty"` // TLS configuration for secure connections
 }
 
 // MCPTool represents a tool definition in the Model Context Protocol.
