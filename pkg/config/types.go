@@ -54,6 +54,8 @@ type Config struct {
 	USE_SSL                   bool   `yaml:"USE_SSL" json:"USESSL"`
 	SSL_CERT_PUBLIC_KEY_FILE  string `yaml:"SSL_CERT_PUBLIC_KEY_FILE" json:"SSLCERTPUBLICKEYFILE"`
 	SSL_CERT_PRIVATE_KEY_FILE string `yaml:"SSL_CERT_PRIVATE_KEY_FILE" json:"SSLCERTPRIVATEKEYFILE"`
+	USE_GRPC_SSL              bool   `yaml:"USE_GRPC_SSL" json:"USEGRPCSSL"`
+	USE_MCP_SSL               bool   `yaml:"USE_MCP_SSL" json:"USEMCPSSL"`
 
 	// Azure Key Vault Settings
 	////////////////////////////
