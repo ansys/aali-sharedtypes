@@ -23,7 +23,7 @@
 package sharedtypes
 
 // SimulationInput captures the schema for simulation validation payloads.
-type SimulationInput struct {
+type DiscoverySimulationInput struct {
 	SimulationName     string               `json:"simulationName"`
 	SimulationType     string               `json:"simulationType"`
 	Model              string               `json:"model"`
@@ -37,7 +37,7 @@ type SimulationInput struct {
 }
 
 // Dimensions defines spatial extents and their units.
-type Dimensions struct {
+type DiscoveryDimensions struct {
 	X     float64 `json:"x"`
 	Y     float64 `json:"y"`
 	Z     float64 `json:"z"`
@@ -45,14 +45,14 @@ type Dimensions struct {
 }
 
 // Material describes a labeled material state.
-type Material struct {
+type DiscoveryMaterial struct {
 	Label string `json:"label"`
 	Name  string `json:"name"`
 	State string `json:"state"`
 }
 
 // BoundaryCondition represents physics constraints for the simulation.
-type BoundaryCondition struct {
+type DiscoveryBoundaryCondition struct {
 	Index          int                      `json:"index"`
 	ProxyGuid      string                   `json:"proxyGuid"`
 	ProxyLabel     string                   `json:"proxyLabel"`
@@ -66,7 +66,7 @@ type BoundaryCondition struct {
 }
 
 // Attachment holds auxiliary binary payloads (e.g., base64-encoded uploads).
-type Attachment struct {
+type DiscoveryAttachment struct {
 	FileName string `json:"fileName"`
 	Data     []byte `json:"data"`
 }
