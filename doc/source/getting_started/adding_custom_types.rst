@@ -28,6 +28,7 @@ All type definitions are located in ``pkg/sharedtypes/``. Each file represents a
    ├── llmhandler.go      # LLM handler types
    ├── ansysgpt.go        # Ansys GPT specific types
    ├── ansysmaterials.go  # Ansys Materials types
+   ├── ansysdiscovery.go  # Ansys Discovery types
    └── dataextraction.go  # Data extraction types
 
 Step 2: Choose or Create a Category

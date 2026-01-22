@@ -24,16 +24,16 @@ package sharedtypes
 
 // SimulationInput captures the schema for simulation validation payloads.
 type DiscoverySimulationInput struct {
-	SimulationName     string               `json:"simulationName"`
-	SimulationType     string               `json:"simulationType"`
-	Model              string               `json:"model"`
-	Objective          string               `json:"objective"`
-	UserID             string               `json:"userId"`
-	OtherInformation   string               `json:"otherInformation,omitempty"`
-	Dimensions         Dimensions           `json:"dimensions"`
-	Materials          []Material           `json:"materials"`
-	BoundaryConditions []BoundaryCondition  `json:"boundaryConditions"`
-	Attachments        []Attachment         `json:"attachments,omitempty"`
+	SimulationName     string                       `json:"simulationName"`
+	SimulationType     string                       `json:"simulationType"`
+	Model              string                       `json:"model"`
+	Objective          string                       `json:"objective"`
+	UserID             string                       `json:"userId"`
+	OtherInformation   string                       `json:"otherInformation,omitempty"`
+	Dimensions         DiscoveryDimensions          `json:"dimensions"`
+	Materials          []DiscoveryMaterial          `json:"materials"`
+	BoundaryConditions []DiscoveryBoundaryCondition `json:"boundaryConditions"`
+	Attachments        []DiscoveryAttachment        `json:"attachments,omitempty"`
 }
 
 // Dimensions defines spatial extents and their units.
