@@ -778,6 +778,56 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 			return nil, true, err
 		}
 		return output, true, nil
+	case "DiscoverySimulationInput":
+		if value == "" {
+			return sharedtypes.DiscoverySimulationInput{}, true, nil
+		}
+		output := sharedtypes.DiscoverySimulationInput{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
+	case "DiscoveryDimensions":
+		if value == "" {
+			return sharedtypes.DiscoveryDimensions{}, true, nil
+		}
+		output := sharedtypes.DiscoveryDimensions{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
+	case "[]DiscoveryMaterial":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.DiscoveryMaterial{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
+	case "[]DiscoveryBoundaryCondition":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.DiscoveryBoundaryCondition{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
+	case "[]DiscoveryAttachment":
+		if value == "" {
+			value = "[]"
+		}
+		output := []sharedtypes.DiscoveryAttachment{}
+		err := json.Unmarshal([]byte(value), &output)
+		if err != nil {
+			return nil, true, err
+		}
+		return output, true, nil
 	}
 
 	return nil, false, nil
@@ -1118,6 +1168,36 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		return string(output), true, nil
 	case "[]SlashCommand":
 		output, err := json.Marshal(value.([]sharedtypes.SlashCommand))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+	case "DiscoverySimulationInput":
+		output, err := json.Marshal(value.(sharedtypes.DiscoverySimulationInput))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+	case "DiscoveryDimensions":
+		output, err := json.Marshal(value.(sharedtypes.DiscoveryDimensions))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+	case "[]DiscoveryMaterial":
+		output, err := json.Marshal(value.([]sharedtypes.DiscoveryMaterial))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+	case "[]DiscoveryBoundaryCondition":
+		output, err := json.Marshal(value.([]sharedtypes.DiscoveryBoundaryCondition))
+		if err != nil {
+			return "", true, err
+		}
+		return string(output), true, nil
+	case "[]DiscoveryAttachment":
+		output, err := json.Marshal(value.([]sharedtypes.DiscoveryAttachment))
 		if err != nil {
 			return "", true, err
 		}
