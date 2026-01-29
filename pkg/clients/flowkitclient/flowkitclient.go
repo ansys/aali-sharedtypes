@@ -154,10 +154,6 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				GoType:  inputParam.GoType,
 				Options: inputParam.Options,
 			})
-			// add the type to available types
-			if AvailableTypes != nil && inputParam.GoType != "" && inputParam.GoType != "any" {
-				AvailableTypes[inputParam.GoType] = true
-			}
 		}
 		outputs := []sharedtypes.FunctionOutput{}
 		for _, outputParam := range function.Output {
@@ -166,10 +162,6 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				Type:   outputParam.Type,
 				GoType: outputParam.GoType,
 			})
-			// add the type to available types
-			if AvailableTypes != nil && outputParam.GoType != "" && outputParam.GoType != "any" {
-				AvailableTypes[outputParam.GoType] = true
-			}
 		}
 
 		// Save the function to internal states
@@ -189,6 +181,12 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 		if AvailableCategories != nil && function.Category != "" {
 			AvailableCategories[function.Category] = true
 		}
+	}
+
+	// Save the available types to internal states
+	AvailableTypes = make(map[string]bool)
+	for _, goType := range typeconverters.GetSupportedTypes() {
+		AvailableTypes[goType] = true
 	}
 
 	return nil

@@ -145,6 +145,191 @@ func TestConvertStringToGivenType(t *testing.T) {
 	}
 }
 
+func TestConvertStringToGivenType_UnsupportedType(t *testing.T) {
+	output, exists, err := ConvertStringToGivenType("value", "UnsupportedType")
+	if exists {
+		t.Errorf("Expected exists to be false for unsupported type")
+	}
+	if output != nil {
+		t.Errorf("Expected output to be nil for unsupported type, got: %v", output)
+	}
+	if err != nil {
+		t.Errorf("Expected no error for unsupported type, got: %v", err)
+	}
+}
+
+func TestConvertGivenTypeToString(t *testing.T) {
+	tests := []struct {
+		name      string
+		value     interface{}
+		goType    string
+		expected  string
+		expectErr bool
+	}{
+		// Primitive types
+		{"string", "hello", "string", "hello", false},
+		{"int", 42, "int", "42", false},
+		{"int8", int8(8), "int8", "8", false},
+		{"int16", int16(16), "int16", "16", false},
+		{"int32", int32(32), "int32", "32", false},
+		{"int64", int64(64), "int64", "64", false},
+		{"uint", uint(42), "uint", "42", false},
+		{"uint8", uint8(8), "uint8", "8", false},
+		{"uint16", uint16(16), "uint16", "16", false},
+		{"uint32", uint32(32), "uint32", "32", false},
+		{"uint64", uint64(64), "uint64", "64", false},
+		{"float32", float32(3.14), "float32", "3.14", false},
+		{"float64", float64(3.14159), "float64", "3.14159", false},
+		{"bool_true", true, "bool", "true", false},
+		{"bool_false", false, "bool", "false", false},
+
+		// Interface types
+		{"interface_string", "test", "interface{}", "test", false},
+		{"interface_map", map[string]interface{}{"key": "value"}, "interface{}", `{"key":"value"}`, false},
+		{"any_string", "test", "any", "test", false},
+
+		// Slice types
+		{"[]string", []string{"a", "b", "c"}, "[]string", `["a","b","c"]`, false},
+		{"[]int", []int{1, 2, 3}, "[]int", `[1,2,3]`, false},
+		{"[]float64", []float64{1.1, 2.2}, "[]float64", `[1.1,2.2]`, false},
+		{"[]bool", []bool{true, false}, "[]bool", `[true,false]`, false},
+		{"[]interface{}", []interface{}{"a", 1}, "[]interface{}", `["a",1]`, false},
+
+		// Map types
+		{"map[string]string", map[string]string{"key": "value"}, "map[string]string", `{"key":"value"}`, false},
+		{"map[string]int", map[string]int{"num": 42}, "map[string]int", `{"num":42}`, false},
+		{"map[string]float64", map[string]float64{"pi": 3.14}, "map[string]float64", `{"pi":3.14}`, false},
+		{"map[string]bool", map[string]bool{"flag": true}, "map[string]bool", `{"flag":true}`, false},
+		{"map[string]interface{}", map[string]interface{}{"key": "value"}, "map[string]interface{}", `{"key":"value"}`, false},
+
+		// Channel types (always empty string)
+		{"*chan string", (*chan string)(nil), "*chan string", "", false},
+		{"*chan interface{}", (*chan interface{})(nil), "*chan interface{}", "", false},
+
+		// Custom sharedtypes
+		{"MCPConfig", sharedtypes.MCPConfig{ServerURL: "http://localhost", Transport: "http"}, "MCPConfig", `{"serverURL":"http://localhost","transport":"http","authToken":"","timeout":0}`, false},
+		{"[]MCPConfig", []sharedtypes.MCPConfig{{ServerURL: "http://localhost"}}, "[]MCPConfig", `[{"serverURL":"http://localhost","transport":"","authToken":"","timeout":0}]`, false},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			output, exists, err := ConvertGivenTypeToString(test.value, test.goType)
+			if !exists {
+				t.Errorf("Expected exists to be true for type %s", test.goType)
+			}
+			if test.expectErr && err == nil {
+				t.Errorf("Expected error for %s, got nil", test.name)
+			}
+			if !test.expectErr && err != nil {
+				t.Errorf("Expected no error for %s, got: %v", test.name, err)
+			}
+			if output != test.expected {
+				t.Errorf("Expected output: %s, got: %s", test.expected, output)
+			}
+		})
+	}
+}
+
+func TestConvertGivenTypeToString_UnsupportedType(t *testing.T) {
+	output, exists, err := ConvertGivenTypeToString("value", "UnsupportedType")
+	if exists {
+		t.Errorf("Expected exists to be false for unsupported type")
+	}
+	if output != "" {
+		t.Errorf("Expected output to be empty for unsupported type, got: %s", output)
+	}
+	if err != nil {
+		t.Errorf("Expected no error for unsupported type, got: %v", err)
+	}
+}
+
+func TestGetSupportedTypes(t *testing.T) {
+	types := GetSupportedTypes()
+
+	// Verify we get a non-empty list
+	if len(types) == 0 {
+		t.Error("Expected GetSupportedTypes to return a non-empty list")
+	}
+
+	// Verify some expected types are present
+	expectedTypes := []string{
+		"string",
+		"int",
+		"float64",
+		"bool",
+		"[]string",
+		"map[string]string",
+		"interface{}",
+		"any",
+		"MCPConfig",
+		"[]MCPTool",
+	}
+
+	typeSet := make(map[string]bool)
+	for _, t := range types {
+		typeSet[t] = true
+	}
+
+	for _, expected := range expectedTypes {
+		if !typeSet[expected] {
+			t.Errorf("Expected type %s to be in supported types", expected)
+		}
+	}
+}
+
+func TestGetSupportedTypes_AllTypesHaveConverters(t *testing.T) {
+	// Verify that all types returned by GetSupportedTypes actually work with the converters
+	types := GetSupportedTypes()
+
+	for _, goType := range types {
+		t.Run(goType, func(t *testing.T) {
+			// Test that ConvertStringToGivenType recognizes the type
+			_, exists, _ := ConvertStringToGivenType("", goType)
+			if !exists {
+				t.Errorf("Type %s returned by GetSupportedTypes but not recognized by ConvertStringToGivenType", goType)
+			}
+		})
+	}
+}
+
+func TestRoundTrip(t *testing.T) {
+	// Test that converting to string and back gives the same value
+	tests := []struct {
+		name   string
+		value  interface{}
+		goType string
+	}{
+		{"string", "hello world", "string"},
+		{"int", 42, "int"},
+		{"float64", 3.14, "float64"},
+		{"bool", true, "bool"},
+		{"[]string", []string{"a", "b", "c"}, "[]string"},
+		{"[]int", []int{1, 2, 3}, "[]int"},
+		{"map[string]string", map[string]string{"key": "value"}, "map[string]string"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			// Convert to string
+			str, exists, err := ConvertGivenTypeToString(test.value, test.goType)
+			if !exists || err != nil {
+				t.Fatalf("Failed to convert %v to string: exists=%v, err=%v", test.value, exists, err)
+			}
+
+			// Convert back from string
+			result, exists, err := ConvertStringToGivenType(str, test.goType)
+			if !exists || err != nil {
+				t.Fatalf("Failed to convert string back to %s: exists=%v, err=%v", test.goType, exists, err)
+			}
+
+			// Compare
+			if !reflect.DeepEqual(test.value, result) {
+				t.Errorf("Round trip failed for %s: original=%v, result=%v", test.goType, test.value, result)
+			}
+		})
+	}
+}
+
 func TestDeepCopy(t *testing.T) {
 	type TestData struct {
 		Name string

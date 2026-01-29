@@ -92,26 +92,45 @@ Follow these guidelines when defining your type:
 Step 4: Add Type Converters
 ----------------------------
 
-Navigate to ``pkg/typeconverters/typeconverters.go`` and add conversion support for your type:
+Navigate to ``pkg/typeconverters/typeconverters.go`` and add your type to the ``typeRegistry`` in the ``init()`` function.
+
+The type registry uses a single-definition approach where each type only needs to be added once. Helper functions make this easy:
+
+- ``jsonMapConverter[T]()`` - For struct types (single objects)
+- ``jsonSliceConverter[T]()`` - For slice types (arrays of objects)
 
 .. code-block:: go
 
-   // In the ConvertStringToGivenType function, add a case for your type:
-   case "MyCustomType":
-       var result sharedtypes.MyCustomType
-       err := json.Unmarshal([]byte(s), &result)
-       if err != nil {
-           return nil, err
-       }
-       return result, nil
+   // In the init() function of pkg/typeconverters/typeconverters.go
+   // Find the "Custom types - sharedtypes" section and add your types:
 
-   // In the ConvertGivenTypeToString function, add a case:
-   case sharedtypes.MyCustomType:
-       bytes, err := json.Marshal(v)
-       if err != nil {
-           return "", err
+   func init() {
+       typeRegistry = map[string]TypeConverter{
+           // ... existing types ...
+
+           // Custom types - sharedtypes (structs)
+           // Add your struct type here:
+           "MyCustomType": jsonMapConverter[sharedtypes.MyCustomType](),
+
+           // Custom types - sharedtypes (slices)
+           // If you need slice support, add it here:
+           "[]MyCustomType": jsonSliceConverter[[]sharedtypes.MyCustomType](),
+
+           // ... existing types ...
        }
-       return string(bytes), nil
+   }
+
+The ``init()`` function runs automatically when the package is imported, so the type converters
+will be available as soon as any application imports the typeconverters package.
+
+.. note::
+
+   The helper functions handle JSON serialization automatically:
+
+   - ``jsonMapConverter`` uses ``{}`` as the default empty value
+   - ``jsonSliceConverter`` uses ``[]`` as the default empty value
+
+   Both use ``json.Marshal`` and ``json.Unmarshal`` under the hood.
 
 
 Step 5: Build and Verify
@@ -173,5 +192,5 @@ Next Steps
 ----------
 
 - Explore existing types in the ``pkg/sharedtypes/`` directory
-- Learn about type conversion in ``pkg/typeconverters/typeconverters.go``
+- Review the type registry in ``pkg/typeconverters/typeconverters.go`` to see all supported types
 - Review gRPC definitions in ``pkg/aaliagentgrpc/`` and ``pkg/aaliflowkitgrpc/``
