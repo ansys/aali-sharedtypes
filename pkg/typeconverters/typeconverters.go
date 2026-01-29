@@ -32,6 +32,337 @@ import (
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 )
 
+// TypeConverter holds functions to convert to and from a given Go type
+type TypeConverter struct {
+	FromString func(value string) (interface{}, error)
+	ToString   func(value interface{}) (string, error)
+}
+
+// typeRegistry maps Go type names to their converters
+var typeRegistry map[string]TypeConverter
+
+// init initializes the type registry with supported types and their converters
+// it is called automatically when the package is imported
+// when adding new sharedtypes, add them here for conversion support
+func init() {
+	typeRegistry = map[string]TypeConverter{
+		// Primitive types
+		"string": {
+			FromString: func(value string) (interface{}, error) { return value, nil },
+			ToString:   func(value interface{}) (string, error) { return value.(string), nil },
+		},
+		"float32": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				f, err := strconv.ParseFloat(value, 32)
+				return float32(f), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatFloat(float64(value.(float32)), 'f', -1, 32), nil
+			},
+		},
+		"float64": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				return strconv.ParseFloat(value, 64)
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatFloat(value.(float64), 'f', -1, 64), nil
+			},
+		},
+		"int": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				return strconv.Atoi(value)
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.Itoa(value.(int)), nil
+			},
+		},
+		"int8": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseInt(value, 10, 8)
+				return int8(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatInt(int64(value.(int8)), 10), nil
+			},
+		},
+		"int16": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseInt(value, 10, 16)
+				return int16(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatInt(int64(value.(int16)), 10), nil
+			},
+		},
+		"int32": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseInt(value, 10, 32)
+				return int32(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatInt(int64(value.(int32)), 10), nil
+			},
+		},
+		"int64": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				return strconv.ParseInt(value, 10, 64)
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatInt(value.(int64), 10), nil
+			},
+		},
+		"uint": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseUint(value, 10, 64)
+				return uint(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatUint(uint64(value.(uint)), 10), nil
+			},
+		},
+		"uint8": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseUint(value, 10, 8)
+				return uint8(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatUint(uint64(value.(uint8)), 10), nil
+			},
+		},
+		"uint16": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseUint(value, 10, 16)
+				return uint16(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatUint(uint64(value.(uint16)), 10), nil
+			},
+		},
+		"uint32": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				v, err := strconv.ParseUint(value, 10, 32)
+				return uint32(v), err
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatUint(uint64(value.(uint32)), 10), nil
+			},
+		},
+		"uint64": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "0"
+				}
+				return strconv.ParseUint(value, 10, 64)
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatUint(value.(uint64), 10), nil
+			},
+		},
+		"bool": {
+			FromString: func(value string) (interface{}, error) {
+				if value == "" {
+					value = "false"
+				}
+				return strconv.ParseBool(value)
+			},
+			ToString: func(value interface{}) (string, error) {
+				return strconv.FormatBool(value.(bool)), nil
+			},
+		},
+
+		// Interface types
+		"interface{}": interfaceConverter(),
+		"any":         interfaceConverter(),
+
+		// Slice types - JSON based
+		"[]interface{}": jsonSliceConverter[[]interface{}](),
+		"[]string":      jsonSliceConverter[[]string](),
+		"[]float32":     jsonSliceConverter[[]float32](),
+		"[]float64":     jsonSliceConverter[[]float64](),
+		"[]int":         jsonSliceConverter[[]int](),
+		"[]bool":        jsonSliceConverter[[]bool](),
+		"[]byte":        jsonSliceConverter[[]byte](),
+		"[][]float32":   jsonSliceConverter[[][]float32](),
+
+		// Channel types (special handling - always nil/empty)
+		"*chan string":      chanConverter[chan string](),
+		"*chan interface{}": chanConverter[chan interface{}](),
+
+		// Map types - JSON based
+		"map[string]string":            jsonMapConverter[map[string]string](),
+		"map[string]float64":           jsonMapConverter[map[string]float64](),
+		"map[string]int":               jsonMapConverter[map[string]int](),
+		"map[string]bool":              jsonMapConverter[map[string]bool](),
+		"map[string][]string":          jsonMapConverter[map[string][]string](),
+		"map[string]map[string]string": jsonMapConverter[map[string]map[string]string](),
+		"map[string]interface{}":       jsonMapConverter[map[string]interface{}](),
+		"map[string]any":               jsonMapConverter[map[string]interface{}](),
+		"map[uint]float32":             jsonMapConverter[map[uint]float32](),
+
+		// Slice of maps - JSON based
+		"[]map[string]string":      jsonSliceConverter[[]map[string]string](),
+		"[]map[uint]float32":       jsonSliceConverter[[]map[uint]float32](),
+		"[]map[string]interface{}": jsonSliceConverter[[]map[string]interface{}](),
+		"[]map[string]any":         jsonSliceConverter[[]map[string]interface{}](),
+
+		// Custom types - aali_graphdb
+		"ParameterMap": jsonMapConverter[aali_graphdb.ParameterMap](),
+
+		// Custom types - sharedtypes (structs)
+		"DbArrayFilter":            jsonMapConverter[sharedtypes.DbArrayFilter](),
+		"DbFilters":                jsonMapConverter[sharedtypes.DbFilters](),
+		"Feedback":                 jsonMapConverter[sharedtypes.Feedback](),
+		"ModelOptions":             jsonMapConverter[sharedtypes.ModelOptions](),
+		"MCPConfig":                jsonMapConverter[sharedtypes.MCPConfig](),
+		"MCPTool":                  jsonMapConverter[sharedtypes.MCPTool](),
+		"ToolCall":                 jsonMapConverter[sharedtypes.ToolCall](),
+		"SlashCommand":             jsonMapConverter[sharedtypes.SlashCommand](),
+		"DiscoverySimulationInput": jsonMapConverter[sharedtypes.DiscoverySimulationInput](),
+		"DiscoveryDimensions":      jsonMapConverter[sharedtypes.DiscoveryDimensions](),
+
+		// Custom types - sharedtypes (slices)
+		"[]DbJsonFilter":                   jsonSliceConverter[[]sharedtypes.DbJsonFilter](),
+		"[]DbResponse":                     jsonSliceConverter[[]sharedtypes.DbResponse](),
+		"[]HistoricMessage":                jsonSliceConverter[[]sharedtypes.HistoricMessage](),
+		"[]AnsysGPTDefaultFields":          jsonSliceConverter[[]sharedtypes.AnsysGPTDefaultFields](),
+		"[]ACSSearchResponse":              jsonSliceConverter[[]sharedtypes.ACSSearchResponse](),
+		"[]AnsysGPTCitation":               jsonSliceConverter[[]sharedtypes.AnsysGPTCitation](),
+		"[]AnsysGPTRetrieverModuleChunk":   jsonSliceConverter[[]sharedtypes.AnsysGPTRetrieverModuleChunk](),
+		"[]DbData":                         jsonSliceConverter[[]sharedtypes.DbData](),
+		"[]CodeGenerationElement":          jsonSliceConverter[[]sharedtypes.CodeGenerationElement](),
+		"[]CodeGenerationExample":          jsonSliceConverter[[]sharedtypes.CodeGenerationExample](),
+		"[]CodeGenerationUserGuideSection": jsonSliceConverter[[]sharedtypes.CodeGenerationUserGuideSection](),
+		"[]MaterialLlmCriterion":           jsonSliceConverter[[]sharedtypes.MaterialLlmCriterion](),
+		"[]MaterialCriterionWithGuid":      jsonSliceConverter[[]sharedtypes.MaterialCriterionWithGuid](),
+		"[]MaterialAttribute":              jsonSliceConverter[[]sharedtypes.MaterialAttribute](),
+		"[]MCPConfig":                      jsonSliceConverter[[]sharedtypes.MCPConfig](),
+		"[]MCPTool":                        jsonSliceConverter[[]sharedtypes.MCPTool](),
+		"[]ToolCall":                       jsonSliceConverter[[]sharedtypes.ToolCall](),
+		"[]SlashCommand":                   jsonSliceConverter[[]sharedtypes.SlashCommand](),
+		"[]DiscoveryMaterial":              jsonSliceConverter[[]sharedtypes.DiscoveryMaterial](),
+		"[]DiscoveryBoundaryCondition":     jsonSliceConverter[[]sharedtypes.DiscoveryBoundaryCondition](),
+		"[]DiscoveryAttachment":            jsonSliceConverter[[]sharedtypes.DiscoveryAttachment](),
+	}
+}
+
+// interfaceConverter creates a converter for interface{}/any types
+func interfaceConverter() TypeConverter {
+	return TypeConverter{
+		FromString: func(value string) (interface{}, error) {
+			if value == "" || value == "null" {
+				return nil, nil
+			}
+			trimmed := strings.TrimSpace(value)
+
+			// Check if it looks like a JSON object or array
+			if (strings.HasPrefix(trimmed, "{") && strings.HasSuffix(trimmed, "}")) ||
+				(strings.HasPrefix(trimmed, "[") && strings.HasSuffix(trimmed, "]")) ||
+				(strings.HasPrefix(trimmed, "\"") && strings.HasSuffix(trimmed, "\"")) {
+				var output interface{}
+				err := json.Unmarshal([]byte(value), &output)
+				return output, err
+			} else if trimmed == "true" || trimmed == "false" {
+				return trimmed == "true", nil
+			} else if num, err := strconv.ParseFloat(trimmed, 64); err == nil {
+				if intNum, err := strconv.ParseInt(trimmed, 10, 64); err == nil {
+					return intNum, nil
+				}
+				return num, nil
+			}
+			return value, nil
+		},
+		ToString: func(value interface{}) (string, error) {
+			if s, ok := value.(string); ok {
+				return s, nil
+			}
+			output, err := json.Marshal(value)
+			return string(output), err
+		},
+	}
+}
+
+// jsonSliceConverter creates a converter for slice types that use JSON serialization
+func jsonSliceConverter[T any]() TypeConverter {
+	return TypeConverter{
+		FromString: func(value string) (interface{}, error) {
+			if value == "" {
+				value = "[]"
+			}
+			var output T
+			err := json.Unmarshal([]byte(value), &output)
+			return output, err
+		},
+		ToString: func(value interface{}) (string, error) {
+			output, err := json.Marshal(value)
+			return string(output), err
+		},
+	}
+}
+
+// jsonMapConverter creates a converter for map/struct types that use JSON serialization
+func jsonMapConverter[T any]() TypeConverter {
+	return TypeConverter{
+		FromString: func(value string) (interface{}, error) {
+			if value == "" {
+				value = "{}"
+			}
+			var output T
+			err := json.Unmarshal([]byte(value), &output)
+			return output, err
+		},
+		ToString: func(value interface{}) (string, error) {
+			output, err := json.Marshal(value)
+			return string(output), err
+		},
+	}
+}
+
+// chanConverter creates a converter for channel pointer types (always nil/empty)
+func chanConverter[T any]() TypeConverter {
+	return TypeConverter{
+		FromString: func(value string) (interface{}, error) {
+			var output *T
+			return output, nil
+		},
+		ToString: func(value interface{}) (string, error) {
+			return "", nil
+		},
+	}
+}
+
 // JSONToGo converts a JSON data type to a Go data type.
 //
 // Parameters:
@@ -134,6 +465,18 @@ func GoToJSON(goType string) string {
 	}
 }
 
+// GetSupportedTypes returns a list of all Go types supported by ConvertStringToGivenType.
+//
+// Returns:
+// - []string: a slice containing all supported Go type names
+func GetSupportedTypes() []string {
+	types := make([]string, 0, len(typeRegistry))
+	for goType := range typeRegistry {
+		types = append(types, goType)
+	}
+	return types
+}
+
 // ConvertStringToGivenType converts a string to a given Go type.
 //
 // Parameters:
@@ -148,689 +491,17 @@ func ConvertStringToGivenType(value string, goType string) (output interface{}, 
 	defer func() {
 		r := recover()
 		if r != nil {
-			err = fmt.Errorf("panic occured in convertStringToGivenType: %v", r)
+			err = fmt.Errorf("panic occured in ConvertStringToGivenType: %v", r)
 		}
 	}()
 
-	switch goType {
-	case "string":
-		return value, true, nil
-	case "float32":
-		if value == "" {
-			value = "0"
-		}
-		floatVal, err := strconv.ParseFloat(value, 32)
-		if err != nil {
-			return nil, false, err
-		}
-		return float32(floatVal), true, nil
-	case "float64":
-		if value == "" {
-			value = "0"
-		}
-		floatVal, err := strconv.ParseFloat(value, 64)
-		if err != nil {
-			return nil, false, err
-		}
-		return floatVal, true, nil
-	case "int":
-		if value == "" {
-			value = "0"
-		}
-		valueInt, err := strconv.Atoi(value)
-		if err != nil {
-			return nil, false, err
-		}
-		return valueInt, true, nil
-	case "int8":
-		if value == "" {
-			value = "0"
-		}
-		valueInt64, err := strconv.ParseInt(value, 10, 8)
-		if err != nil {
-			return nil, true, err
-		}
-		return int8(valueInt64), true, nil
-	case "int16":
-		if value == "" {
-			value = "0"
-		}
-		valueInt64, err := strconv.ParseInt(value, 10, 16)
-		if err != nil {
-			return nil, true, err
-		}
-		return int16(valueInt64), true, nil
-	case "int32":
-		if value == "" {
-			value = "0"
-		}
-		valueInt64, err := strconv.ParseInt(value, 10, 32)
-		if err != nil {
-			return nil, true, err
-		}
-		return int32(valueInt64), true, nil
-	case "int64":
-		if value == "" {
-			value = "0"
-		}
-		intVal, err := strconv.ParseInt(value, 10, 64)
-		if err != nil {
-			return nil, true, err
-		}
-		return intVal, true, nil
-	case "uint":
-		if value == "" {
-			value = "0"
-		}
-		valueUint64, err := strconv.ParseUint(value, 10, 64)
-		if err != nil {
-			return nil, true, err
-		}
-		return uint(valueUint64), true, nil
-	case "uint8":
-		if value == "" {
-			value = "0"
-		}
-		valueUint64, err := strconv.ParseUint(value, 10, 8)
-		if err != nil {
-			return nil, true, err
-		}
-		return uint8(valueUint64), true, nil
-	case "uint16":
-		if value == "" {
-			value = "0"
-		}
-		valueUint64, err := strconv.ParseUint(value, 10, 16)
-		if err != nil {
-			return nil, true, err
-		}
-		return uint16(valueUint64), true, nil
-	case "uint32":
-		if value == "" {
-			value = "0"
-		}
-		valueUint64, err := strconv.ParseUint(value, 10, 32)
-		if err != nil {
-			return nil, true, err
-		}
-		return uint32(valueUint64), true, nil
-	case "uint64":
-		if value == "" {
-			value = "0"
-		}
-		uintVal, err := strconv.ParseUint(value, 10, 64)
-		if err != nil {
-			return nil, true, err
-		}
-		return uintVal, true, nil
-	case "bool":
-		if value == "" {
-			value = "false"
-		}
-		boolVal, err := strconv.ParseBool(value)
-		if err != nil {
-			return nil, false, err
-		}
-		return boolVal, true, nil
-	case "interface{}", "any":
-		var output interface{}
-		if value == "" || value == "null" {
-			output = nil
-		} else {
-			trimmed := strings.TrimSpace(value)
-
-			// Check if it looks like a JSON object or array
-			if (strings.HasPrefix(trimmed, "{") && strings.HasSuffix(trimmed, "}")) ||
-				(strings.HasPrefix(trimmed, "[") && strings.HasSuffix(trimmed, "]")) ||
-				(strings.HasPrefix(trimmed, "\"") && strings.HasSuffix(trimmed, "\"")) {
-				// Try to unmarshal as JSON
-				err := json.Unmarshal([]byte(value), &output)
-				if err != nil {
-					return nil, true, err
-				}
-			} else if trimmed == "true" || trimmed == "false" {
-				// Handle boolean values
-				output = trimmed == "true"
-			} else if num, err := strconv.ParseFloat(trimmed, 64); err == nil {
-				// Try to parse as number (int or float)
-				intNum, err := strconv.ParseInt(trimmed, 10, 64)
-				if err == nil {
-					output = intNum
-				} else {
-					output = num
-				}
-			} else {
-				// Default: treat as plain string
-				output = value
-			}
-		}
-		return output, true, nil
-	case "[]interface{}":
-		if value == "" {
-			value = "[]"
-		}
-		output := []interface{}{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]string":
-		if value == "" {
-			value = "[]"
-		}
-		output := []string{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]float32":
-		if value == "" {
-			value = "[]"
-		}
-		output := []float32{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]float64":
-		if value == "" {
-			value = "[]"
-		}
-		output := []float64{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]int":
-		if value == "" {
-			value = "[]"
-		}
-		output := []int{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]bool":
-		if value == "" {
-			value = "[]"
-		}
-		output := []bool{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]byte":
-		if value == "" {
-			value = "[]"
-		}
-		output := []byte{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[][]float32":
-		if value == "" {
-			value = "[]"
-		}
-		output := [][]float32{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "*chan string":
-		var output *chan string
-		output = nil
-		return output, true, nil
-	case "*chan interface{}":
-		var output *chan interface{}
-		output = nil
-		return output, true, nil
-	case "map[string]string":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]string{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string]float64":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]float64{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string]int":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]int{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string]bool":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]bool{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string][]string":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string][]string{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string]map[string]string":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]map[string]string{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[string]interface{}", "map[string]any":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[string]interface{}{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "ParameterMap":
-		if value == "" {
-			value = "{}"
-		}
-		output := aali_graphdb.ParameterMap{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]map[string]string":
-		if value == "" {
-			value = "[]"
-		}
-		output := []map[string]string{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "map[uint]float32":
-		if value == "" {
-			value = "{}"
-		}
-		output := map[uint]float32{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]map[uint]float32":
-		if value == "" {
-			value = "[]"
-		}
-		output := []map[uint]float32{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]map[string]interface{}", "[]map[string]any":
-		if value == "" {
-			value = "[]"
-		}
-		output := []map[string]interface{}{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "DbArrayFilter":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.DbArrayFilter{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "DbFilters":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.DbFilters{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "Feedback":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.Feedback{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "ModelOptions":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.ModelOptions{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]DbJsonFilter":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DbJsonFilter{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]DbResponse":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DbResponse{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]HistoricMessage":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.HistoricMessage{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-
-	case "[]AnsysGPTDefaultFields":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.AnsysGPTDefaultFields{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-
-	case "[]ACSSearchResponse":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.ACSSearchResponse{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-
-	case "[]AnsysGPTCitation":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.AnsysGPTCitation{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-
-	case "[]AnsysGPTRetrieverModuleChunk":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.AnsysGPTRetrieverModuleChunk{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-
-	case "[]DbData":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DbData{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]CodeGenerationElement":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.CodeGenerationElement{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]CodeGenerationExample":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.CodeGenerationExample{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]CodeGenerationUserGuideSection":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.CodeGenerationUserGuideSection{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]MaterialLlmCriterion":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.MaterialLlmCriterion{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]MaterialCriterionWithGuid":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.MaterialCriterionWithGuid{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]MaterialAttribute":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.MaterialAttribute{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "MCPConfig":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.MCPConfig{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]MCPConfig":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.MCPConfig{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]MCPTool":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.MCPTool{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "MCPTool":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.MCPTool{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "ToolCall":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.ToolCall{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]ToolCall":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.ToolCall{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "SlashCommand":
-		if value == "" {
-			value = "{}"
-		}
-		output := sharedtypes.SlashCommand{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]SlashCommand":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.SlashCommand{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "DiscoverySimulationInput":
-		if value == "" {
-			return sharedtypes.DiscoverySimulationInput{}, true, nil
-		}
-		output := sharedtypes.DiscoverySimulationInput{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "DiscoveryDimensions":
-		if value == "" {
-			return sharedtypes.DiscoveryDimensions{}, true, nil
-		}
-		output := sharedtypes.DiscoveryDimensions{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]DiscoveryMaterial":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DiscoveryMaterial{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]DiscoveryBoundaryCondition":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DiscoveryBoundaryCondition{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
-	case "[]DiscoveryAttachment":
-		if value == "" {
-			value = "[]"
-		}
-		output := []sharedtypes.DiscoveryAttachment{}
-		err := json.Unmarshal([]byte(value), &output)
-		if err != nil {
-			return nil, true, err
-		}
-		return output, true, nil
+	converter, ok := typeRegistry[goType]
+	if !ok {
+		return nil, false, nil
 	}
 
-	return nil, false, nil
+	result, err := converter.FromString(value)
+	return result, true, err
 }
 
 // ConvertGivenTypeToString converts a given Go type to a string.
@@ -851,360 +522,13 @@ func ConvertGivenTypeToString(value interface{}, goType string) (output string, 
 		}
 	}()
 
-	switch goType {
-	case "string":
-		return value.(string), true, nil
-	case "float32":
-		return strconv.FormatFloat(float64(value.(float32)), 'f', -1, 32), true, nil
-	case "float64":
-		return strconv.FormatFloat(value.(float64), 'f', -1, 64), true, nil
-	case "int":
-		return strconv.Itoa(value.(int)), true, nil
-	case "int8":
-		return strconv.FormatInt(int64(value.(int8)), 10), true, nil
-	case "int16":
-		return strconv.FormatInt(int64(value.(int16)), 10), true, nil
-	case "int32":
-		return strconv.FormatInt(int64(value.(int32)), 10), true, nil
-	case "int64":
-		return strconv.FormatInt(value.(int64), 10), true, nil
-	case "uint":
-		return strconv.FormatUint(uint64(value.(uint)), 10), true, nil
-	case "uint8":
-		return strconv.FormatUint(uint64(value.(uint8)), 10), true, nil
-	case "uint16":
-		return strconv.FormatUint(uint64(value.(uint16)), 10), true, nil
-	case "uint32":
-		return strconv.FormatUint(uint64(value.(uint32)), 10), true, nil
-	case "uint64":
-		return strconv.FormatUint(value.(uint64), 10), true, nil
-	case "bool":
-		return strconv.FormatBool(value.(bool)), true, nil
-	case "interface{}", "any":
-		switch v := value.(type) {
-		case string:
-			return v, true, nil
-		default:
-			output, err := json.Marshal(value)
-			if err != nil {
-				return "", true, err
-			}
-			return string(output), true, nil
-		}
-	case "[]string":
-		output, err := json.Marshal(value.([]string))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]interface{}":
-		output, err := json.Marshal(value.([]interface{}))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]float32":
-		output, err := json.Marshal(value.([]float32))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]float64":
-		output, err := json.Marshal(value.([]float64))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]int":
-		output, err := json.Marshal(value.([]int))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]bool":
-		output, err := json.Marshal(value.([]bool))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]byte":
-		output, err := json.Marshal(value.([]byte))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[][]float32":
-		output, err := json.Marshal(value.([][]float32))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "*chan string":
-		return "", true, nil
-	case "*chan interface{}":
-		return "", true, nil
-	case "map[string]string":
-		output, err := json.Marshal(value.(map[string]string))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string]float64":
-		output, err := json.Marshal(value.(map[string]float64))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string]int":
-		output, err := json.Marshal(value.(map[string]int))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string]bool":
-		output, err := json.Marshal(value.(map[string]bool))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string][]string":
-		output, err := json.Marshal(value.(map[string][]string))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string]map[string]string":
-		output, err := json.Marshal(value.(map[string]map[string]string))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[string]interface{}", "map[string]any":
-		output, err := json.Marshal(value.(map[string]interface{}))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "ParameterMap":
-		output, err := json.Marshal(value.(aali_graphdb.ParameterMap))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]map[string]string":
-		output, err := json.Marshal(value.([]map[string]string))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]map[string]interface{}", "[]map[string]any":
-		output, err := json.Marshal(value.([]map[string]interface{}))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "map[uint]float32":
-		output, err := json.Marshal(value.(map[uint]float32))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]map[uint]float32":
-		output, err := json.Marshal(value.([]map[uint]float32))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "DbArrayFilter":
-		output, err := json.Marshal(value.(sharedtypes.DbArrayFilter))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "DbFilters":
-		output, err := json.Marshal(value.(sharedtypes.DbFilters))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "Feedback":
-		output, err := json.Marshal(value.(sharedtypes.Feedback))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "ModelOptions":
-		output, err := json.Marshal(value.(sharedtypes.ModelOptions))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DbJsonFilter":
-		output, err := json.Marshal(value.([]sharedtypes.DbJsonFilter))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DbResponse":
-		output, err := json.Marshal(value.([]sharedtypes.DbResponse))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]HistoricMessage":
-		output, err := json.Marshal(value.([]sharedtypes.HistoricMessage))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]AnsysGPTDefaultFields":
-		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTDefaultFields))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]ACSSearchResponse":
-		output, err := json.Marshal(value.([]sharedtypes.ACSSearchResponse))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]AnsysGPTCitation":
-		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTCitation))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]AnsysGPTRetrieverModuleChunk":
-		output, err := json.Marshal(value.([]sharedtypes.AnsysGPTRetrieverModuleChunk))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DbData":
-		output, err := json.Marshal(value.([]sharedtypes.DbData))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]CodeGenerationElement":
-		output, err := json.Marshal(value.([]sharedtypes.CodeGenerationElement))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]CodeGenerationExample":
-		output, err := json.Marshal(value.([]sharedtypes.CodeGenerationExample))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]CodeGenerationUserGuideSection":
-		output, err := json.Marshal(value.([]sharedtypes.CodeGenerationUserGuideSection))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]MaterialLlmCriterion":
-		output, err := json.Marshal(value.([]sharedtypes.MaterialLlmCriterion))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]MaterialCriterionWithGuid":
-		output, err := json.Marshal(value.([]sharedtypes.MaterialCriterionWithGuid))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]MaterialAttribute":
-		output, err := json.Marshal(value.([]sharedtypes.MaterialAttribute))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "MCPConfig":
-		output, err := json.Marshal(value.(sharedtypes.MCPConfig))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]MCPConfig":
-		output, err := json.Marshal(value.([]sharedtypes.MCPConfig))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]MCPTool":
-		// Handle both []sharedtypes.MCPTool and []interface{} types
-		output, err := json.Marshal(value)
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "MCPTool":
-		output, err := json.Marshal(value.(sharedtypes.MCPTool))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "ToolCall":
-		output, err := json.Marshal(value.(sharedtypes.ToolCall))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]ToolCall":
-		output, err := json.Marshal(value.([]sharedtypes.ToolCall))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "SlashCommand":
-		output, err := json.Marshal(value.(sharedtypes.SlashCommand))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]SlashCommand":
-		output, err := json.Marshal(value.([]sharedtypes.SlashCommand))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "DiscoverySimulationInput":
-		output, err := json.Marshal(value.(sharedtypes.DiscoverySimulationInput))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "DiscoveryDimensions":
-		output, err := json.Marshal(value.(sharedtypes.DiscoveryDimensions))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DiscoveryMaterial":
-		output, err := json.Marshal(value.([]sharedtypes.DiscoveryMaterial))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DiscoveryBoundaryCondition":
-		output, err := json.Marshal(value.([]sharedtypes.DiscoveryBoundaryCondition))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
-	case "[]DiscoveryAttachment":
-		output, err := json.Marshal(value.([]sharedtypes.DiscoveryAttachment))
-		if err != nil {
-			return "", true, err
-		}
-		return string(output), true, nil
+	converter, ok := typeRegistry[goType]
+	if !ok {
+		return "", false, nil
 	}
 
-	return "", false, nil
+	result, err := converter.ToString(value)
+	return result, true, err
 }
 
 // DeepCopy deep copies the source interface to the destination interface.
