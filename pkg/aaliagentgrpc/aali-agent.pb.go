@@ -665,8 +665,10 @@ type ClientResponse struct {
 	ToolCall *ToolCall `protobuf:"bytes,16,opt,name=tool_call,json=toolCall,proto3" json:"tool_call,omitempty"`
 	// Code Execution properties
 	CodeExecutionAllowed bool `protobuf:"varint,17,opt,name=code_execution_allowed,json=codeExecutionAllowed,proto3" json:"code_execution_allowed,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	// Images properties
+	Images        []string `protobuf:"bytes,18,rep,name=images,proto3" json:"images,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ClientResponse) Reset() {
@@ -816,6 +818,13 @@ func (x *ClientResponse) GetCodeExecutionAllowed() bool {
 		return x.CodeExecutionAllowed
 	}
 	return false
+}
+
+func (x *ClientResponse) GetImages() []string {
+	if x != nil {
+		return x.Images
+	}
+	return nil
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
@@ -1121,7 +1130,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\x0fworkflow_run_id\x18\x02 \x01(\tR\rworkflowRunId\x125\n" +
 	"\x17max_number_of_snapshots\x18\x03 \x01(\x05R\x14maxNumberOfSnapshots\"J\n" +
 	"\x14AuthenticationStatus\x122\n" +
-	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xd9\x06\n" +
+	"\x14authenticationStatus\x18\x01 \x01(\tR\x14authenticationStatus\"\xf1\x06\n" +
 	"\x0eClientResponse\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x17\n" +
@@ -1141,7 +1150,8 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\finfo_message\x18\x0e \x01(\tH\x00R\vinfoMessage\x88\x01\x01\x12-\n" +
 	"\x12conversation_title\x18\x0f \x01(\tR\x11conversationTitle\x124\n" +
 	"\ttool_call\x18\x10 \x01(\v2\x17.aaliagentgrpc.ToolCallR\btoolCall\x124\n" +
-	"\x16code_execution_allowed\x18\x11 \x01(\bR\x14codeExecutionAllowed\x1aA\n" +
+	"\x16code_execution_allowed\x18\x11 \x01(\bR\x14codeExecutionAllowed\x12\x16\n" +
+	"\x06images\x18\x12 \x03(\tR\x06images\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\x0f\n" +
