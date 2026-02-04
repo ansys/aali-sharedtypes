@@ -167,6 +167,9 @@ message ClientResponse {
 
     // Code Execution properties
     bool code_execution_allowed = 17;
+
+    // Images properties
+    repeated string images = 18;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
