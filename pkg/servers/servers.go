@@ -20,6 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//go:generate go run ../../internal/gen/value/gen.go
+package servers
 
-package aali_graphdb
+import "github.com/coder/websocket"
+
+// GetDefaultWebsocketDialOptions returns the default dial options for websocket connections.
+//
+// Returns:
+//   - acceptOptions: Pointer to websocket.AcceptOptions with default settings.
+func GetDefaultWebsocketAcceptOptions() (acceptOptions *websocket.AcceptOptions) {
+	return &websocket.AcceptOptions{
+		InsecureSkipVerify: true,
+	}
+}

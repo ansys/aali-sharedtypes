@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/struct.proto"; 
+
 package aaliagentgrpc;
 
 option go_package = "./aaliagentgrpc";
@@ -70,7 +72,7 @@ message ClientRequest {
     // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
     string instruction_id = 1;
 
-    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback"
+    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution"
     string type = 2;
 
     // String input for chat interface interaction
@@ -87,6 +89,12 @@ message ClientRequest {
 
     // Feedback for the workflow run
     WorkflowFeedback feedback = 7; // Feedback for the workflow run
+
+    // Tool Call validation input
+    bool accept_tool_call = 8;
+
+    // Updated LLM message after code changes for code execution
+    string updated_llm_message = 9;
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
@@ -124,7 +132,7 @@ message ClientResponse {
     // Randomly generated instruction ID to be used in the client request
     string instruction_id = 1;
 
-    // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received"
+    // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation"
     string type = 2;
 
     // Chat Interface properties
@@ -150,6 +158,18 @@ message ClientResponse {
 
     // Info properties
     optional string info_message = 14;
+
+    // Conversation Title
+    string conversation_title = 15;
+
+    // Tool Call properties
+    ToolCall tool_call = 16;
+
+    // Code Execution properties
+    bool code_execution_allowed = 17;
+
+    // Images properties
+    repeated string images = 18;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
@@ -171,6 +191,21 @@ message SlashCommand {
 
     // Description of the slash command
     string description = 2;
+}
+
+// ToolCall is the message to send a tool call to the client.
+message ToolCall {
+    // Identifier of the tool to be called
+    string id = 1;
+
+    // Type of the tool 
+    string type = 2;
+
+    // Name of the tool
+    string name = 3;
+
+    // Input parameters for the tool call
+    google.protobuf.Struct input = 4;
 }
 
 // ErrorResponse is the message to send an error response to the client.

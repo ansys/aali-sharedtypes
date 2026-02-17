@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2025 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -97,14 +97,16 @@ type Config struct {
 	// LLM Connection
 	LLM_REST_ENDPOINT string `yaml:"LLM_REST_ENDPOINT" json:"LLMRESTENDPOINT"`
 	// Authentication & Authorization
-	ENABLE_AUTH                      bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
-	AZURE_AD_AUTHENTICATION_URL      string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
-	ANSYS_AUTHORIZATION_URL          string `yaml:"ANSYS_AUTHORIZATION_URL" json:"ANSYSAUTHORIZATIONURL"`
-	ANSYS_GATING_AND_ENTITLEMENT_URL string `yaml:"ANSYS_GATING_AND_ENTITLEMENT_URL" json:"ANSYSGATINGANDENTITLEMENTURL"`
-	ANSYS_AUTHORIZATION_CRYPT_KEY    string `yaml:"ANSYS_AUTHORIZATION_CRYPT_KEY" json:"ANSYSAUTHORIZATIONCRYPTKEY"`
-	ANSYS_AUTHORIZATION_SECRET_KEY   string `yaml:"ANSYS_AUTHORIZATION_SECRET_KEY" json:"ANSYSAUTHORIZATIONSECRETKEY"`
-	ANSYS_DISCO_CRYPT_PRIVAT_KEY     string `yaml:"ANSYS_DISCO_CRYPT_PRIVAT_KEY" json:"ANSYSDISCOCRYPTPRIVATKEY"`
-	ANSYS_DISOC_SIGN_PUBLIC_KEY      string `yaml:"ANSYS_DISOC_SIGN_PUBLIC_KEY" json:"ANSYSDISOCSIGNPUBLICKEY"`
+	ENABLE_AUTH                            bool   `yaml:"ENABLE_AUTH" json:"ENABLEAUTH"` // If true, the agent will require authentication/authorization for workflows
+	AZURE_AD_AUTHENTICATION_URL            string `yaml:"AZURE_AD_AUTHENTICATION_URL" json:"AZUREADAUTHENTICATIONURL"`
+	ANSYS_AUTHORIZATION_URL                string `yaml:"ANSYS_AUTHORIZATION_URL" json:"ANSYSAUTHORIZATIONURL"`
+	ANSYS_GATING_AND_ENTITLEMENT_URL       string `yaml:"ANSYS_GATING_AND_ENTITLEMENT_URL" json:"ANSYSGATINGANDENTITLEMENTURL"`
+	ANSYS_AUTHORIZATION_CRYPT_KEY          string `yaml:"ANSYS_AUTHORIZATION_CRYPT_KEY" json:"ANSYSAUTHORIZATIONCRYPTKEY"`
+	ANSYS_AUTHORIZATION_SECRET_KEY         string `yaml:"ANSYS_AUTHORIZATION_SECRET_KEY" json:"ANSYSAUTHORIZATIONSECRETKEY"`
+	ANSYS_AUTHORIZATION_SECRET_KEY_2       string `yaml:"ANSYS_AUTHORIZATION_SECRET_KEY_2" json:"ANSYSAUTHORIZATIONSECRETKEY2"`
+	ANSYS_AUTHORIZATION_SECRET_KEY_2_VALUE string `yaml:"ANSYS_AUTHORIZATION_SECRET_KEY_2_VALUE" json:"ANSYSAUTHORIZATIONSECRETKEY2VALUE"`
+	ANSYS_DISCO_CRYPT_PRIVAT_KEY           string `yaml:"ANSYS_DISCO_CRYPT_PRIVAT_KEY" json:"ANSYSDISCOCRYPTPRIVATKEY"`
+	ANSYS_DISOC_SIGN_PUBLIC_KEY            string `yaml:"ANSYS_DISOC_SIGN_PUBLIC_KEY" json:"ANSYSDISOCSIGNPUBLICKEY"`
 	// Workflow Store
 	WORKFLOW_CONFIG_VARIABLES map[string]string `yaml:"WORKFLOW_CONFIG_VARIABLES" json:"WORKFLOWCONFIGVARIABLES"`
 
@@ -147,11 +149,25 @@ type Config struct {
 	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
 	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
 	QDRANT_API_KEY        string `yaml:"QDRANT_API_KEY" json:"QDRANTAPIKEY"`
+	// Connections to external services
+	MONGODB_CS string `yaml:"MONGODB_CS" json:"MONGODBCS"`
 
 	// Aali Flowkit Python
 	//////////////////////
 	FLOWKIT_PYTHON_ADDRESS string `yaml:"FLOWKIT_PYTHON_ADDRESS" json:"FLOWKITPYTHONADDRESS"`
 	FLOWKIT_PYTHON_API_KEY string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
+
+	// Aali Proxy / ADS
+	///////////////////
+	// ads proxy uses this to determine which port to listen on for graphdb proxy requests
+	GRAPHDB_PROXY_ADDRESS string `yaml:"GRAPHDB_PROXY_ADDRESS" json:"GRAPHDBPROXYADDRESS"`
+	// ads proxy uses this to determine which port to listen on for qdrant proxy requests
+	QDRANT_PROXY_ADDRESS string `yaml:"QDRANT_PROXY_ADDRESS" json:"QDRANTPROXYADDRESS"`
+	// other services use this to determine what address to call to get encrypted graphdb data from
+	GRAPHDB_ADDRESS_ENCRYPTED string `yaml:"GRAPHDB_ADDRESS_ENCRYPTED" json:"GRAPHDBADDRESSENCRYPTED"`
+	// other services use these to determine what address to call to get encrypted qdrant data from
+	QDRANT_HOST_ENCRYPTED string `yaml:"QDRANT_HOST_ENCRYPTED" json:"QDRANTHOSTENCRYPTED"`
+	QDRANT_PORT_ENCRYPTED int    `yaml:"QDRANT_PORT_ENCRYPTED" json:"QDRANTPORTENCRYPTED"`
 
 	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
 	/////////////////////////////////////////////////////////////////////////

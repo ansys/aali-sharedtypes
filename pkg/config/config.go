@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2025 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -550,8 +550,7 @@ func ValidateConfig(config Config, requiredProperties []string) (err error) {
 		field := configValue.FieldByName(property)
 
 		if !field.IsValid() || field.IsZero() {
-			message := fmt.Sprintf("config.yaml is missing mandatory property '%v': ", property)
-			return fmt.Errorf(message)
+			return fmt.Errorf("config.yaml is missing mandatory property '%v': ", property)
 		}
 	}
 

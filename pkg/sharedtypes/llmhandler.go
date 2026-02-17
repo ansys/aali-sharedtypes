@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2025 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -30,6 +30,7 @@ type HandlerRequest struct {
 	ModelCategory       []string          `json:"modelCategory"`              // optional model category; define one or more categories to filter models; models of the specified categories from first to last will be used for this request if available
 	Data                interface{}       `json:"data"`                       // for embeddings, this can be a string or []string; for chat, only string is allowed
 	Images              []string          `json:"images"`                     // List of images in base64 format
+	MCPTools            []MCPTool         `json:"mcpTools,omitempty"`         // MCP tool definitions for tool calling support
 	ChatRequestType     string            `json:"chatRequestType"`            // "summary", "code", "keywords", "general"; only relevant if "adapter" is "chat"
 	DataStream          bool              `json:"dataStream"`                 // only relevant if "adapter" is "chat"
 	MaxNumberOfKeywords uint32            `json:"maxNumberOfKeywords"`        // only relevant if "chatRequestType" is "keywords"
@@ -49,11 +50,12 @@ type HandlerResponse struct {
 	Type            string `json:"type"` // "info", "error", "chat", "embeddings"
 
 	// Chat properties
-	IsLast           *bool   `json:"isLast,omitempty"`
-	Position         *uint32 `json:"position,omitempty"`
-	InputTokenCount  *int    `json:"inputTokenCount,omitempty"`
-	OutputTokenCount *int    `json:"outputTokenCount,omitempty"`
-	ChatData         *string `json:"chatData,omitempty"`
+	IsLast           *bool      `json:"isLast,omitempty"`
+	Position         *uint32    `json:"position,omitempty"`
+	InputTokenCount  *int       `json:"inputTokenCount,omitempty"`
+	OutputTokenCount *int       `json:"outputTokenCount,omitempty"`
+	ChatData         *string    `json:"chatData,omitempty"`
+	ToolCalls        []ToolCall `json:"toolCalls,omitempty"` // Structured tool calls from LLM
 
 	// Embeddings properties
 	EmbeddedData   interface{} `json:"embeddedData,omitempty"`   // []float32 or [][]float32; for BAAI/bge-m3 these are dense vectors
@@ -65,6 +67,11 @@ type HandlerResponse struct {
 
 	// Info properties
 	InfoMessage *string `json:"infoMessage,omitempty"`
+}
+
+// HasToolCalls returns true if the response contains tool calls.
+func (hr *HandlerResponse) HasToolCalls() bool {
+	return len(hr.ToolCalls) > 0
 }
 
 // ErrorResponse represents the error response sent to the client when something fails during the processing of the request.
@@ -79,14 +86,16 @@ type TransferDetails struct {
 	RequestChannel  chan HandlerRequest
 }
 
-// HistoricMessage represents a past chat messages.
+// HistoricMessage represents a past chat message.
 type HistoricMessage struct {
-	Role    string   `json:"role"`
-	Content string   `json:"content"`
-	Images  []string `json:"images"` // image in base64 format
+	Role       string     `json:"role"`
+	Content    string     `json:"content"`
+	Images     []string   `json:"images"`               // image in base64 format
+	ToolCallId *string    `json:"toolCallId,omitempty"` // Tool call ID for tool responses
+	ToolCalls  []ToolCall `json:"toolCalls,omitempty"`  // Tool calls made by assistant
 }
 
-// OpenAIOption represents an option for an OpenAI API call.
+// ModelOptions represents options for provider-specific API calls.
 type ModelOptions struct {
 	FrequencyPenalty *float32 `json:"frequencyPenalty,omitempty" yaml:"FREQUENCY_PENALTY,omitempty"`
 	MaxTokens        *int32   `json:"maxTokens,omitempty" yaml:"MAX_TOKENS,omitempty"`
@@ -95,18 +104,18 @@ type ModelOptions struct {
 	Temperature      *float32 `json:"temperature,omitempty" yaml:"TEMPERATURE,omitempty"`
 	TopP             *float32 `json:"topP,omitempty" yaml:"TOP_P,omitempty"`
 
-	// GPT-5 / o-series only
-
-	ReasoningEffort  *string `json:"reasoningEffort,omitempty" yaml:"REASONING_EFFORT,omitempty"`   // "minimal" | "low" | "medium" | "high"
-	ReasoningSummary *string `json:"reasoningSummary,omitempty" yaml:"REASONING_SUMMARY,omitempty"` // "auto" | "concise" | "detailed"
-	Verbosity        *string `json:"verbosity,omitempty" yaml:"VERBOSITY,omitempty"`                // "low" | "medium" | "high"
+	// Reasoning effort level
+	ReasoningEffort *string `json:"reasoningEffort,omitempty" yaml:"REASONING_EFFORT,omitempty"`
+	// Reasoning summary format
+	ReasoningSummary *string `json:"reasoningSummary,omitempty" yaml:"REASONING_SUMMARY,omitempty"`
+	Verbosity        *string `json:"verbosity,omitempty" yaml:"VERBOSITY,omitempty"` // "low" | "medium" | "high"
 }
 
-// EmbeddingsOptions represents the options for an embeddings request.
+// EmbeddingOptions represents the options for an embeddings request.
 type EmbeddingOptions struct {
-	ReturnDense   *bool `json:"returnDense"`   // defines if the response should include dense vectors; only for BAAI/bge-m3
-	ReturnSparse  *bool `json:"returnSparse"`  // defines if the response should include lexical weights; only for BAAI/bge-m3
-	ReturnColbert *bool `json:"returnColbert"` // defines if the response should include colbert vectors; only for BAAI/bge-m3
+	ReturnDense   *bool `json:"returnDense"`   // Include dense vectors in response
+	ReturnSparse  *bool `json:"returnSparse"`  // Include lexical weights in response
+	ReturnColbert *bool `json:"returnColbert"` // Include colbert vectors in response
 	IsPrompt      *bool `json:"isPrompt"`      // Is the query passage a prompt or code. For Nomic Embed Code embedding model
 }
 
@@ -114,4 +123,20 @@ type EmbeddingOptions struct {
 type EmbeddingResult struct {
 	Dense  []float32
 	Sparse map[uint]float32
+}
+
+// ToolCall represents a tool invocation from the model.
+type ToolCall struct {
+	ID    string                 `json:"id"`
+	Type  string                 `json:"type"`
+	Name  string                 `json:"name"`
+	Input map[string]interface{} `json:"input"`
+}
+
+// ToolResult represents the result of a tool execution.
+type ToolResult struct {
+	ToolCallID   string           `json:"tool_call_id"`            // Matches the ID from the original tool call
+	Content      string           `json:"content"`                 // Primary text content
+	ContentItems []MCPContentItem `json:"content_items,omitempty"` // Content items for multi-modal support
+	IsError      bool             `json:"is_error"`                // True if tool execution failed
 }

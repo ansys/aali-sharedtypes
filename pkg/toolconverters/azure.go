@@ -20,6 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//go:generate go run ../../internal/gen/value/gen.go
+package toolconverters
 
-package aali_graphdb
+import (
+	"github.com/ansys/aali-sharedtypes/pkg/logging"
+	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
+	"github.com/openai/openai-go/v2"
+)
+
+// ConvertMCPToAzureFormat converts MCP tool definitions to Azure OpenAI format.
+// Azure OpenAI Service uses the same SDK and format as OpenAI, so this function
+// wraps the OpenAI converter for clarity and future flexibility.
+func ConvertMCPToAzureFormat(
+	ctx *logging.ContextMap,
+	mcpTools []sharedtypes.MCPTool,
+) ([]openai.ChatCompletionToolUnionParam, []error) {
+	// Azure uses the same format as OpenAI
+	return ConvertMCPToOpenAIFormat(ctx, mcpTools)
+}
+
+// ConvertAzureToolCallsToSharedTypes converts Azure OpenAI tool call responses
+// to the shared ToolCall format used throughout the AALI framework.
+// Azure OpenAI Service uses the same response format as OpenAI.
+func ConvertAzureToolCallsToSharedTypes(
+	ctx *logging.ContextMap,
+	toolCalls []openai.ChatCompletionMessageToolCallUnion,
+) ([]sharedtypes.ToolCall, []error) {
+	// Azure uses the same format as OpenAI
+	return ConvertOpenAIToolCallsToSharedTypes(ctx, toolCalls)
+}

@@ -20,6 +20,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//go:generate go run ../../internal/gen/value/gen.go
+package sharedtypes
 
-package aali_graphdb
+import (
+	"os"
+	"testing"
+)
+
+func TestGetAuthToken(t *testing.T) {
+	tests := []struct {
+		name      string
+		authToken string
+		envVar    string
+		envValue  string
+		expected  string
+	}{
+		{
+			name:      "plain token",
+			authToken: "my-secret-token",
+			expected:  "my-secret-token",
+		},
+		{
+			name:      "env var syntax",
+			authToken: "${MCP_TEST_TOKEN}",
+			envVar:    "MCP_TEST_TOKEN",
+			envValue:  "token-from-env",
+			expected:  "token-from-env",
+		},
+		{
+			name:      "empty token",
+			authToken: "",
+			expected:  "",
+		},
+		{
+			name:      "env var not set",
+			authToken: "${UNSET_VAR}",
+			expected:  "",
+		},
+		{
+			name:      "partial syntax not resolved",
+			authToken: "${INCOMPLETE",
+			expected:  "${INCOMPLETE",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Set env var if specified
+			if tt.envVar != "" {
+				os.Setenv(tt.envVar, tt.envValue)
+				defer os.Unsetenv(tt.envVar)
+			}
+
+			config := &MCPConfig{AuthToken: tt.authToken}
+			result := config.GetAuthToken()
+
+			if result != tt.expected {
+				t.Errorf("GetAuthToken() = %q, want %q", result, tt.expected)
+			}
+		})
+	}
+}

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2025 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -31,7 +31,7 @@ import (
 	"os"
 	"time"
 
-	"nhooyr.io/websocket"
+	"github.com/coder/websocket"
 
 	"github.com/ansys/aali-sharedtypes/pkg/config"
 	"go.uber.org/zap"

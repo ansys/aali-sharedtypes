@@ -1,4 +1,4 @@
-// Copyright (C) 2025 ANSYS, Inc. and/or its affiliates.
+// Copyright (C) 2025 - 2026 ANSYS, Inc. and/or its affiliates.
 // SPDX-License-Identifier: MIT
 //
 //
@@ -26,17 +26,15 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"net"
 	"strings"
 
 	"github.com/ansys/aali-sharedtypes/pkg/aaliflowkitgrpc"
+	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -156,10 +154,6 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				GoType:  inputParam.GoType,
 				Options: inputParam.Options,
 			})
-			// add the type to available types
-			if AvailableTypes != nil && inputParam.GoType != "" && inputParam.GoType != "any" {
-				AvailableTypes[inputParam.GoType] = true
-			}
 		}
 		outputs := []sharedtypes.FunctionOutput{}
 		for _, outputParam := range function.Output {
@@ -168,10 +162,6 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 				Type:   outputParam.Type,
 				GoType: outputParam.GoType,
 			})
-			// add the type to available types
-			if AvailableTypes != nil && outputParam.GoType != "" && outputParam.GoType != "any" {
-				AvailableTypes[outputParam.GoType] = true
-			}
 		}
 
 		// Save the function to internal states
@@ -193,6 +183,12 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 		}
 	}
 
+	// Save the available types to internal states
+	AvailableTypes = make(map[string]bool)
+	for _, goType := range typeconverters.GetSupportedTypes() {
+		AvailableTypes[goType] = true
+	}
+
 	return nil
 }
 
@@ -210,14 +206,14 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	defer func() {
 		r := recover()
 		if r != nil {
-			err = fmt.Errorf("panic occurred in RunFunction: %v", r)
+			err = fmt.Errorf("panic occurred in RunFunction of function '%v': %v", functionName, r)
 		}
 	}()
 
 	// Get function definition
 	functionDef, ok := AvailableFunctions[functionName]
 	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+		return nil, fmt.Errorf("function '%s' not found in available functions", functionName)
 	}
 
 	// Set up a connection to the server.
@@ -250,9 +246,12 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		value, ok := inputs[inputDef.Name]
 		if ok {
 			// found: convert value to string
-			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			stringValue, exists, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
 			if err != nil {
-				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+				return nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
+			}
+			if !exists {
+				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
 			}
 			grpcInput.Value = stringValue
 
@@ -271,16 +270,19 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		Inputs: grpcInputs,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("error in external function gRPC RunFunction: %v", err)
+		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
 	}
 
 	// convert outputs to map[string]sharedtypes.FilledInputOutput
 	outputs = map[string]sharedtypes.FilledInputOutput{}
 	for _, output := range runResp.Outputs {
 		// convert value to Go type
-		value, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
+		value, exists, err := typeconverters.ConvertStringToGivenType(output.Value, output.GoType)
 		if err != nil {
-			return nil, fmt.Errorf("error converting output %s (%v) to Go type: %v", output.Name, output.Value, err)
+			return nil, fmt.Errorf("error converting output '%s' with value '%v' for function '%v' to Go type: %v", output.Name, output.Value, functionName, err)
+		}
+		if !exists {
+			return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertStringToGivenType", output.Name)
 		}
 
 		// Save the output to the map
@@ -308,14 +310,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	defer func() {
 		r := recover()
 		if r != nil {
-			err = fmt.Errorf("panic occured in StreamFunction: %v", r)
+			err = fmt.Errorf("panic occured in StreamFunction for function '%v': %v", functionName, r)
 		}
 	}()
 
 	// Get function definition
 	functionDef, ok := AvailableFunctions[functionName]
 	if !ok {
-		return nil, fmt.Errorf("function %s not found in available functions", functionName)
+		return nil, fmt.Errorf("function '%s' not found in available functions", functionName)
 	}
 
 	// Set up a connection to the server.
@@ -348,11 +350,16 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 		value, ok := inputs[inputDef.Name]
 		if ok {
 			// found: convert value to string
-			stringValue, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
+			stringValue, exists, err := typeconverters.ConvertGivenTypeToString(value.Value, inputDef.GoType)
 			if err != nil {
 				conn.Close()
 				cancel()
-				return nil, fmt.Errorf("error converting input %s to string: %v", inputDef.Name, err)
+				return nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
+			}
+			if !exists {
+				conn.Close()
+				cancel()
+				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
 			}
 			grpcInput.Value = stringValue
 
@@ -373,14 +380,14 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	if err != nil {
 		conn.Close()
 		cancel()
-		return nil, fmt.Errorf("error in external function gRPC StreamFunction: %v", err)
+		return nil, fmt.Errorf("error in external function gRPC StreamFunction for function '%v': %v", functionName, err)
 	}
 
 	// Create a stream channel
 	streamChannel := make(chan string, 400)
 
 	// Receive the stream from the server
-	go receiveStreamFromServer(ctx, stream, &streamChannel, conn, cancel)
+	go receiveStreamFromServer(ctx, stream, &streamChannel, conn, cancel, functionName)
 
 	return &streamChannel, nil
 }
@@ -390,11 +397,11 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 // Parameters:
 //   - stream: the stream from the server
 //   - streamChannel: the channel to send the stream to
-func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.ExternalFunctions_StreamFunctionClient, streamChannel *chan string, conn *grpc.ClientConn, cancel context.CancelFunc) {
+func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.ExternalFunctions_StreamFunctionClient, streamChannel *chan string, conn *grpc.ClientConn, cancel context.CancelFunc, functionName string) {
 	defer func() {
 		r := recover()
 		if r != nil {
-			logging.Log.Errorf(ctx, "Panic occured in receiveStreamFromServer: %v", r)
+			logging.Log.Errorf(ctx, "Panic occured in receiveStreamFromServer for function '%v': %v", functionName, r)
 		}
 	}()
 
@@ -402,7 +409,7 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 	for {
 		res, err := stream.Recv()
 		if err != nil && err != io.EOF {
-			logging.Log.Errorf(ctx, "error receiving stream: %v", err)
+			logging.Log.Errorf(ctx, "error receiving stream for function '%v': %v", functionName, err)
 		}
 
 		// Send the stream to the channel
@@ -443,30 +450,10 @@ func createClient(url string, apiKey string) (client aaliflowkitgrpc.ExternalFun
 		address = url
 	}
 
-	// Set up the gRPC dial options
-	var opts []grpc.DialOption
-
-	// Add custom dialer with IPv4 first, fallback to IPv6
-	opts = append(opts, grpc.WithContextDialer(func(ctx context.Context, addr string) (net.Conn, error) {
-		d := &net.Dialer{}
-
-		// Try IPv4 first
-		conn, err := d.DialContext(ctx, "tcp4", addr)
-		if err == nil {
-			return conn, nil
-		}
-
-		// Fall back to IPv6 if IPv4 fails
-		return d.DialContext(ctx, "tcp6", addr)
-	}))
-
-	if scheme == "https" {
-		// Set up a secure connection with default TLS config
-		creds := credentials.NewTLS(nil)
-		opts = append(opts, grpc.WithTransportCredentials(creds))
-	} else {
-		// Set up an insecure connection
-		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// Get gRPC dial options
+	opts, err := clients.GetGrpcDialOptions(scheme)
+	if err != nil {
+		return nil, nil, fmt.Errorf("unable to get gRPC dial options: %v", err)
 	}
 
 	// Add the API key if it is set
