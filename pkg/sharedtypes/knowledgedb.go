@@ -129,6 +129,9 @@ type ApiDbResponse struct {
 	Type              string                 `json:"type"`
 	ParentClass       string                 `json:"parent_class"`
 	PyaedtGroup       string                 `json:"typeof,omitempty"`
+        Summary           string                 `json:"summary, omitempty"`
+        NameFormatted     string                 `json:"name_formatted"`
+        NamePseudocode    string                 `json:"name_pseudocode"`
 	//ParentId          *uuid.UUID             `json:"parent_id"`
 	//Siblings  []DbData `json:"siblings,omitempty"`
 }
