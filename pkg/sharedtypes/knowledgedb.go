@@ -87,11 +87,14 @@ type DbData struct {
 
 // ApiDbResponse represents the response from the database.
 type ApiDbResponse struct {
-	Guid        uuid.UUID `json:"guid"`
-	Name        string    `json:"name"`
-	Type        string    `json:"type"`
-	ParentClass string    `json:"parent_class"`
-	PyaedtGroup string    `json:"typeof,omitempty"`
+	Guid           uuid.UUID `json:"guid"`
+	Name           string    `json:"name"`
+	Type           string    `json:"type"`
+	ParentClass    string    `json:"parent_class"`
+	PyaedtGroup    string    `json:"typeof,omitempty"`
+	Summary        string    `json:"summary,omitempty"`
+	NameFormatted  string    `json:"name_formatted"`
+	NamePseudocode string    `json:"name_pseudocode"`
 	//ParentId          *uuid.UUID             `json:"parent_id"`
 	//Siblings  []DbData `json:"siblings,omitempty"`
 }
