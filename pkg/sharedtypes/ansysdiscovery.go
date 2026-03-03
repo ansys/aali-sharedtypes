@@ -46,23 +46,17 @@ type DiscoveryDimensions struct {
 
 // Material describes a labeled material state.
 type DiscoveryMaterial struct {
+	Guid  string `json:"guid"`
 	Label string `json:"label"`
-	Name  string `json:"name"`
 	State string `json:"state"`
 }
 
 // BoundaryCondition represents physics constraints for the simulation.
 type DiscoveryBoundaryCondition struct {
-	Index          int                      `json:"index"`
-	ProxyGuid      string                   `json:"proxyGuid"`
-	ProxyLabel     string                   `json:"proxyLabel"`
-	Type           string                   `json:"type"`
-	Classification int                      `json:"classification"`
-	Rationale      string                   `json:"rationale"`
-	Details        map[string]interface{}   `json:"details"`
-	Guids          []string                 `json:"guids"`
-	Names          []string                 `json:"names"`
-	EntityIdsNames []map[string]interface{} `json:"entityIdsNames"`
+	ProxyGuid  string                 `json:"proxyGuid"`
+	ProxyLabel string                 `json:"proxyLabel"`
+	Type       string                 `json:"type"`
+	Details    map[string]interface{} `json:"details"`
 }
 
 // Attachment holds auxiliary binary payloads (e.g., base64-encoded uploads).
