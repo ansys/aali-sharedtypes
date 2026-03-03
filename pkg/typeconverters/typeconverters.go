@@ -282,6 +282,9 @@ func init() {
 		"[]ApiDbResponse":                 jsonSliceConverter[[]sharedtypes.ApiDbResponse](),
 		"[]ExampleDbResponse":             jsonSliceConverter[[]sharedtypes.ExampleDbResponse](),
 		"[]UserGuideDbResponse":           jsonSliceConverter[[]sharedtypes.UserGuideDbResponse](),
+		"[][]ApiDbResponse":               jsonSliceConverter[[][]sharedtypes.ApiDbResponse](),
+		"[][]ExampleDbResponse":           jsonSliceConverter[[][]sharedtypes.ExampleDbResponse](),
+		"[][]UserGuideDbResponse":         jsonSliceConverter[[][]sharedtypes.UserGuideDbResponse](),
 		"map[string]ElementContextsTuple": jsonMapConverter[map[string]sharedtypes.ElementContextsTuple](),
 		"DesignContext":                   jsonMapConverter[sharedtypes.DesignContext](),
 	}
