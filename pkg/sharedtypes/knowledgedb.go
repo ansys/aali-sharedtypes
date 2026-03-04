@@ -117,7 +117,7 @@ type UserGuideDbResponse struct {
 	Title             string    `json:"title"`
 	ParentSectionName string    `json:"parent_section_name"`
 	SectionName       string    `json:"section_name"`
-	Level             string    `json:"level"`
+	Level             int       `json:"level"`
 }
 
 // ExampleDbResponse represents the example response from the database.
