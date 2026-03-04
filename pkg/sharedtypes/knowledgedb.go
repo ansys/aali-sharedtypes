@@ -112,8 +112,8 @@ type UserGuideDbResponse struct {
 	Guid              uuid.UUID `json:"guid"`
 	DocumentName      string    `json:"document_name"`
 	Text              string    `json:"text"`
-	NextChunk         string    `json:"next_chunk"`
-	PreviousChunk     string    `json:"previous_chunk"`
+	NextChunk         string    `json:"next_chunk,omitempty"`
+	PreviousChunk     string    `json:"previous_chunk,omitempty"`
 	Title             string    `json:"title"`
 	ParentSectionName string    `json:"parent_section_name"`
 	SectionName       string    `json:"section_name"`
