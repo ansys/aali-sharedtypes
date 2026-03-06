@@ -424,6 +424,8 @@ func JSONToGo(jsonType string) (string, error) {
 		return "int", nil
 	case jsonType == "boolean":
 		return "bool", nil
+	case jsonType == "Any" || jsonType == "any" || jsonType == "object":
+		return "interface{}", nil
 	default:
 		return "", fmt.Errorf("not supported JSON type: %s", jsonType)
 	}
