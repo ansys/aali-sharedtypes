@@ -49,7 +49,7 @@ type DiscoveryMaterial struct {
 	Guid    string                 `json:"guid"`
 	Label   string                 `json:"label"`
 	State   string                 `json:"state"`
-	Details map[string]interface{} `json:"details"`
+	Details map[string]interface{} `json:"details,omitempty"`
 }
 
 // BoundaryCondition represents physics constraints for the simulation.
