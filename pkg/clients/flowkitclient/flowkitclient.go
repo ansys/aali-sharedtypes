@@ -410,6 +410,8 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 		res, err := stream.Recv()
 		if err != nil && err != io.EOF {
 			logging.Log.Errorf(ctx, "error receiving stream for function '%v': %v", functionName, err)
+			*streamChannel <- fmt.Sprintf("$&$error$&$:$&$%v$&$", err)
+			break
 		}
 
 		// Send the stream to the channel
