@@ -34,6 +34,7 @@ type DiscoverySimulationInput struct {
 	Materials          []DiscoveryMaterial          `json:"materials"`
 	BoundaryConditions []DiscoveryBoundaryCondition `json:"boundaryConditions"`
 	Attachments        []DiscoveryAttachment        `json:"attachments,omitempty"`
+	Monitors           []DiscoveryMonitors          `json:"monitors,omitempty"`
 }
 
 // Dimensions defines spatial extents and their units.
@@ -63,4 +64,9 @@ type DiscoveryBoundaryCondition struct {
 type DiscoveryAttachment struct {
 	FileName string `json:"fileName"`
 	Data     []byte `json:"data"`
+}
+type DiscoveryMonitors struct {
+	ProxyGuid  string                 `json:"proxyGuid"`
+	ProxyLabel string                 `json:"proxyLabel"`
+	Details    map[string]interface{} `json:"details"`
 }

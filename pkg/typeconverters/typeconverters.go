@@ -276,6 +276,7 @@ func init() {
 		"[]SlashCommand":                   jsonSliceConverter[[]sharedtypes.SlashCommand](),
 		"[]DiscoveryMaterial":              jsonSliceConverter[[]sharedtypes.DiscoveryMaterial](),
 		"[]DiscoveryBoundaryCondition":     jsonSliceConverter[[]sharedtypes.DiscoveryBoundaryCondition](),
+		"[]DiscoveryMonitors":              jsonSliceConverter[[]sharedtypes.DiscoveryMonitors](),
 		"[]DiscoveryAttachment":            jsonSliceConverter[[]sharedtypes.DiscoveryAttachment](),
 	}
 }
