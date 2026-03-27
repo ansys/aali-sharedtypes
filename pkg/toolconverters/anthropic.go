@@ -26,9 +26,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
+	"github.com/anthropics/anthropic-sdk-go"
 )
 
 // ConvertMCPToAnthropicFormat converts MCP tools to Anthropic tool definition format.

@@ -26,9 +26,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
+	"github.com/anthropics/anthropic-sdk-go"
 )
 
 func TestConvertMCPToAnthropicFormat(t *testing.T) {
