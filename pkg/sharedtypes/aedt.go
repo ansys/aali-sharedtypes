@@ -23,15 +23,7 @@
 package sharedtypes
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
-	"time"
-
-	"cloud.google.com/go/civil"
-	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
 // AedtEmbeddingOptions represents the options for an embeddings request.
