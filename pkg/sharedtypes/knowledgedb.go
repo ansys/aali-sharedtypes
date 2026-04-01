@@ -85,22 +85,6 @@ type DbData struct {
 	HasNeo4jEntry     bool                   `json:"has_neo4j_entry"`
 }
 
-// AedtApiDbResponse represents the response from the database.
-// ApiDbResponse is now AedtApiDbResponse
-// for remaining DbResponse, use the standard DbResponse
-type AedtApiDbResponse struct {
-	Guid              uuid.UUID              `json:"guid"`
-	Name              string                 `json:"name"`
-	Type              string                 `json:"type"`
-	ParentClass       string                 `json:"parent_class"`
-	PyaedtGroup       string                 `json:"typeof,omitempty"`
-        Summary           string                 `json:"summary, omitempty"`
-        NameFormatted     string                 `json:"name_formatted"`
-        NamePseudocode    string                 `json:"name_pseudocode"`
-	//ParentId          *uuid.UUID             `json:"parent_id"`
-	//Siblings  []DbData `json:"siblings,omitempty"`
-}
-
 // DbResponse represents the response from the database.
 // DbResponse can accommodate non-conflicting data from:
 // - StoreElementsInVectorDatabase (API/Element data)

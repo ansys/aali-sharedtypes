@@ -259,6 +259,7 @@ func init() {
 		"[]DbResponse":                     jsonSliceConverter[[]sharedtypes.DbResponse](),
 		"[]HistoricMessage":                jsonSliceConverter[[]sharedtypes.HistoricMessage](),
 		"[]AedtApiDbResponse":              jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
+		"[][]AedtApiDbResponse":                jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](),
 		"[]AnsysGPTDefaultFields":          jsonSliceConverter[[]sharedtypes.AnsysGPTDefaultFields](),
 		"[]ACSSearchResponse":              jsonSliceConverter[[]sharedtypes.ACSSearchResponse](),
 		"[]AnsysGPTCitation":               jsonSliceConverter[[]sharedtypes.AnsysGPTCitation](),
