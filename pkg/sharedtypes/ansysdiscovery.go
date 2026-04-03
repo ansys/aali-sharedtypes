@@ -34,6 +34,7 @@ type DiscoverySimulationInput struct {
 	Materials          []DiscoveryMaterial          `json:"materials"`
 	BoundaryConditions []DiscoveryBoundaryCondition `json:"boundaryConditions"`
 	Attachments        []DiscoveryAttachment        `json:"attachments,omitempty"`
+	Monitors           []DiscoveryMonitors          `json:"monitors,omitempty"`
 }
 
 // Dimensions defines spatial extents and their units.
@@ -46,27 +47,27 @@ type DiscoveryDimensions struct {
 
 // Material describes a labeled material state.
 type DiscoveryMaterial struct {
-	Label string `json:"label"`
-	Name  string `json:"name"`
-	State string `json:"state"`
+	Guid    string                 `json:"guid"`
+	Label   string                 `json:"label"`
+	State   string                 `json:"state"`
+	Details map[string]interface{} `json:"details,omitempty"`
 }
 
 // BoundaryCondition represents physics constraints for the simulation.
 type DiscoveryBoundaryCondition struct {
-	Index          int                      `json:"index"`
-	ProxyGuid      string                   `json:"proxyGuid"`
-	ProxyLabel     string                   `json:"proxyLabel"`
-	Type           string                   `json:"type"`
-	Classification int                      `json:"classification"`
-	Rationale      string                   `json:"rationale"`
-	Details        map[string]interface{}   `json:"details"`
-	Guids          []string                 `json:"guids"`
-	Names          []string                 `json:"names"`
-	EntityIdsNames []map[string]interface{} `json:"entityIdsNames"`
+	ProxyGuid  string                 `json:"proxyGuid"`
+	ProxyLabel string                 `json:"proxyLabel"`
+	Type       string                 `json:"type"`
+	Details    map[string]interface{} `json:"details,omitempty"`
 }
 
 // Attachment holds auxiliary binary payloads (e.g., base64-encoded uploads).
 type DiscoveryAttachment struct {
 	FileName string `json:"fileName"`
 	Data     []byte `json:"data"`
+}
+type DiscoveryMonitors struct {
+	ProxyGuid  string                 `json:"proxyGuid"`
+	ProxyLabel string                 `json:"proxyLabel"`
+	Details    map[string]interface{} `json:"details"`
 }
