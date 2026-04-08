@@ -60,11 +60,11 @@ type Config struct {
 	EXTRACT_CONFIG_FROM_AZURE_KEY_VAULT bool   `yaml:"EXTRACT_CONFIG_FROM_AZURE_KEY_VAULT" json:"EXTRACTCONFIGFROMAZUREKEYVAULT"`
 	AZURE_KEY_VAULT_NAME                string `yaml:"AZURE_KEY_VAULT_NAME" json:"AZUREKEYVAULTNAME"`
 	AZURE_MANAGED_IDENTITY_ID           string `yaml:"AZURE_MANAGED_IDENTITY_ID" json:"AZUREMANAGEDIDENTITYID"`
-    
-    // Aali Chat
-    ///////////////
-    CHAT_ADDRESS string `yaml:"CHAT_ADDRESS" json:"CHATADDRESS"`
-	
+
+	// Aali Chat
+	///////////////
+	CHAT_ADDRESS string `yaml:"CHAT_ADDRESS" json:"CHATADDRESS"`
+
 	// Aali Agent
 	///////////////
 	AGENT_ADDRESS    string `yaml:"AGENT_ADDRESS" json:"AGENTADDRESS"`
