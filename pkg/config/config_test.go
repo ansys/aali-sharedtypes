@@ -737,6 +737,256 @@ func TestWriteInterfaceToFile(t *testing.T) {
 	}
 }
 
+// TestApplySecretValueToConfig tests the applySecretValueToConfig function
+// which is the core logic of InitGlobalConfigFromAzureKeyVault
+func TestApplySecretValueToConfig(t *testing.T) {
+	tests := []struct {
+		name          string
+		secretName    string
+		secretValue   string
+		setupConfig   func() *Config
+		validate      func(t *testing.T, config *Config)
+		expectError   bool
+		errorContains string
+	}{
+		// String type
+		{
+			name:        "Set string field",
+			secretName:  "LOGLEVEL",
+			secretValue: "debug",
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				if config.LOG_LEVEL != "debug" {
+					t.Errorf("Expected LOG_LEVEL 'debug', got '%v'", config.LOG_LEVEL)
+				}
+			},
+		},
+		{
+			name:        "Set string field with escape sequences",
+			secretName:  "LOGLEVEL",
+			secretValue: `line1\nline2`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				if config.LOG_LEVEL != "line1\nline2" {
+					t.Errorf("Expected LOG_LEVEL with newline, got '%v'", config.LOG_LEVEL)
+				}
+			},
+		},
+		// Bool type
+		{
+			name:        "Set bool field true",
+			secretName:  "LOCALLOGS",
+			secretValue: "true",
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				if !config.LOCAL_LOGS {
+					t.Errorf("Expected LOCAL_LOGS true, got false")
+				}
+			},
+		},
+		{
+			name:        "Set bool field empty string",
+			secretName:  "LOCALLOGS",
+			secretValue: "",
+			setupConfig: func() *Config { return &Config{LOCAL_LOGS: true} },
+			validate: func(t *testing.T, config *Config) {
+				if config.LOCAL_LOGS {
+					t.Errorf("Expected LOCAL_LOGS false, got true")
+				}
+			},
+		},
+		{
+			name:          "Set bool field invalid value",
+			secretName:    "LOCALLOGS",
+			secretValue:   "notabool",
+			setupConfig:   func() *Config { return &Config{} },
+			expectError:   true,
+			errorContains: "strconv.ParseBool",
+		},
+		// Int type
+		{
+			name:        "Set int field",
+			secretName:  "NUMBEROFWORKFLOWWORKERS",
+			secretValue: "42",
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				if config.NUMBER_OF_WORKFLOW_WORKERS != 42 {
+					t.Errorf("Expected NUMBER_OF_WORKFLOW_WORKERS 42, got %v", config.NUMBER_OF_WORKFLOW_WORKERS)
+				}
+			},
+		},
+		{
+			name:        "Set int field empty string",
+			secretName:  "NUMBEROFWORKFLOWWORKERS",
+			secretValue: "",
+			setupConfig: func() *Config { return &Config{NUMBER_OF_WORKFLOW_WORKERS: 10} },
+			validate: func(t *testing.T, config *Config) {
+				if config.NUMBER_OF_WORKFLOW_WORKERS != 0 {
+					t.Errorf("Expected NUMBER_OF_WORKFLOW_WORKERS 0, got %v", config.NUMBER_OF_WORKFLOW_WORKERS)
+				}
+			},
+		},
+		{
+			name:          "Set int field invalid value",
+			secretName:    "NUMBEROFWORKFLOWWORKERS",
+			secretValue:   "notanint",
+			setupConfig:   func() *Config { return &Config{} },
+			expectError:   true,
+			errorContains: "strconv.Atoi",
+		},
+		// []string type
+		{
+			name:        "Set string slice field",
+			secretName:  "PRIVATEWORKFLOWSFOLDERS",
+			secretValue: `["folder1","folder2","folder3"]`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				expected := []string{"folder1", "folder2", "folder3"}
+				if !reflect.DeepEqual(config.PRIVATE_WORKFLOWS_FOLDERS, expected) {
+					t.Errorf("Expected PRIVATE_WORKFLOWS_FOLDERS %v, got %v", expected, config.PRIVATE_WORKFLOWS_FOLDERS)
+				}
+			},
+		},
+		{
+			name:        "Set string slice field empty string",
+			secretName:  "PRIVATEWORKFLOWSFOLDERS",
+			secretValue: "",
+			setupConfig: func() *Config { return &Config{PRIVATE_WORKFLOWS_FOLDERS: []string{"old"}} },
+			validate: func(t *testing.T, config *Config) {
+				if len(config.PRIVATE_WORKFLOWS_FOLDERS) != 0 {
+					t.Errorf("Expected empty slice, got %v", config.PRIVATE_WORKFLOWS_FOLDERS)
+				}
+			},
+		},
+		{
+			name:          "Set string slice field invalid JSON",
+			secretName:    "PRIVATEWORKFLOWSFOLDERS",
+			secretValue:   "not json",
+			setupConfig:   func() *Config { return &Config{} },
+			expectError:   true,
+			errorContains: "json.Unmarshal []string",
+		},
+		// []int type
+		{
+			name:        "Set int slice field",
+			secretName:  "ANSYSAUTHORIZATIONACCEPTEDPERSONAS",
+			secretValue: `[1,2,3]`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				expected := []int{1, 2, 3}
+				if !reflect.DeepEqual(config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS, expected) {
+					t.Errorf("Expected ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS %v, got %v", expected, config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS)
+				}
+			},
+		},
+		{
+			name:        "Set int slice field single element",
+			secretName:  "ANSYSAUTHORIZATIONACCEPTEDPERSONAS",
+			secretValue: `[42]`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				expected := []int{42}
+				if !reflect.DeepEqual(config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS, expected) {
+					t.Errorf("Expected ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS %v, got %v", expected, config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS)
+				}
+			},
+		},
+		{
+			name:        "Set int slice field empty string",
+			secretName:  "ANSYSAUTHORIZATIONACCEPTEDPERSONAS",
+			secretValue: "",
+			setupConfig: func() *Config { return &Config{ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS: []int{1, 2}} },
+			validate: func(t *testing.T, config *Config) {
+				if len(config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS) != 0 {
+					t.Errorf("Expected empty slice, got %v", config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS)
+				}
+			},
+		},
+		{
+			name:        "Set int slice field empty array",
+			secretName:  "ANSYSAUTHORIZATIONACCEPTEDPERSONAS",
+			secretValue: `[]`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				if len(config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS) != 0 {
+					t.Errorf("Expected empty slice, got %v", config.ANSYS_AUTHORIZATION_ACCEPTED_PERSONAS)
+				}
+			},
+		},
+		{
+			name:          "Set int slice field invalid JSON",
+			secretName:    "ANSYSAUTHORIZATIONACCEPTEDPERSONAS",
+			secretValue:   `["not","ints"]`,
+			setupConfig:   func() *Config { return &Config{} },
+			expectError:   true,
+			errorContains: "json.Unmarshal []int",
+		},
+		// map[string]string type
+		{
+			name:        "Set map field",
+			secretName:  "WORKFLOWCONFIGVARIABLES",
+			secretValue: `{"key1":"val1","key2":"val2"}`,
+			setupConfig: func() *Config { return &Config{} },
+			validate: func(t *testing.T, config *Config) {
+				expected := map[string]string{"key1": "val1", "key2": "val2"}
+				if !reflect.DeepEqual(config.WORKFLOW_CONFIG_VARIABLES, expected) {
+					t.Errorf("Expected WORKFLOW_CONFIG_VARIABLES %v, got %v", expected, config.WORKFLOW_CONFIG_VARIABLES)
+				}
+			},
+		},
+		{
+			name:        "Set map field empty string",
+			secretName:  "WORKFLOWCONFIGVARIABLES",
+			secretValue: "",
+			setupConfig: func() *Config { return &Config{WORKFLOW_CONFIG_VARIABLES: map[string]string{"old": "val"}} },
+			validate: func(t *testing.T, config *Config) {
+				if len(config.WORKFLOW_CONFIG_VARIABLES) != 0 {
+					t.Errorf("Expected empty map, got %v", config.WORKFLOW_CONFIG_VARIABLES)
+				}
+			},
+		},
+		// Non-matching secret name
+		{
+			name:        "Non-matching secret name leaves config unchanged",
+			secretName:  "NONEXISTENTSECRET",
+			secretValue: "somevalue",
+			setupConfig: func() *Config { return &Config{LOG_LEVEL: "info"} },
+			validate: func(t *testing.T, config *Config) {
+				if config.LOG_LEVEL != "info" {
+					t.Errorf("Expected LOG_LEVEL 'info' unchanged, got '%v'", config.LOG_LEVEL)
+				}
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			config := tt.setupConfig()
+			err := applySecretValueToConfig(config, tt.secretName, tt.secretValue)
+
+			if tt.expectError {
+				if err == nil {
+					t.Errorf("Expected error but got none")
+					return
+				}
+				if tt.errorContains != "" && !contains(err.Error(), tt.errorContains) {
+					t.Errorf("Expected error to contain '%s', got: %v", tt.errorContains, err)
+				}
+				return
+			}
+
+			if err != nil {
+				t.Errorf("Unexpected error: %v", err)
+				return
+			}
+
+			if tt.validate != nil {
+				tt.validate(t, config)
+			}
+		})
+	}
+}
+
 // Helper function to check if a string contains a substring
 func contains(s, substr string) bool {
 	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
