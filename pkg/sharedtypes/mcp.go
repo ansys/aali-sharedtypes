@@ -75,6 +75,14 @@ type MCPPromptArgument struct {
 	Required    bool   `json:"required,omitempty"`    // Whether the argument is required
 }
 
+// ToolSetDefinition represents a named group of MCP tools with a system prompt for dynamic filtering.
+type ToolSetDefinition struct {
+	Name         string   `json:"name"`                    // Unique set identifier
+	Description  string   `json:"description,omitempty"`   // Human-readable description of the set
+	Tools        []string `json:"tools"`                   // Tool names belonging to this set
+	SystemPrompt string   `json:"system_prompt,omitempty"` // Instructions injected when this set is active
+}
+
 // GetAuthToken returns the authentication token, resolving environment variables if needed
 // ${MCP_TOKEN} will return the value of the MCP_TOKEN environment variable
 func (config *MCPConfig) GetAuthToken() string {
