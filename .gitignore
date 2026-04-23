@@ -53,3 +53,6 @@ doc/source/api_reference/logging/
 doc/source/api_reference/sharedtypes/
 doc/source/api_reference/type_definitions/
 doc/source/api_reference/typeconverters/
+
+# env
+.env

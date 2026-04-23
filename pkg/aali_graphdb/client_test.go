@@ -23,11 +23,16 @@
 package aali_graphdb
 
 import (
+	"archive/tar"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
+	"path"
 	"regexp"
 	"testing"
 	"time"
@@ -480,4 +485,138 @@ func TestRequiresApiKey(t *testing.T) {
 	// try to make a call without api key and make sure you get an error
 	_, err = client.WithApiKey("").GetDatabases()
 	assert.EqualError(err, "unexpected status code: 401")
+}
+
+func TestExport(t *testing.T) {
+	client := getTestClient(t)
+
+	const Db = "test-db"
+	require.NoError(t, client.CreateDatabase(Db))
+
+	// put some data in there
+	for _, query := range []string{
+		"CREATE NODE TABLE User(name STRING, age INT64, PRIMARY KEY (name))",
+		"CREATE (:User {name: 'Adam', age: 30});",
+		"CREATE (:User {name: 'Karissa', age: 40});",
+		"CREATE (:User {name: 'Zhang', age: 50});",
+		"CREATE (:User {name: 'Noura', age: 25});",
+	} {
+		_, err := client.CypherQueryWrite(Db, query, nil)
+		require.NoError(t, err)
+	}
+
+	testCases := map[string]struct {
+		opts []AaliGraphDbExportOpt
+		ext  string
+	}{
+		"NoOpts":             {[]AaliGraphDbExportOpt{}, "parquet"},
+		"Parquet":            {[]AaliGraphDbExportOpt{WithFormatParquet{}}, "parquet"},
+		"Csv":                {[]AaliGraphDbExportOpt{WithFormatCsv{}}, "csv"},
+		"DefaultCompression": {[]AaliGraphDbExportOpt{WithCompressionDefault{}}, "parquet"},
+		"BestCompression":    {[]AaliGraphDbExportOpt{WithCompressionBest{}}, "parquet"},
+		"FastCompression":    {[]AaliGraphDbExportOpt{WithCompressionFast{}}, "parquet"},
+		"ParquetBest":        {[]AaliGraphDbExportOpt{WithFormatParquet{}, WithCompressionBest{}}, "parquet"},
+		"CsvFast":            {[]AaliGraphDbExportOpt{WithCompressionFast{}, WithFormatCsv{}}, "csv"},
+	}
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			tmpdir := t.TempDir()
+			exportFile := path.Join(tmpdir, "export.tar.gz")
+			require.NoFileExists(t, exportFile)
+			require.NoError(t, client.ExportDatabase(Db, exportFile, tc.opts...))
+			assert.FileExists(t, exportFile)
+
+			unarchivedPath := path.Join(tmpdir, "unarchived")
+			require.NoError(t, os.Mkdir(unarchivedPath, os.ModePerm))
+			archive, err := os.Open(exportFile)
+			require.NoError(t, err)
+			defer func() { _ = archive.Close() }()
+			require.NoError(t, extractTarGz(archive, unarchivedPath))
+
+			exportDir := path.Join(unarchivedPath, "aali-graphdb-export")
+			assert.DirExists(t, exportDir)
+			assert.FileExists(t, path.Join(exportDir, "copy.cypher"))
+			assert.FileExists(t, path.Join(exportDir, "schema.cypher"))
+			assert.FileExists(t, path.Join(exportDir, "index.cypher"))
+			assert.FileExists(t, path.Join(exportDir, fmt.Sprintf("User.%s", tc.ext)))
+		})
+	}
+}
+
+func extractTarGz(r io.Reader, dir string) error {
+	gzipReader, err := gzip.NewReader(r)
+	if err != nil {
+		return err
+	}
+
+	tarReader := tar.NewReader(gzipReader)
+	for {
+		header, err := tarReader.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		dstPath := path.Join(dir, header.Name)
+		switch header.Typeflag {
+		case tar.TypeDir:
+			if err := os.MkdirAll(dstPath, header.FileInfo().Mode().Perm()); err != nil {
+				return err
+			}
+		case tar.TypeReg:
+			dst, err := os.OpenFile(dstPath, os.O_CREATE|os.O_RDWR, header.FileInfo().Mode())
+			if err != nil {
+				return err
+			}
+			defer func() { _ = dst.Close() }()
+
+			_, err = io.Copy(dst, tarReader)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func TestImport(t *testing.T) {
+	client := getTestClient(t)
+
+	// make a seed DB that an export can be made from
+	const SeedDb = "seeder"
+	require.NoError(t, client.CreateDatabase(SeedDb))
+	for _, query := range []string{
+		"CREATE NODE TABLE User(name STRING, age INT64, PRIMARY KEY (name))",
+		"CREATE (:User {name: 'Adam', age: 30});",
+		"CREATE (:User {name: 'Karissa', age: 40});",
+		"CREATE (:User {name: 'Zhang', age: 50});",
+		"CREATE (:User {name: 'Noura', age: 25});",
+	} {
+		_, err := client.CypherQueryWrite(SeedDb, query, nil)
+		require.NoError(t, err)
+	}
+
+	for name, format := range map[string]AaliGraphDbExportOpt{
+		"Parquet": WithFormatParquet{},
+		"Csv":     WithFormatCsv{},
+	} {
+		t.Run(name, func(t *testing.T) {
+			tmpdir := t.TempDir()
+			export := path.Join(tmpdir, "export.tar.gz")
+			require.NoError(t, client.ExportDatabase(SeedDb, export, format))
+
+			require.NoError(t, client.CreateDatabase(name))
+			resBefore, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+			require.NoError(t, err)
+			require.Equal(t, 0., resBefore[0]["count"])
+
+			require.NoError(t, client.ImportDatabase(name, export))
+			resAfter, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+			require.NoError(t, err)
+			assert.Equal(t, 4., resAfter[0]["count"])
+		})
+	}
+
 }
