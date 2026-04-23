@@ -164,6 +164,11 @@ type Config struct {
 	FLOWKIT_PYTHON_ADDRESS string `yaml:"FLOWKIT_PYTHON_ADDRESS" json:"FLOWKITPYTHONADDRESS"`
 	FLOWKIT_PYTHON_API_KEY string `yaml:"FLOWKIT_PYTHON_API_KEY" json:"FLOWKITPYTHONAPIKEY"`
 
+	// Database Settings
+	//////////////////////
+	GRAPHDB_ADDR      string `yaml:"GRAPHDB_ADDR" json:"GRAPHDBADDR"`
+	GRAPHDB_DATA_PATH string `yaml:"GRAPHDB_DATA_PATH" json:"GRAPHDBDATAPATH"`
+
 	// Aali Proxy / ADS
 	///////////////////
 	// ads proxy uses this to determine which port to listen on for graphdb proxy requests
