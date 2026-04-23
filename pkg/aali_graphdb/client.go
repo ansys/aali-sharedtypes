@@ -29,6 +29,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"go.uber.org/zap"
@@ -344,4 +345,88 @@ type Parameters interface {
 
 func (params ParameterMap) AsParameters() (map[string]Value, error) {
 	return params, nil
+}
+
+type aaliGraphDbExportOpts struct {
+	Format      string `json:"format,omitempty"`
+	Compression string `json:"compression,omitempty"`
+}
+
+type AaliGraphDbExportOpt interface {
+	apply(*aaliGraphDbExportOpts)
+}
+
+type WithFormatParquet struct{}
+
+func (WithFormatParquet) apply(opts *aaliGraphDbExportOpts) {
+	opts.Format = "parquet"
+}
+
+type WithFormatCsv struct{}
+
+func (WithFormatCsv) apply(opts *aaliGraphDbExportOpts) {
+	opts.Format = "csv"
+}
+
+type WithCompressionDefault struct{}
+
+func (WithCompressionDefault) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "default"
+}
+
+type WithCompressionFast struct{}
+
+func (WithCompressionFast) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "fast"
+}
+
+type WithCompressionBest struct{}
+
+func (WithCompressionBest) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "best"
+}
+
+func (client *Client) ExportDatabase(name string, file string, opts ...AaliGraphDbExportOpt) error {
+	exportOpts := &aaliGraphDbExportOpts{}
+	for _, opt := range opts {
+		opt.apply(exportOpts)
+	}
+
+	out, err := os.Create(file)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		err := out.Close()
+		if err != nil {
+			client.logger.Warn(fmt.Sprintf("could not close file %q: %s", file, err))
+		}
+	}()
+
+	u, err := url.JoinPath(client.address, "databases", name, "export")
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.post(u, exportOpts)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		body := string(bodyBytes)
+		return fmt.Errorf("unexpected status code: %v %q", resp.StatusCode, body)
+	}
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
