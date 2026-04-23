@@ -580,3 +580,43 @@ func extractTarGz(r io.Reader, dir string) error {
 	}
 	return nil
 }
+
+func TestImport(t *testing.T) {
+	client := getTestClient(t)
+
+	// make a seed DB that an export can be made from
+	const SeedDb = "seeder"
+	require.NoError(t, client.CreateDatabase(SeedDb))
+	for _, query := range []string{
+		"CREATE NODE TABLE User(name STRING, age INT64, PRIMARY KEY (name))",
+		"CREATE (:User {name: 'Adam', age: 30});",
+		"CREATE (:User {name: 'Karissa', age: 40});",
+		"CREATE (:User {name: 'Zhang', age: 50});",
+		"CREATE (:User {name: 'Noura', age: 25});",
+	} {
+		_, err := client.CypherQueryWrite(SeedDb, query, nil)
+		require.NoError(t, err)
+	}
+
+	for name, format := range map[string]AaliGraphDbExportOpt{
+		"Parquet": WithFormatParquet{},
+		"Csv":     WithFormatCsv{},
+	} {
+		t.Run(name, func(t *testing.T) {
+			tmpdir := t.TempDir()
+			export := path.Join(tmpdir, "export.tar.gz")
+			require.NoError(t, client.ExportDatabase(SeedDb, export, format))
+
+			require.NoError(t, client.CreateDatabase(name))
+			resBefore, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+			require.NoError(t, err)
+			require.Equal(t, 0., resBefore[0]["count"])
+
+			require.NoError(t, client.ImportDatabase(name, export))
+			resAfter, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+			require.NoError(t, err)
+			assert.Equal(t, 4., resAfter[0]["count"])
+		})
+	}
+
+}

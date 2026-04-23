@@ -27,6 +27,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"net/url"
 	"os"
@@ -426,6 +427,62 @@ func (client *Client) ExportDatabase(name string, file string, opts ...AaliGraph
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (client *Client) ImportDatabase(name string, filepath string) error {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil
+	}
+	defer func() {
+		err := file.Close()
+		if err != nil {
+			client.logger.Warn(fmt.Sprintf("could not close file %q: %s", filepath, err))
+		}
+	}()
+
+	u, err := url.JoinPath(client.address, "databases", name, "import")
+	if err != nil {
+		return err
+	}
+
+	var b bytes.Buffer
+	w := multipart.NewWriter(&b)
+	fw, err := w.CreateFormFile("file", file.Name())
+	if err != nil {
+		return err
+	}
+	if _, err = io.Copy(fw, file); err != nil {
+		return nil
+	}
+	if err = w.Close(); err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, u, &b)
+	if err != nil {
+		return err
+	}
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
+	}
+	req.Header.Set("Content-Type", w.FormDataContentType())
+	resp, err := client.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		body := string(bodyBytes)
+		return fmt.Errorf("unexpected status code: %v %q", resp.StatusCode, body)
 	}
 
 	return nil
