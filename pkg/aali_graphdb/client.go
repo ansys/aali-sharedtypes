@@ -30,7 +30,6 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"go.uber.org/zap"
@@ -387,22 +386,11 @@ func (WithCompressionBest) apply(opts *aaliGraphDbExportOpts) {
 	opts.Compression = "best"
 }
 
-func (client *Client) ExportDatabase(name string, file string, opts ...AaliGraphDbExportOpt) error {
+func (client *Client) ExportDatabase(name string, dst io.Writer, opts ...AaliGraphDbExportOpt) error {
 	exportOpts := &aaliGraphDbExportOpts{}
 	for _, opt := range opts {
 		opt.apply(exportOpts)
 	}
-
-	out, err := os.Create(file)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		err := out.Close()
-		if err != nil {
-			client.logger.Warn(fmt.Sprintf("could not close file %q: %s", file, err))
-		}
-	}()
 
 	u, err := url.JoinPath(client.address, "databases", name, "export")
 	if err != nil {
@@ -424,7 +412,7 @@ func (client *Client) ExportDatabase(name string, file string, opts ...AaliGraph
 		return fmt.Errorf("unexpected status code: %v %q", resp.StatusCode, body)
 	}
 
-	_, err = io.Copy(out, resp.Body)
+	_, err = io.Copy(dst, resp.Body)
 	if err != nil {
 		return err
 	}
@@ -432,18 +420,7 @@ func (client *Client) ExportDatabase(name string, file string, opts ...AaliGraph
 	return nil
 }
 
-func (client *Client) ImportDatabase(name string, filepath string) error {
-	file, err := os.Open(filepath)
-	if err != nil {
-		return nil
-	}
-	defer func() {
-		err := file.Close()
-		if err != nil {
-			client.logger.Warn(fmt.Sprintf("could not close file %q: %s", filepath, err))
-		}
-	}()
-
+func (client *Client) ImportDatabase(name string, src io.Reader) error {
 	u, err := url.JoinPath(client.address, "databases", name, "import")
 	if err != nil {
 		return err
@@ -451,11 +428,11 @@ func (client *Client) ImportDatabase(name string, filepath string) error {
 
 	var b bytes.Buffer
 	w := multipart.NewWriter(&b)
-	fw, err := w.CreateFormFile("file", file.Name())
+	fw, err := w.CreateFormField("file")
 	if err != nil {
 		return err
 	}
-	if _, err = io.Copy(fw, file); err != nil {
+	if _, err = io.Copy(fw, src); err != nil {
 		return nil
 	}
 	if err = w.Close(); err != nil {

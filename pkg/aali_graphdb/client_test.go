@@ -24,6 +24,7 @@ package aali_graphdb
 
 import (
 	"archive/tar"
+	"bytes"
 	"compress/gzip"
 	"context"
 	"encoding/json"
@@ -518,29 +519,51 @@ func TestExport(t *testing.T) {
 		"ParquetBest":        {[]AaliGraphDbExportOpt{WithFormatParquet{}, WithCompressionBest{}}, "parquet"},
 		"CsvFast":            {[]AaliGraphDbExportOpt{WithCompressionFast{}, WithFormatCsv{}}, "csv"},
 	}
-	for name, tc := range testCases {
-		t.Run(name, func(t *testing.T) {
+
+	for mode, exportBuilder := range map[string]func(*testing.T) io.ReadWriter{
+		"File": func(t *testing.T) io.ReadWriter {
 			tmpdir := t.TempDir()
-			exportFile := path.Join(tmpdir, "export.tar.gz")
-			require.NoFileExists(t, exportFile)
-			require.NoError(t, client.ExportDatabase(Db, exportFile, tc.opts...))
-			assert.FileExists(t, exportFile)
-
-			unarchivedPath := path.Join(tmpdir, "unarchived")
-			require.NoError(t, os.Mkdir(unarchivedPath, os.ModePerm))
-			archive, err := os.Open(exportFile)
+			exportFile, err := os.CreateTemp(tmpdir, "*.tar.gz")
 			require.NoError(t, err)
-			defer func() { _ = archive.Close() }()
-			require.NoError(t, extractTarGz(archive, unarchivedPath))
+			return exportFile
+		},
+		"Buffer": func(t *testing.T) io.ReadWriter {
+			return &bytes.Buffer{}
+		},
+	} {
+		t.Run(mode, func(t *testing.T) {
+			for name, tc := range testCases {
+				t.Run(name, func(t *testing.T) {
+					export := exportBuilder(t)
 
-			exportDir := path.Join(unarchivedPath, "aali-graphdb-export")
-			assert.DirExists(t, exportDir)
-			assert.FileExists(t, path.Join(exportDir, "copy.cypher"))
-			assert.FileExists(t, path.Join(exportDir, "schema.cypher"))
-			assert.FileExists(t, path.Join(exportDir, "index.cypher"))
-			assert.FileExists(t, path.Join(exportDir, fmt.Sprintf("User.%s", tc.ext)))
+					// close file-like export locations
+					if closer, ok := export.(io.Closer); ok {
+						defer func() { require.NoError(t, closer.Close()) }()
+					}
+					require.NoError(t, client.ExportDatabase(Db, export, tc.opts...))
+
+					// seek back to the start for file-like export locations
+					if seeker, ok := export.(io.Seeker); ok {
+						_, err := seeker.Seek(0, io.SeekStart)
+						require.NoError(t, err)
+					}
+
+					tmpdir := t.TempDir()
+					unarchivedPath := path.Join(tmpdir, "unarchived")
+					require.NoError(t, os.Mkdir(unarchivedPath, os.ModePerm))
+					require.NoError(t, extractTarGz(export, unarchivedPath))
+
+					exportDir := path.Join(unarchivedPath, "aali-graphdb-export")
+					assert.DirExists(t, exportDir)
+					assert.FileExists(t, path.Join(exportDir, "copy.cypher"))
+					assert.FileExists(t, path.Join(exportDir, "schema.cypher"))
+					assert.FileExists(t, path.Join(exportDir, "index.cypher"))
+					assert.FileExists(t, path.Join(exportDir, fmt.Sprintf("User.%s", tc.ext)))
+				})
+			}
 		})
 	}
+
 }
 
 func extractTarGz(r io.Reader, dir string) error {
@@ -598,25 +621,48 @@ func TestImport(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	for name, format := range map[string]AaliGraphDbExportOpt{
-		"Parquet": WithFormatParquet{},
-		"Csv":     WithFormatCsv{},
-	} {
-		t.Run(name, func(t *testing.T) {
+	for mode, exportBuilder := range map[string]func(*testing.T) io.ReadWriter{
+		"File": func(t *testing.T) io.ReadWriter {
 			tmpdir := t.TempDir()
-			export := path.Join(tmpdir, "export.tar.gz")
-			require.NoError(t, client.ExportDatabase(SeedDb, export, format))
-
-			require.NoError(t, client.CreateDatabase(name))
-			resBefore, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+			exportFile, err := os.CreateTemp(tmpdir, "*.tar.gz")
 			require.NoError(t, err)
-			require.Equal(t, 0., resBefore[0]["count"])
+			return exportFile
+		},
+		"Buffer": func(t *testing.T) io.ReadWriter {
+			return &bytes.Buffer{}
+		},
+	} {
+		t.Run(mode, func(t *testing.T) {
+			for name, format := range map[string]AaliGraphDbExportOpt{
+				"Parquet": WithFormatParquet{},
+				"Csv":     WithFormatCsv{},
+			} {
+				t.Run(name, func(t *testing.T) {
+					db := fmt.Sprintf("%s-%s", mode, name)
 
-			require.NoError(t, client.ImportDatabase(name, export))
-			resAfter, err := client.CypherQueryRead(name, "MATCH (u) RETURN COUNT(*) AS count;", nil)
-			require.NoError(t, err)
-			assert.Equal(t, 4., resAfter[0]["count"])
+					export := exportBuilder(t)
+					if closer, ok := export.(io.Closer); ok {
+						// make sure file-like exports are closed at the end
+						defer func() { require.NoError(t, closer.Close()) }()
+					}
+					require.NoError(t, client.ExportDatabase(SeedDb, export, format))
+					if seeker, ok := export.(io.Seeker); ok {
+						// make sure file-like exports are rewinded back to start
+						_, err := seeker.Seek(0, io.SeekStart)
+						require.NoError(t, err)
+					}
+
+					require.NoError(t, client.CreateDatabase(db))
+					resBefore, err := client.CypherQueryRead(db, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+					require.NoError(t, err)
+					require.Equal(t, 0., resBefore[0]["count"])
+
+					require.NoError(t, client.ImportDatabase(db, export))
+					resAfter, err := client.CypherQueryRead(db, "MATCH (u) RETURN COUNT(*) AS count;", nil)
+					require.NoError(t, err)
+					assert.Equal(t, 4., resAfter[0]["count"])
+				})
+			}
 		})
 	}
-
 }
