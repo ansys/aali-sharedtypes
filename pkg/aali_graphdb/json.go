@@ -99,12 +99,16 @@ type tagged interface {
 
 // helper type for serializing 2-tuples
 type Twople[A any, B any] struct {
-	a A
-	b B
+	A A
+	B B
+}
+
+func NewTwople[A any, B any](a A, b B) Twople[A, B] {
+	return Twople[A, B]{a, b}
 }
 
 func (tup Twople[A, B]) MarshalJSON() ([]byte, error) {
-	return json.Marshal([]any{tup.a, tup.b})
+	return json.Marshal([]any{tup.A, tup.B})
 }
 
 func (tup *Twople[A, B]) UnmarshalJSON(data []byte) error {
@@ -126,8 +130,8 @@ func (tup *Twople[A, B]) UnmarshalJSON(data []byte) error {
 			return err
 		}
 
-		tup.a = a
-		tup.b = b
+		tup.A = a
+		tup.B = b
 		return nil
 	} else {
 		return fmt.Errorf("cannot unmarshal array of length %d to Twople, must be length 2", len(arr))
@@ -140,29 +144,29 @@ type typedValuesTwople Twople[logicalTypeUnmarshalHelper, valueArrayJson]
 
 func typedValuesTwopleFromList(l listValue) typedValuesTwople {
 	return typedValuesTwople{
-		a: l.LogicalType,
-		b: l.Values,
+		A: l.LogicalType,
+		B: l.Values,
 	}
 }
 
 func (tup typedValuesTwople) toList() listValue {
 	return listValue{
-		LogicalType: tup.a,
-		Values:      tup.b,
+		LogicalType: tup.A,
+		Values:      tup.B,
 	}
 }
 
 func typedValuesTwopleFromArray(a arrayValue) typedValuesTwople {
 	return typedValuesTwople{
-		a: a.LogicalType,
-		b: a.Values,
+		A: a.LogicalType,
+		B: a.Values,
 	}
 }
 
 func (tup typedValuesTwople) toArray() arrayValue {
 	return arrayValue{
-		LogicalType: tup.a,
-		Values:      tup.b,
+		LogicalType: tup.A,
+		Values:      tup.B,
 	}
 }
 
@@ -197,7 +201,7 @@ func namedFieldsTwoplesFromMap(m map[string]Value) namedFieldsTwoples {
 func (t namedFieldsTwoples) toMap() map[string]Value {
 	m := make(map[string]Value, len(t))
 	for _, tup := range t {
-		m[tup.a] = tup.b.Value
+		m[tup.A] = tup.B.Value
 	}
 	return m
 }
@@ -232,7 +236,7 @@ func namedTypesTwoplesFromMap(m map[string]LogicalType) namedTypesTwoples {
 func (t namedTypesTwoples) toMap() map[string]LogicalType {
 	m := make(map[string]LogicalType, len(t))
 	for _, tup := range t {
-		m[tup.a] = tup.b.LogicalType
+		m[tup.A] = tup.B.LogicalType
 	}
 	return m
 }
@@ -301,7 +305,7 @@ func (v *intervalValueJson) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	allNanos := secsNanos.a*1e9 + secsNanos.b
+	allNanos := secsNanos.A*1e9 + secsNanos.B
 	*v = intervalValueJson(time.Duration(allNanos))
 	return nil
 }
@@ -348,7 +352,7 @@ func (v *valueMapJson) UnmarshalJSON(data []byte) error {
 
 	vals := make(map[Value]Value, len(intermediate))
 	for _, val := range intermediate {
-		vals[val.a.Value] = val.b.Value
+		vals[val.A.Value] = val.B.Value
 	}
 	*v = valueMapJson(vals)
 	return nil
@@ -369,9 +373,9 @@ func (v *mapValueJson) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*v = mapValueJson(mapValue{
-		intermediate.a.a,
-		intermediate.a.b,
-		intermediate.b,
+		intermediate.A.A,
+		intermediate.A.B,
+		intermediate.B,
 	})
 	return nil
 }
