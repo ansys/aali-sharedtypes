@@ -35,6 +35,8 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"slices"
+	"strings"
 	"testing"
 	"time"
 
@@ -43,6 +45,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"golang.org/x/mod/semver"
 )
 
@@ -141,7 +145,16 @@ func TestGetDatabases(t *testing.T) {
 }
 
 func TestCreateDatabase(t *testing.T) {
+	var warnLogs strings.Builder
+	logger := zap.New(zapcore.NewCore(
+		zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig()),
+		zapcore.AddSync(&warnLogs),
+		zapcore.WarnLevel,
+	))
+	defer func() { require.NoError(t, logger.Sync()) }()
+
 	client := getTestClient(t)
+	client.logger = logger
 
 	// make sure no dbs
 	dbs, err := client.GetDatabases()
@@ -152,6 +165,17 @@ func TestCreateDatabase(t *testing.T) {
 	const NEWDBNAME = "test-create-db"
 	err = client.CreateDatabase(NEWDBNAME)
 	require.NoError(t, err)
+
+	// check warnings, if appropriate
+	ver, err := client.GetVersion()
+	require.NoError(t, err)
+	if semverComp(ver.Version, createDbPutMinVer) < 0 {
+		logs := strings.Split(strings.TrimSpace(warnLogs.String()), "\n")
+		assert.Len(t, logs, 1)
+		assert.True(t, slices.ContainsFunc(logs, func(log string) bool {
+			return strings.Contains(log, "The `POST /databases` method for creating a new DB is deprecated. Upgrade your aali-graphdb server to use the newer `PUT /databases/{name}` method")
+		}))
+	}
 
 	// now check the dbs again
 	dbs, err = client.GetDatabases()
