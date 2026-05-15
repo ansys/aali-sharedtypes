@@ -206,6 +206,43 @@ func TestDeleteDatabase(t *testing.T) {
 	assert.Equal(t, []string{}, dbs)
 }
 
+func TestGetSchema(t *testing.T) {
+	client := getTestClient(t)
+
+	const DBNAME = "test-db"
+	err := client.CreateDatabase(DBNAME)
+	require.NoError(t, err)
+
+	for _, query := range []string{
+		"CREATE NODE TABLE User(name STRING, age INT64, PRIMARY KEY (name))",
+		"CREATE NODE TABLE City(name STRING, population INT64, PRIMARY KEY (name))",
+		"CREATE REL TABLE LivesIn(FROM User TO City)",
+	} {
+		_, err := client.CypherQueryWrite(DBNAME, query, nil)
+		require.NoError(t, err)
+	}
+
+	ver, err := client.GetVersion()
+	require.NoError(t, err)
+	schema, err := client.GetSchema(DBNAME)
+	if semverComp(ver.Version, getSchemaMinVer) < 0 {
+		assert.ErrorContains(t, err, "the `GET /databases/{name}/schema` endpoint was introduced in ")
+		assert.Empty(t, schema)
+	} else {
+		assert.NoError(t, err)
+		schemaLines := strings.Split(strings.TrimSpace(schema), "\n")
+		expectedLines := []string{
+			"CREATE NODE TABLE `User` (`name` STRING,`age` INT64, PRIMARY KEY(`name`));",
+			"CREATE NODE TABLE `City` (`name` STRING,`population` INT64, PRIMARY KEY(`name`));",
+			"CREATE REL TABLE `LivesIn` (FROM `User` TO `City`, MANY_MANY);",
+		}
+		assert.Len(t, schemaLines, len(expectedLines))
+		for _, line := range schemaLines {
+			assert.Contains(t, expectedLines, line)
+		}
+	}
+}
+
 func TestReadWriteData(t *testing.T) {
 	client := getTestClient(t)
 	const DBNAME = "my-db"

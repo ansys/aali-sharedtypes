@@ -283,6 +283,42 @@ func (client Client) DeleteDatabase(name string) error {
 	return nil
 }
 
+const getSchemaMinVer = "v1.2.14"
+
+func (client Client) GetSchema(name string) (string, error) {
+	ver, err := client.GetVersion()
+	if err != nil {
+		return "", err
+	}
+	if semverComp(ver.Version, getSchemaMinVer) < 0 {
+		return "", fmt.Errorf("the `GET /databases/{name}/schema` endpoint was introduced in %s, but the current server is %s", createDbPutMinVer, ver.Version)
+	}
+
+	url, err := url.JoinPath(client.address, "databases", name, "schema")
+	if err != nil {
+		return "", err
+	}
+	resp, err := client.get(url)
+	if err != nil {
+		return "", err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return "", fmt.Errorf("unexpected status code: %v", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	return string(body), nil
+}
+
 type cypherQueryResponse[T any] struct {
 	Result []T `json:"result"`
 }
