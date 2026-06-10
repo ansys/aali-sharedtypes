@@ -27,11 +27,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"go.uber.org/zap"
+	"golang.org/x/mod/semver"
 )
 
 type Client struct {
@@ -184,13 +187,60 @@ func (client Client) GetDatabases() ([]string, error) {
 	return r.Databases, nil
 }
 
+const createDbPutMinVer = "v1.2.14"
+
 func (client Client) CreateDatabase(name string) error {
+	ver, err := client.GetVersion()
+	if err != nil {
+		return err
+	}
+
+	if semverComp(ver.Version, createDbPutMinVer) >= 0 {
+		return client.createDatabasePut(name)
+	} else {
+		return client.createDatabasePost(name)
+	}
+}
+
+func (client Client) createDatabasePost(name string) error {
+	client.logger.Warn("The `POST /databases` method for creating a new DB is deprecated. Upgrade your aali-graphdb server to use the newer `PUT /databases/{name}` method")
+
 	u, err := url.JoinPath(client.address, "databases")
 	if err != nil {
 		return err
 	}
 
 	resp, err := client.post(u, map[string]any{"name": name, "in_memory": false})
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return fmt.Errorf("unexpected status code: %v", resp.StatusCode)
+	}
+
+	return nil
+}
+
+func (client Client) createDatabasePut(name string) error {
+	u, err := url.JoinPath(client.address, "databases", name)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, u, nil)
+	if err != nil {
+		return err
+	}
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
+	}
+
+	resp, err := client.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
@@ -231,6 +281,42 @@ func (client Client) DeleteDatabase(name string) error {
 		return fmt.Errorf("unexpected status code: %v", resp.StatusCode)
 	}
 	return nil
+}
+
+const getSchemaMinVer = "v1.2.14"
+
+func (client Client) GetSchema(name string) (string, error) {
+	ver, err := client.GetVersion()
+	if err != nil {
+		return "", err
+	}
+	if semverComp(ver.Version, getSchemaMinVer) < 0 {
+		return "", fmt.Errorf("the `GET /databases/{name}/schema` endpoint was introduced in %s, but the current server is %s", createDbPutMinVer, ver.Version)
+	}
+
+	url, err := url.JoinPath(client.address, "databases", name, "schema")
+	if err != nil {
+		return "", err
+	}
+	resp, err := client.get(url)
+	if err != nil {
+		return "", err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return "", fmt.Errorf("unexpected status code: %v", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	return string(body), nil
 }
 
 type cypherQueryResponse[T any] struct {
@@ -344,4 +430,136 @@ type Parameters interface {
 
 func (params ParameterMap) AsParameters() (map[string]Value, error) {
 	return params, nil
+}
+
+type aaliGraphDbExportOpts struct {
+	Format      string `json:"format,omitempty"`
+	Compression string `json:"compression,omitempty"`
+}
+
+type AaliGraphDbExportOpt interface {
+	apply(*aaliGraphDbExportOpts)
+}
+
+type WithFormatParquet struct{}
+
+func (WithFormatParquet) apply(opts *aaliGraphDbExportOpts) {
+	opts.Format = "parquet"
+}
+
+type WithFormatCsv struct{}
+
+func (WithFormatCsv) apply(opts *aaliGraphDbExportOpts) {
+	opts.Format = "csv"
+}
+
+type WithCompressionDefault struct{}
+
+func (WithCompressionDefault) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "default"
+}
+
+type WithCompressionFast struct{}
+
+func (WithCompressionFast) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "fast"
+}
+
+type WithCompressionBest struct{}
+
+func (WithCompressionBest) apply(opts *aaliGraphDbExportOpts) {
+	opts.Compression = "best"
+}
+
+func (client *Client) ExportDatabase(name string, dst io.Writer, opts ...AaliGraphDbExportOpt) error {
+	exportOpts := &aaliGraphDbExportOpts{}
+	for _, opt := range opts {
+		opt.apply(exportOpts)
+	}
+
+	u, err := url.JoinPath(client.address, "databases", name, "export")
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.post(u, exportOpts)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		body := string(bodyBytes)
+		return fmt.Errorf("unexpected status code: %v %q", resp.StatusCode, body)
+	}
+
+	_, err = io.Copy(dst, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (client *Client) ImportDatabase(name string, src io.Reader) error {
+	u, err := url.JoinPath(client.address, "databases", name, "import")
+	if err != nil {
+		return err
+	}
+
+	var b bytes.Buffer
+	w := multipart.NewWriter(&b)
+	fw, err := w.CreateFormField("file")
+	if err != nil {
+		return err
+	}
+	if _, err = io.Copy(fw, src); err != nil {
+		return nil
+	}
+	if err = w.Close(); err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, u, &b)
+	if err != nil {
+		return err
+	}
+	if client.apiKey != "" {
+		req.Header.Set("api-key", client.apiKey)
+	}
+	req.Header.Set("Content-Type", w.FormDataContentType())
+	resp, err := client.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if e := resp.Body.Close(); e != nil {
+			client.logger.Warn("could not close body")
+		}
+	}()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		body := string(bodyBytes)
+		return fmt.Errorf("unexpected status code: %v %q", resp.StatusCode, body)
+	}
+
+	return nil
+}
+
+// A helper method for comparing semvers.
+//
+// It does the same thing as [semver.Compare], excepts it prepends a "v" prefix if the provided versions don't have them.
+// This is since Go's semver requires `v*` even though that's not really part of the semver spec.
+func semverComp(v string, w string) int {
+	if !strings.HasPrefix(v, "v") {
+		v = fmt.Sprintf("v%s", v)
+	}
+	if !strings.HasPrefix(w, "v") {
+		w = fmt.Sprintf("v%s", w)
+	}
+	return semver.Compare(v, w)
 }

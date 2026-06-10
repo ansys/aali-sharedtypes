@@ -443,9 +443,6 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 		for _, secret := range page.Value {
 			// iterate over all fields in the struct
 			for i := 0; i < GlobalConfigValue.NumField(); i++ {
-				// Get the field
-				field := GlobalConfigValue.Field(i)
-
 				// Get the YAML tag
 				fieldType := GlobalConfigType.Field(i)
 				yamlTag := fieldType.Tag.Get("json")
@@ -457,74 +454,112 @@ func InitGlobalConfigFromAzureKeyVault() (err error) {
 					if err != nil {
 						return fmt.Errorf("error while getting value for secret '%v': %v", yamlTag, err)
 					}
-					// Check if the field is settable
-					if field.CanSet() {
-						// Set the field to the new value
-						switch field.Kind() {
-						case reflect.String:
-							value := *resp.Value
-							unquoted, err := strconv.Unquote(`"` + strings.ReplaceAll(value, `"`, `\"`) + `"`)
-							if err == nil {
-								value = unquoted
-							}
-							field.SetString(value)
-						case reflect.Bool:
-							// fix for empty string
-							if *resp.Value == "" {
-								field.SetBool(false)
-								break
-							}
-							// Convert string to bool
-							value, err := strconv.ParseBool(*resp.Value)
-							if err != nil {
-								return fmt.Errorf("error in strconv.ParseBool for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
-							}
-							field.SetBool(value)
-						case reflect.Int:
-							// fix for empty string
-							if *resp.Value == "" {
-								field.SetInt(0)
-								break
-							}
-							// Convert string to int
-							value, err := strconv.Atoi(*resp.Value)
-							if err != nil {
-								return fmt.Errorf("error in strconv.Atoi for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
-							}
-							field.SetInt(int64(value))
-						case reflect.Slice:
-							// fix for empty string
-							if *resp.Value == "" {
-								field.Set(reflect.ValueOf([]string{}))
-								break
-							}
-							// Convert string to string slice
-							var value []string
-							err := json.Unmarshal([]byte(*resp.Value), &value)
-							if err != nil {
-								return fmt.Errorf("error in json.Unmarshal []string for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
-							}
-							field.Set(reflect.ValueOf(value))
-						case reflect.Map:
-							// fix for empty string
-							if *resp.Value == "" {
-								field.Set(reflect.ValueOf(map[string]string{}))
-								break
-							}
-							// Convert string to map[string]string
-							var value map[string]string
-							err := json.Unmarshal([]byte(*resp.Value), &value)
-							if err != nil {
-								return fmt.Errorf("error in json.Unmarshal map[string]string for secret '%v' with value '%v': %v", yamlTag, *resp.Value, err)
-							}
-							field.Set(reflect.ValueOf(value))
-						default:
-							return fmt.Errorf("unsupported field type '%v' for secret '%v' with value '%v'", field.Kind(), yamlTag, *resp.Value)
-						}
+					// Apply secret value to config field
+					err = applySecretValueToConfig(GlobalConfig, yamlTag, *resp.Value)
+					if err != nil {
+						return err
 					}
 				}
 			}
 		}
+	}
+
+	return nil
+}
+
+// applySecretValueToConfig applies a secret value (identified by its JSON tag) to the corresponding field in the Config struct.
+//
+// Parameters:
+//   - config: The configuration object to update.
+//   - secretName: The JSON tag name of the secret.
+//   - secretValue: The string value of the secret.
+//
+// Returns:
+//   - err: An error if there was an issue applying the secret value.
+func applySecretValueToConfig(config *Config, secretName string, secretValue string) error {
+	configValue := reflect.ValueOf(config).Elem()
+	configType := configValue.Type()
+
+	for i := 0; i < configValue.NumField(); i++ {
+		field := configValue.Field(i)
+		fieldType := configType.Field(i)
+		yamlTag := fieldType.Tag.Get("json")
+
+		if yamlTag != secretName {
+			continue
+		}
+
+		if !field.CanSet() {
+			return fmt.Errorf("field '%v' is not settable", secretName)
+		}
+
+		switch field.Kind() {
+		case reflect.String:
+			value := secretValue
+			unquoted, err := strconv.Unquote(`"` + strings.ReplaceAll(value, `"`, `\"`) + `"`)
+			if err == nil {
+				value = unquoted
+			}
+			field.SetString(value)
+		case reflect.Bool:
+			if secretValue == "" {
+				field.SetBool(false)
+				break
+			}
+			value, err := strconv.ParseBool(secretValue)
+			if err != nil {
+				return fmt.Errorf("error in strconv.ParseBool for secret '%v' with value '%v': %v", secretName, secretValue, err)
+			}
+			field.SetBool(value)
+		case reflect.Int:
+			if secretValue == "" {
+				field.SetInt(0)
+				break
+			}
+			value, err := strconv.Atoi(secretValue)
+			if err != nil {
+				return fmt.Errorf("error in strconv.Atoi for secret '%v' with value '%v': %v", secretName, secretValue, err)
+			}
+			field.SetInt(int64(value))
+		case reflect.Slice:
+			if secretValue == "" {
+				field.Set(reflect.MakeSlice(field.Type(), 0, 0))
+				break
+			}
+			switch field.Type().Elem().Kind() {
+			case reflect.String:
+				var value []string
+				err := json.Unmarshal([]byte(secretValue), &value)
+				if err != nil {
+					return fmt.Errorf("error in json.Unmarshal []string for secret '%v' with value '%v': %v", secretName, secretValue, err)
+				}
+				field.Set(reflect.ValueOf(value))
+			case reflect.Int:
+				var value []int
+				err := json.Unmarshal([]byte(secretValue), &value)
+				if err != nil {
+					return fmt.Errorf("error in json.Unmarshal []int for secret '%v' with value '%v': %v", secretName, secretValue, err)
+				}
+				field.Set(reflect.ValueOf(value))
+			default:
+				return fmt.Errorf("unsupported slice element type '%v' for secret '%v' with value '%v'", field.Type().Elem().Kind(), secretName, secretValue)
+			}
+		case reflect.Map:
+			if secretValue == "" {
+				field.Set(reflect.ValueOf(map[string]string{}))
+				break
+			}
+			var value map[string]string
+			err := json.Unmarshal([]byte(secretValue), &value)
+			if err != nil {
+				return fmt.Errorf("error in json.Unmarshal map[string]string for secret '%v' with value '%v': %v", secretName, secretValue, err)
+			}
+			field.Set(reflect.ValueOf(value))
+		default:
+			return fmt.Errorf("unsupported field type '%v' for secret '%v' with value '%v'", field.Kind(), secretName, secretValue)
+		}
+
+		return nil
 	}
 
 	return nil

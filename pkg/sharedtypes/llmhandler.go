@@ -109,6 +109,11 @@ type ModelOptions struct {
 	// Reasoning summary format
 	ReasoningSummary *string `json:"reasoningSummary,omitempty" yaml:"REASONING_SUMMARY,omitempty"`
 	Verbosity        *string `json:"verbosity,omitempty" yaml:"VERBOSITY,omitempty"` // "low" | "medium" | "high"
+
+	// Extended thinking configuration (Anthropic)
+	ThinkingMode         *string `json:"thinkingMode,omitempty" yaml:"THINKING_MODE,omitempty"`                  // "adaptive" | "enabled" | "disabled"
+	ThinkingBudgetTokens *int64  `json:"thinkingBudgetTokens,omitempty" yaml:"THINKING_BUDGET_TOKENS,omitempty"` // min 1024, must be < max_tokens
+	ThinkingDisplayMode  *string `json:"thinkingDisplayMode,omitempty" yaml:"THINKING_DISPLAY_MODE,omitempty"`   // "summarized" | "omitted"
 }
 
 // EmbeddingOptions represents the options for an embeddings request.

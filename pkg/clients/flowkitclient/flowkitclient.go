@@ -297,6 +297,7 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 }
 
 // StreamFunction calls the StreamFunction gRPC and returns a channel to stream the outputs
+// and an interrupt channel to send interrupts to the server.
 // This function is used to stream the outputs of an external function
 //
 // Parameters:
@@ -304,9 +305,10 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 //   - inputs: the inputs to the function
 //
 // Returns:
-//   - *chan string: a channel to stream the output
+//   - *chan string: a channel to stream the output from the server
+//   - *chan string: an interrupt channel to send messages to the server
 //   - error: an error message if the gRPC call fails
-func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, err error) {
+func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (channel *chan string, interruptChannel *chan string, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -317,13 +319,13 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	// Get function definition
 	functionDef, ok := AvailableFunctions[functionName]
 	if !ok {
-		return nil, fmt.Errorf("function '%s' not found in available functions", functionName)
+		return nil, nil, fmt.Errorf("function '%s' not found in available functions", functionName)
 	}
 
 	// Set up a connection to the server.
 	c, conn, err := createClient(functionDef.FlowkitUrl, functionDef.ApiKey)
 	if err != nil {
-		return nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
+		return nil, nil, fmt.Errorf("unable to connect to external function gRPC: %v", err)
 	}
 
 	// Create a context with a cancel
@@ -334,7 +336,7 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 	if err != nil {
 		conn.Close()
 		cancel()
-		return nil, fmt.Errorf("error adding metadata: %v", err)
+		return nil, nil, fmt.Errorf("error adding metadata: %v", err)
 	}
 
 	// Convert inputs to gRPC format based on order from function definition
@@ -354,12 +356,12 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 			if err != nil {
 				conn.Close()
 				cancel()
-				return nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
+				return nil, nil, fmt.Errorf("error converting input '%s' for function '%v' to string: %v", inputDef.Name, functionName, err)
 			}
 			if !exists {
 				conn.Close()
 				cancel()
-				return nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
+				return nil, nil, fmt.Errorf("type '%s' does not exist in typeconverters.ConvertGivenTypeToString", inputDef.Name)
 			}
 			grpcInput.Value = stringValue
 
@@ -372,24 +374,36 @@ func StreamFunction(ctx *logging.ContextMap, functionName string, inputs map[str
 		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
-	// Call StreamFunction
-	stream, err := c.StreamFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
+	// Call StreamFunction (bidirectional)
+	stream, err := c.StreamFunction(ctxWithMetadata)
+	if err != nil {
+		conn.Close()
+		cancel()
+		return nil, nil, fmt.Errorf("error in external function gRPC StreamFunction for function '%v': %v", functionName, err)
+	}
+
+	// Send the initial message with function inputs
+	err = stream.Send(&aaliflowkitgrpc.StreamInput{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
 	if err != nil {
 		conn.Close()
 		cancel()
-		return nil, fmt.Errorf("error in external function gRPC StreamFunction for function '%v': %v", functionName, err)
+		return nil, nil, fmt.Errorf("error sending initial message in StreamFunction for function '%v': %v", functionName, err)
 	}
 
-	// Create a stream channel
+	// Create channels
 	streamChannel := make(chan string, 400)
+	interruptCh := make(chan string, 400)
 
 	// Receive the stream from the server
 	go receiveStreamFromServer(ctx, stream, &streamChannel, conn, cancel, functionName)
 
-	return &streamChannel, nil
+	// Send interrupts to the server
+	go sendInterruptsToServer(ctx, stream, &interruptCh, functionName)
+
+	return &streamChannel, &interruptCh, nil
 }
 
 // receiveStreamFromServer receives the stream from the server and sends it to the channel
@@ -410,6 +424,8 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 		res, err := stream.Recv()
 		if err != nil && err != io.EOF {
 			logging.Log.Errorf(ctx, "error receiving stream for function '%v': %v", functionName, err)
+			*streamChannel <- fmt.Sprintf("$&$error$&$:$&$%v$&$", err)
+			break
 		}
 
 		// Send the stream to the channel
@@ -425,6 +441,35 @@ func receiveStreamFromServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Ext
 	conn.Close()
 	cancel()
 	close(*streamChannel)
+}
+
+// sendInterruptsToServer listens to the interrupt channel and sends messages to the server via gRPC
+//
+// Parameters:
+//   - stream: the bidirectional stream to the server
+//   - interruptChannel: the channel to receive interrupt messages from
+//   - functionName: the name of the function (for logging)
+func sendInterruptsToServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.ExternalFunctions_StreamFunctionClient, interruptChannel *chan string, functionName string) {
+	defer func() {
+		r := recover()
+		if r != nil {
+			logging.Log.Errorf(ctx, "Panic occured in sendInterruptsToServer for function '%v': %v", functionName, r)
+		}
+	}()
+
+	// Listen to the interrupt channel and send messages to the server
+	for msg := range *interruptChannel {
+		err := stream.Send(&aaliflowkitgrpc.StreamInput{
+			Interrupt: msg,
+		})
+		if err != nil {
+			logging.Log.Errorf(ctx, "error sending interrupt for function '%v': %v", functionName, err)
+			return
+		}
+	}
+
+	// Close the send direction when the interrupt channel is closed
+	stream.CloseSend()
 }
 
 // createClient creates a client to the external functions gRPC

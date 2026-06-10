@@ -444,6 +444,12 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 	timeString := timeToString(time)
 	callerString := entryCallerToString(caller)
 
+	// Convert arguments to string representations to ensure JSON serializability
+	stringArgs := make([]string, len(arguments))
+	for i, arg := range arguments {
+		stringArgs[i] = fmt.Sprintf("%v", arg)
+	}
+
 	// Create rest API call body structure
 	body := []map[string]interface{}{
 		{
@@ -456,7 +462,7 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 			"stack":     stack,
 			"function":  function,
 			"status":    levelString,
-			"arguments": arguments,
+			"arguments": stringArgs,
 		},
 	}
 

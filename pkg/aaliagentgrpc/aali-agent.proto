@@ -170,6 +170,9 @@ message ClientResponse {
 
     // Images properties
     repeated string images = 18;
+
+    // Stream interruption properties
+    bool stream_interruption_allowed = 19;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.

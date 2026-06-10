@@ -119,7 +119,7 @@ func newLogicalTypeHelper(lt LogicalType) logicalTypeUnmarshalHelper {
 func getTwopleLogicalTypeFromHelper(tups []Twople[string, logicalTypeUnmarshalHelper]) []Twople[string, LogicalType] {
 	ltTups := make([]Twople[string, LogicalType], len(tups))
 	for i, tup := range tups {
-		newTup := Twople[string, LogicalType]{tup.a, tup.b.LogicalType}
+		newTup := Twople[string, LogicalType]{tup.A, tup.B.LogicalType}
 		ltTups[i] = newTup
 	}
 	return ltTups
