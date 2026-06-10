@@ -20,7 +20,8 @@ service ExternalFunctions {
     rpc RunFunction(FunctionInputs) returns (FunctionOutputs) {}
 
     // Runs a specified function with provided inputs and returns the function output as a stream.
-    rpc StreamFunction(FunctionInputs) returns (stream StreamOutput) {}
+    // Accepts a stream of StreamInput messages to allow client-to-server interrupts.
+    rpc StreamFunction(stream StreamInput) returns (stream StreamOutput) {}
 }
 
 // HealthRequest is the input message for the HealthCheck method.
@@ -155,6 +156,19 @@ message FunctionOutput {
 
     // Code validation of the output. Only relevant for code generation.
     string code_validation = 4;
+}
+
+// StreamInput is the input message for the bidirectional StreamFunction method.
+// The first message should contain the function inputs. Subsequent messages can be used for interrupts.
+message StreamInput {
+    // Name of the function to run (only required in the first message).
+    string name = 1;
+
+    // List of inputs for the function (only required in the first message).
+    repeated FunctionInput inputs = 2;
+
+    // Interrupt message sent from client to server.
+    string interrupt = 3;
 }
 
 // StreamOutput is the output message for the StreamFunction method.
