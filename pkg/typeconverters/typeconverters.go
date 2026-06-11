@@ -220,6 +220,7 @@ func init() {
 		// Channel types (special handling - always nil/empty)
 		"*chan string":      chanConverter[chan string](),
 		"*chan interface{}": chanConverter[chan interface{}](),
+		"*Conn": chanConverter[websocket.Conn](),
 
 		// Map types - JSON based
 		"map[string]string":            jsonMapConverter[map[string]string](),
