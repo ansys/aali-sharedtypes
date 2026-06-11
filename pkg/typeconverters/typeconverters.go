@@ -28,6 +28,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/coder/websocket"
 	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 )
