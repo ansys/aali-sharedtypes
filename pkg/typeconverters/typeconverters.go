@@ -288,6 +288,7 @@ func init() {
 		"[][]AedtApiDbResponse":               jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
 		"[][]DbResponse":                      jsonSliceConverter[[][]sharedtypes.DbResponse](),
 		"[]AedtCodeGenerationExample":         jsonSliceConverter[[]sharedtypes.AedtCodeGenerationExample](),
+		"[]AedtCodeGenerationElement":         jsonSliceConverter[[]sharedtypes.AedtCodeGenerationElement](),
 	}
 }
 

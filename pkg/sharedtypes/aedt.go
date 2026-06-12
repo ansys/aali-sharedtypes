@@ -34,6 +34,8 @@ type AedtEmbeddingOptions struct {
 	IsPrompt      *bool `json:"isPrompt"`      // Is the query passage a prompt or code. For Nomic Embed Code embedding model
 }
 
+// Checked
+// AedtCodeGenerationType represents the type of code generation element.
 type AedtCodeGenerationElement struct {
 	Guid              uuid.UUID          `json:"guid"`
 	Type              CodeGenerationType `json:"type"`
