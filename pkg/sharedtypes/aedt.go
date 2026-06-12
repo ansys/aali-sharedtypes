@@ -88,3 +88,12 @@ type AedtElementContextsTuple struct {
 	Example     string `json:"example"`
 	Instruction string `json:"instruction"`
 }
+
+// Checked
+// AedtCodeGenerationExample represents an example for code generation.
+type AedtCodeGenerationExample struct {
+	Guid    uuid.UUID `json:"guid"`
+	Name    string    `json:"name"`
+	Designs []string  `json:"designs"`
+	Chunks  []string  `json:"chunks"`
+}
