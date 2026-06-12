@@ -30,6 +30,7 @@ import (
 
 	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
+	"github.com/coder/websocket"
 )
 
 // TypeConverter holds functions to convert to and from a given Go type
@@ -210,6 +211,7 @@ func init() {
 		// Slice types - JSON based
 		"[]interface{}": jsonSliceConverter[[]interface{}](),
 		"[]string":      jsonSliceConverter[[]string](),
+		"[][]string":    jsonSliceConverter[[][]string](),
 		"[]float32":     jsonSliceConverter[[]float32](),
 		"[]float64":     jsonSliceConverter[[]float64](),
 		"[]int":         jsonSliceConverter[[]int](),
@@ -220,6 +222,7 @@ func init() {
 		// Channel types (special handling - always nil/empty)
 		"*chan string":      chanConverter[chan string](),
 		"*chan interface{}": chanConverter[chan interface{}](),
+		"*Conn":             chanConverter[websocket.Conn](),
 
 		// Map types - JSON based
 		"map[string]string":            jsonMapConverter[map[string]string](),
@@ -278,6 +281,12 @@ func init() {
 		"[]DiscoveryBoundaryCondition":     jsonSliceConverter[[]sharedtypes.DiscoveryBoundaryCondition](),
 		"[]DiscoveryMonitors":              jsonSliceConverter[[]sharedtypes.DiscoveryMonitors](),
 		"[]DiscoveryAttachment":            jsonSliceConverter[[]sharedtypes.DiscoveryAttachment](),
+
+		// AEDT types
+		"map[string]AedtElementContextsTuple": jsonMapConverter[map[string]sharedtypes.AedtElementContextsTuple](),
+		"[]AedtApiDbResponse":                 jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
+		"[][]AedtApiDbResponse":               jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
+		"[][]DbResponse":                      jsonSliceConverter[[][]sharedtypes.DbResponse](),
 	}
 }
 
