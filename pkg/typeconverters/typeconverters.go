@@ -30,6 +30,7 @@ import (
 
 	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
+	"github.com/coder/websocket"
 )
 
 // TypeConverter holds functions to convert to and from a given Go type
@@ -221,6 +222,7 @@ func init() {
 		// Channel types (special handling - always nil/empty)
 		"*chan string":      chanConverter[chan string](),
 		"*chan interface{}": chanConverter[chan interface{}](),
+		"*Conn":             chanConverter[websocket.Conn](),
 
 		// Map types - JSON based
 		"map[string]string":            jsonMapConverter[map[string]string](),
@@ -280,15 +282,11 @@ func init() {
 		"[]DiscoveryMonitors":              jsonSliceConverter[[]sharedtypes.DiscoveryMonitors](),
 		"[]DiscoveryAttachment":            jsonSliceConverter[[]sharedtypes.DiscoveryAttachment](),
 
-		// PyAEDT types
-		"[]ApiDbResponse":                 jsonSliceConverter[[]sharedtypes.ApiDbResponse](),
-		"[]ExampleDbResponse":             jsonSliceConverter[[]sharedtypes.ExampleDbResponse](),
-		"[]UserGuideDbResponse":           jsonSliceConverter[[]sharedtypes.UserGuideDbResponse](),
-		"[][]ApiDbResponse":               jsonSliceConverter[[][]sharedtypes.ApiDbResponse](),
-		"[][]ExampleDbResponse":           jsonSliceConverter[[][]sharedtypes.ExampleDbResponse](),
-		"[][]UserGuideDbResponse":         jsonSliceConverter[[][]sharedtypes.UserGuideDbResponse](),
-		"map[string]ElementContextsTuple": jsonMapConverter[map[string]sharedtypes.ElementContextsTuple](),
-		"DesignContext":                   jsonMapConverter[sharedtypes.DesignContext](),
+		// AEDT types
+		"map[string]AedtElementContextsTuple": jsonMapConverter[map[string]sharedtypes.AedtElementContextsTuple](),
+		"[]AedtApiDbResponse":                 jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
+		"[][]AedtApiDbResponse":               jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
+		"[][]DbResponse":                      jsonSliceConverter[[][]sharedtypes.DbResponse](),
 	}
 }
 
