@@ -225,15 +225,16 @@ func init() {
 		"*Conn":             chanConverter[websocket.Conn](),
 
 		// Map types - JSON based
-		"map[string]string":            jsonMapConverter[map[string]string](),
-		"map[string]float64":           jsonMapConverter[map[string]float64](),
-		"map[string]int":               jsonMapConverter[map[string]int](),
-		"map[string]bool":              jsonMapConverter[map[string]bool](),
-		"map[string][]string":          jsonMapConverter[map[string][]string](),
-		"map[string]map[string]string": jsonMapConverter[map[string]map[string]string](),
-		"map[string]interface{}":       jsonMapConverter[map[string]interface{}](),
-		"map[string]any":               jsonMapConverter[map[string]interface{}](),
-		"map[uint]float32":             jsonMapConverter[map[uint]float32](),
+		"map[string]string":                   jsonMapConverter[map[string]string](),
+		"map[string]float64":                  jsonMapConverter[map[string]float64](),
+		"map[string]int":                      jsonMapConverter[map[string]int](),
+		"map[string]bool":                     jsonMapConverter[map[string]bool](),
+		"map[string][]string":                 jsonMapConverter[map[string][]string](),
+		"map[string]map[string]string":        jsonMapConverter[map[string]map[string]string](),
+		"map[string]interface{}":              jsonMapConverter[map[string]interface{}](),
+		"map[string]any":                      jsonMapConverter[map[string]interface{}](),
+		"map[uint]float32":                    jsonMapConverter[map[uint]float32](),
+		"map[string]AedtElementContextsTuple": jsonMapConverter[map[string]sharedtypes.AedtElementContextsTuple](),
 
 		// Slice of maps - JSON based
 		"[]map[string]string":      jsonSliceConverter[[]map[string]string](),
@@ -281,14 +282,11 @@ func init() {
 		"[]DiscoveryBoundaryCondition":     jsonSliceConverter[[]sharedtypes.DiscoveryBoundaryCondition](),
 		"[]DiscoveryMonitors":              jsonSliceConverter[[]sharedtypes.DiscoveryMonitors](),
 		"[]DiscoveryAttachment":            jsonSliceConverter[[]sharedtypes.DiscoveryAttachment](),
-
-		// AEDT types
-		"map[string]AedtElementContextsTuple": jsonMapConverter[map[string]sharedtypes.AedtElementContextsTuple](),
-		"[]AedtApiDbResponse":                 jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
-		"[][]AedtApiDbResponse":               jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
-		"[][]DbResponse":                      jsonSliceConverter[[][]sharedtypes.DbResponse](),
-		"[]AedtCodeGenerationExample":         jsonSliceConverter[[]sharedtypes.AedtCodeGenerationExample](),
-		"[]AedtCodeGenerationElement":         jsonSliceConverter[[]sharedtypes.AedtCodeGenerationElement](),
+		"[]AedtApiDbResponse":              jsonSliceConverter[[]sharedtypes.AedtApiDbResponse](),
+		"[]AedtCodeGenerationExample":      jsonSliceConverter[[]sharedtypes.AedtCodeGenerationExample](),
+		"[]AedtCodeGenerationElement":      jsonSliceConverter[[]sharedtypes.AedtCodeGenerationElement](),
+		"[][]AedtApiDbResponse":            jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
+		"[][]DbResponse":                   jsonSliceConverter[[][]sharedtypes.DbResponse](),        // batch responses
 	}
 }
 

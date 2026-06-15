@@ -26,14 +26,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// AedtEmbeddingOptions represents the options for an embeddings request.
-type AedtEmbeddingOptions struct {
-	ReturnDense   *bool `json:"returnDense"`   // Include dense vectors in response
-	ReturnSparse  *bool `json:"returnSparse"`  // Include lexical weights in response
-	ReturnColbert *bool `json:"returnColbert"` // Include colbert vectors in response
-	IsPrompt      *bool `json:"isPrompt"`      // Is the query passage a prompt or code. For Nomic Embed Code embedding model
-}
-
 // Checked
 // AedtCodeGenerationType represents the type of code generation element.
 type AedtCodeGenerationElement struct {
