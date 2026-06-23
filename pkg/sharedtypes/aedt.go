@@ -26,7 +26,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// Checked
 // AedtCodeGenerationType represents the type of code generation element.
 type AedtCodeGenerationElement struct {
 	Guid              uuid.UUID          `json:"guid"`
@@ -57,7 +56,6 @@ type AedtCodeGenerationElement struct {
 	GraphDBMetadata  any `json:"graph_db_metadata,omitempty"`  // Optional metadata for graph databases
 }
 
-// Checked
 // AedtApiDbResponse represents the response from the database.
 // ApiDbResponse is now AedtApiDbResponse
 // for remaining DbResponse, use the standard DbResponse
@@ -74,7 +72,6 @@ type AedtApiDbResponse struct {
 	//Siblings  []DbData `json:"siblings,omitempty"`
 }
 
-// Checked
 // AedtElementContextsTuple represents a tuple of element contexts.
 type AedtElementContextsTuple struct {
 	Params      string `json:"params"`
@@ -83,7 +80,6 @@ type AedtElementContextsTuple struct {
 	Instruction string `json:"instruction"`
 }
 
-// Checked
 // AedtCodeGenerationExample represents an example for code generation.
 type AedtCodeGenerationExample struct {
 	Guid    uuid.UUID `json:"guid"`
