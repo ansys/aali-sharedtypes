@@ -180,6 +180,8 @@ type Config struct {
 	// other services use these to determine what address to call to get encrypted qdrant data from
 	QDRANT_HOST_ENCRYPTED string `yaml:"QDRANT_HOST_ENCRYPTED" json:"QDRANTHOSTENCRYPTED"`
 	QDRANT_PORT_ENCRYPTED int    `yaml:"QDRANT_PORT_ENCRYPTED" json:"QDRANTPORTENCRYPTED"`
+	// the port for data shield license admin
+	PROXY_ADMIN_PORT int `yaml:"PROXY_ADMIN_PORT" json:"PROXYADMINPORT"`
 
 	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
 	/////////////////////////////////////////////////////////////////////////
