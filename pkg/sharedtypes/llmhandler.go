@@ -50,12 +50,18 @@ type HandlerResponse struct {
 	Type            string `json:"type"` // "info", "error", "chat", "embeddings"
 
 	// Chat properties
-	IsLast           *bool      `json:"isLast,omitempty"`
-	Position         *uint32    `json:"position,omitempty"`
-	InputTokenCount  *int       `json:"inputTokenCount,omitempty"`
-	OutputTokenCount *int       `json:"outputTokenCount,omitempty"`
-	ChatData         *string    `json:"chatData,omitempty"`
-	ToolCalls        []ToolCall `json:"toolCalls,omitempty"` // Structured tool calls from LLM
+	IsLast           *bool   `json:"isLast,omitempty"`
+	Position         *uint32 `json:"position,omitempty"`
+	InputTokenCount  *int    `json:"inputTokenCount,omitempty"`
+	OutputTokenCount *int    `json:"outputTokenCount,omitempty"`
+	// CachedTokenCount and ReasoningTokenCount are optional usage details forwarded from the
+	// provider when available (e.g. OpenAI prompt_tokens_details.cached_tokens and
+	// completion_tokens_details.reasoning_tokens). They are nil/omitted when the provider does
+	// not report them, so existing consumers are unaffected (backward compatible).
+	CachedTokenCount    *int       `json:"cachedTokenCount,omitempty"`
+	ReasoningTokenCount *int       `json:"reasoningTokenCount,omitempty"`
+	ChatData            *string    `json:"chatData,omitempty"`
+	ToolCalls           []ToolCall `json:"toolCalls,omitempty"` // Structured tool calls from LLM
 
 	// Embeddings properties
 	EmbeddedData   interface{} `json:"embeddedData,omitempty"`   // []float32 or [][]float32; for BAAI/bge-m3 these are dense vectors
