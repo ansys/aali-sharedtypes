@@ -169,19 +169,17 @@ type Config struct {
 	GRAPHDB_ADDR      string `yaml:"GRAPHDB_ADDR" json:"GRAPHDBADDR"`
 	GRAPHDB_DATA_PATH string `yaml:"GRAPHDB_DATA_PATH" json:"GRAPHDBDATAPATH"`
 
-	// Aali Proxy / ADS
+	// Aali Proxy / data-shield
 	///////////////////
-	// ads proxy uses this to determine which port to listen on for graphdb proxy requests
-	GRAPHDB_PROXY_ADDRESS string `yaml:"GRAPHDB_PROXY_ADDRESS" json:"GRAPHDBPROXYADDRESS"`
-	// ads proxy uses this to determine which port to listen on for qdrant proxy requests
-	QDRANT_PROXY_ADDRESS string `yaml:"QDRANT_PROXY_ADDRESS" json:"QDRANTPROXYADDRESS"`
+	// datashield uses these to determine which addresses to listen on for incoming proxy requests
+	PROXY_ADMIN_ADDRESS   string `yaml:"PROXY_ADMIN_ADDRESS" json:"PROXYADMINADDRESS"`
+	PROXY_GRAPHDB_ADDRESS string `yaml:"PROXY_GRAPHDB_ADDRESS" json:"PROXYGRAPHDBADDRESS"`
+	PROXY_QDRANT_ADDRESS  string `yaml:"PROXY_QDRANT_ADDRESS" json:"PROXYQDRANTADDRESS"`
 	// other services use this to determine what address to call to get encrypted graphdb data from
 	GRAPHDB_ADDRESS_ENCRYPTED string `yaml:"GRAPHDB_ADDRESS_ENCRYPTED" json:"GRAPHDBADDRESSENCRYPTED"`
 	// other services use these to determine what address to call to get encrypted qdrant data from
 	QDRANT_HOST_ENCRYPTED string `yaml:"QDRANT_HOST_ENCRYPTED" json:"QDRANTHOSTENCRYPTED"`
 	QDRANT_PORT_ENCRYPTED int    `yaml:"QDRANT_PORT_ENCRYPTED" json:"QDRANTPORTENCRYPTED"`
-	// the port for data shield license admin
-	PROXY_ADMIN_PORT int `yaml:"PROXY_ADMIN_PORT" json:"PROXYADMINPORT"`
 
 	// Legacy Port definitions (are overwritten by the new ADDRESS variables)
 	/////////////////////////////////////////////////////////////////////////
