@@ -31,6 +31,7 @@ import (
 	"github.com/ansys/aali-sharedtypes/pkg/aali_graphdb"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/coder/websocket"
+	"github.com/qdrant/go-client/qdrant"
 )
 
 // TypeConverter holds functions to convert to and from a given Go type
@@ -203,6 +204,45 @@ func init() {
 				return strconv.FormatBool(value.(bool)), nil
 			},
 		},
+		"*float32": {
+			FromString: func(value string) (any, error) {
+				if value == "" {
+					return nil, nil
+				}
+				f, err := strconv.ParseFloat(value, 32)
+				f32 := float32(f)
+				return &f32, err
+			},
+			ToString: func(value any) (string, error) {
+				f, ok := value.(*float32)
+				if !ok {
+					return "", fmt.Errorf("value was not a *float32")
+				}
+				if f == nil {
+					return "", nil
+				}
+				return strconv.FormatFloat(float64(*f), 'f', -1, 32), nil
+			},
+		},
+		"*uint64": {
+			FromString: func(value string) (any, error) {
+				if value == "" {
+					return nil, nil
+				}
+				u64, err := strconv.ParseUint(value, 10, 64)
+				return &u64, err
+			},
+			ToString: func(value any) (string, error) {
+				u, ok := value.(*uint64)
+				if !ok {
+					return "", fmt.Errorf("value was not a *uint64")
+				}
+				if u == nil {
+					return "", nil
+				}
+				return strconv.FormatUint(*u, 10), nil
+			},
+		},
 
 		// Interface types
 		"interface{}": interfaceConverter(),
@@ -287,6 +327,11 @@ func init() {
 		"[]AedtCodeGenerationElement":      jsonSliceConverter[[]sharedtypes.AedtCodeGenerationElement](),
 		"[][]AedtApiDbResponse":            jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
 		"[][]DbResponse":                   jsonSliceConverter[[][]sharedtypes.DbResponse](),        // batch responses
+
+		// qdrant types
+		// "QdrantQueryRequest":  typeconverter[*qdrant.Query](),
+		// "QdrantScoredPoint":   typeconverter[*qdrant.ScoredPoint](),
+		"[]QdrantScoredPoint": jsonSliceConverter[[]*qdrant.ScoredPoint](),
 	}
 }
 
