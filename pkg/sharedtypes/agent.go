@@ -49,13 +49,17 @@ type SessionContext struct {
 
 // ConversationHistoryMessage is a structure that contains the message ID, role, content, and images of a conversation history message.
 type ConversationHistoryMessage struct {
-	MessageId        string   `json:"message_id"`
-	Role             string   `json:"role"`
-	Content          string   `json:"content"`
-	Images           []string `json:"images"` // image in base64 format
-	PositiveFeedback bool     `json:"positive_feedback"`
-	NegativeFeedback bool     `json:"negative_feedback"`
-	FeedbackText     string   `json:"feedback_text,omitempty"` // Optional feedback text
+	MessageId           string   `json:"message_id"`
+	Role                string   `json:"role"`
+	Content             string   `json:"content"`
+	Images              []string `json:"images"` // image in base64 format
+	PositiveFeedback    bool     `json:"positive_feedback"`
+	NegativeFeedback    bool     `json:"negative_feedback"`
+	FeedbackText        string   `json:"feedback_text,omitempty"` // Optional feedback text
+	InputTokenCount     int      `json:"inputTokenCount,omitempty"`
+	OutputTokenCount    int      `json:"outputTokenCount,omitempty"`
+	CachedTokenCount    int      `json:"cachedTokenCount,omitempty"`
+	ReasoningTokenCount int      `json:"reasoningTokenCount,omitempty"`
 }
 
 // Feedback is a structure that contains the conversation history, message ID, and feedback options of a workflow feedback.
