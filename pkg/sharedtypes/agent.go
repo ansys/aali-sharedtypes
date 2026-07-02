@@ -56,10 +56,10 @@ type ConversationHistoryMessage struct {
 	PositiveFeedback    bool     `json:"positive_feedback"`
 	NegativeFeedback    bool     `json:"negative_feedback"`
 	FeedbackText        string   `json:"feedback_text,omitempty"` // Optional feedback text
-	InputTokenCount     int      `json:"inputTokenCount,omitempty"`
-	OutputTokenCount    int      `json:"outputTokenCount,omitempty"`
-	CachedTokenCount    int      `json:"cachedTokenCount,omitempty"`
-	ReasoningTokenCount int      `json:"reasoningTokenCount,omitempty"`
+	InputTokenCount     int      `json:"input_token_count,omitempty"`
+	OutputTokenCount    int      `json:"output_token_count,omitempty"`
+	CachedTokenCount    int      `json:"cached_token_count,omitempty"`
+	ReasoningTokenCount int      `json:"reasoning_token_count,omitempty"`
 }
 
 // Feedback is a structure that contains the conversation history, message ID, and feedback options of a workflow feedback.
