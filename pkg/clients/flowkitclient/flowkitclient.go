@@ -24,6 +24,7 @@ package flowkitclient
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
@@ -265,12 +266,31 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	}
 
 	// Call RunFunction
+	var responseHeader metadata.MD
 	runResp, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
-	})
+	}, grpc.Header(&responseHeader))
 	if err != nil {
 		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
+	}
+
+	// Update logging context with token counts from response headers
+	if values := responseHeader.Get("aali-logging-context"); len(values) > 0 {
+		var body []map[string]interface{}
+		if err := json.Unmarshal([]byte(values[0]), &body); err == nil && len(body) > 0 {
+			tokenKeys := []logging.ContextKey{
+				logging.InputTokenCount,
+				logging.OutputTokenCount,
+				logging.CachedTokenCount,
+				logging.ReasoningTokenCount,
+			}
+			for _, key := range tokenKeys {
+				if val, ok := body[0][string(key)]; ok {
+					ctx.Set(key, val)
+				}
+			}
+		}
 	}
 
 	// convert outputs to map[string]sharedtypes.FilledInputOutput
