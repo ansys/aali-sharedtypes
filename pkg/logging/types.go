@@ -32,19 +32,23 @@ import (
 type ContextKey string
 
 const (
-	InstructionGuid ContextKey = "instructionGuid"
-	WorkflowId      ContextKey = "workflowId"
-	WorkflowRunId   ContextKey = "workflowRunId"
-	UserId          ContextKey = "userId"
-	AdapterType     ContextKey = "adapterType"
-	WatchFolderPath ContextKey = "watchFolderPath"
-	WatchFilePath   ContextKey = "watchFilePath"
-	ReaderGuid      ContextKey = "readerGuid"
-	ClientGuid      ContextKey = "clientGuid"
-	Action          ContextKey = "action"
-	Rest_Call_Id    ContextKey = "restCallId"
-	Rest_Call       ContextKey = "restCall"
-	UserMail        ContextKey = "userMail"
+	InstructionGuid     ContextKey = "instructionGuid"
+	WorkflowId          ContextKey = "workflowId"
+	WorkflowRunId       ContextKey = "workflowRunId"
+	UserId              ContextKey = "userId"
+	AdapterType         ContextKey = "adapterType"
+	WatchFolderPath     ContextKey = "watchFolderPath"
+	WatchFilePath       ContextKey = "watchFilePath"
+	ReaderGuid          ContextKey = "readerGuid"
+	ClientGuid          ContextKey = "clientGuid"
+	Action              ContextKey = "action"
+	Rest_Call_Id        ContextKey = "restCallId"
+	Rest_Call           ContextKey = "restCall"
+	UserMail            ContextKey = "userMail"
+	InputTokenCount     ContextKey = "inputTokenCount"
+	OutputTokenCount    ContextKey = "outputTokenCount"
+	CachedTokenCount    ContextKey = "cachedTokenCount"
+	ReasoningTokenCount ContextKey = "reasoningTokenCount"
 )
 
 // Initialize the global logger variable.
