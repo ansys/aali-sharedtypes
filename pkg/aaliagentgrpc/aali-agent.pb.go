@@ -332,7 +332,7 @@ type ClientRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution"
+	// Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// String input for chat interface interaction
 	Input string `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`
@@ -348,8 +348,10 @@ type ClientRequest struct {
 	AcceptToolCall bool `protobuf:"varint,8,opt,name=accept_tool_call,json=acceptToolCall,proto3" json:"accept_tool_call,omitempty"`
 	// Updated LLM message after code changes for code execution
 	UpdatedLlmMessage string `protobuf:"bytes,9,opt,name=updated_llm_message,json=updatedLlmMessage,proto3" json:"updated_llm_message,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Message ID of the conversation history message to be updated by edit_assistant_message request
+	MessageId     string `protobuf:"bytes,10,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ClientRequest) Reset() {
@@ -441,6 +443,13 @@ func (x *ClientRequest) GetAcceptToolCall() bool {
 func (x *ClientRequest) GetUpdatedLlmMessage() string {
 	if x != nil {
 		return x.UpdatedLlmMessage
+	}
+	return ""
+}
+
+func (x *ClientRequest) GetMessageId() string {
+	if x != nil {
+		return x.MessageId
 	}
 	return ""
 }
@@ -639,7 +648,7 @@ type ClientResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Randomly generated instruction ID to be used in the client request
 	InstructionId string `protobuf:"bytes,1,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
-	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation"
+	// Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response"
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// Chat Interface properties
 	IsLast           bool   `protobuf:"varint,3,opt,name=is_last,json=isLast,proto3" json:"is_last,omitempty"`
@@ -1112,7 +1121,7 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"\aapi_key\x18\t \x01(\tR\x06apiKey\x1a<\n" +
 	"\x0eVariablesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xce\x03\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xed\x03\n" +
 	"\rClientRequest\x12%\n" +
 	"\x0einstruction_id\x18\x01 \x01(\tR\rinstructionId\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x14\n" +
@@ -1123,7 +1132,10 @@ const file_pkg_aaliagentgrpc_aali_agent_proto_rawDesc = "" +
 	"snapshotId\x12;\n" +
 	"\bfeedback\x18\a \x01(\v2\x1f.aaliagentgrpc.WorkflowFeedbackR\bfeedback\x12(\n" +
 	"\x10accept_tool_call\x18\b \x01(\bR\x0eacceptToolCall\x12.\n" +
-	"\x13updated_llm_message\x18\t \x01(\tR\x11updatedLlmMessage\x1aA\n" +
+	"\x13updated_llm_message\x18\t \x01(\tR\x11updatedLlmMessage\x12\x1d\n" +
+	"\n" +
+	"message_id\x18\n" +
+	" \x01(\tR\tmessageId\x1aA\n" +
 	"\x13VariableValuesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc9\x01\n" +
