@@ -1,221 +1,224 @@
 syntax = "proto3";
 
-import "google/protobuf/struct.proto"; 
-
 package aaliagentgrpc;
+
+import "google/protobuf/struct.proto";
 
 option go_package = "./aaliagentgrpc";
 
 // WorkflowRun is a gRPC service that allows for running a workflow.
 service WorkflowRun {
-    // Bidirectional streaming RPC
-    rpc RunWorkflow(stream ClientMessage) returns (stream ServerMessage) {}
+  // Bidirectional streaming RPC
+  rpc RunWorkflow(stream ClientMessage) returns (stream ServerMessage) {}
 }
 
 // ClientMessage is the message sent by the client to the server.
 message ClientMessage {
-    oneof message_type {
-        // Session context message to initiate a session
-        SessionContext session_context = 1;
+  oneof message_type {
+    // Session context message to initiate a session
+    SessionContext session_context = 1;
 
-        // Client request message to send a request to the server
-        ClientRequest client_request = 2;
-    }
+    // Client request message to send a request to the server
+    ClientRequest client_request = 2;
+  }
 }
 
 // ServerMessage is the message sent by the server to the client.
 message ServerMessage {
-    oneof message_type {
-        // Connection status message to indicate the connection status after client sends a session context message
-        ConnectionStatus connection_status = 1;
+  oneof message_type {
+    // Connection status message to indicate the connection status after client sends a session context message
+    ConnectionStatus connection_status = 1;
 
-        // Authentication status message to indicate failing authentication after client sends a session context message with authentication enabled
-        AuthenticationStatus authentication_status = 2;
+    // Authentication status message to indicate failing authentication after client sends a session context message with authentication enabled
+    AuthenticationStatus authentication_status = 2;
 
-        // Client response message to send a response to the client
-        ClientResponse client_response = 3;
-    }
+    // Client response message to send a response to the client
+    ClientResponse client_response = 3;
+  }
 }
 
 // SessionContext is the message to initiate a session with the server.
 message SessionContext {
-    // JWT token for authentication
-    string jwt_token = 1;
+  // JWT token for authentication
+  string jwt_token = 1;
 
-    // Workflow ID for the workflow to be run
-    string workflow_id = 2;
+  // Workflow ID for the workflow to be run
+  string workflow_id = 2;
 
-    // Variables to be passed to the workflow
-    map<string, string> variables = 3;
+  // Variables to be passed to the workflow
+  map<string, string> variables = 3;
 
-    // Snapshot ID; if defined, the given snapshot will retrived from the database
-    string snapshot_id = 4; 
+  // Snapshot ID; if defined, the given snapshot will retrived from the database
+  string snapshot_id = 4;
 
-    // Workflow run ID; mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
-    string workflow_run_id = 5;
+  // Workflow run ID; mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
+  string workflow_run_id = 5;
 
-    // User ID; mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
-    string user_id = 6;
+  // User ID; mandatory if "snapshot_id" is defined in order to retrieve the snapshot from the database
+  string user_id = 6;
 
-    // Store snapshots; if true, all taken snapshots will be stored in the database
-    bool store_snapshots = 7;
+  // Store snapshots; if true, all taken snapshots will be stored in the database
+  bool store_snapshots = 7;
 
-    // IP address of the client; required for some auth_types
-    string ip_address = 8;
+  // IP address of the client; required for some auth_types
+  string ip_address = 8;
 
-    // API key for authentication
-    string api_key = 9;
+  // API key for authentication
+  string api_key = 9;
 }
 
 // ClientRequest is the message to send a request to the server.
 message ClientRequest {
-    // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
-    string instruction_id = 1;
+  // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
+  string instruction_id = 1;
 
-    // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution"
-    string type = 2;
+  // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message"
+  string type = 2;
 
-    // String input for chat interface interaction
-    string input = 3;
+  // String input for chat interface interaction
+  string input = 3;
 
-    // Image input for chat interface interaction
-    repeated string images = 4;
+  // Image input for chat interface interaction
+  repeated string images = 4;
 
-    // Variable values to be set for the workflow
-    map<string, string> variable_values = 5;
+  // Variable values to be set for the workflow
+  map<string, string> variable_values = 5;
 
-    // ID of the snapshot to be loaded
-    string snapshot_id = 6; 
+  // ID of the snapshot to be loaded
+  string snapshot_id = 6;
 
-    // Feedback for the workflow run
-    WorkflowFeedback feedback = 7; // Feedback for the workflow run
+  // Feedback for the workflow run
+  WorkflowFeedback feedback = 7; // Feedback for the workflow run
 
-    // Tool Call validation input
-    bool accept_tool_call = 8;
+  // Tool Call validation input
+  bool accept_tool_call = 8;
 
-    // Updated LLM message after code changes for code execution
-    string updated_llm_message = 9;
+  // Updated LLM message after code changes for code execution
+  string updated_llm_message = 9;
+
+  // Message ID of the conversation history message to be updated by edit_assistant_message request
+  string message_id = 10;
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
 message WorkflowFeedback {
-    // Message ID which has to be equal to the message ID in the conversation history for which the feedback is given
-    string message_id = 1;
+  // Message ID which has to be equal to the message ID in the conversation history for which the feedback is given
+  string message_id = 1;
 
-    // Positive or negative feedback can either be added or removed to the message ID in the conversation history
-    bool add_positive = 2;
-    bool add_negative = 3;
-    bool remove_positive = 4;
-    bool remove_negative = 5;
+  // Positive or negative feedback can either be added or removed to the message ID in the conversation history
+  bool add_positive = 2;
+  bool add_negative = 3;
+  bool remove_positive = 4;
+  bool remove_negative = 5;
 }
 
 // ConnectionStatus is the message to indicate the connection status after client sends a session context message.
 message ConnectionStatus {
-    // Connection status; can be "success", "failed"
-    string connectionStatus = 1;
+  // Connection status; can be "success", "failed"
+  string connectionStatus = 1;
 
-    // Workflow Run ID; if the connection status is "success", this will be the ID of the workflow run
-    string workflow_run_id = 2;
+  // Workflow Run ID; if the connection status is "success", this will be the ID of the workflow run
+  string workflow_run_id = 2;
 
-    // Maximum number of snapshots that can be stored in the database per workflow run
-    int32 max_number_of_snapshots = 3; 
+  // Maximum number of snapshots that can be stored in the database per workflow run
+  int32 max_number_of_snapshots = 3;
 }
 
 // AuthenticationStatus is the message to indicate failing authentication after client sends a session context message with authentication enabled.
 message AuthenticationStatus {
-    // Authentication status; can only be "failed"
-    string authenticationStatus = 1;
+  // Authentication status; can only be "failed"
+  string authenticationStatus = 1;
 }
 
 // ClientResponse is the message to send a response to the client.
 message ClientResponse {
-    // Randomly generated instruction ID to be used in the client request
-    string instruction_id = 1;
+  // Randomly generated instruction ID to be used in the client request
+  string instruction_id = 1;
 
-    // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation"
-    string type = 2;
+  // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response"
+  string type = 2;
 
-    // Chat Interface properties
-    bool is_last = 3;
-    uint32 position = 4;
-    string chat_data = 5;
-    string code_validation = 6; // "unvalidated", "valid", "warning", "invalid"
-    int32 input_token_count = 7;
-    int32 output_token_count = 8;
-    string context = 9;
+  // Chat Interface properties
+  bool is_last = 3;
+  uint32 position = 4;
+  string chat_data = 5;
+  string code_validation = 6; // "unvalidated", "valid", "warning", "invalid"
+  int32 input_token_count = 7;
+  int32 output_token_count = 8;
+  string context = 9;
 
-    // Variable values properties
-    map<string, string> variable_values = 10;
+  // Variable values properties
+  map<string, string> variable_values = 10;
 
-    // Snapshot properties; id of the snapshot taken or loaded
-    string snapshot_id = 11;
+  // Snapshot properties; id of the snapshot taken or loaded
+  string snapshot_id = 11;
 
-    // Slash command properties; List of @ commands containing their corresponding slash commands
-    repeated SlashCommandCategory commands_by_category = 12;
+  // Slash command properties; List of @ commands containing their corresponding slash commands
+  repeated SlashCommandCategory commands_by_category = 12;
 
-    // Error properties
-    ErrorResponse error = 13;
+  // Error properties
+  ErrorResponse error = 13;
 
-    // Info properties
-    optional string info_message = 14;
+  // Info properties
+  optional string info_message = 14;
 
-    // Conversation Title
-    string conversation_title = 15;
+  // Conversation Title
+  string conversation_title = 15;
 
-    // Tool Call properties
-    ToolCall tool_call = 16;
+  // Tool Call properties
+  ToolCall tool_call = 16;
 
-    // Code Execution properties
-    bool code_execution_allowed = 17;
+  // Code Execution properties
+  bool code_execution_allowed = 17;
 
-    // Images properties
-    repeated string images = 18;
+  // Images properties
+  repeated string images = 18;
 
-    // Stream interruption properties
-    bool stream_interruption_allowed = 19;
+  // Stream interruption properties
+  bool stream_interruption_allowed = 19;
 }
 
 // SlashCommandCategory is the message to send a list of slash commands categorized by their categories.
 message SlashCommandCategory {
-    // Category name
-    string name = 1;
+  // Category name
+  string name = 1;
 
-    // Description of the category
-    string description = 2;
+  // Description of the category
+  string description = 2;
 
-    // List of slash commands in this category
-    repeated SlashCommand commands = 3;
+  // List of slash commands in this category
+  repeated SlashCommand commands = 3;
 }
 
 // SlashCommand is the message to send a slash command.
 message SlashCommand {
-    // Name of the slash command
-    string name = 1;
+  // Name of the slash command
+  string name = 1;
 
-    // Description of the slash command
-    string description = 2;
+  // Description of the slash command
+  string description = 2;
 }
 
 // ToolCall is the message to send a tool call to the client.
 message ToolCall {
-    // Identifier of the tool to be called
-    string id = 1;
+  // Identifier of the tool to be called
+  string id = 1;
 
-    // Type of the tool 
-    string type = 2;
+  // Type of the tool 
+  string type = 2;
 
-    // Name of the tool
-    string name = 3;
+  // Name of the tool
+  string name = 3;
 
-    // Input parameters for the tool call
-    google.protobuf.Struct input = 4;
+  // Input parameters for the tool call
+  google.protobuf.Struct input = 4;
 }
 
 // ErrorResponse is the message to send an error response to the client.
 message ErrorResponse {
-    // Error code
-    int32 code = 1;
+  // Error code
+  int32 code = 1;
 
-    // Error message
-    string message = 2;
+  // Error message
+  string message = 2;
 }
