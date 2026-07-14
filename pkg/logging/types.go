@@ -26,7 +26,11 @@ import (
 	"sync"
 
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
+
+// TraceLevel is a custom log level below DebugLevel (-1), defined as -2.
+const TraceLevel = zapcore.DebugLevel - 1
 
 // ContextKey defines the supported context keys.
 type ContextKey string

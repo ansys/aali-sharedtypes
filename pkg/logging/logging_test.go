@@ -446,6 +446,7 @@ func TestLevelToString(t *testing.T) {
 		level    zapcore.Level
 		expected string
 	}{
+		{TraceLevel, "trace"},
 		{zapcore.DebugLevel, "debug"},
 		{zapcore.InfoLevel, "info"},
 		{zapcore.WarnLevel, "warn"},
@@ -955,6 +956,73 @@ func TestMultipleLogLevels(t *testing.T) {
 				t.Errorf("LOG_LEVEL not set to %s", tc.logLevel)
 			}
 		})
+	}
+}
+
+// TestLoggerTracef tests the Tracef logging method
+func TestLoggerTracef(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_tracef_log.log")
+	defer os.Remove(localLogFile)
+
+	testConfig := &config.Config{
+		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
+		LOG_LEVEL:           "trace",
+		LOCAL_LOGS:          true,
+		LOCAL_LOGS_LOCATION: localLogFile,
+		DATADOG_LOGS:        false,
+	}
+	InitLogger(testConfig)
+
+	ctx := &ContextMap{}
+	ctx.Set(ClientGuid, "client-trace-789")
+
+	Log.Tracef(ctx, "Trace: detailed value is %d", 99)
+
+	// Give time for async operations
+	time.Sleep(100 * time.Millisecond)
+
+	// Verify log file was created and contains trace content
+	content, err := os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read log file: %v", err)
+	}
+
+	contentStr := string(content)
+	if !strings.Contains(contentStr, "Trace: detailed value is 99") {
+		t.Error("Log file does not contain expected trace message")
+	}
+	if !strings.Contains(contentStr, "trace") {
+		t.Error("Log file does not contain trace level status")
+	}
+}
+
+// TestLoggerTracef_NotLoggedAtDebugLevel tests that Tracef does not log when level is debug
+func TestLoggerTracef_NotLoggedAtDebugLevel(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_tracef_filtered.log")
+	defer os.Remove(localLogFile)
+
+	testConfig := &config.Config{
+		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
+		LOG_LEVEL:           "debug",
+		LOCAL_LOGS:          true,
+		LOCAL_LOGS_LOCATION: localLogFile,
+		DATADOG_LOGS:        false,
+	}
+	InitLogger(testConfig)
+
+	ctx := &ContextMap{}
+	Log.Tracef(ctx, "This trace should not appear: %s", "hidden")
+
+	time.Sleep(100 * time.Millisecond)
+
+	// File should not exist since trace is filtered at debug level
+	if _, err := os.Stat(localLogFile); !os.IsNotExist(err) {
+		content, _ := os.ReadFile(localLogFile)
+		if strings.Contains(string(content), "This trace should not appear") {
+			t.Error("Trace message was logged when log level is debug")
+		}
 	}
 }
 

@@ -87,7 +87,7 @@ func InitLogger(GlobalConfig *config.Config) {
 
 	// Create a new zap logger with the specified configuration
 	config := zap.NewProductionConfig()
-	config.Level.SetLevel(zap.DebugLevel)
+	config.Level.SetLevel(TraceLevel)
 	option := zap.AddCallerSkip(1)
 	config.EncoderConfig.FunctionKey = "func"
 	temp, _ := config.Build(option)
@@ -372,7 +372,7 @@ func (logger *loggerWrapper) Infof(ctx *ContextMap, format string, args ...inter
 //   - format: The format of the log message.
 //   - args: The log message.
 func (logger *loggerWrapper) Debugf(ctx *ContextMap, format string, args ...interface{}) {
-	if LOG_LEVEL != "debug" {
+	if (LOG_LEVEL == "fatal") || (LOG_LEVEL == "error") || (LOG_LEVEL == "warn") || (LOG_LEVEL == "info") {
 		return
 	}
 
@@ -380,6 +380,34 @@ func (logger *loggerWrapper) Debugf(ctx *ContextMap, format string, args ...inte
 	logger.lw.Debug(fmt.Sprintf(format, args...), fields...)
 
 	entry := logger.lw.Check(zapcore.DebugLevel, format)
+	if entry != nil {
+		go sendLogs(
+			ctx,
+			entry.Level,
+			entry.Time,
+			fmt.Sprintf(format, args...),
+			entry.Caller,
+			entry.Stack,
+			entry.Caller.Function,
+			args...)
+	}
+}
+
+// Tracef logs a formatted message with Trace level if the global log level is set to "trace."
+//
+// Parameters:
+//   - ctx: A ContextMap containing context information to be included in the log entry.
+//   - format: The format of the log message.
+//   - args: The log message.
+func (logger *loggerWrapper) Tracef(ctx *ContextMap, format string, args ...interface{}) {
+	if LOG_LEVEL != "trace" {
+		return
+	}
+
+	fields := []zap.Field{zap.Any("Arguments", args)}
+	logger.lw.Log(TraceLevel, fmt.Sprintf(format, args...), fields...)
+
+	entry := logger.lw.Check(TraceLevel, format)
 	if entry != nil {
 		go sendLogs(
 			ctx,
@@ -661,6 +689,9 @@ func mapsToJSONBytes(maps []map[string]interface{}) ([]byte, error) {
 // Returns:
 //   - string: The string representation of the zapcore.Level.
 func levelToString(level zapcore.Level) string {
+	if level == TraceLevel {
+		return "trace"
+	}
 	return level.String()
 }
 
