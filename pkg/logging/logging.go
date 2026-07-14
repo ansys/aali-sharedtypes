@@ -821,26 +821,19 @@ func wrapTextWords(s string, width int) []string {
 // Content that exceeds the column width is wrapped onto continuation lines to keep columns aligned.
 // The entire entry is built as a single string and written atomically to avoid interleaving from concurrent goroutines.
 func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
-	var file *os.File
-	var err error
-	isNew := false
-
-	if _, err = os.Stat(filename); os.IsNotExist(err) {
-		file, err = os.Create(filename)
-		if err != nil {
-			return err
-		}
-		isNew = true
-	} else {
-		file, err = os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
-		if err != nil {
-			return err
-		}
+	// Open file atomically: create if missing, always append. Avoids TOCTOU race with concurrent goroutines.
+	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
 	}
 	defer file.Close()
 
-	// Write header row for a freshly created file
-	if isNew {
+	// Write header if the file is empty (freshly created)
+	info, err := file.Stat()
+	if err != nil {
+		return err
+	}
+	if info.Size() == 0 {
 		_, err = file.WriteString(localLogHeader)
 		if err != nil {
 			return err
