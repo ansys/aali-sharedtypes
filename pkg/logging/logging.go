@@ -752,18 +752,23 @@ func shortenCaller(caller string) string {
 	return caller
 }
 
+// localLogHeader is the title row written when a new log file is created.
+const localLogHeader = "TIMESTAMP               | LEVEL | FUNCTION                                 | CALLER               | MESSAGE                                                            | STACK                                                              | CONTEXT\n" +
+	"------------------------|-------|------------------------------------------|----------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------\n"
+
 // writeFormattedLogToFile writes a log entry to a file in a human-readable columnar format.
-// Format: timestamp | level | function (padded) | caller (padded) | message
-// If args, stack, or context values are non-empty, they appear as indented continuation lines below.
+// Format: timestamp | LEVEL | function | caller | message | stack | context
 func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
 	var file *os.File
 	var err error
+	isNew := false
 
 	if _, err = os.Stat(filename); os.IsNotExist(err) {
 		file, err = os.Create(filename)
 		if err != nil {
 			return err
 		}
+		isNew = true
 	} else {
 		file, err = os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
 		if err != nil {
@@ -772,69 +777,48 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 	}
 	defer file.Close()
 
+	// Write header row for a freshly created file
+	if isNew {
+		_, err = file.WriteString(localLogHeader)
+		if err != nil {
+			return err
+		}
+	}
+
 	shortFunc := shortenFunction(function)
 	shortCaller := shortenCaller(caller)
+	upperLevel := strings.ToUpper(level)
 
-	// Main log line
-	line := fmt.Sprintf("%s | %-5s | %-40s | %-20s | %s\n",
-		timeStr, level, shortFunc, shortCaller, message)
-	_, err = file.WriteString(line)
-	if err != nil {
-		return err
-	}
-
-	// Continuation line prefix (blank-padded to align with main line columns)
-	// timestamp(23) + " | " + level(5) + " | " + function(40) + " | " + caller(20) + " | "
-	const padding = "                        |       |                                          |                      |   "
-
-	// Write args continuation line if non-empty
-	hasArgs := false
-	for _, a := range args {
-		if a != "" {
-			hasArgs = true
-			break
-		}
-	}
-	if hasArgs {
-		argsLine := fmt.Sprintf("%sargs: [%s]\n", padding, strings.Join(args, ", "))
-		_, err = file.WriteString(argsLine)
-		if err != nil {
-			return err
-		}
-	}
-
-	// Write context key-value pairs as continuation lines
-	if ctx != nil {
-		ctx.data.Range(func(key, value interface{}) bool {
-			ctxLine := fmt.Sprintf("%s%s: %v\n", padding, key, value)
-			_, err = file.WriteString(ctxLine)
-			return err == nil
-		})
-		if err != nil {
-			return err
-		}
-	}
-
-	// Write stack continuation lines if non-empty
+	// Build stack column: join all frames with " > "
+	stackCol := ""
 	if stack != "" {
-		stackLines := strings.Split(stack, "\n")
-		for i, sl := range stackLines {
-			sl = strings.TrimSpace(sl)
-			if sl == "" {
-				continue
-			}
-			if i == 0 {
-				_, err = file.WriteString(fmt.Sprintf("%sstack: %s\n", padding, sl))
-			} else {
-				_, err = file.WriteString(fmt.Sprintf("%s       %s\n", padding, sl))
-			}
-			if err != nil {
-				return err
+		frames := strings.Split(stack, "\n")
+		var trimmed []string
+		for _, f := range frames {
+			f = strings.TrimSpace(f)
+			if f != "" {
+				trimmed = append(trimmed, f)
 			}
 		}
+		stackCol = strings.Join(trimmed, " > ")
 	}
 
-	return nil
+	// Build context column: key=value pairs joined with ", "
+	ctxCol := ""
+	if ctx != nil {
+		var parts []string
+		ctx.data.Range(func(key, value interface{}) bool {
+			parts = append(parts, fmt.Sprintf("%s=%v", key, value))
+			return true
+		})
+		ctxCol = strings.Join(parts, ", ")
+	}
+
+	// Main log line with all columns
+	line := fmt.Sprintf("%s | %-5s | %-40s | %-20s | %-66s | %-66s | %s\n",
+		timeStr, upperLevel, shortFunc, shortCaller, message, stackCol, ctxCol)
+	_, err = file.WriteString(line)
+	return err
 }
 
 ///////////////////////////////////

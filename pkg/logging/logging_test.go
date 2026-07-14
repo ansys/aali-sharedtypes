@@ -992,7 +992,7 @@ func TestLoggerTracef(t *testing.T) {
 	if !strings.Contains(contentStr, "Trace: detailed value is 99") {
 		t.Error("Log file does not contain expected trace message")
 	}
-	if !strings.Contains(contentStr, "trace") {
+	if !strings.Contains(contentStr, "TRACE") {
 		t.Error("Log file does not contain trace level status")
 	}
 }
