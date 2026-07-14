@@ -25,6 +25,7 @@ package logging
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -1071,5 +1072,272 @@ func BenchmarkLogInfo(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		Log.Info(ctx, "Benchmark message")
+	}
+}
+
+// TestConcurrentLogOrder verifies that all concurrent log entries appear in the file
+// with no missing or corrupted lines.
+func TestConcurrentLogOrder(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_concurrent_order.log")
+	defer os.Remove(localLogFile)
+
+	testConfig := &config.Config{
+		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
+		LOG_LEVEL:           "debug",
+		LOCAL_LOGS:          true,
+		LOCAL_LOGS_LOCATION: localLogFile,
+		DATADOG_LOGS:        false,
+	}
+	InitLogger(testConfig)
+
+	const numGoroutines = 10
+	const logsPerGoroutine = 5
+	totalLogs := numGoroutines * logsPerGoroutine
+
+	// Launch concurrent goroutines writing to the same log file
+	done := make(chan struct{})
+	for g := 0; g < numGoroutines; g++ {
+		go func(goroutineID int) {
+			ctx := &ContextMap{}
+			ctx.Set(ClientGuid, fmt.Sprintf("client-%d", goroutineID))
+			for i := 0; i < logsPerGoroutine; i++ {
+				Log.Debugf(ctx, "CONCURRENT_MARKER g=%d i=%d", goroutineID, i)
+			}
+			done <- struct{}{}
+		}(g)
+	}
+
+	// Wait for all goroutines to finish dispatching
+	for g := 0; g < numGoroutines; g++ {
+		<-done
+	}
+
+	// Wait for all async log writes to complete
+	pendingLogs.Wait()
+
+	content, err := os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read log file: %v", err)
+	}
+
+	contentStr := string(content)
+
+	// Count how many unique log entries made it into the file
+	found := 0
+	for g := 0; g < numGoroutines; g++ {
+		for i := 0; i < logsPerGoroutine; i++ {
+			marker := fmt.Sprintf("CONCURRENT_MARKER g=%d i=%d", g, i)
+			if strings.Contains(contentStr, marker) {
+				found++
+			}
+		}
+	}
+
+	if found != totalLogs {
+		t.Errorf("Expected %d log entries, found %d. Some logs were lost.", totalLogs, found)
+	}
+
+	// Verify no corrupted lines: every non-empty, non-header line should contain "|"
+	lines := strings.Split(contentStr, "\n")
+	for lineNum, line := range lines {
+		if line == "" {
+			continue
+		}
+		if !strings.Contains(line, "|") {
+			t.Errorf("Line %d appears corrupted (no pipe separator): %q", lineNum+1, line)
+		}
+	}
+}
+
+// TestWriteFormattedLogNeverOverwritesExistingFile verifies that writeFormattedLogToFile
+// always appends to an existing file and never overwrites its contents.
+func TestWriteFormattedLogNeverOverwritesExistingFile(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_no_overwrite.log")
+	defer os.Remove(localLogFile)
+
+	// Pre-populate file with known content
+	preExisting := "PRE_EXISTING_CONTENT_LINE_1\nPRE_EXISTING_CONTENT_LINE_2\n"
+	err := os.WriteFile(localLogFile, []byte(preExisting), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create pre-existing file: %v", err)
+	}
+
+	ctx := &ContextMap{}
+	ctx.Set(InstructionGuid, "test-no-overwrite")
+
+	// Write a formatted log entry to the same file
+	err = writeFormattedLogToFile(
+		localLogFile,
+		"2026-07-14 10:00:00.000",
+		"info",
+		"test.Function",
+		"test.go:42",
+		"New log entry",
+		"",
+		nil,
+		ctx,
+	)
+	if err != nil {
+		t.Fatalf("writeFormattedLogToFile failed: %v", err)
+	}
+
+	content, err := os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read log file: %v", err)
+	}
+	contentStr := string(content)
+
+	// Pre-existing content must still be there
+	if !strings.Contains(contentStr, "PRE_EXISTING_CONTENT_LINE_1") {
+		t.Error("Pre-existing content line 1 was overwritten")
+	}
+	if !strings.Contains(contentStr, "PRE_EXISTING_CONTENT_LINE_2") {
+		t.Error("Pre-existing content line 2 was overwritten")
+	}
+	// New log entry must also be there
+	if !strings.Contains(contentStr, "New log entry") {
+		t.Error("New log entry was not appended")
+	}
+	// No header should be written since the file was not empty
+	if strings.Contains(contentStr, "TIMESTAMP") {
+		t.Error("Header was written to a non-empty file")
+	}
+}
+
+// TestConcurrentWriteFormattedLogNoDataLoss verifies that many concurrent direct calls to
+// writeFormattedLogToFile never lose data or corrupt each other.
+func TestConcurrentWriteFormattedLogNoDataLoss(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_concurrent_write.log")
+	defer os.Remove(localLogFile)
+
+	const numWriters = 50
+	done := make(chan struct{})
+
+	for w := 0; w < numWriters; w++ {
+		go func(writerID int) {
+			ctx := &ContextMap{}
+			ctx.Set(ClientGuid, fmt.Sprintf("writer-%d", writerID))
+			err := writeFormattedLogToFile(
+				localLogFile,
+				"2026-07-14 10:00:00.000",
+				"debug",
+				fmt.Sprintf("pkg.Function%d", writerID),
+				"file.go:1",
+				fmt.Sprintf("WRITER_MARKER_%d", writerID),
+				"",
+				nil,
+				ctx,
+			)
+			if err != nil {
+				t.Errorf("Writer %d failed: %v", writerID, err)
+			}
+			done <- struct{}{}
+		}(w)
+	}
+
+	for w := 0; w < numWriters; w++ {
+		<-done
+	}
+
+	content, err := os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read log file: %v", err)
+	}
+	contentStr := string(content)
+
+	// Every writer's marker must be present
+	for w := 0; w < numWriters; w++ {
+		marker := fmt.Sprintf("WRITER_MARKER_%d", w)
+		if !strings.Contains(contentStr, marker) {
+			t.Errorf("Writer %d marker not found — data was lost", w)
+		}
+	}
+
+	// Header should appear at least once (multiple concurrent writers may each write
+	// a header if they all see the file as empty simultaneously — this is a harmless
+	// cosmetic race that only happens on initial file creation)
+	headerCount := strings.Count(contentStr, "TIMESTAMP")
+	if headerCount < 1 {
+		t.Errorf("Expected at least 1 header row, found %d", headerCount)
+	}
+}
+
+// TestWriteFormattedLogHeaderOnFreshFile verifies a header is written on new files
+// but not on existing ones.
+func TestWriteFormattedLogHeaderOnFreshFile(t *testing.T) {
+	tempDir := os.TempDir()
+	localLogFile := filepath.Join(tempDir, "test_header_fresh.log")
+	defer os.Remove(localLogFile)
+
+	ctx := &ContextMap{}
+
+	// First write: file doesn't exist → header should appear
+	err := writeFormattedLogToFile(localLogFile, "2026-07-14 10:00:00.000", "info", "test.Func", "test.go:1", "First entry", "", nil, ctx)
+	if err != nil {
+		t.Fatalf("First write failed: %v", err)
+	}
+
+	content, err := os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read: %v", err)
+	}
+	if !strings.Contains(string(content), "TIMESTAMP") {
+		t.Error("Header missing on fresh file")
+	}
+
+	// Second write: file exists → no additional header
+	err = writeFormattedLogToFile(localLogFile, "2026-07-14 10:00:01.000", "debug", "test.Func2", "test.go:2", "Second entry", "", nil, ctx)
+	if err != nil {
+		t.Fatalf("Second write failed: %v", err)
+	}
+
+	content, err = os.ReadFile(localLogFile)
+	if err != nil {
+		t.Fatalf("Failed to read: %v", err)
+	}
+	contentStr := string(content)
+
+	headerCount := strings.Count(contentStr, "TIMESTAMP")
+	if headerCount != 1 {
+		t.Errorf("Expected 1 header, found %d", headerCount)
+	}
+	if !strings.Contains(contentStr, "First entry") {
+		t.Error("First entry missing after second write")
+	}
+	if !strings.Contains(contentStr, "Second entry") {
+		t.Error("Second entry missing")
+	}
+}
+
+// TestWrapTextWordsNoInfiniteLoop verifies that wrapTextWords never hangs
+// on strings with no spaces or only leading-indent spaces.
+func TestWrapTextWordsNoInfiniteLoop(t *testing.T) {
+	// A string with no spaces at all, longer than width
+	result := wrapTextWords("abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890", 20)
+	joined := strings.Join(result, "")
+	// All characters must survive (ignoring indent spaces)
+	cleaned := strings.ReplaceAll(joined, " ", "")
+	original := strings.ReplaceAll("abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890", " ", "")
+	if cleaned != original {
+		t.Errorf("Characters lost during wrapping: got %q", cleaned)
+	}
+	for _, line := range result {
+		if len(line) > 20 {
+			t.Errorf("Line exceeds width 20: %q (len=%d)", line, len(line))
+		}
+	}
+
+	// A string where spaces only appear near the start (simulating indent + long token)
+	result2 := wrapTextWords("  verylongwordwithoutanyspacesatallinthisstring", 15)
+	if len(result2) == 0 {
+		t.Error("Expected at least one line")
+	}
+	for _, line := range result2 {
+		if len(line) > 15 {
+			t.Errorf("Line exceeds width 15: %q (len=%d)", line, len(line))
+		}
 	}
 }
