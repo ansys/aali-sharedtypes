@@ -825,10 +825,10 @@ func wrapTextWords(s string, width int) []string {
 	}
 	var lines []string
 	for len(s) > width {
-		// Find the last space within the allowed width
+		// Find the last space within the allowed width, but not in the leading indent
 		breakAt := strings.LastIndex(s[:width], " ")
-		if breakAt <= 0 {
-			// No space found — hard break
+		if breakAt < width/4 {
+			// Space only found very early (e.g. in the indent) — hard break to ensure progress
 			breakAt = width
 		}
 		lines = append(lines, s[:breakAt])
