@@ -58,6 +58,9 @@ const (
 // Initialize the global logger variable.
 var Log loggerWrapper
 
+// pendingLogs tracks in-flight async log writes so Fatal can wait for them before exiting.
+var pendingLogs sync.WaitGroup
+
 // Initialize config variables
 var ERROR_FILE_LOCATION string
 var LOG_LEVEL string

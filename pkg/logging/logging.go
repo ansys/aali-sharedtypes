@@ -91,6 +91,13 @@ func InitLogger(GlobalConfig *config.Config) {
 	config.Level.SetLevel(TraceLevel)
 	option := zap.AddCallerSkip(1)
 	config.EncoderConfig.FunctionKey = "func"
+	config.EncoderConfig.EncodeLevel = func(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
+		if l == TraceLevel {
+			enc.AppendString("trace")
+		} else {
+			zapcore.LowercaseLevelEncoder(l, enc)
+		}
+	}
 	temp, _ := config.Build(option)
 	Log = loggerWrapper{lw: temp}
 
@@ -167,6 +174,8 @@ func (logger *loggerWrapper) Fatal(ctx *ContextMap, args ...interface{}) {
 		panic(pan)
 	}
 
+	// Wait for all pending async log writes to finish before exiting
+	pendingLogs.Wait()
 	logger.lw.Fatal(fmt.Sprint(args...))
 }
 
@@ -200,6 +209,8 @@ func (logger *loggerWrapper) Fatalf(ctx *ContextMap, format string, args ...inte
 		panic(pan)
 	}
 
+	// Wait for all pending async log writes to finish before exiting
+	pendingLogs.Wait()
 	fields := []zap.Field{zap.Any("Arguments", args)}
 	logger.lw.Fatal(fmt.Sprintf(format, args...), fields...)
 }
@@ -218,7 +229,7 @@ func (logger *loggerWrapper) Error(ctx *ContextMap, args ...interface{}) {
 
 	entry := logger.lw.Check(zapcore.ErrorLevel, fmt.Sprint(args...))
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -246,7 +257,7 @@ func (logger *loggerWrapper) Errorf(ctx *ContextMap, format string, args ...inte
 
 	entry := logger.lw.Check(zapcore.ErrorLevel, format)
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -272,7 +283,7 @@ func (logger *loggerWrapper) Warn(ctx *ContextMap, args ...interface{}) {
 
 	entry := logger.lw.Check(zapcore.WarnLevel, fmt.Sprint(args...))
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -300,7 +311,7 @@ func (logger *loggerWrapper) Warnf(ctx *ContextMap, format string, args ...inter
 
 	entry := logger.lw.Check(zapcore.WarnLevel, format)
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -326,7 +337,7 @@ func (logger *loggerWrapper) Info(ctx *ContextMap, args ...interface{}) {
 
 	entry := logger.lw.Check(zapcore.InfoLevel, fmt.Sprint(args...))
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -354,7 +365,7 @@ func (logger *loggerWrapper) Infof(ctx *ContextMap, format string, args ...inter
 
 	entry := logger.lw.Check(zapcore.InfoLevel, format)
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -382,7 +393,7 @@ func (logger *loggerWrapper) Debugf(ctx *ContextMap, format string, args ...inte
 
 	entry := logger.lw.Check(zapcore.DebugLevel, format)
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -410,7 +421,7 @@ func (logger *loggerWrapper) Tracef(ctx *ContextMap, format string, args ...inte
 
 	entry := logger.lw.Check(TraceLevel, format)
 	if entry != nil {
-		go sendLogs(
+		asyncSendLogs(
 			ctx,
 			entry.Level,
 			entry.Time,
@@ -438,6 +449,16 @@ func (logger *loggerWrapper) Metrics(name string, count float64) {
 ///////////////////////////////////
 // Datadog logging helper functions
 ///////////////////////////////////
+
+// asyncSendLogs dispatches sendLogs in a goroutine, tracking it with pendingLogs
+// so that Fatal/Fatalf can wait for all pending writes before exiting.
+func asyncSendLogs(ctx *ContextMap, level zapcore.Level, t time.Time, message string, caller zapcore.EntryCaller, stack string, function string, arguments ...interface{}) {
+	pendingLogs.Add(1)
+	go func() {
+		defer pendingLogs.Done()
+		sendLogs(ctx, level, t, message, caller, stack, function, arguments...)
+	}()
+}
 
 // sendLogs sends log entries to Datadog or writes them to a local file, depending on the global configuration settings. It formats log entries and prepares them for transmission.
 
