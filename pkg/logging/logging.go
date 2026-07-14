@@ -29,6 +29,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/coder/websocket"
@@ -516,10 +517,10 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 
 	if LOCAL_LOGS {
 
-		// Write logs to local file
-		err := writeInterfaceToFile(LOCAL_LOGS_LOCATION, body)
+		// Write logs to local file in human-readable columnar format
+		err := writeFormattedLogToFile(LOCAL_LOGS_LOCATION, timeString, levelString, function, callerString, message, stack, stringArgs, ctx)
 		if err != nil {
-			message := "Error occurred in writeInterfaceToFile:"
+			message := "Error occurred in writeFormattedLogToFile:"
 			pan := writeStringToFile(ERROR_FILE_LOCATION, message)
 			if pan != nil {
 				panic(pan)
@@ -716,6 +717,124 @@ func timeToString(t time.Time) string {
 //   - string: The string representation of the zapcore.EntryCaller.
 func entryCallerToString(ec zapcore.EntryCaller) string {
 	return ec.String()
+}
+
+///////////////////////////////////
+// Local log file writer (columnar)
+///////////////////////////////////
+
+// shortenFunction shortens a fully-qualified Go function name to its last two dot-separated segments.
+// e.g. "github.com/ansys/aali-agent/pkg/workflows/workflowstore.loadPredefinedWorkflows" -> "workflowstore.loadPredefinedWorkflows"
+func shortenFunction(fn string) string {
+	if fn == "" {
+		return ""
+	}
+	// Find the last '/' to get "package.Function"
+	if idx := strings.LastIndex(fn, "/"); idx >= 0 {
+		return fn[idx+1:]
+	}
+	return fn
+}
+
+// shortenCaller shortens a full caller path to just "filename:line".
+// e.g. "C:/Users/fkuhn/Documents/GitHub/aali-agent/pkg/clients/flowkit/flowkit.go:67" -> "flowkit.go:67"
+func shortenCaller(caller string) string {
+	if caller == "" {
+		return ""
+	}
+	// Caller format is "path/to/file.go:line"
+	// Find the last '/' or '\' before the ':'
+	for i := len(caller) - 1; i >= 0; i-- {
+		if caller[i] == '/' || caller[i] == '\\' {
+			return caller[i+1:]
+		}
+	}
+	return caller
+}
+
+// writeFormattedLogToFile writes a log entry to a file in a human-readable columnar format.
+// Format: timestamp | level | function (padded) | caller (padded) | message
+// If args, stack, or context values are non-empty, they appear as indented continuation lines below.
+func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
+	var file *os.File
+	var err error
+
+	if _, err = os.Stat(filename); os.IsNotExist(err) {
+		file, err = os.Create(filename)
+		if err != nil {
+			return err
+		}
+	} else {
+		file, err = os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
+		if err != nil {
+			return err
+		}
+	}
+	defer file.Close()
+
+	shortFunc := shortenFunction(function)
+	shortCaller := shortenCaller(caller)
+
+	// Main log line
+	line := fmt.Sprintf("%s | %-5s | %-40s | %-20s | %s\n",
+		timeStr, level, shortFunc, shortCaller, message)
+	_, err = file.WriteString(line)
+	if err != nil {
+		return err
+	}
+
+	// Continuation line prefix (blank-padded to align with main line columns)
+	// timestamp(23) + " | " + level(5) + " | " + function(40) + " | " + caller(20) + " | "
+	const padding = "                        |       |                                          |                      |   "
+
+	// Write args continuation line if non-empty
+	hasArgs := false
+	for _, a := range args {
+		if a != "" {
+			hasArgs = true
+			break
+		}
+	}
+	if hasArgs {
+		argsLine := fmt.Sprintf("%sargs: [%s]\n", padding, strings.Join(args, ", "))
+		_, err = file.WriteString(argsLine)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Write context key-value pairs as continuation lines
+	if ctx != nil {
+		ctx.data.Range(func(key, value interface{}) bool {
+			ctxLine := fmt.Sprintf("%s%s: %v\n", padding, key, value)
+			_, err = file.WriteString(ctxLine)
+			return err == nil
+		})
+		if err != nil {
+			return err
+		}
+	}
+
+	// Write stack continuation lines if non-empty
+	if stack != "" {
+		stackLines := strings.Split(stack, "\n")
+		for i, sl := range stackLines {
+			sl = strings.TrimSpace(sl)
+			if sl == "" {
+				continue
+			}
+			if i == 0 {
+				_, err = file.WriteString(fmt.Sprintf("%sstack: %s\n", padding, sl))
+			} else {
+				_, err = file.WriteString(fmt.Sprintf("%s       %s\n", padding, sl))
+			}
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 ///////////////////////////////////
