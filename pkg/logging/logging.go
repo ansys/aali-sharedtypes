@@ -752,12 +752,51 @@ func shortenCaller(caller string) string {
 	return caller
 }
 
+// Column widths for the local log file format.
+const (
+	colWidthTimestamp = 23
+	colWidthLevel     = 5
+	colWidthFunction  = 40
+	colWidthCaller    = 20
+	colWidthMessage   = 60
+	colWidthStack     = 60
+	colWidthContext   = 40
+)
+
 // localLogHeader is the title row written when a new log file is created.
-const localLogHeader = "TIMESTAMP               | LEVEL | FUNCTION                                 | CALLER               | MESSAGE                                                            | STACK                                                              | CONTEXT\n" +
-	"------------------------|-------|------------------------------------------|----------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------\n"
+var localLogHeader = fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s\n",
+	colWidthTimestamp, "TIMESTAMP",
+	colWidthLevel, "LEVEL",
+	colWidthFunction, "FUNCTION",
+	colWidthCaller, "CALLER",
+	colWidthMessage, "MESSAGE",
+	colWidthStack, "STACK",
+	colWidthContext, "CONTEXT") +
+	fmt.Sprintf("%s-|-%s-|-%s-|-%s-|-%s-|-%s-|-%s\n",
+		strings.Repeat("-", colWidthTimestamp),
+		strings.Repeat("-", colWidthLevel),
+		strings.Repeat("-", colWidthFunction),
+		strings.Repeat("-", colWidthCaller),
+		strings.Repeat("-", colWidthMessage),
+		strings.Repeat("-", colWidthStack),
+		strings.Repeat("-", colWidthContext))
+
+// wrapText splits a string into lines of at most width characters.
+func wrapText(s string, width int) []string {
+	if len(s) <= width {
+		return []string{s}
+	}
+	var lines []string
+	for len(s) > width {
+		lines = append(lines, s[:width])
+		s = s[width:]
+	}
+	lines = append(lines, s)
+	return lines
+}
 
 // writeFormattedLogToFile writes a log entry to a file in a human-readable columnar format.
-// Format: timestamp | LEVEL | function | caller | message | stack | context
+// Content that exceeds the column width is wrapped onto continuation lines to keep columns aligned.
 func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
 	var file *os.File
 	var err error
@@ -789,6 +828,9 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 	shortCaller := shortenCaller(caller)
 	upperLevel := strings.ToUpper(level)
 
+	// Strip trailing whitespace/newlines from message
+	message = strings.TrimRight(message, " \t\r\n")
+
 	// Build stack column: join all frames with " > "
 	stackCol := ""
 	if stack != "" {
@@ -814,10 +856,61 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 		ctxCol = strings.Join(parts, ", ")
 	}
 
-	// Main log line with all columns
-	line := fmt.Sprintf("%s | %-5s | %-40s | %-20s | %-66s | %-66s | %s\n",
-		timeStr, upperLevel, shortFunc, shortCaller, message, stackCol, ctxCol)
-	_, err = file.WriteString(line)
+	// Wrap variable-width columns (except context, which is last and doesn't need wrapping)
+	msgLines := wrapText(message, colWidthMessage)
+	stackLines := wrapText(stackCol, colWidthStack)
+
+	// Determine how many output lines we need
+	maxLines := len(msgLines)
+	if len(stackLines) > maxLines {
+		maxLines = len(stackLines)
+	}
+
+	// Blank padding for fixed columns on continuation lines
+	blankTimestamp := strings.Repeat(" ", colWidthTimestamp)
+	blankLevel := strings.Repeat(" ", colWidthLevel)
+	blankFunction := strings.Repeat(" ", colWidthFunction)
+	blankCaller := strings.Repeat(" ", colWidthCaller)
+
+	for i := 0; i < maxLines; i++ {
+		ts := blankTimestamp
+		lv := blankLevel
+		fn := blankFunction
+		cl := blankCaller
+		if i == 0 {
+			ts = timeStr
+			lv = upperLevel
+			fn = shortFunc
+			cl = shortCaller
+		}
+
+		msg := ""
+		if i < len(msgLines) {
+			msg = msgLines[i]
+		}
+		stk := ""
+		if i < len(stackLines) {
+			stk = stackLines[i]
+		}
+		ctxV := ""
+		if i == 0 {
+			ctxV = ctxCol
+		}
+
+		line := fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
+			colWidthTimestamp, ts,
+			colWidthLevel, lv,
+			colWidthFunction, fn,
+			colWidthCaller, cl,
+			colWidthMessage, msg,
+			colWidthStack, stk,
+			ctxV)
+		_, err = file.WriteString(line)
+		if err != nil {
+			return err
+		}
+	}
+
 	return err
 }
 
