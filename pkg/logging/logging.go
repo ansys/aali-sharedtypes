@@ -781,7 +781,8 @@ var localLogHeader = fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s
 		strings.Repeat("-", colWidthStack),
 		strings.Repeat("-", colWidthContext))
 
-// wrapText splits a string into lines of at most width characters.
+// wrapText splits a string into lines of at most width characters, breaking at hard character boundaries.
+// Continuation lines are indented with 2 spaces (reducing effective width by 2).
 func wrapText(s string, width int) []string {
 	if len(s) <= width {
 		return []string{s}
@@ -789,7 +790,28 @@ func wrapText(s string, width int) []string {
 	var lines []string
 	for len(s) > width {
 		lines = append(lines, s[:width])
-		s = s[width:]
+		s = "  " + s[width:]
+	}
+	lines = append(lines, s)
+	return lines
+}
+
+// wrapTextWords splits a string into lines of at most width characters, preferring to break at word boundaries.
+// Continuation lines are indented with 2 spaces.
+func wrapTextWords(s string, width int) []string {
+	if len(s) <= width {
+		return []string{s}
+	}
+	var lines []string
+	for len(s) > width {
+		// Find the last space within the allowed width
+		breakAt := strings.LastIndex(s[:width], " ")
+		if breakAt <= 0 {
+			// No space found — hard break
+			breakAt = width
+		}
+		lines = append(lines, s[:breakAt])
+		s = "  " + strings.TrimLeft(s[breakAt:], " ")
 	}
 	lines = append(lines, s)
 	return lines
@@ -797,6 +819,7 @@ func wrapText(s string, width int) []string {
 
 // writeFormattedLogToFile writes a log entry to a file in a human-readable columnar format.
 // Content that exceeds the column width is wrapped onto continuation lines to keep columns aligned.
+// The entire entry is built as a single string and written atomically to avoid interleaving from concurrent goroutines.
 func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
 	var file *os.File
 	var err error
@@ -856,8 +879,9 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 		ctxCol = strings.Join(parts, ", ")
 	}
 
-	// Wrap variable-width columns (except context, which is last and doesn't need wrapping)
-	msgLines := wrapText(message, colWidthMessage)
+	// Wrap variable-width columns (word-aware for message, hard wrap for stack)
+	// Context is last column so no wrapping needed
+	msgLines := wrapTextWords(message, colWidthMessage)
 	stackLines := wrapText(stackCol, colWidthStack)
 
 	// Determine how many output lines we need
@@ -872,6 +896,8 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 	blankFunction := strings.Repeat(" ", colWidthFunction)
 	blankCaller := strings.Repeat(" ", colWidthCaller)
 
+	// Build complete entry as a single string for atomic write
+	var buf strings.Builder
 	for i := 0; i < maxLines; i++ {
 		ts := blankTimestamp
 		lv := blankLevel
@@ -897,20 +923,18 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 			ctxV = ctxCol
 		}
 
-		line := fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
+		buf.WriteString(fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
 			colWidthTimestamp, ts,
 			colWidthLevel, lv,
 			colWidthFunction, fn,
 			colWidthCaller, cl,
 			colWidthMessage, msg,
 			colWidthStack, stk,
-			ctxV)
-		_, err = file.WriteString(line)
-		if err != nil {
-			return err
-		}
+			ctxV))
 	}
 
+	// Single atomic write
+	_, err = file.WriteString(buf.String())
 	return err
 }
 
