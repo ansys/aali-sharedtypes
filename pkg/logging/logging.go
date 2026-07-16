@@ -805,9 +805,9 @@ func shortenCaller(caller string) string {
 const (
 	colWidthTimestamp = 23
 	colWidthLevel     = 5
-	colWidthFunction  = 40
-	colWidthCaller    = 20
 	colWidthMessage   = 60
+	colWidthFunction  = 50
+	colWidthCaller    = 30
 	colWidthStack     = 60
 	colWidthContext   = 40
 )
@@ -816,17 +816,17 @@ const (
 var localLogHeader = fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s\n",
 	colWidthTimestamp, "TIMESTAMP",
 	colWidthLevel, "LEVEL",
+	colWidthMessage, "MESSAGE",
 	colWidthFunction, "FUNCTION",
 	colWidthCaller, "CALLER",
-	colWidthMessage, "MESSAGE",
 	colWidthStack, "STACK",
 	colWidthContext, "CONTEXT") +
 	fmt.Sprintf("%s-|-%s-|-%s-|-%s-|-%s-|-%s-|-%s\n",
 		strings.Repeat("-", colWidthTimestamp),
 		strings.Repeat("-", colWidthLevel),
+		strings.Repeat("-", colWidthMessage),
 		strings.Repeat("-", colWidthFunction),
 		strings.Repeat("-", colWidthCaller),
-		strings.Repeat("-", colWidthMessage),
 		strings.Repeat("-", colWidthStack),
 		strings.Repeat("-", colWidthContext))
 
@@ -979,9 +979,9 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 		buf.WriteString(fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
 			colWidthTimestamp, ts,
 			colWidthLevel, lv,
+			colWidthMessage, msg,
 			colWidthFunction, fn,
 			colWidthCaller, cl,
-			colWidthMessage, msg,
 			colWidthStack, stk,
 			ctxV))
 	}
