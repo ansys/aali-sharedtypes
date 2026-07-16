@@ -921,8 +921,10 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 		ctxCol = strings.Join(parts, ", ")
 	}
 
-	// Wrap variable-width columns (word-aware for message, hard wrap for stack)
+	// Wrap variable-width columns (word-aware for message, hard wrap for others)
 	// Context is last column so no wrapping needed
+	funcLines := wrapText(shortFunc, colWidthFunction)
+	callerLines := wrapText(shortCaller, colWidthCaller)
 	msgLines := wrapTextWords(message, colWidthMessage)
 	stackLines := wrapText(stackCol, colWidthStack)
 
@@ -931,25 +933,34 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 	if len(stackLines) > maxLines {
 		maxLines = len(stackLines)
 	}
+	if len(funcLines) > maxLines {
+		maxLines = len(funcLines)
+	}
+	if len(callerLines) > maxLines {
+		maxLines = len(callerLines)
+	}
 
 	// Blank padding for fixed columns on continuation lines
 	blankTimestamp := strings.Repeat(" ", colWidthTimestamp)
 	blankLevel := strings.Repeat(" ", colWidthLevel)
-	blankFunction := strings.Repeat(" ", colWidthFunction)
-	blankCaller := strings.Repeat(" ", colWidthCaller)
 
 	// Build complete entry as a single string for atomic write
 	var buf strings.Builder
 	for i := 0; i < maxLines; i++ {
 		ts := blankTimestamp
 		lv := blankLevel
-		fn := blankFunction
-		cl := blankCaller
 		if i == 0 {
 			ts = timeStr
 			lv = upperLevel
-			fn = shortFunc
-			cl = shortCaller
+		}
+
+		fn := ""
+		if i < len(funcLines) {
+			fn = funcLines[i]
+		}
+		cl := ""
+		if i < len(callerLines) {
+			cl = callerLines[i]
 		}
 
 		msg := ""
