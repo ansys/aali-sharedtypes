@@ -29,6 +29,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -539,7 +540,7 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 	if LOCAL_LOGS {
 
 		// Write logs to local file in human-readable columnar format
-		err := writeFormattedLogToFile(LOCAL_LOGS_LOCATION, timeString, levelString, function, callerString, message, stack, stringArgs, ctx)
+		err := writeFormattedLogToFile(dailyLogPath(LOCAL_LOGS_LOCATION), timeString, levelString, function, callerString, message, stack, stringArgs, ctx)
 		if err != nil {
 			message := "Error occurred in writeFormattedLogToFile:"
 			pan := writeStringToFile(ERROR_FILE_LOCATION, message)
@@ -743,6 +744,33 @@ func entryCallerToString(ec zapcore.EntryCaller) string {
 ///////////////////////////////////
 // Local log file writer (columnar)
 ///////////////////////////////////
+
+// dailyLogPath takes the configured log file location and returns a path with
+// today's date (YYYY-MM-DD) prepended to the filename.
+// It handles:
+//   - absolute paths (Windows or Linux)
+//   - relative paths
+//   - bare filenames
+//   - empty string (defaults to "local.log")
+//
+// Examples:
+//
+//	"app.log"                     -> "2026-07-16_app.log"
+//	"logs/app.log"                -> "logs/2026-07-16_app.log"
+//	"/var/log/app.log"            -> "/var/log/2026-07-16_app.log"
+//	"C:\\logs\\app.log"            -> "C:\\logs\\2026-07-16_app.log"
+//	""                            -> "2026-07-16_local.log"
+func dailyLogPath(location string) string {
+	if location == "" {
+		location = "local.log"
+	}
+
+	dir := filepath.Dir(location)
+	base := filepath.Base(location)
+	datePrefix := time.Now().Format("2006-01-02")
+
+	return filepath.Join(dir, datePrefix+"_"+base)
+}
 
 // shortenFunction shortens a fully-qualified Go function name to its last two dot-separated segments.
 // e.g. "github.com/ansys/aali-agent/pkg/workflows/workflowstore.loadPredefinedWorkflows" -> "workflowstore.loadPredefinedWorkflows"

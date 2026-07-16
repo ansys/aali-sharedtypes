@@ -158,6 +158,39 @@ func TestInitLoggerConfig(t *testing.T) {
 	}
 }
 
+// TestDailyLogPath tests the dailyLogPath function with various input formats
+func TestDailyLogPath(t *testing.T) {
+	today := time.Now().Format("2006-01-02")
+
+	tests := []struct {
+		name     string
+		input    string
+		wantBase string // expected filename (base) portion
+	}{
+		{"bare filename", "app.log", today + "_app.log"},
+		{"relative path", filepath.Join("logs", "app.log"), today + "_app.log"},
+		{"empty string defaults", "", today + "_local.log"},
+		{"filename without extension", "mylog", today + "_mylog"},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := dailyLogPath(tc.input)
+			base := filepath.Base(result)
+			if base != tc.wantBase {
+				t.Errorf("dailyLogPath(%q) base = %q, want %q", tc.input, base, tc.wantBase)
+			}
+			// For relative path, verify directory is preserved
+			if tc.input == filepath.Join("logs", "app.log") {
+				dir := filepath.Dir(result)
+				if dir != "logs" {
+					t.Errorf("dailyLogPath(%q) dir = %q, want %q", tc.input, dir, "logs")
+				}
+			}
+		})
+	}
+}
+
 // TestInitLogger tests the InitLogger function
 func TestInitLogger(t *testing.T) {
 	testConfig := &config.Config{
@@ -197,7 +230,8 @@ func TestLoggerError(t *testing.T) {
 	// Setup
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_error_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -218,7 +252,7 @@ func TestLoggerError(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 
 	// Verify log file was created
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -228,7 +262,8 @@ func TestLoggerErrorf(t *testing.T) {
 	// Setup
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_errorf_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -249,7 +284,7 @@ func TestLoggerErrorf(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 
 	// Verify log file was created
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -258,7 +293,8 @@ func TestLoggerErrorf(t *testing.T) {
 func TestLoggerWarn(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_warn_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -276,7 +312,7 @@ func TestLoggerWarn(t *testing.T) {
 
 	time.Sleep(100 * time.Millisecond)
 
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -285,7 +321,8 @@ func TestLoggerWarn(t *testing.T) {
 func TestLoggerWarnf(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_warnf_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -301,7 +338,7 @@ func TestLoggerWarnf(t *testing.T) {
 
 	time.Sleep(100 * time.Millisecond)
 
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -310,7 +347,8 @@ func TestLoggerWarnf(t *testing.T) {
 func TestLoggerInfo(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_info_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -328,7 +366,7 @@ func TestLoggerInfo(t *testing.T) {
 
 	time.Sleep(100 * time.Millisecond)
 
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -337,7 +375,8 @@ func TestLoggerInfo(t *testing.T) {
 func TestLoggerInfof(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_infof_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -353,7 +392,7 @@ func TestLoggerInfof(t *testing.T) {
 
 	time.Sleep(100 * time.Millisecond)
 
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -362,7 +401,8 @@ func TestLoggerInfof(t *testing.T) {
 func TestLoggerDebugf(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_debugf_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -380,7 +420,7 @@ func TestLoggerDebugf(t *testing.T) {
 
 	time.Sleep(100 * time.Millisecond)
 
-	if _, err := os.Stat(localLogFile); os.IsNotExist(err) {
+	if _, err := os.Stat(dailyFile); os.IsNotExist(err) {
 		t.Error("Log file was not created")
 	}
 }
@@ -837,7 +877,8 @@ func TestMetrics_Disabled(t *testing.T) {
 func TestLoggerWrapper_AllContextKeys(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_all_keys.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -869,7 +910,7 @@ func TestLoggerWrapper_AllContextKeys(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 
 	// Verify log file contains some of the keys
-	content, err := os.ReadFile(localLogFile)
+	content, err := os.ReadFile(dailyFile)
 	if err != nil {
 		t.Fatalf("Failed to read log file: %v", err)
 	}
@@ -964,7 +1005,8 @@ func TestMultipleLogLevels(t *testing.T) {
 func TestLoggerTracef(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_tracef_log.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -984,7 +1026,7 @@ func TestLoggerTracef(t *testing.T) {
 	time.Sleep(100 * time.Millisecond)
 
 	// Verify log file was created and contains trace content
-	content, err := os.ReadFile(localLogFile)
+	content, err := os.ReadFile(dailyFile)
 	if err != nil {
 		t.Fatalf("Failed to read log file: %v", err)
 	}
@@ -1080,7 +1122,8 @@ func BenchmarkLogInfo(b *testing.B) {
 func TestConcurrentLogOrder(t *testing.T) {
 	tempDir := os.TempDir()
 	localLogFile := filepath.Join(tempDir, "test_concurrent_order.log")
-	defer os.Remove(localLogFile)
+	dailyFile := dailyLogPath(localLogFile)
+	defer os.Remove(dailyFile)
 
 	testConfig := &config.Config{
 		ERROR_FILE_LOCATION: filepath.Join(tempDir, "test_errors.log"),
@@ -1116,7 +1159,7 @@ func TestConcurrentLogOrder(t *testing.T) {
 	// Wait for all async log writes to complete
 	pendingLogs.Wait()
 
-	content, err := os.ReadFile(localLogFile)
+	content, err := os.ReadFile(dailyFile)
 	if err != nil {
 		t.Fatalf("Failed to read log file: %v", err)
 	}

@@ -53,6 +53,7 @@ const (
 	OutputTokenCount    ContextKey = "outputTokenCount"
 	CachedTokenCount    ContextKey = "cachedTokenCount"
 	ReasoningTokenCount ContextKey = "reasoningTokenCount"
+	ChatModelId         ContextKey = "chatModelId"
 )
 
 // Initialize the global logger variable.
