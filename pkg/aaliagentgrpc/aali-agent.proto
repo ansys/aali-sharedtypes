@@ -65,6 +65,9 @@ message SessionContext {
 
   // API key for authentication
   string api_key = 9;
+
+  // Chat model ID; if defined, the given chat model will be used for the workflow run
+  string chat_model_id = 10;
 }
 
 // ClientRequest is the message to send a request to the server.
@@ -72,7 +75,7 @@ message ClientRequest {
   // Instruction ID which has to be equal to the instruction ID of the client response for chat interface interaction
   string instruction_id = 1;
 
-  // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message"
+  // Type of the request; can be "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message", "set_chat_model"
   string type = 2;
 
   // String input for chat interface interaction
@@ -98,6 +101,9 @@ message ClientRequest {
 
   // Message ID of the conversation history message to be updated by edit_assistant_message request
   string message_id = 10;
+
+  // Chat model ID to be set for the workflow run
+  string chat_model_id = 11;
 }
 
 // WorkflowFeedback is the message to send feedback to the server.
@@ -135,7 +141,7 @@ message ClientResponse {
   // Randomly generated instruction ID to be used in the client request
   string instruction_id = 1;
 
-  // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response"
+  // Type of the response; can be "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response", "assistant_message_edited", "status_message", "status_stream", "chat_model_set"
   string type = 2;
 
   // Chat Interface properties
