@@ -128,7 +128,7 @@ func InitLogger(GlobalConfig *config.Config) {
 // Parameters:
 //   - config: The Config struct containing the configuration values to set.
 func initLoggerConfig(config Config) {
-	APP_NAME = repoNameFromBuildInfo()
+	APP_NAME = repoNameFromBuildInfo(config.DatadogService)
 	ERROR_FILE_LOCATION = config.ErrorFileLocation
 	LOG_LEVEL = config.LogLevel
 	LOCAL_LOGS = config.LocalLogs
@@ -749,17 +749,21 @@ func entryCallerToString(ec zapcore.EntryCaller) string {
 
 // repoNameFromBuildInfo extracts the repository name from the main module path
 // available via Go's embedded build info (e.g. "github.com/ansys/aali-flowkit" -> "aali-flowkit").
-// Returns "unknown" if build info is unavailable.
-func repoNameFromBuildInfo() string {
+// Falls back to the provided fallback value (typically SERVICE_NAME from config) if build info
+// is unavailable or empty.
+func repoNameFromBuildInfo(fallback string) string {
 	info, ok := debug.ReadBuildInfo()
-	if !ok || info.Main.Path == "" {
-		return "unknown"
+	if ok && info.Main.Path != "" {
+		path := info.Main.Path
+		if idx := strings.LastIndex(path, "/"); idx >= 0 {
+			return path[idx+1:]
+		}
+		return path
 	}
-	path := info.Main.Path
-	if idx := strings.LastIndex(path, "/"); idx >= 0 {
-		return path[idx+1:]
+	if fallback != "" {
+		return fallback
 	}
-	return path
+	return "unknown"
 }
 
 // dailyLogPath takes the configured log file location and returns a path with
@@ -967,6 +971,7 @@ func writeFormattedLogToFile(filename, app, timeStr, level, function, caller, me
 
 	// Wrap variable-width columns (word-aware for message, dot-aware for function, hard wrap for others)
 	// Context is last column so no wrapping needed
+	appLines := wrapText(app, colWidthApp)
 	funcLines := wrapTextDot(shortFunc, colWidthFunction)
 	callerLines := wrapText(shortCaller, colWidthCaller)
 	msgLines := wrapTextWords(message, colWidthMessage)
@@ -983,24 +988,28 @@ func writeFormattedLogToFile(filename, app, timeStr, level, function, caller, me
 	if len(callerLines) > maxLines {
 		maxLines = len(callerLines)
 	}
+	if len(appLines) > maxLines {
+		maxLines = len(appLines)
+	}
 
 	// Blank padding for fixed columns on continuation lines
 	blankTimestamp := strings.Repeat(" ", colWidthTimestamp)
-	blankApp := strings.Repeat(" ", colWidthApp)
 	blankLevel := strings.Repeat(" ", colWidthLevel)
 
 	// Build complete entry as a single string for atomic write
 	var buf strings.Builder
 	for i := 0; i < maxLines; i++ {
 		ts := blankTimestamp
-		ap := blankApp
 		lv := blankLevel
 		if i == 0 {
 			ts = timeStr
-			ap = app
 			lv = upperLevel
 		}
 
+		ap := ""
+		if i < len(appLines) {
+			ap = appLines[i]
+		}
 		fn := ""
 		if i < len(funcLines) {
 			fn = funcLines[i]
