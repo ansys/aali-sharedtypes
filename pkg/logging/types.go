@@ -80,7 +80,6 @@ var DATADOG_METRICS_URL string
 
 // Config represents the configuration for the logging package.
 type Config struct {
-	AppName           string
 	ErrorFileLocation string
 	LogLevel          string
 	LocalLogs         bool
