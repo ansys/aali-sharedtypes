@@ -1213,6 +1213,7 @@ func TestWriteFormattedLogNeverOverwritesExistingFile(t *testing.T) {
 	// Write a formatted log entry to the same file
 	err = writeFormattedLogToFile(
 		localLogFile,
+		"test-app",
 		"2026-07-14 10:00:00.000",
 		"info",
 		"test.Function",
@@ -1265,6 +1266,7 @@ func TestConcurrentWriteFormattedLogNoDataLoss(t *testing.T) {
 			ctx.Set(ClientGuid, fmt.Sprintf("writer-%d", writerID))
 			err := writeFormattedLogToFile(
 				localLogFile,
+				"test-app",
 				"2026-07-14 10:00:00.000",
 				"debug",
 				fmt.Sprintf("pkg.Function%d", writerID),
@@ -1318,7 +1320,7 @@ func TestWriteFormattedLogHeaderOnFreshFile(t *testing.T) {
 	ctx := &ContextMap{}
 
 	// First write: file doesn't exist → header should appear
-	err := writeFormattedLogToFile(localLogFile, "2026-07-14 10:00:00.000", "info", "test.Func", "test.go:1", "First entry", "", nil, ctx)
+	err := writeFormattedLogToFile(localLogFile, "test-app", "2026-07-14 10:00:00.000", "info", "test.Func", "test.go:1", "First entry", "", nil, ctx)
 	if err != nil {
 		t.Fatalf("First write failed: %v", err)
 	}
@@ -1332,7 +1334,7 @@ func TestWriteFormattedLogHeaderOnFreshFile(t *testing.T) {
 	}
 
 	// Second write: file exists → no additional header
-	err = writeFormattedLogToFile(localLogFile, "2026-07-14 10:00:01.000", "debug", "test.Func2", "test.go:2", "Second entry", "", nil, ctx)
+	err = writeFormattedLogToFile(localLogFile, "test-app", "2026-07-14 10:00:01.000", "debug", "test.Func2", "test.go:2", "Second entry", "", nil, ctx)
 	if err != nil {
 		t.Fatalf("Second write failed: %v", err)
 	}

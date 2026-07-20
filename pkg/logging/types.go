@@ -63,6 +63,7 @@ var Log loggerWrapper
 var pendingLogs sync.WaitGroup
 
 // Initialize config variables
+var APP_NAME string
 var ERROR_FILE_LOCATION string
 var LOG_LEVEL string
 var LOCAL_LOGS bool
@@ -79,6 +80,7 @@ var DATADOG_METRICS_URL string
 
 // Config represents the configuration for the logging package.
 type Config struct {
+	AppName           string
 	ErrorFileLocation string
 	LogLevel          string
 	LocalLogs         bool

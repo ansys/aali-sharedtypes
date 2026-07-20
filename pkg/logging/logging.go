@@ -104,6 +104,7 @@ func InitLogger(GlobalConfig *config.Config) {
 
 	// Set the global configuration variables for the logging package
 	initLoggerConfig(Config{
+		AppName:           GlobalConfig.SERVICE_NAME,
 		ErrorFileLocation: GlobalConfig.ERROR_FILE_LOCATION,
 		LogLevel:          GlobalConfig.LOG_LEVEL,
 		LocalLogs:         GlobalConfig.LOCAL_LOGS,
@@ -127,6 +128,7 @@ func InitLogger(GlobalConfig *config.Config) {
 // Parameters:
 //   - config: The Config struct containing the configuration values to set.
 func initLoggerConfig(config Config) {
+	APP_NAME = config.AppName
 	ERROR_FILE_LOCATION = config.ErrorFileLocation
 	LOG_LEVEL = config.LogLevel
 	LOCAL_LOGS = config.LocalLogs
@@ -540,7 +542,7 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 	if LOCAL_LOGS {
 
 		// Write logs to local file in human-readable columnar format
-		err := writeFormattedLogToFile(dailyLogPath(LOCAL_LOGS_LOCATION), timeString, levelString, function, callerString, message, stack, stringArgs, ctx)
+		err := writeFormattedLogToFile(dailyLogPath(LOCAL_LOGS_LOCATION), APP_NAME, timeString, levelString, function, callerString, message, stack, stringArgs, ctx)
 		if err != nil {
 			message := "Error occurred in writeFormattedLogToFile:"
 			pan := writeStringToFile(ERROR_FILE_LOCATION, message)
@@ -804,6 +806,7 @@ func shortenCaller(caller string) string {
 // Column widths for the local log file format.
 const (
 	colWidthTimestamp = 23
+	colWidthApp       = 12
 	colWidthLevel     = 5
 	colWidthMessage   = 60
 	colWidthFunction  = 50
@@ -813,16 +816,18 @@ const (
 )
 
 // localLogHeader is the title row written when a new log file is created.
-var localLogHeader = fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s\n",
+var localLogHeader = fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s\n",
 	colWidthTimestamp, "TIMESTAMP",
+	colWidthApp, "APP",
 	colWidthLevel, "LEVEL",
 	colWidthMessage, "MESSAGE",
 	colWidthFunction, "FUNCTION",
 	colWidthCaller, "CALLER",
 	colWidthStack, "STACK",
 	colWidthContext, "CONTEXT") +
-	fmt.Sprintf("%s-|-%s-|-%s-|-%s-|-%s-|-%s-|-%s\n",
+	fmt.Sprintf("%s-|-%s-|-%s-|-%s-|-%s-|-%s-|-%s-|-%s\n",
 		strings.Repeat("-", colWidthTimestamp),
+		strings.Repeat("-", colWidthApp),
 		strings.Repeat("-", colWidthLevel),
 		strings.Repeat("-", colWidthMessage),
 		strings.Repeat("-", colWidthFunction),
@@ -840,6 +845,30 @@ func wrapText(s string, width int) []string {
 	for len(s) > width {
 		lines = append(lines, s[:width])
 		s = "  " + s[width:]
+	}
+	lines = append(lines, s)
+	return lines
+}
+
+// wrapTextDot splits a string into lines of at most width characters, preferring to break after '.' boundaries.
+// This is intended for qualified function names (e.g. "package.FunctionName") so that breaks look natural.
+// Falls back to hard character break when no suitable dot is found.
+func wrapTextDot(s string, width int) []string {
+	if len(s) <= width {
+		return []string{s}
+	}
+	var lines []string
+	for len(s) > width {
+		// Prefer breaking after the last '.' within the allowed width
+		breakAt := strings.LastIndex(s[:width], ".")
+		if breakAt < 1 || breakAt < width/4 {
+			// No good dot break found — hard break
+			breakAt = width
+		} else {
+			breakAt++ // include the dot on the first line
+		}
+		lines = append(lines, s[:breakAt])
+		s = "  " + s[breakAt:]
 	}
 	lines = append(lines, s)
 	return lines
@@ -869,7 +898,7 @@ func wrapTextWords(s string, width int) []string {
 // writeFormattedLogToFile writes a log entry to a file in a human-readable columnar format.
 // Content that exceeds the column width is wrapped onto continuation lines to keep columns aligned.
 // The entire entry is built as a single string and written atomically to avoid interleaving from concurrent goroutines.
-func writeFormattedLogToFile(filename, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
+func writeFormattedLogToFile(filename, app, timeStr, level, function, caller, message, stack string, args []string, ctx *ContextMap) error {
 	// Open file atomically: create if missing, always append. Avoids TOCTOU race with concurrent goroutines.
 	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -921,9 +950,9 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 		ctxCol = strings.Join(parts, ", ")
 	}
 
-	// Wrap variable-width columns (word-aware for message, hard wrap for others)
+	// Wrap variable-width columns (word-aware for message, dot-aware for function, hard wrap for others)
 	// Context is last column so no wrapping needed
-	funcLines := wrapText(shortFunc, colWidthFunction)
+	funcLines := wrapTextDot(shortFunc, colWidthFunction)
 	callerLines := wrapText(shortCaller, colWidthCaller)
 	msgLines := wrapTextWords(message, colWidthMessage)
 	stackLines := wrapText(stackCol, colWidthStack)
@@ -942,15 +971,18 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 
 	// Blank padding for fixed columns on continuation lines
 	blankTimestamp := strings.Repeat(" ", colWidthTimestamp)
+	blankApp := strings.Repeat(" ", colWidthApp)
 	blankLevel := strings.Repeat(" ", colWidthLevel)
 
 	// Build complete entry as a single string for atomic write
 	var buf strings.Builder
 	for i := 0; i < maxLines; i++ {
 		ts := blankTimestamp
+		ap := blankApp
 		lv := blankLevel
 		if i == 0 {
 			ts = timeStr
+			ap = app
 			lv = upperLevel
 		}
 
@@ -976,8 +1008,9 @@ func writeFormattedLogToFile(filename, timeStr, level, function, caller, message
 			ctxV = ctxCol
 		}
 
-		buf.WriteString(fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
+		buf.WriteString(fmt.Sprintf("%-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %-*s | %s\n",
 			colWidthTimestamp, ts,
+			colWidthApp, ap,
 			colWidthLevel, lv,
 			colWidthMessage, msg,
 			colWidthFunction, fn,
