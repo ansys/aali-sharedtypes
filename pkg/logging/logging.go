@@ -30,7 +30,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"runtime/debug"
 	"strings"
 	"time"
 
@@ -128,7 +127,13 @@ func InitLogger(GlobalConfig *config.Config) {
 // Parameters:
 //   - config: The Config struct containing the configuration values to set.
 func initLoggerConfig(config Config) {
-	APP_NAME = repoNameFromBuildInfo(config.DatadogService)
+	if AppName != "" {
+		APP_NAME = AppName
+	} else if config.DatadogService != "" {
+		APP_NAME = config.DatadogService
+	} else {
+		APP_NAME = "unknown"
+	}
 	ERROR_FILE_LOCATION = config.ErrorFileLocation
 	LOG_LEVEL = config.LogLevel
 	LOCAL_LOGS = config.LocalLogs
@@ -746,25 +751,6 @@ func entryCallerToString(ec zapcore.EntryCaller) string {
 ///////////////////////////////////
 // Local log file writer (columnar)
 ///////////////////////////////////
-
-// repoNameFromBuildInfo extracts the repository name from the main module path
-// available via Go's embedded build info (e.g. "github.com/ansys/aali-flowkit" -> "aali-flowkit").
-// Falls back to the provided fallback value (typically SERVICE_NAME from config) if build info
-// is unavailable or empty.
-func repoNameFromBuildInfo(fallback string) string {
-	info, ok := debug.ReadBuildInfo()
-	if ok && info.Main.Path != "" {
-		path := info.Main.Path
-		if idx := strings.LastIndex(path, "/"); idx >= 0 {
-			return path[idx+1:]
-		}
-		return path
-	}
-	if fallback != "" {
-		return fallback
-	}
-	return "unknown"
-}
 
 // dailyLogPath takes the configured log file location and returns a path with
 // today's date (YYYY-MM-DD) prepended to the filename.

@@ -32,6 +32,8 @@ import (
 // TraceLevel is a custom log level below DebugLevel (-1), defined as -2.
 const TraceLevel = zapcore.DebugLevel - 1
 
+var AppName string
+
 // ContextKey defines the supported context keys.
 type ContextKey string
 
