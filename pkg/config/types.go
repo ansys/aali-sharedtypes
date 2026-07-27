@@ -154,6 +154,16 @@ type Config struct {
 	KNOWLEDGE_DB_ENDPOINT string `yaml:"KNOWLEDGE_DB_ENDPOINT" json:"KNOWLEDGEDBENDPOINT"`
 	GRAPHDB_ADDRESS       string `yaml:"GRAPHDB_ADDRESS" json:"GRAPHDBADDRESS"`
 	GRAPHDB_API_KEY       string `yaml:"GRAPHDB_API_KEY" json:"GRAPHDBAPIKEY"`
+	WIKI_ADDRESS          string `yaml:"WIKI_ADDRESS" json:"WIKIADDRESS"`
+	WIKI_API_KEY          string `yaml:"WIKI_API_KEY" json:"WIKIAPIKEY"`
+	WIKI_TRANSPORT        string `yaml:"WIKI_TRANSPORT" json:"WIKITRANSPORT"`
+	WIKI_DB_PATH          string `yaml:"WIKI_DB_PATH" json:"WIKIDBPATH"`
+	WIKI_API_PORT         int    `yaml:"WIKI_API_PORT" json:"WIKIAPIPORT"`
+	WIKI_LLM_PROVIDER     string `yaml:"WIKI_LLM_PROVIDER" json:"WIKILLMPROVIDER"`
+	WIKI_LLM_API_KEY      string `yaml:"WIKI_LLM_API_KEY" json:"WIKILLMAPIKEY"`
+	WIKI_LLM_MODEL        string `yaml:"WIKI_LLM_MODEL" json:"WIKILLMMODEL"`
+	WIKI_LLM_MAX_TOKENS   int    `yaml:"WIKI_LLM_MAX_TOKENS" json:"WIKILLMMAXTOKENS"`
+	WIKI_LLM_ENDPOINT     string `yaml:"WIKI_LLM_ENDPOINT" json:"WIKILLMENDPOINT"`
 	QDRANT_HOST           string `yaml:"QDRANT_HOST" json:"QDRANTHOST"`
 	QDRANT_PORT           int    `yaml:"QDRANT_PORT" json:"QDRANTPORT"`
 	QDRANT_API_KEY        string `yaml:"QDRANT_API_KEY" json:"QDRANTAPIKEY"`
