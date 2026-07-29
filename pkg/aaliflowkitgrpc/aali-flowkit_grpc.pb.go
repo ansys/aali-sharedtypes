@@ -40,7 +40,7 @@ type ExternalFunctionsClient interface {
 	// Lists all available functions with description, inputs and outputs.
 	ListFunctions(ctx context.Context, in *ListFunctionsRequest, opts ...grpc.CallOption) (*ListFunctionsResponse, error)
 	// Runs a specified function with provided inputs and returns the function outputs.
-	RunFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (*FunctionOutputs, error)
+	RunFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FunctionOutputs], error)
 	// Runs a specified function with provided inputs and returns the function output as a stream.
 	// Accepts a stream of StreamInput messages to allow client-to-server interrupts.
 	StreamFunction(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[StreamInput, StreamOutput], error)
@@ -84,19 +84,28 @@ func (c *externalFunctionsClient) ListFunctions(ctx context.Context, in *ListFun
 	return out, nil
 }
 
-func (c *externalFunctionsClient) RunFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (*FunctionOutputs, error) {
+func (c *externalFunctionsClient) RunFunction(ctx context.Context, in *FunctionInputs, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FunctionOutputs], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FunctionOutputs)
-	err := c.cc.Invoke(ctx, ExternalFunctions_RunFunction_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ExternalFunctions_ServiceDesc.Streams[0], ExternalFunctions_RunFunction_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &grpc.GenericClientStream[FunctionInputs, FunctionOutputs]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ExternalFunctions_RunFunctionClient = grpc.ServerStreamingClient[FunctionOutputs]
 
 func (c *externalFunctionsClient) StreamFunction(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[StreamInput, StreamOutput], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &ExternalFunctions_ServiceDesc.Streams[0], ExternalFunctions_StreamFunction_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ExternalFunctions_ServiceDesc.Streams[1], ExternalFunctions_StreamFunction_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +130,7 @@ type ExternalFunctionsServer interface {
 	// Lists all available functions with description, inputs and outputs.
 	ListFunctions(context.Context, *ListFunctionsRequest) (*ListFunctionsResponse, error)
 	// Runs a specified function with provided inputs and returns the function outputs.
-	RunFunction(context.Context, *FunctionInputs) (*FunctionOutputs, error)
+	RunFunction(*FunctionInputs, grpc.ServerStreamingServer[FunctionOutputs]) error
 	// Runs a specified function with provided inputs and returns the function output as a stream.
 	// Accepts a stream of StreamInput messages to allow client-to-server interrupts.
 	StreamFunction(grpc.BidiStreamingServer[StreamInput, StreamOutput]) error
@@ -144,8 +153,8 @@ func (UnimplementedExternalFunctionsServer) GetVersion(context.Context, *Version
 func (UnimplementedExternalFunctionsServer) ListFunctions(context.Context, *ListFunctionsRequest) (*ListFunctionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListFunctions not implemented")
 }
-func (UnimplementedExternalFunctionsServer) RunFunction(context.Context, *FunctionInputs) (*FunctionOutputs, error) {
-	return nil, status.Error(codes.Unimplemented, "method RunFunction not implemented")
+func (UnimplementedExternalFunctionsServer) RunFunction(*FunctionInputs, grpc.ServerStreamingServer[FunctionOutputs]) error {
+	return status.Error(codes.Unimplemented, "method RunFunction not implemented")
 }
 func (UnimplementedExternalFunctionsServer) StreamFunction(grpc.BidiStreamingServer[StreamInput, StreamOutput]) error {
 	return status.Error(codes.Unimplemented, "method StreamFunction not implemented")
@@ -225,23 +234,16 @@ func _ExternalFunctions_ListFunctions_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExternalFunctions_RunFunction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FunctionInputs)
-	if err := dec(in); err != nil {
-		return nil, err
+func _ExternalFunctions_RunFunction_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(FunctionInputs)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(ExternalFunctionsServer).RunFunction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ExternalFunctions_RunFunction_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExternalFunctionsServer).RunFunction(ctx, req.(*FunctionInputs))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(ExternalFunctionsServer).RunFunction(m, &grpc.GenericServerStream[FunctionInputs, FunctionOutputs]{ServerStream: stream})
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ExternalFunctions_RunFunctionServer = grpc.ServerStreamingServer[FunctionOutputs]
 
 func _ExternalFunctions_StreamFunction_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ExternalFunctionsServer).StreamFunction(&grpc.GenericServerStream[StreamInput, StreamOutput]{ServerStream: stream})
@@ -269,12 +271,13 @@ var ExternalFunctions_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ListFunctions",
 			Handler:    _ExternalFunctions_ListFunctions_Handler,
 		},
-		{
-			MethodName: "RunFunction",
-			Handler:    _ExternalFunctions_RunFunction_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "RunFunction",
+			Handler:       _ExternalFunctions_RunFunction_Handler,
+			ServerStreams: true,
+		},
 		{
 			StreamName:    "StreamFunction",
 			Handler:       _ExternalFunctions_StreamFunction_Handler,

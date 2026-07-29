@@ -639,7 +639,9 @@ type FunctionOutputs struct {
 	// Name of the function that was run.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// List of outputs from the function.
-	Outputs       []*FunctionOutput `protobuf:"bytes,2,rep,name=outputs,proto3" json:"outputs,omitempty"`
+	Outputs []*FunctionOutput `protobuf:"bytes,2,rep,name=outputs,proto3" json:"outputs,omitempty"`
+	// Type of for running other commands from flowkit to agent. "response" is the default type for normal function outputs and will end the function run. Other types: "disable_interrupt", "enable_interrupt"
+	Type          string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -686,6 +688,13 @@ func (x *FunctionOutputs) GetOutputs() []*FunctionOutput {
 		return x.Outputs
 	}
 	return nil
+}
+
+func (x *FunctionOutputs) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
 }
 
 // FunctionOutput is a single output from a function.
@@ -941,10 +950,11 @@ const file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc = "" +
 	"\rFunctionInput\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n" +
 	"\ago_type\x18\x02 \x01(\tR\x06goType\x12\x14\n" +
-	"\x05value\x18\x03 \x01(\tR\x05value\"`\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\"t\n" +
 	"\x0fFunctionOutputs\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x129\n" +
-	"\aoutputs\x18\x02 \x03(\v2\x1f.aaliflowkitgrpc.FunctionOutputR\aoutputs\"|\n" +
+	"\aoutputs\x18\x02 \x03(\v2\x1f.aaliflowkitgrpc.FunctionOutputR\aoutputs\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\"|\n" +
 	"\x0eFunctionOutput\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n" +
 	"\ago_type\x18\x02 \x01(\tR\x06goType\x12\x14\n" +
@@ -958,13 +968,13 @@ const file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc = "" +
 	"\x0fmessage_counter\x18\x01 \x01(\x05R\x0emessageCounter\x12\x17\n" +
 	"\ais_last\x18\x02 \x01(\bR\x06isLast\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05value\x12'\n" +
-	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation2\xc3\x03\n" +
+	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation2\xc5\x03\n" +
 	"\x11ExternalFunctions\x12P\n" +
 	"\vHealthCheck\x12\x1e.aaliflowkitgrpc.HealthRequest\x1a\x1f.aaliflowkitgrpc.HealthResponse\"\x00\x12Q\n" +
 	"\n" +
 	"GetVersion\x12\x1f.aaliflowkitgrpc.VersionRequest\x1a .aaliflowkitgrpc.VersionResponse\"\x00\x12`\n" +
-	"\rListFunctions\x12%.aaliflowkitgrpc.ListFunctionsRequest\x1a&.aaliflowkitgrpc.ListFunctionsResponse\"\x00\x12R\n" +
-	"\vRunFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a .aaliflowkitgrpc.FunctionOutputs\"\x00\x12S\n" +
+	"\rListFunctions\x12%.aaliflowkitgrpc.ListFunctionsRequest\x1a&.aaliflowkitgrpc.ListFunctionsResponse\"\x00\x12T\n" +
+	"\vRunFunction\x12\x1f.aaliflowkitgrpc.FunctionInputs\x1a .aaliflowkitgrpc.FunctionOutputs\"\x000\x01\x12S\n" +
 	"\x0eStreamFunction\x12\x1c.aaliflowkitgrpc.StreamInput\x1a\x1d.aaliflowkitgrpc.StreamOutput\"\x00(\x010\x01B\x13Z\x11./aaliflowkitgrpcb\x06proto3"
 
 var (
