@@ -285,6 +285,11 @@ out:
 			logging.Log.Error(ctx, err)
 			return nil, err
 		}
+		if err == io.EOF {
+			err := fmt.Errorf("received EOF before the final response for RunFunction '%v'", functionName)
+			logging.Log.Error(ctx, err)
+			return nil, err
+		}
 
 		// Handle the response based on its type
 		switch res.Type {
