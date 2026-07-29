@@ -56,6 +56,7 @@ const (
 	CachedTokenCount    ContextKey = "cachedTokenCount"
 	ReasoningTokenCount ContextKey = "reasoningTokenCount"
 	ChatModelId         ContextKey = "chatModelId"
+	FlowkitStream       ContextKey = "flowkitStream"
 )
 
 // Initialize the global logger variable.
