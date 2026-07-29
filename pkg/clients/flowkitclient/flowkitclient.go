@@ -193,6 +193,15 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 	return nil
 }
 
+// ResponseType is a type that represents the type of response from flowkit
+type ResponseType string
+
+const (
+	Response         ResponseType = "response"
+	DisableInterrupt ResponseType = "disable_interrupt"
+	EnableInterrupt  ResponseType = "enable_interrupt"
+)
+
 // RunFunction calls the RunFunction gRPC and returns the outputs
 // This function is used to run an external function
 //
@@ -292,20 +301,20 @@ out:
 		}
 
 		// Handle the response based on its type
-		switch res.Type {
-		case "response":
+		switch ResponseType(res.Type) {
+		case Response:
 			// default case: asign runResp and break the loop
 			runResp = res
 			break out
-		case "disable_interrupt":
+		case DisableInterrupt:
 			// send a message to the response channel to disable interrupts
 			responseChannel <- sharedtypes.ClientResponse{
-				Type: "disable_interrupt",
+				Type: string(DisableInterrupt),
 			}
-		case "enable_interrupt":
+		case EnableInterrupt:
 			// send a message to the response channel to enable interrupts
 			responseChannel <- sharedtypes.ClientResponse{
-				Type: "enable_interrupt",
+				Type: string(EnableInterrupt),
 			}
 		default:
 			// unknown type
