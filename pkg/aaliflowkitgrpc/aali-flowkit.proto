@@ -7,182 +7,182 @@ option go_package = "./aaliflowkitgrpc";
 // ExternalFunctions is a gRPC service that allows for listing and running
 // the function available in the externalfunctions package.
 service ExternalFunctions {
-    // HealthCheck is a simple health check method that returns an empty response.
-    rpc HealthCheck(HealthRequest) returns (HealthResponse) {}
+  // HealthCheck is a simple health check method that returns an empty response.
+  rpc HealthCheck(HealthRequest) returns (HealthResponse) {}
 
-    // GetVersion returns the version of the service.
-    rpc GetVersion(VersionRequest) returns (VersionResponse) {}
+  // GetVersion returns the version of the service.
+  rpc GetVersion(VersionRequest) returns (VersionResponse) {}
 
-    // Lists all available functions with description, inputs and outputs.
-    rpc ListFunctions(ListFunctionsRequest) returns (ListFunctionsResponse) {}
+  // Lists all available functions with description, inputs and outputs.
+  rpc ListFunctions(ListFunctionsRequest) returns (ListFunctionsResponse) {}
 
-    // Runs a specified function with provided inputs and returns the function outputs.
-    rpc RunFunction(FunctionInputs) returns (FunctionOutputs) {}
+  // Runs a specified function with provided inputs and returns the function outputs.
+  rpc RunFunction(FunctionInputs) returns (stream FunctionOutputs) {}
 
-    // Runs a specified function with provided inputs and returns the function output as a stream.
-    // Accepts a stream of StreamInput messages to allow client-to-server interrupts.
-    rpc StreamFunction(stream StreamInput) returns (stream StreamOutput) {}
+  // Runs a specified function with provided inputs and returns the function output as a stream.
+  // Accepts a stream of StreamInput messages to allow client-to-server interrupts.
+  rpc StreamFunction(stream StreamInput) returns (stream StreamOutput) {}
 }
 
 // HealthRequest is the input message for the HealthCheck method.
-message HealthRequest {
-}
+message HealthRequest {}
 
 // HealthResponse is the output message for the HealthCheck method.
 message HealthResponse {
-    // Status of the health check, always "OK" for a healthy service.
-    string status = 1;
+  // Status of the health check, always "OK" for a healthy service.
+  string status = 1;
 }
 
 // VersionRequest is the input message for the GetVersion method.
-message VersionRequest {
-}
+message VersionRequest {}
 
 // VersionResponse is the output message for the GetVersion method.
 message VersionResponse {
-    // Version of the service.
-    string version = 1;
+  // Version of the service.
+  string version = 1;
 }
 
 // ListFunctionsRequest is the input message for the ListFunctions method.
 // As no input is required, this message is empty.
-message ListFunctionsRequest {
-}
+message ListFunctionsRequest {}
 
 // ListFunctionsResponse is the output message for the ListFunctions method.
 // It contains a map of function names to their definitions.
 message ListFunctionsResponse {
-    // Map of function names to their definitions.
-    map<string, FunctionDefinition> functions = 1;
+  // Map of function names to their definitions.
+  map<string, FunctionDefinition> functions = 1;
 }
 
 // FunctionDefinition is the definition of an individual function.
 // It contains the name, description, inputs and outputs of the function.
 message FunctionDefinition {
-    // Name of the function.
-    string name = 1;
+  // Name of the function.
+  string name = 1;
 
-    // Description of the function.
-    string description = 2;
+  // Description of the function.
+  string description = 2;
 
-    // Category of the function.
-    string category = 3;
+  // Category of the function.
+  string category = 3;
 
-    // Display name of the function;
-    string displayName = 4;
+  // Display name of the function;
+  string displayName = 4;
 
-    // List of input definitions for the function.
-    repeated FunctionInputDefinition input = 5;
+  // List of input definitions for the function.
+  repeated FunctionInputDefinition input = 5;
 
-    // List of output definitions for the function.
-    repeated FunctionOutputDefinition output = 6;
+  // List of output definitions for the function.
+  repeated FunctionOutputDefinition output = 6;
 
-    // List of deprecated parameters for the function.
-    repeated string deprecatedParams = 7;
+  // List of deprecated parameters for the function.
+  repeated string deprecatedParams = 7;
 }
 
 // FunctionInputDefinition is the definition of an input for a function.
 // It contains the name, type, Go language type and options for the input.
 message FunctionInputDefinition {
-    // Name of the input.
-    string name = 1;
+  // Name of the input.
+  string name = 1;
 
-    // Type of the input.
-    string type = 2;
+  // Type of the input.
+  string type = 2;
 
-    // Go language type of the input.
-    string go_type = 3;
+  // Go language type of the input.
+  string go_type = 3;
 
-    // List of options for the input, if applicable.
-    repeated string options = 4;
+  // List of options for the input, if applicable.
+  repeated string options = 4;
 }
 
 // FunctionOutputDefinition is the definition of an output for a function.
 // It contains the name, type and Go language type of the output.
 message FunctionOutputDefinition {
-    // Name of the output.
-    string name = 1;
+  // Name of the output.
+  string name = 1;
 
-    // Type of the output.
-    string type = 2;
+  // Type of the output.
+  string type = 2;
 
-    // Go language type of the output.
-    string go_type = 3;
+  // Go language type of the output.
+  string go_type = 3;
 }
 
 // FunctionInputs is the input message for the RunFunction method.
 // It contains the name of the function to run and a list of inputs.
 message FunctionInputs {
-    // Name of the function to run.
-    string name = 1;
+  // Name of the function to run.
+  string name = 1;
 
-    // List of inputs for the function.
-    repeated FunctionInput inputs = 2;
+  // List of inputs for the function.
+  repeated FunctionInput inputs = 2;
 }
 
 // Single input for a function.
 message FunctionInput {
-    // Name of the input.
-    string name = 1;
+  // Name of the input.
+  string name = 1;
 
-    // Go language type of the input.
-    string go_type = 2;
+  // Go language type of the input.
+  string go_type = 2;
 
-    // Value of the input.
-    string value = 3;
+  // Value of the input.
+  string value = 3;
 }
 
 // FunctionOutputs is the output message for the RunFunction method.
 // It contains the name of the function that was run and a list of outputs.
 message FunctionOutputs {
-    // Name of the function that was run.
-    string name = 1;
+  // Name of the function that was run.
+  string name = 1;
 
-    // List of outputs from the function.
-    repeated FunctionOutput outputs = 2;
+  // List of outputs from the function.
+  repeated FunctionOutput outputs = 2;
+
+  // Type of for running other commands from flowkit to agent. "response" is the default type for normal function outputs and will end the function run. Other types: "disable_interrupt", "enable_interrupt"
+  string type = 3;
 }
 
 // FunctionOutput is a single output from a function.
 // It contains the name, Go language type and value of the output.
 message FunctionOutput {
-    // Name of the output.
-    string name = 1;
+  // Name of the output.
+  string name = 1;
 
-    // Go language type of the output.
-    string go_type = 2;
+  // Go language type of the output.
+  string go_type = 2;
 
-    // Value of the output.
-    string value = 3;
+  // Value of the output.
+  string value = 3;
 
-    // Code validation of the output. Only relevant for code generation.
-    string code_validation = 4;
+  // Code validation of the output. Only relevant for code generation.
+  string code_validation = 4;
 }
 
 // StreamInput is the input message for the bidirectional StreamFunction method.
 // The first message should contain the function inputs. Subsequent messages can be used for interrupts.
 message StreamInput {
-    // Name of the function to run (only required in the first message).
-    string name = 1;
+  // Name of the function to run (only required in the first message).
+  string name = 1;
 
-    // List of inputs for the function (only required in the first message).
-    repeated FunctionInput inputs = 2;
+  // List of inputs for the function (only required in the first message).
+  repeated FunctionInput inputs = 2;
 
-    // Interrupt message sent from client to server.
-    string interrupt = 3;
+  // Interrupt message sent from client to server.
+  string interrupt = 3;
 }
 
 // StreamOutput is the output message for the StreamFunction method.
 // It contains the message counter, a flag indicating if this is the last message
 message StreamOutput {
-    // Counter for the message in the stream.
-    int32 message_counter = 1;
+  // Counter for the message in the stream.
+  int32 message_counter = 1;
 
-    // Indicates if this is the last message in the stream.
-    bool is_last = 2;
+  // Indicates if this is the last message in the stream.
+  bool is_last = 2;
 
-    // Value of the output.
-    string value = 3;
+  // Value of the output.
+  string value = 3;
 
-    // Code validation of the output. Only relevant for code generation.
-    string code_validation = 4;
+  // Code validation of the output. Only relevant for code generation.
+  string code_validation = 4;
 }
