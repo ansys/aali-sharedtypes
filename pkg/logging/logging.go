@@ -952,6 +952,9 @@ func writeFormattedLogToFile(filename, app, timeStr, level, function, caller, me
 	if ctx != nil {
 		var parts []string
 		ctx.data.Range(func(key, value interface{}) bool {
+			if key.(ContextKey) == FlowkitStream {
+				return true
+			}
 			parts = append(parts, fmt.Sprintf("%s=%v", key, value))
 			return true
 		})
