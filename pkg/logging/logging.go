@@ -526,6 +526,9 @@ func sendLogs(ctx *ContextMap, level zapcore.Level, time time.Time, message stri
 
 	// Append body with context
 	ctx.data.Range(func(key, value interface{}) bool {
+		if key.(ContextKey) == FlowkitStream {
+			return true
+		}
 		body[0][string(key.(ContextKey))] = value
 		return true
 	})
