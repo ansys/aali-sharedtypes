@@ -199,11 +199,12 @@ func ListFunctionsAndSaveToInteralStates(url string, apiKey string) (err error) 
 // Parameters:
 //   - functionName: the name of the function to run
 //   - inputs: the inputs to the function
+//   - responseChannel: a channel to send messages to the client
 //
 // Returns:
 //   - map[string]sharedtypes.FilledInputOutput: the outputs of the function
 //   - error: an error message if the gRPC call fails
-func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
+func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string]sharedtypes.FilledInputOutput, responseChannel chan sharedtypes.ClientResponse) (outputs map[string]sharedtypes.FilledInputOutput, err error) {
 	defer func() {
 		r := recover()
 		if r != nil {
@@ -266,17 +267,58 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	}
 
 	// Call RunFunction
-	var responseHeader metadata.MD
-	runResp, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
+	stream, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
-	}, grpc.Header(&responseHeader))
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
 	}
 
-	// Update logging context with token counts from response headers
-	if values := responseHeader.Get("aali-logging-context"); len(values) > 0 {
+	// Receive the stream from the server
+	var runResp *aaliflowkitgrpc.FunctionOutputs
+out:
+	for {
+		res, err := stream.Recv()
+		if err != nil && err != io.EOF {
+			err := fmt.Errorf("error receiving stream for RunFunction '%v': %v", functionName, err)
+			logging.Log.Error(ctx, err)
+			return nil, err
+		}
+		if err == io.EOF {
+			err := fmt.Errorf("received EOF before the final response for RunFunction '%v'", functionName)
+			logging.Log.Error(ctx, err)
+			return nil, err
+		}
+
+		// Handle the response based on its type
+		switch res.Type {
+		case "response":
+			// default case: asign runResp and break the loop
+			runResp = res
+			break out
+		case "disable_interrupt":
+			// send a message to the response channel to disable interrupts
+			responseChannel <- sharedtypes.ClientResponse{
+				Type: "disable_interrupt",
+			}
+		case "enable_interrupt":
+			// send a message to the response channel to enable interrupts
+			responseChannel <- sharedtypes.ClientResponse{
+				Type: "enable_interrupt",
+			}
+		default:
+			// unknown type
+			err := fmt.Errorf("unknown response type '%v' received from RunFunction '%v'", res.Type, functionName)
+			logging.Log.Error(ctx, err)
+			return nil, err
+		}
+	}
+
+	// Update logging context with token counts from response trailers
+	// Trailers are available after the stream ends and contain the final logging context
+	responseTrailer := stream.Trailer()
+	if values := responseTrailer.Get("aali-logging-context"); len(values) > 0 {
 		var body []map[string]interface{}
 		if err := json.Unmarshal([]byte(values[0]), &body); err == nil && len(body) > 0 {
 			tokenKeys := []logging.ContextKey{
