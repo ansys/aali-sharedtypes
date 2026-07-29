@@ -152,9 +152,15 @@ type WorkflowFeedback struct {
 
 // SlashCommandCategory is a structure that contains the name, description, and list of commands in a slash command category.
 type SlashCommandCategory struct {
-	Name        string         `json:"name" yaml:"name"`               // Name of the category
-	Description string         `json:"description" yaml:"description"` // Description of the category
-	Commands    []SlashCommand `json:"commands" yaml:"commands"`       // List of commands in the category
+	Name        string              `json:"name" yaml:"name"`               // Name of the category
+	Description string              `json:"description" yaml:"description"` // Description of the category
+	Commands    []SlashCommandAgent `json:"commands" yaml:"commands"`       // List of commands in the category
+}
+
+// SlashCommand is a structure that contains the name and description of a slash command.
+type SlashCommandAgent struct {
+	Name        string `json:"name" yaml:"name"`               // Name of the command
+	Description string `json:"description" yaml:"description"` // Description of the command
 }
 
 // SetSessionContext sets the SessionContext struct from the JSON payload
