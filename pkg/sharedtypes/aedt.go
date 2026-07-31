@@ -40,7 +40,7 @@ type AedtCodeGenerationElement struct {
 	ReturnElementList []string           `json:"return_element_list"`
 	ReturnDescription string             `json:"return_description"` // Return description
 	Remarks           string             `json:"remarks"`
-	Design            string             `json:"design"`
+	Designs           []string           `json:"designs"`
 
 	// Only for type "method"
 	PyaedtParents []string `json:"inheritsfrom"`
