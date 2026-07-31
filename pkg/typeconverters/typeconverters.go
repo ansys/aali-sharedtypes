@@ -52,6 +52,16 @@ func init() {
 			FromString: func(value string) (interface{}, error) { return value, nil },
 			ToString:   func(value interface{}) (string, error) { return value.(string), nil },
 		},
+		"*string": {
+			FromString: func(value string) (any, error) { return &value, nil },
+			ToString: func(value any) (string, error) {
+				s := value.(*string)
+				if s == nil {
+					return "", nil
+				}
+				return *s, nil
+			},
+		},
 		"float32": {
 			FromString: func(value string) (interface{}, error) {
 				if value == "" {
@@ -62,6 +72,23 @@ func init() {
 			},
 			ToString: func(value interface{}) (string, error) {
 				return strconv.FormatFloat(float64(value.(float32)), 'f', -1, 32), nil
+			},
+		},
+		"*float32": {
+			FromString: func(value string) (any, error) {
+				if value == "" {
+					return nil, nil
+				}
+				f, err := strconv.ParseFloat(value, 32)
+				f32 := float32(f)
+				return &f32, err
+			},
+			ToString: func(value any) (string, error) {
+				f := value.(*float32)
+				if f == nil {
+					return "", nil
+				}
+				return strconv.FormatFloat(float64(*f), 'f', -1, 32), nil
 			},
 		},
 		"float64": {
@@ -192,6 +219,26 @@ func init() {
 				return strconv.FormatUint(value.(uint64), 10), nil
 			},
 		},
+		"*uint64": {
+			FromString: func(value string) (any, error) {
+				var ptr *uint64
+				if value != "" {
+					int, err := strconv.ParseUint(value, 10, 64)
+					if err != nil {
+						return nil, err
+					}
+					ptr = &int
+				}
+				return ptr, nil
+			},
+			ToString: func(value any) (string, error) {
+				int := value.(*uint64)
+				if int == nil {
+					return "", nil
+				}
+				return strconv.FormatUint(*int, 10), nil
+			},
+		},
 		"bool": {
 			FromString: func(value string) (interface{}, error) {
 				if value == "" {
@@ -288,6 +335,12 @@ func init() {
 		"[]AedtCodeGenerationElement":      jsonSliceConverter[[]sharedtypes.AedtCodeGenerationElement](),
 		"[][]AedtApiDbResponse":            jsonSliceConverter[[][]sharedtypes.AedtApiDbResponse](), // batch responses
 		"[][]DbResponse":                   jsonSliceConverter[[][]sharedtypes.DbResponse](),        // batch responses
+
+		// qdrant types
+		"QdrantQuery":         jsonMapConverter[sharedtypes.QdrantQuery](),
+		"QdrantCondition":     jsonMapConverter[sharedtypes.QdrantCondition](),
+		"QdrantFilter":        jsonMapConverter[sharedtypes.QdrantFilter](),
+		"[]QdrantScoredPoint": jsonSliceConverter[[]sharedtypes.QdrantScoredPoint](),
 	}
 }
 
