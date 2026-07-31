@@ -207,6 +207,7 @@ func init() {
 		// Interface types
 		"interface{}": interfaceConverter(),
 		"any":         interfaceConverter(),
+		"json":        interfaceConverter(),
 
 		// Slice types - JSON based
 		"[]interface{}": jsonSliceConverter[[]interface{}](),
