@@ -324,8 +324,21 @@ out:
 		}
 	}
 
+	// gRPC trailers are only available after the stream is fully consumed (Recv returns EOF).
+	// Breaking out on the Response message alone left Trailer() empty, so token usage that
+	// flowkit attaches via aali-logging-context never reached aali-agent (traces showed null).
+	for {
+		_, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			logging.Log.Warnf(ctx, "error draining RunFunction stream for '%v' before reading trailers: %v", functionName, err)
+			break
+		}
+	}
+
 	// Update logging context with token counts from response trailers
-	// Trailers are available after the stream ends and contain the final logging context
 	responseTrailer := stream.Trailer()
 	if values := responseTrailer.Get("aali-logging-context"); len(values) > 0 {
 		var body []map[string]interface{}
