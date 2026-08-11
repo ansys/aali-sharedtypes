@@ -324,8 +324,22 @@ out:
 		}
 	}
 
+	// wait for EOF so grpc trailers are available
+	for {
+		resp, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				logging.Log.Warnf(ctx, "error draining RunFunction stream for '%v' before reading trailers: %v", functionName, err)
+				break
+			}
+		}
+		// no additional response expected, but log if any unexpected responses are received
+		logging.Log.Warnf(ctx, "unexpected response received from RunFunction '%v' while draining stream: %v", functionName, resp)
+	}
+
 	// Update logging context with token counts from response trailers
-	// Trailers are available after the stream ends and contain the final logging context
 	responseTrailer := stream.Trailer()
 	if values := responseTrailer.Get("aali-logging-context"); len(values) > 0 {
 		var body []map[string]interface{}
