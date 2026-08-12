@@ -930,8 +930,12 @@ func writeFormattedLogToFile(filename, app, timeStr, level, function, caller, me
 	shortCaller := shortenCaller(caller)
 	upperLevel := strings.ToUpper(level)
 
-	// Strip trailing whitespace/newlines from message
-	message = strings.TrimRight(message, " \t\r\n")
+	// Replace embedded newlines with spaces to preserve table alignment,
+	// then strip trailing whitespace.
+	message = strings.ReplaceAll(message, "\r\n", " ")
+	message = strings.ReplaceAll(message, "\n", " ")
+	message = strings.ReplaceAll(message, "\r", " ")
+	message = strings.TrimRight(message, " \t")
 
 	// Build stack column: join all frames with " > "
 	stackCol := ""
