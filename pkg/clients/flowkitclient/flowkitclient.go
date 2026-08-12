@@ -28,12 +28,14 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"sync"
 
 	"github.com/ansys/aali-sharedtypes/pkg/aaliflowkitgrpc"
 	"github.com/ansys/aali-sharedtypes/pkg/clients"
 	"github.com/ansys/aali-sharedtypes/pkg/logging"
 	"github.com/ansys/aali-sharedtypes/pkg/sharedtypes"
 	"github.com/ansys/aali-sharedtypes/pkg/typeconverters"
+	"github.com/google/uuid"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -200,7 +202,14 @@ const (
 	Response         ResponseType = "response"
 	DisableInterrupt ResponseType = "disable_interrupt"
 	EnableInterrupt  ResponseType = "enable_interrupt"
+	InfoMessage      ResponseType = "info_message"
+	StatusMessage    ResponseType = "status_message"
+	GetApproval      ResponseType = "get_approval"
 )
+
+// OpenApprovals is a global variable that keeps track of the open approvals for each function
+var OpenApprovals = map[string]*chan string{}
+var OpenApprovalsLock = sync.RWMutex{}
 
 // RunFunction calls the RunFunction gRPC and returns the outputs
 // This function is used to run an external function
@@ -275,13 +284,49 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		grpcInputs = append(grpcInputs, grpcInput)
 	}
 
-	// Call RunFunction
-	stream, err := c.RunFunction(ctxWithMetadata, &aaliflowkitgrpc.FunctionInputs{
+	// create a channel to send messages to the server
+	responseChannelToServer := make(chan *aaliflowkitgrpc.FunctionInputs, 400)
+	closeResponseChannel := sync.OnceFunc(func() { close(responseChannelToServer) })
+	defer closeResponseChannel()
+
+	// track pending approval instruction IDs for cleanup on error
+	pendingApprovalIDs := []string{}
+
+	// Call RunFunction (bidirectional streaming)
+	stream, err := c.RunFunction(ctxWithMetadata)
+	if err != nil {
+		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
+	}
+
+	// Send the initial message with function inputs
+	err = stream.Send(&aaliflowkitgrpc.FunctionInputs{
 		Name:   functionName,
 		Inputs: grpcInputs,
 	})
 	if err != nil {
-		return nil, fmt.Errorf("error in external function gRPC RunFunction for function '%v': %v", functionName, err)
+		return nil, fmt.Errorf("error sending initial message in RunFunction for function '%v': %v", functionName, err)
+	}
+
+	// Launch goroutine to forward messages from responseChannelToServer to the server
+	go func() {
+		for msg := range responseChannelToServer {
+			if err := stream.Send(msg); err != nil {
+				logging.Log.Errorf(ctx, "error sending message to server in RunFunction for function '%v': %v", functionName, err)
+				return
+			}
+		}
+	}()
+
+	// cleanup function to remove pending approvals on error
+	cleanupApprovals := func() {
+		OpenApprovalsLock.Lock()
+		defer OpenApprovalsLock.Unlock()
+		for _, id := range pendingApprovalIDs {
+			if ch, ok := OpenApprovals[id]; ok {
+				close(*ch)
+				delete(OpenApprovals, id)
+			}
+		}
 	}
 
 	// Receive the stream from the server
@@ -292,11 +337,13 @@ out:
 		if err != nil && err != io.EOF {
 			err := fmt.Errorf("error receiving stream for RunFunction '%v': %v", functionName, err)
 			logging.Log.Error(ctx, err)
+			cleanupApprovals()
 			return nil, err
 		}
 		if err == io.EOF {
 			err := fmt.Errorf("received EOF before the final response for RunFunction '%v'", functionName)
 			logging.Log.Error(ctx, err)
+			cleanupApprovals()
 			return nil, err
 		}
 
@@ -306,23 +353,106 @@ out:
 			// default case: asign runResp and break the loop
 			runResp = res
 			break out
-		case DisableInterrupt:
+		case DisableInterrupt, EnableInterrupt:
 			// send a message to the response channel to disable interrupts
 			responseChannel <- sharedtypes.ClientResponse{
-				Type: string(DisableInterrupt),
+				Type: string(res.Type),
 			}
-		case EnableInterrupt:
-			// send a message to the response channel to enable interrupts
+		case InfoMessage, StatusMessage:
+			// send a message to the response channel with the info or status message
 			responseChannel <- sharedtypes.ClientResponse{
-				Type: string(EnableInterrupt),
+				InstructionId: strings.ReplaceAll(uuid.New().String(), "-", ""),
+				Type:          string(res.Type),
+				ChatData:      res.Message,
 			}
+		case GetApproval:
+			// create a channel to receive the approval response from the client
+			approvalResponseChannel := make(chan string, 1)
+
+			// track for cleanup on error
+			pendingApprovalIDs = append(pendingApprovalIDs, res.InstructionId)
+
+			// add instruction ID to the response channel to get approval from the client
+			func() {
+				OpenApprovalsLock.Lock()
+				defer OpenApprovalsLock.Unlock()
+				OpenApprovals[res.InstructionId] = &approvalResponseChannel
+			}()
+
+			// send a message to the response channel with the approval request
+			responseChannel <- sharedtypes.ClientResponse{
+				InstructionId:   res.InstructionId,
+				Type:            string(res.Type),
+				ApprovalText:    res.ApprovalText,
+				ApprovalOptions: res.ApprovalOptions,
+			}
+
+			// launch go routine to wait for the approval response from the client and send it to the server
+			go func() {
+				// check if free_text us allowed for the approval request
+				freeTextAllowed := false
+				for _, option := range res.ApprovalOptions {
+					if option == "free_text" {
+						freeTextAllowed = true
+						break
+					}
+				}
+
+				// wait for the approval response from the client
+				var approvalResponse string
+				for {
+					approvalResponse = <-approvalResponseChannel
+
+					// verify response if free_text is not allowed
+					if !freeTextAllowed {
+						validResponse := false
+						for _, option := range res.ApprovalOptions {
+							if approvalResponse == option {
+								validResponse = true
+								break
+							}
+						}
+
+						// send error message to client if response is not valid and wait for a new response
+						if !validResponse {
+							responseChannel <- sharedtypes.ClientResponse{
+								Type:     "error_message",
+								ChatData: fmt.Sprintf("Invalid approval response '%v' for instruction ID '%v'. Please choose from the available options: %v", approvalResponse, res.InstructionId, res.ApprovalOptions),
+							}
+						} else {
+							// valid response, break the loop
+							break
+						}
+					}
+				}
+
+				// send the approval server reponse channel
+				responseChannelToServer <- &aaliflowkitgrpc.FunctionInputs{
+					Type:             "approval_response",
+					InstructionId:    res.InstructionId,
+					ApprovalResponse: approvalResponse,
+				}
+
+				// remove the instruction ID from the OpenApprovals map
+				OpenApprovalsLock.Lock()
+				defer OpenApprovalsLock.Unlock()
+				delete(OpenApprovals, res.InstructionId)
+			}()
+
 		default:
 			// unknown type
 			err := fmt.Errorf("unknown response type '%v' received from RunFunction '%v'", res.Type, functionName)
 			logging.Log.Error(ctx, err)
+			cleanupApprovals()
 			return nil, err
 		}
 	}
+
+	// Close the responseChannelToServer to signal the sending goroutine to stop
+	closeResponseChannel()
+
+	// Close the send direction of the stream
+	stream.CloseSend()
 
 	// wait for EOF so grpc trailers are available
 	for {

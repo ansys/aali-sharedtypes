@@ -52,7 +52,7 @@ type SessionContext struct {
 // ClientRequest is a structure that contains the instruction ID, input, and client ID.
 type ClientRequest struct {
 	InstructionId     string            `json:"instruction_id"`
-	Type              string            `json:"type"` // "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message", "set_chat_model"
+	Type              string            `json:"type"` // "message", "get_variable_values", "set_variable_values", "keepalive", "take_snapshot", "load_snapshot", "get_slash_commands", "feedback", "get_conversation_title", "tool_validation", "code_execution", "parallel_code_execution", "edit_assitant_message", "set_chat_model", "approval_response"
 	Input             string            `json:"input"`
 	Images            []string          `json:"images,omitempty"`
 	VariableValues    map[string]string `json:"variable_values,omitempty"`
@@ -68,7 +68,7 @@ type ClientRequest struct {
 type ClientResponse struct {
 	// Common properties
 	InstructionId string `json:"instruction_id"`
-	Type          string `json:"type"` // "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response", "assistant_message_edited", "status_message", "status_stream", "chat_model_set", "disable_interrupt", "enable_interrupt"
+	Type          string `json:"type"` // "message", "stream", "info_message", "info_stream", "error", "info", "varaible_values", "snapshot_taken", "snapshot_loaded", "slash_commands", "feedback_received", "conversation_title", "get_tool_validation", "code_execution_response", "assistant_message_edited", "status_message", "status_stream", "chat_model_set", "disable_interrupt", "enable_interrupt", "get_approval"
 
 	// Chat Interface properties
 	IsLast           bool   `json:"is_last,omitempty"`
@@ -106,6 +106,10 @@ type ClientResponse struct {
 
 	// Stream Interruption properties
 	StreamInterruptionAllowed bool `json:"stream_interruption_allowed,omitempty"`
+
+	// Approval properties
+	ApprovalText    string   `json:"approval_text,omitempty"`
+	ApprovalOptions []string `json:"approval_options,omitempty"`
 
 	// Error properties
 	Error *ErrorResponse `json:"error,omitempty"`

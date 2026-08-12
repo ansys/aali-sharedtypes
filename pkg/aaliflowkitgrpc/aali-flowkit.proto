@@ -17,7 +17,7 @@ service ExternalFunctions {
   rpc ListFunctions(ListFunctionsRequest) returns (ListFunctionsResponse) {}
 
   // Runs a specified function with provided inputs and returns the function outputs.
-  rpc RunFunction(FunctionInputs) returns (stream FunctionOutputs) {}
+  rpc RunFunction(stream FunctionInputs) returns (stream FunctionOutputs) {}
 
   // Runs a specified function with provided inputs and returns the function output as a stream.
   // Accepts a stream of StreamInput messages to allow client-to-server interrupts.
@@ -115,6 +115,15 @@ message FunctionInputs {
 
   // List of inputs for the function.
   repeated FunctionInput inputs = 2;
+
+  // Type for return responses from agent to flowkit for other commands. "input" is the default and will start the function run. Other types: "approval_response"
+  string type = 3;
+
+  // Optional instruction ID only relevant for "approval_response" type.
+  string instruction_id = 4;
+
+  // Optional approval response only relevant for "approval_response" type.
+  string approval_response = 5;
 }
 
 // Single input for a function.
@@ -138,8 +147,20 @@ message FunctionOutputs {
   // List of outputs from the function.
   repeated FunctionOutput outputs = 2;
 
-  // Type of for running other commands from flowkit to agent. "response" is the default type for normal function outputs and will end the function run. Other types: "disable_interrupt", "enable_interrupt"
+  // Type for running other commands from flowkit to agent. "response" is the default type for normal function outputs and will end the function run. Other types: "disable_interrupt", "enable_interrupt", "info_message", "status_message", "get_aprroval"
   string type = 3;
+
+  // Optional message only relevant for "info_message" and "status_message" types.
+  string message = 4;
+
+  // Optional instruction ID only relevant for "get_approval" type.
+  string instruction_id = 5;
+
+  // Optional approval text only relevant for "get_approval" type.
+  string approval_text = 6;
+
+  // Optional approval options only relevant for "get_approval" type; add "free_text" to allow free text input from the client.
+  repeated string approval_options = 7;
 }
 
 // FunctionOutput is a single output from a function.
