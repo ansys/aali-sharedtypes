@@ -285,9 +285,8 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 	}
 
 	// create a channel to send messages to the server
-	responseChannelToServer := make(chan *aaliflowkitgrpc.FunctionInputs, 400)
-	closeResponseChannel := sync.OnceFunc(func() { close(responseChannelToServer) })
-	defer closeResponseChannel()
+	responseChannelToServer := make(chan *aaliflowkitgrpc.FunctionInputs)
+	defer close(responseChannelToServer)
 
 	// track pending approval instruction IDs for cleanup on error
 	pendingApprovalIDs := []string{}
@@ -380,6 +379,7 @@ out:
 			}()
 
 			// send a message to the response channel with the approval request
+			logging.Log.Debugf(ctx, "Sending approval request for instruction ID '%v' to client; Approval Text: '%v'; Approval Options '%v'", res.InstructionId, res.ApprovalText, res.ApprovalOptions)
 			responseChannel <- sharedtypes.ClientResponse{
 				InstructionId:   res.InstructionId,
 				Type:            string(res.Type),
@@ -389,6 +389,7 @@ out:
 
 			// launch go routine to wait for the approval response from the client and send it to the server
 			go func() {
+				defer close(approvalResponseChannel)
 				// check if free_text us allowed for the approval request
 				freeTextAllowed := false
 				for _, option := range res.ApprovalOptions {
@@ -402,6 +403,7 @@ out:
 				var approvalResponse string
 				for {
 					approvalResponse = <-approvalResponseChannel
+					logging.Log.Debugf(ctx, "Received approval response '%v' for instruction ID '%v'", approvalResponse, res.InstructionId)
 
 					// verify response if free_text is not allowed
 					if !freeTextAllowed {
@@ -423,6 +425,9 @@ out:
 							// valid response, break the loop
 							break
 						}
+					} else {
+						// any response is valid if free_text is allowed, break the loop
+						break
 					}
 				}
 
@@ -447,9 +452,6 @@ out:
 			return nil, err
 		}
 	}
-
-	// Close the responseChannelToServer to signal the sending goroutine to stop
-	closeResponseChannel()
 
 	// Close the send direction of the stream
 	stream.CloseSend()
