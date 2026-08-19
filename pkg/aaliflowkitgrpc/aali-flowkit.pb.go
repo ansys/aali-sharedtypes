@@ -842,10 +842,16 @@ type StreamInput struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// List of inputs for the function (only required in the first message).
 	Inputs []*FunctionInput `protobuf:"bytes,2,rep,name=inputs,proto3" json:"inputs,omitempty"`
+	// Type for send other commands from client to server. "input" is the default and will start the function run. Other types: "interrupt", "approval_response"
+	Type string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
 	// Interrupt message sent from client to server.
-	Interrupt     string `protobuf:"bytes,3,opt,name=interrupt,proto3" json:"interrupt,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Interrupt string `protobuf:"bytes,4,opt,name=interrupt,proto3" json:"interrupt,omitempty"`
+	// Optional instruction ID only relevant for "approval_response" type.
+	InstructionId string `protobuf:"bytes,5,opt,name=instruction_id,json=instructionId,proto3" json:"instruction_id,omitempty"`
+	// Optional approval response only relevant for "approval_response" type.
+	ApprovalResponse string `protobuf:"bytes,6,opt,name=approval_response,json=approvalResponse,proto3" json:"approval_response,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *StreamInput) Reset() {
@@ -892,9 +898,30 @@ func (x *StreamInput) GetInputs() []*FunctionInput {
 	return nil
 }
 
+func (x *StreamInput) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
 func (x *StreamInput) GetInterrupt() string {
 	if x != nil {
 		return x.Interrupt
+	}
+	return ""
+}
+
+func (x *StreamInput) GetInstructionId() string {
+	if x != nil {
+		return x.InstructionId
+	}
+	return ""
+}
+
+func (x *StreamInput) GetApprovalResponse() string {
+	if x != nil {
+		return x.ApprovalResponse
 	}
 	return ""
 }
@@ -1029,11 +1056,14 @@ const file_pkg_aaliflowkitgrpc_aali_flowkit_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x17\n" +
 	"\ago_type\x18\x02 \x01(\tR\x06goType\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05value\x12'\n" +
-	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation\"w\n" +
+	"\x0fcode_validation\x18\x04 \x01(\tR\x0ecodeValidation\"\xdf\x01\n" +
 	"\vStreamInput\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x126\n" +
-	"\x06inputs\x18\x02 \x03(\v2\x1e.aaliflowkitgrpc.FunctionInputR\x06inputs\x12\x1c\n" +
-	"\tinterrupt\x18\x03 \x01(\tR\tinterrupt\"\x8f\x01\n" +
+	"\x06inputs\x18\x02 \x03(\v2\x1e.aaliflowkitgrpc.FunctionInputR\x06inputs\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12\x1c\n" +
+	"\tinterrupt\x18\x04 \x01(\tR\tinterrupt\x12%\n" +
+	"\x0einstruction_id\x18\x05 \x01(\tR\rinstructionId\x12+\n" +
+	"\x11approval_response\x18\x06 \x01(\tR\x10approvalResponse\"\x8f\x01\n" +
 	"\fStreamOutput\x12'\n" +
 	"\x0fmessage_counter\x18\x01 \x01(\x05R\x0emessageCounter\x12\x17\n" +
 	"\ais_last\x18\x02 \x01(\bR\x06isLast\x12\x14\n" +
