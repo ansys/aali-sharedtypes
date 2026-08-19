@@ -207,9 +207,35 @@ const (
 	GetApproval      ResponseType = "get_approval"
 )
 
+// FunctionType is a type that represents the type of function to run
+type FunctionType string
+
+const (
+	Run    FunctionType = "run"
+	Stream FunctionType = "stream"
+)
+
 // OpenApprovals is a global variable that keeps track of the open approvals for each function
-var OpenApprovals = map[string]*chan string{}
+type OpenApproval struct {
+	FunctionType FunctionType
+	Channel      *chan string
+}
+
+var OpenApprovals = map[string]OpenApproval{}
 var OpenApprovalsLock = sync.RWMutex{}
+
+// ApprovalRequest is a struct that represents the approval request from flowkit
+type ApprovalRequest struct {
+	InstructionId   string   `json:"instruction_id"`
+	ApprovalText    string   `json:"approval_text"`
+	ApprovalOptions []string `json:"approval_options"`
+}
+
+// ApprovalResponse is a struct that represents the approval response from the client
+type ApprovalResponse struct {
+	InstructionId    string `json:"instruction_id"`
+	ApprovalResponse string `json:"approval_response"`
+}
 
 // RunFunction calls the RunFunction gRPC and returns the outputs
 // This function is used to run an external function
@@ -321,8 +347,8 @@ func RunFunction(ctx *logging.ContextMap, functionName string, inputs map[string
 		OpenApprovalsLock.Lock()
 		defer OpenApprovalsLock.Unlock()
 		for _, id := range pendingApprovalIDs {
-			if ch, ok := OpenApprovals[id]; ok {
-				close(*ch)
+			if openApproval, ok := OpenApprovals[id]; ok {
+				close(*openApproval.Channel)
 				delete(OpenApprovals, id)
 			}
 		}
@@ -375,7 +401,10 @@ out:
 			func() {
 				OpenApprovalsLock.Lock()
 				defer OpenApprovalsLock.Unlock()
-				OpenApprovals[res.InstructionId] = &approvalResponseChannel
+				OpenApprovals[res.InstructionId] = OpenApproval{
+					FunctionType: Run,
+					Channel:      &approvalResponseChannel,
+				}
 			}()
 
 			// send a message to the response channel with the approval request
@@ -676,12 +705,36 @@ func sendInterruptsToServer(ctx *logging.ContextMap, stream aaliflowkitgrpc.Exte
 
 	// Listen to the interrupt channel and send messages to the server
 	for msg := range *interruptChannel {
-		err := stream.Send(&aaliflowkitgrpc.StreamInput{
-			Interrupt: msg,
-		})
-		if err != nil {
-			logging.Log.Errorf(ctx, "error sending interrupt for function '%v': %v", functionName, err)
-			return
+		switch {
+		case strings.Contains(msg, "$&$approval_response$&$"):
+			// remove $&$approval_response$&$ from the start of the message
+			approvalResponseJson := strings.TrimPrefix(msg, "$&$approval_response$&$")
+			// unmarshal the approval response
+			var approvalResponse ApprovalResponse
+			err := json.Unmarshal([]byte(approvalResponseJson), &approvalResponse)
+			if err != nil {
+				logging.Log.Errorf(ctx, "error unmarshalling approval response for function '%v': %v", functionName, err)
+				continue
+			}
+			// send the approval response to the server
+			err = stream.Send(&aaliflowkitgrpc.StreamInput{
+				InstructionId:    approvalResponse.InstructionId,
+				Type:             "approval_response",
+				ApprovalResponse: approvalResponse.ApprovalResponse,
+			})
+			if err != nil {
+				logging.Log.Errorf(ctx, "error sending approval response for function '%v': %v", functionName, err)
+				return
+			}
+		default:
+			err := stream.Send(&aaliflowkitgrpc.StreamInput{
+				Type:      "interrupt",
+				Interrupt: msg,
+			})
+			if err != nil {
+				logging.Log.Errorf(ctx, "error sending interrupt for function '%v': %v", functionName, err)
+				return
+			}
 		}
 	}
 

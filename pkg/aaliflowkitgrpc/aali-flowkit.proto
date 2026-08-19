@@ -188,8 +188,17 @@ message StreamInput {
   // List of inputs for the function (only required in the first message).
   repeated FunctionInput inputs = 2;
 
+  // Type for send other commands from client to server. "input" is the default and will start the function run. Other types: "interrupt", "approval_response"
+  string type = 3;
+
   // Interrupt message sent from client to server.
-  string interrupt = 3;
+  string interrupt = 4;
+
+  // Optional instruction ID only relevant for "approval_response" type.
+  string instruction_id = 5;
+
+  // Optional approval response only relevant for "approval_response" type.
+  string approval_response = 6;
 }
 
 // StreamOutput is the output message for the StreamFunction method.
